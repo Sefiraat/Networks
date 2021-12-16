@@ -37,9 +37,9 @@ public class NetworkNode {
     protected NetworkNode parent = null;
     protected NetworkRoot root = null;
     protected Location nodePosition;
-    protected ObjectType nodeType;
+    protected NodeType nodeType;
 
-    public NetworkNode(Location location, ObjectType type) {
+    public NetworkNode(Location location, NodeType type) {
         this.nodePosition = location;
         this.nodeType = type;
     }
@@ -60,7 +60,7 @@ public class NetworkNode {
         return nodePosition;
     }
 
-    public ObjectType getNodeType() {
+    public NodeType getNodeType() {
         return nodeType;
     }
 
@@ -117,21 +117,21 @@ public class NetworkNode {
         // Loop through all possible locations
         for (BlockFace face : VALID_FACES) {
             final Location testLocation = this.nodePosition.clone().add(face.getDirection());
-            final ObjectDefinition testDefinition = NetworkStorage.getAllNetworkObjects().get(testLocation);
+            final NodeDefinition testDefinition = NetworkStorage.getAllNetworkObjects().get(testLocation);
 
             if (testDefinition == null) {
                 continue;
             }
 
-            final ObjectType testType = testDefinition.getType();
+            final NodeType testType = testDefinition.getType();
 
             // Kill additional controllers if it isn't the root
-            if (testType == ObjectType.CONTROLLER && !testLocation.equals(getRoot().nodePosition)) {
+            if (testType == NodeType.CONTROLLER && !testLocation.equals(getRoot().nodePosition)) {
                 killAdditionalController(testLocation);
             }
 
             // Check if it's in the network already and, if not, create a child node and propagate further.
-            if (testType != ObjectType.CONTROLLER && !this.networkContains(testLocation)) {
+            if (testType != NodeType.CONTROLLER && !this.networkContains(testLocation)) {
                 final NetworkNode networkNode = new NetworkNode(testLocation, testType);
                 addChild(networkNode);
                 networkNode.addAllChildren();
@@ -152,11 +152,11 @@ public class NetworkNode {
     }
 
     @Nonnull
-    protected Set<Location> getMatchingChildren(@Nonnull ObjectType objectType) {
+    protected Set<Location> getMatchingChildren(@Nonnull NodeType nodeType) {
         Set<Location> itemList = new HashSet<>();
         for (NetworkNode networkNode : getChildrenNodes()) {
-            itemList.addAll(networkNode.getMatchingChildren(objectType));
-            if (this.nodeType == objectType) {
+            itemList.addAll(networkNode.getMatchingChildren(nodeType));
+            if (this.nodeType == nodeType) {
                 itemList.add(this.nodePosition);
             }
         }

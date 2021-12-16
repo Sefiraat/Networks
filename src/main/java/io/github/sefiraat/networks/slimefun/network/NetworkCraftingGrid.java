@@ -16,6 +16,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -27,6 +28,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,29 +39,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NetworkGrid extends NetworkObject {
+public class NetworkCraftingGrid extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = {
-        17, 26, 35
+        5, 14, 23, 32, 33, 35, 41, 42, 44, 45, 47, 49, 50, 51, 52, 53
     };
 
     private static final int[] DISPLAY_SLOTS = {
-        0, 1, 2, 3, 4, 5, 6, 7,
-        9, 10, 11, 12, 13, 14, 15, 16,
-        18, 19, 20, 21, 22, 23, 24, 25,
-        27, 28, 29, 30, 31, 32, 33, 34,
-        36, 37, 38, 39, 40, 41, 42, 43,
-        45, 46, 47, 48, 49, 50, 51, 52
+        0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40
     };
 
-    private static final int INPUT_SLOT = 8;
+    private static final int[] CRAFT_ITEMS = {
+        6, 7, 8, 15, 16, 17, 24, 25, 26
+    };
 
-    private static final int PAGE_PREVIOUS = 44;
-    private static final int PAGE_NEXT = 53;
+    private static final int CRAFT_BUTTON_SLOT = 34;
+    private static final int CRAFT_OUTPUT_SLOT = 43;
+    private static final int PAGE_PREVIOUS = 46;
+    private static final int PAGE_NEXT = 48;
 
-    private static final ItemStack BLANK_SLOT_STACK = new CustomItemStack(
-        Material.LIGHT_GRAY_STAINED_GLASS_PANE,
-        " "
+    private static final Map<Location, Integer> PAGE_MAP = new HashMap<>();
+    private static final Map<Location, Integer> MAX_PAGE_MAP = new HashMap<>();
+
+    private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
+        Material.CRAFTING_TABLE,
+        Theme.CLICK_INFO.getColor() + "Click to craft"
     );
 
     private static final CustomItemStack PAGE_PREVIOUS_STACK = new CustomItemStack(
@@ -72,12 +76,13 @@ public class NetworkGrid extends NetworkObject {
         Theme.CLICK_INFO.getColor() + "Next Page"
     );
 
-    private static final Map<Location, Integer> PAGE_MAP = new HashMap<>();
-    private static final Map<Location, Integer> MAX_PAGE_MAP = new HashMap<>();
+    private static final Map<ItemStack[], ItemStack> RECIPES = new HashMap<>();
+
+    private static final ItemStack BLANK_SLOT_STACK = new CustomItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ");
 
     private final ItemSetting<Integer> tickRate;
 
-    public NetworkGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkCraftingGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.GRID);
 
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
@@ -98,7 +103,6 @@ public class NetworkGrid extends NetworkObject {
                     if (tick <= 1) {
                         final BlockMenu blockMenu = BlockStorage.getInventory(block);
                         addToRegistry(block);
-                        tryAddItem(blockMenu);
                         updateDisplay(blockMenu);
                     }
                 }
@@ -122,7 +126,6 @@ public class NetworkGrid extends NetworkObject {
 
             // Update Screen
             NetworkRoot root = definition.getNode().getRoot();
-
             final List<Map.Entry<ItemStack, Integer>> entries = root.getAllCellItems().entrySet().stream().toList();
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
             final int page = PAGE_MAP.getOrDefault(blockMenu.getLocation(), 0);
@@ -161,25 +164,6 @@ public class NetworkGrid extends NetworkObject {
             String message = MessageFormat.format("{0}Updating Display: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
             blockMenu.toInventory().getViewers().get(0).sendMessage(message);
         }
-    }
-
-    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final long startTime = System.nanoTime();
-        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
-
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return;
-        }
-
-        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
-        if (definition.getNode() == null) {
-            return;
-        }
-
-        definition.getNode().getRoot().addItemStack(itemStack);
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        blockMenu.toInventory().getViewers().get(0).sendMessage(message);
     }
 
     @ParametersAreNonnullByDefault
@@ -248,7 +232,7 @@ public class NetworkGrid extends NetworkObject {
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
                 PAGE_MAP.put(menu.getLocation(), 0);
 
-                menu.replaceExistingItem(PAGE_PREVIOUS, PAGE_PREVIOUS_STACK);
+                menu.addItem(PAGE_PREVIOUS, PAGE_PREVIOUS_STACK);
                 menu.addMenuClickHandler(PAGE_PREVIOUS, (p, slot, item, action) -> {
                     Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
                     page = page <= 0 ? 0 : page - 1;
@@ -256,7 +240,7 @@ public class NetworkGrid extends NetworkObject {
                     return false;
                 });
 
-                menu.replaceExistingItem(PAGE_NEXT, PAGE_NEXT_STACK);
+                menu.addItem(PAGE_NEXT, PAGE_NEXT_STACK);
                 menu.addMenuClickHandler(PAGE_NEXT, (p, slot, item, action) -> {
                     Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
                     Integer maxPages = MAX_PAGE_MAP.getOrDefault(menu.getLocation(), 0);
@@ -271,5 +255,34 @@ public class NetworkGrid extends NetworkObject {
                 }
             }
         };
+    }
+
+    public static boolean allowedRecipe(SlimefunItemStack i) {
+        return allowedRecipe(i.getItemId());
+    }
+
+    public static boolean allowedRecipe(String s) {
+        return !isBackpack(s);
+    }
+
+    public static boolean isBackpack(String s) {
+        return s.matches("(.*)BACKPACK(.*)");
+    }
+
+    public static boolean allowedRecipe(SlimefunItem i) {
+        return allowedRecipe(i.getId());
+    }
+
+    public static void addRecipe(ItemStack[] input, ItemStack output) {
+        RECIPES.put(input, output);
+    }
+
+    private boolean testRecipe(ItemStack[] input, ItemStack[] recipe) {
+        for (int test = 0; test < recipe.length; test++) {
+            if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

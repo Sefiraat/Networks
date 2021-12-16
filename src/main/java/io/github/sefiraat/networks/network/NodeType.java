@@ -1,10 +1,11 @@
 package io.github.sefiraat.networks.network;
 
-public enum ObjectType {
+public enum NodeType {
     CONTROLLER,
     BRIDGE,
     STORAGE_MONITOR,
     IMPORT,
     EXPORT,
-    GRID
+    GRID,
+    CELL
 }

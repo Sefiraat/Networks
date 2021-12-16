@@ -1,15 +1,15 @@
 package io.github.sefiraat.networks.network;
 
-public class ObjectDefinition {
+public class NodeDefinition {
 
-    private final ObjectType type;
+    private final NodeType type;
     private NetworkNode node;
 
-    public ObjectDefinition(ObjectType type) {
+    public NodeDefinition(NodeType type) {
         this.type = type;
     }
 
-    public ObjectType getType() {
+    public NodeType getType() {
         return type;
     }
 

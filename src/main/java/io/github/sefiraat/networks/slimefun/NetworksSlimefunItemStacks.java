@@ -25,6 +25,8 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_IMPORT;
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRID;
+    public static final SlimefunItemStack NETWORK_CELL;
+    public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
 
     static {
 
@@ -68,6 +70,20 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.NOTE_BLOCK),
             Theme.MACHINE,
             "Network Grid"
+        );
+
+        NETWORK_CRAFTING_GRID = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_GRID",
+            new ItemStack(Material.REDSTONE_LAMP),
+            Theme.MACHINE,
+            "Network Crafting Grid"
+        );
+
+        NETWORK_CELL = Theme.themedSlimefunItemStack(
+            "NTW_CELL",
+            new ItemStack(Material.HONEYCOMB_BLOCK),
+            Theme.MACHINE,
+            "Network Cell"
         );
     }
 

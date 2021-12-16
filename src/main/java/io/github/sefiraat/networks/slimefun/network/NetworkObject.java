@@ -1,8 +1,8 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
-import io.github.sefiraat.networks.network.ObjectDefinition;
-import io.github.sefiraat.networks.network.ObjectType;
+import io.github.sefiraat.networks.network.NodeDefinition;
+import io.github.sefiraat.networks.network.NodeType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -23,9 +23,9 @@ import java.util.List;
 public class NetworkObject extends SlimefunItem {
 
     @Getter
-    private final ObjectType nodeType;
+    private final NodeType nodeType;
 
-    public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ObjectType type) {
+    public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type) {
         super(itemGroup, item, recipeType, recipe);
         this.nodeType = type;
         addItemHandler(
@@ -54,7 +54,7 @@ public class NetworkObject extends SlimefunItem {
 
     public void addToRegistry(@Nonnull Block block) {
         if (!NetworkStorage.getAllNetworkObjects().containsKey(block.getLocation())) {
-            NetworkStorage.getAllNetworkObjects().put(block.getLocation(), new ObjectDefinition(nodeType));
+            NetworkStorage.getAllNetworkObjects().put(block.getLocation(), new NodeDefinition(nodeType));
         }
     }
 }

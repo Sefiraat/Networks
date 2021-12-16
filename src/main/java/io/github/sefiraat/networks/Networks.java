@@ -99,7 +99,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
 
     public void setupSlimefun() {
-        NetworkSlimefunItems.trigger();
+        NetworkSlimefunItems.setup();
     }
 
     @Nonnull
