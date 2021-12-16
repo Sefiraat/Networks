@@ -1,24 +1,39 @@
 package io.github.sefiraat.networks.network;
 
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Container;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class NetworkRoot extends NetworkNode {
+
+    protected static final List<String> BARREL_INFINITY = List.of(
+        "BASIC_STORAGE",
+        "ADVANCED_STORAGE",
+        "REINFORCED_STORAGE",
+        "VOID_STORAGE",
+        "INFINITY_STORAGE"
+    );
+
+    protected static final List<String> BARREL_FLUFFY = List.of(
+        "SMALL_FLUFFY_BARREL",
+        "MEDIUM_FLUFFY_BARREL",
+        "BIG_FLUFFY_BARREL",
+        "LARGE_FLUFFY_BARREL",
+        "MASSIVE_FLUFFY_BARREL",
+        "BOTTOMLESS_FLUFFY_BARREL"
+    );
 
     protected final Set<Location> networkLocations = new HashSet<>();
     protected final Set<Location> networkBridges = new HashSet<>();
@@ -66,7 +81,6 @@ public class NetworkRoot extends NetworkNode {
         return networkImporters;
     }
 
-    // Todo move to material checks for all containers
     public Set<BlockMenu> getCellMenus() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location cellLocation : networkCells) {
@@ -78,21 +92,46 @@ public class NetworkRoot extends NetworkNode {
         return menus;
     }
 
-    public Set<Block> getConnectedContainersAsBlocks() {
-        final Set<Block> blocks = new HashSet<>();
-        for (Location monitorLocation : networkMonitors) {
+    public Map<ItemStack, BarrelIdentity> getBarrelItems() {
+        final Map<ItemStack, BarrelIdentity> barrelItemMap = new LinkedHashMap<>();
+        for (Location cellLocation : networkMonitors) {
             for (BlockFace face : VALID_FACES) {
-                final Block block = monitorLocation.clone().add(face.getDirection()).getBlock();
-                if (VALID_CONTAINERS.contains(block.getType())) {
-                    blocks.add(block);
+                final Location testLocation = cellLocation.clone().add(face.getDirection());
+                final BlockMenu menu = BlockStorage.getInventory(testLocation);
+                if (menu != null) {
+                    final Config config = BlockStorage.getLocationInfo(testLocation);
+                    final String id = config.getString("id");
+
+                    // final boolean fluffy = BARREL_FLUFFY.contains(id);  TODO add fluffy when workaround 2 slots
+                    final boolean infinity = BARREL_INFINITY.contains(id);
+
+                    if (infinity) {
+                        final ItemStack itemStack = menu.getItemInSlot(16);
+
+                        if (itemStack == null || itemStack.getType() == Material.AIR) {
+                            continue;
+                        }
+
+                        final ItemStack clone = itemStack.clone();
+                        final String storedString = config.getString("stored");
+                        final int storedInt = Integer.parseInt(storedString);
+
+                        clone.setAmount(1);
+                        BarrelIdentity identity = new BarrelIdentity(menu.getLocation(), clone, storedInt + itemStack.getAmount(), 10, 16);
+                        barrelItemMap.put(clone, identity);
+                    }
                 }
             }
         }
-        return blocks;
+        return barrelItemMap;
     }
 
-    public Map<ItemStack, Integer> getAllCellItems() {
+    public Map<ItemStack, Integer> getAllNetworkItems() {
         final Map<ItemStack, Integer> itemStacks = new LinkedHashMap<>();
+
+        for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
+            itemStacks.put(barrelIdentity.getItemStack(), barrelIdentity.getAmount());
+        }
 
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
@@ -146,11 +185,76 @@ public class NetworkRoot extends NetworkNode {
                 }
             }
         }
+
+        for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
+            if (SlimefunUtils.isItemSimilar(request.getItemStack(), barrelIdentity.getItemStack(), true, false)) {
+                final BlockMenu menu = BlockStorage.getInventory(barrelIdentity.getLocation());
+                final ItemStack itemStack = menu.getItemInSlot(barrelIdentity.getOutputSlot());
+
+                if (SlimefunUtils.isItemSimilar(request.getItemStack(), itemStack, true, false)) {
+
+                    if (itemStack.getAmount() == 1) {
+                        continue;
+                    }
+
+                    // Stack is null, so we can fill it here
+                    if (requestedStack == null) {
+                        requestedStack = itemStack.clone();
+                        requestedStack.setAmount(1);
+                        request.receiveAmount(1);
+                        itemStack.setAmount(itemStack.getAmount() - 1);
+                    }
+
+                    // Escape if fulfilled request
+                    if (request.getAmount() <= 0) {
+                        return requestedStack;
+                    }
+
+                    final int preserveAmount = itemStack.getAmount() - 1;
+
+                    if (request.getAmount() <= preserveAmount) {
+                        requestedStack.setAmount(requestedStack.getAmount() + request.getAmount());
+                        itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                        return requestedStack;
+                    } else {
+                        requestedStack.setAmount(requestedStack.getAmount() + preserveAmount);
+                        request.receiveAmount(preserveAmount);
+                        itemStack.setAmount(1);
+                    }
+                }
+            }
+        }
+
         return requestedStack;
     }
 
     public void addItemStack(ItemStack incomingStack) {
-        // Run one for matching items first
+        // Run for matching barrels
+        for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
+            if (SlimefunUtils.isItemSimilar(incomingStack, barrelIdentity.getItemStack(), true, false)) {
+                final BlockMenu menu = BlockStorage.getInventory(barrelIdentity.getLocation());
+                final ItemStack itemStack = menu.getItemInSlot(barrelIdentity.getInputSlot());
+
+                if (SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                    && itemStack.getAmount() < itemStack.getMaxStackSize()
+                ) {
+                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStack.getAmount();
+                    final int amountToAdd = Math.min(maxCanAdd, incomingStack.getAmount());
+                    itemStack.setAmount(itemStack.getAmount() + amountToAdd);
+                    incomingStack.setAmount(incomingStack.getAmount() - amountToAdd);
+                } else {
+                    menu.replaceExistingItem(barrelIdentity.getInputSlot(), incomingStack.clone());
+                    incomingStack.setAmount(0);
+                }
+
+                // All distributed, can escape
+                if (incomingStack.getAmount() == 0) {
+                    return;
+                }
+            }
+        }
+
+        // Then run for matching items in cells
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack != null

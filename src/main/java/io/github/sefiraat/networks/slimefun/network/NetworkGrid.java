@@ -23,6 +23,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +125,16 @@ public class NetworkGrid extends NetworkObject {
             // Update Screen
             NetworkRoot root = definition.getNode().getRoot();
 
-            final List<Map.Entry<ItemStack, Integer>> entries = root.getAllCellItems().entrySet().stream().toList();
+            final List<Map.Entry<ItemStack, Integer>> entries = root.getAllNetworkItems().entrySet().stream()
+                .sorted(
+                    Comparator.comparing(itemStackIntegerEntry -> {
+                        ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
+                        return itemMeta.hasDisplayName()
+                            ? ChatColor.stripColor(itemMeta.getDisplayName())
+                            : itemStackIntegerEntry.getKey().getType().name();
+                    }))
+                .toList();
+
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
             final int page = PAGE_MAP.getOrDefault(blockMenu.getLocation(), 0);
 
@@ -159,7 +170,7 @@ public class NetworkGrid extends NetworkObject {
             }
             long finishTime = System.nanoTime();
             String message = MessageFormat.format("{0}Updating Display: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-            blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+            // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
         }
     }
 
@@ -179,7 +190,7 @@ public class NetworkGrid extends NetworkObject {
         definition.getNode().getRoot().addItemStack(itemStack);
         long finishTime = System.nanoTime();
         String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
     }
 
     @ParametersAreNonnullByDefault
@@ -210,7 +221,7 @@ public class NetworkGrid extends NetworkObject {
         }
         long finishTime = System.nanoTime();
         String message = MessageFormat.format("{0}Retrieving Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        player.sendMessage(message);
+        // player.sendMessage(message);
 
         return false;
     }

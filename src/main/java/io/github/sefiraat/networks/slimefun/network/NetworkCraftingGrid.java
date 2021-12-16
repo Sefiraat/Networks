@@ -15,6 +15,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -24,17 +25,19 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,17 +45,18 @@ import java.util.Map;
 public class NetworkCraftingGrid extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = {
-        5, 14, 23, 32, 33, 35, 41, 42, 44, 45, 47, 49, 50, 51, 52, 53
+        0, 1, 3, 4, 5, 14, 23, 32, 33, 35, 41, 42, 44, 45, 47, 49, 50, 51, 52, 53
     };
 
     private static final int[] DISPLAY_SLOTS = {
-        0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40
+        9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40
     };
 
     private static final int[] CRAFT_ITEMS = {
         6, 7, 8, 15, 16, 17, 24, 25, 26
     };
 
+    private static final int INPUT_SLOT = 2;
     private static final int CRAFT_BUTTON_SLOT = 34;
     private static final int CRAFT_OUTPUT_SLOT = 43;
     private static final int PAGE_PREVIOUS = 46;
@@ -80,6 +84,15 @@ public class NetworkCraftingGrid extends NetworkObject {
 
     private static final ItemStack BLANK_SLOT_STACK = new CustomItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ");
 
+    static {
+        for (SlimefunItem i : Slimefun.getRegistry().getEnabledSlimefunItems()) {
+            RecipeType recipeType = i.getRecipeType();
+            if ((recipeType == RecipeType.ENHANCED_CRAFTING_TABLE) && allowedRecipe(i)) {
+                addRecipe(i.getRecipe(), i.getRecipeOutput());
+            }
+        }
+    }
+
     private final ItemSetting<Integer> tickRate;
 
     public NetworkCraftingGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -103,6 +116,7 @@ public class NetworkCraftingGrid extends NetworkObject {
                     if (tick <= 1) {
                         final BlockMenu blockMenu = BlockStorage.getInventory(block);
                         addToRegistry(block);
+                        tryAddItem(blockMenu);
                         updateDisplay(blockMenu);
                     }
                 }
@@ -126,7 +140,16 @@ public class NetworkCraftingGrid extends NetworkObject {
 
             // Update Screen
             NetworkRoot root = definition.getNode().getRoot();
-            final List<Map.Entry<ItemStack, Integer>> entries = root.getAllCellItems().entrySet().stream().toList();
+            final List<Map.Entry<ItemStack, Integer>> entries = root.getAllNetworkItems().entrySet().stream()
+                .sorted(
+                    Comparator.comparing(itemStackIntegerEntry -> {
+                        ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
+                        return itemMeta.hasDisplayName()
+                            ? ChatColor.stripColor(itemMeta.getDisplayName())
+                            : itemStackIntegerEntry.getKey().getType().name();
+                    }))
+                .toList();
+
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
             final int page = PAGE_MAP.getOrDefault(blockMenu.getLocation(), 0);
 
@@ -162,8 +185,27 @@ public class NetworkCraftingGrid extends NetworkObject {
             }
             long finishTime = System.nanoTime();
             String message = MessageFormat.format("{0}Updating Display: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-            blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+            // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
         }
+    }
+
+    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
+        final long startTime = System.nanoTime();
+        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return;
+        }
+
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+        if (definition.getNode() == null) {
+            return;
+        }
+
+        definition.getNode().getRoot().addItemStack(itemStack);
+        long finishTime = System.nanoTime();
+        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
+        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
     }
 
     @ParametersAreNonnullByDefault
@@ -194,7 +236,7 @@ public class NetworkCraftingGrid extends NetworkObject {
         }
         long finishTime = System.nanoTime();
         String message = MessageFormat.format("{0}Retrieving Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        player.sendMessage(message);
+        // player.sendMessage(message);
 
         return false;
     }
@@ -214,7 +256,6 @@ public class NetworkCraftingGrid extends NetworkObject {
             @Override
             public void init() {
                 drawBackground(BACKGROUND_SLOTS);
-                setSize(54);
             }
 
             @Override
@@ -232,7 +273,7 @@ public class NetworkCraftingGrid extends NetworkObject {
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
                 PAGE_MAP.put(menu.getLocation(), 0);
 
-                menu.addItem(PAGE_PREVIOUS, PAGE_PREVIOUS_STACK);
+                menu.replaceExistingItem(PAGE_PREVIOUS, PAGE_PREVIOUS_STACK);
                 menu.addMenuClickHandler(PAGE_PREVIOUS, (p, slot, item, action) -> {
                     Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
                     page = page <= 0 ? 0 : page - 1;
@@ -240,7 +281,7 @@ public class NetworkCraftingGrid extends NetworkObject {
                     return false;
                 });
 
-                menu.addItem(PAGE_NEXT, PAGE_NEXT_STACK);
+                menu.replaceExistingItem(PAGE_NEXT, PAGE_NEXT_STACK);
                 menu.addMenuClickHandler(PAGE_NEXT, (p, slot, item, action) -> {
                     Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
                     Integer maxPages = MAX_PAGE_MAP.getOrDefault(menu.getLocation(), 0);
@@ -253,6 +294,65 @@ public class NetworkCraftingGrid extends NetworkObject {
                     menu.replaceExistingItem(displaySlot, null);
                     menu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
                 }
+
+                menu.replaceExistingItem(CRAFT_BUTTON_SLOT, CRAFT_BUTTON_STACK);
+                menu.addMenuClickHandler(CRAFT_BUTTON_SLOT, (player, slot, item, action) -> {
+                    long startTime = System.nanoTime();
+                    final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
+
+                    if (definition.getNode() == null) {
+                        return false;
+                    }
+
+                    final ItemStack[] inputs = new ItemStack[CRAFT_ITEMS.length];
+                    int i = 0;
+
+                    // Fill the inputs
+                    for (int recipeSlot : CRAFT_ITEMS) {
+                        ItemStack stack = menu.getItemInSlot(recipeSlot);
+                        inputs[i] = stack;
+                        i++;
+                    }
+
+                    ItemStack crafted = null;
+
+                    // Go through each recipe, test and set the ItemStack if found
+                    for (Map.Entry<ItemStack[], ItemStack> entry : RECIPES.entrySet()) {
+                        if (testRecipe(inputs, entry.getKey())) {
+                            crafted = entry.getValue().clone();
+                            break;
+                        }
+                    }
+
+                    if (crafted == null) {
+                        crafted = Bukkit.craftItem(inputs, player.getWorld(), player);
+                    }
+
+                    if (crafted.getType() != Material.AIR && menu.fits(crafted, CRAFT_OUTPUT_SLOT)) {
+                        menu.pushItem(crafted, CRAFT_OUTPUT_SLOT);
+                        for (int recipeSlot : CRAFT_ITEMS) {
+                            final ItemStack itemInSlot = menu.getItemInSlot(recipeSlot);
+                            if (itemInSlot != null) {
+                                final ItemStack itemInSlotClone = itemInSlot.clone();
+                                itemInSlotClone.setAmount(1);
+                                ItemUtils.consumeItem(menu.getItemInSlot(recipeSlot), 1, true);
+                                if (menu.getItemInSlot(recipeSlot) == null) {
+
+                                    final GridItemRequest request = new GridItemRequest(itemInSlotClone, player, 1);
+                                    // Process item request
+                                    ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+                                    if (requestingStack != null) {
+                                        menu.replaceExistingItem(recipeSlot, requestingStack);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    long finishTime = System.nanoTime();
+                    String message = MessageFormat.format("{0}Crafting Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
+                    // player.sendMessage(message);
+                    return false;
+                });
             }
         };
     }

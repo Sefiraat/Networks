@@ -65,7 +65,7 @@ public class NetworkController extends NetworkObject {
                             long timeExporter = System.nanoTime();
                             int inventories = root.getCellMenus().size();
                             long timeInventories = System.nanoTime();
-                            int items = root.getAllCellItems().size();
+                            int items = root.getAllNetworkItems().size();
                             long timeItems = System.nanoTime();
 
                             player.sendMessage("");
