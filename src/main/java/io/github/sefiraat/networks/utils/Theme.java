@@ -44,17 +44,16 @@ public enum Theme {
 
     }
 
-    /**
-     * Applies the theme color to a given string
-     *
-     * @param themeType The {@link Theme} to apply the color from
-     * @param string    The string to apply the color to
-     * @return Returns the string provides preceded by the color
-     */
     @Nonnull
-    @ParametersAreNonnullByDefault
-    public static String applyThemeToString(Theme themeType, String string) {
-        return themeType.getColor() + string;
+    public Particle.DustOptions getDustOptions(float size) {
+        return new Particle.DustOptions(
+            Color.fromRGB(
+                color.getColor().getRed(),
+                color.getColor().getGreen(),
+                color.getColor().getBlue()
+            ),
+            size
+        );
     }
 
     /**
@@ -87,6 +86,19 @@ public enum Theme {
     }
 
     /**
+     * Applies the theme color to a given string
+     *
+     * @param themeType The {@link Theme} to apply the color from
+     * @param string    The string to apply the color to
+     * @return Returns the string provides preceded by the color
+     */
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static String applyThemeToString(Theme themeType, String string) {
+        return themeType.getColor() + string;
+    }
+
+    /**
      * Gets an ItemStack with a pre-populated lore and name with themed colors.
      *
      * @param material  The {@link Material} used to base the {@link ItemStack} on
@@ -110,18 +122,6 @@ public enum Theme {
             material,
             Theme.applyThemeToString(themeType, name),
             finalLore.toArray(new String[finalLore.size() - 1])
-        );
-    }
-
-    @Nonnull
-    public Particle.DustOptions getDustOptions(float size) {
-        return new Particle.DustOptions(
-            Color.fromRGB(
-                color.getColor().getRed(),
-                color.getColor().getGreen(),
-                color.getColor().getBlue()
-            ),
-            size
         );
     }
 }

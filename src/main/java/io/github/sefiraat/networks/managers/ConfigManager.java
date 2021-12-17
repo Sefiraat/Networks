@@ -33,21 +33,6 @@ public class ConfigManager {
     }
 
     /**
-     * @noinspection unchecked
-     */
-    @Nullable
-    public static Particle.DustOptions getDustOptions(@Nonnull Block block, float size) {
-        final List<?> list = getInstance().getBlockColors().getList(block.getType().name());
-
-        if (list == null) {
-            return null;
-        }
-        final List<Integer> integers = (List<Integer>) list;
-        final Color color = Color.fromRGB(integers.get(0), integers.get(1), integers.get(2));
-        return new Particle.DustOptions(color, size);
-    }
-
-    /**
      * @noinspection ResultOfMethodCallIgnored
      */
     private FileConfiguration getConfig(String fileName, boolean updateWithDefaults) {
@@ -90,6 +75,21 @@ public class ConfigManager {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    /**
+     * @noinspection unchecked
+     */
+    @Nullable
+    public static Particle.DustOptions getDustOptions(@Nonnull Block block, float size) {
+        final List<?> list = getInstance().getBlockColors().getList(block.getType().name());
+
+        if (list == null) {
+            return null;
+        }
+        final List<Integer> integers = (List<Integer>) list;
+        final Color color = Color.fromRGB(integers.get(0), integers.get(1), integers.get(2));
+        return new Particle.DustOptions(color, size);
     }
 
 }

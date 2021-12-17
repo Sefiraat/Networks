@@ -52,10 +52,6 @@ public class NetworkNode {
         return child;
     }
 
-    public Set<NetworkNode> getChildrenNodes() {
-        return childrenNodes;
-    }
-
     public Location getNodePosition() {
         return nodePosition;
     }
@@ -64,12 +60,12 @@ public class NetworkNode {
         return nodeType;
     }
 
-    public NetworkRoot getRoot() {
-        return this.root;
+    public boolean networkContains(@Nonnull NetworkNode networkNode) {
+        return networkContains(networkNode.nodePosition);
     }
 
-    private void setRoot(NetworkRoot root) {
-        this.root = root;
+    public boolean networkContains(@Nonnull Location location) {
+        return getNetworkLocations().contains(location);
     }
 
     @Nonnull
@@ -77,12 +73,12 @@ public class NetworkNode {
         return getRoot().networkLocations;
     }
 
-    public boolean networkContains(@Nonnull NetworkNode networkNode) {
-        return networkContains(networkNode.nodePosition);
+    public NetworkRoot getRoot() {
+        return this.root;
     }
 
-    public boolean networkContains(@Nonnull Location location) {
-        return getNetworkLocations().contains(location);
+    private void setRoot(NetworkRoot root) {
+        this.root = root;
     }
 
     public NetworkNode getParent() {
@@ -110,6 +106,10 @@ public class NetworkNode {
             this.parent.getChildrenNodes().remove(this);
         }
         this.getChildrenNodes().clear();
+    }
+
+    public Set<NetworkNode> getChildrenNodes() {
+        return childrenNodes;
     }
 
     public void addAllChildren() {

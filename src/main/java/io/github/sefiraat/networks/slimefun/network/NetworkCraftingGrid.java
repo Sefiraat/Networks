@@ -129,6 +129,25 @@ public class NetworkCraftingGrid extends NetworkObject {
         );
     }
 
+    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
+        final long startTime = System.nanoTime();
+        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return;
+        }
+
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+        if (definition.getNode() == null) {
+            return;
+        }
+
+        definition.getNode().getRoot().addItemStack(itemStack);
+        long finishTime = System.nanoTime();
+        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
+        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+    }
+
     void updateDisplay(@Nonnull BlockMenu blockMenu) {
         if (blockMenu.hasViewer()) {
             final long startTime = System.nanoTime();
@@ -189,23 +208,12 @@ public class NetworkCraftingGrid extends NetworkObject {
         }
     }
 
-    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final long startTime = System.nanoTime();
-        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
-
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return;
-        }
-
-        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
-        if (definition.getNode() == null) {
-            return;
-        }
-
-        definition.getNode().getRoot().addItemStack(itemStack);
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+    @Nonnull
+    static List<String> getLoreAddition(int amount) {
+        return List.of(
+            "",
+            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
+        );
     }
 
     @ParametersAreNonnullByDefault
@@ -239,14 +247,6 @@ public class NetworkCraftingGrid extends NetworkObject {
         // player.sendMessage(message);
 
         return false;
-    }
-
-    @Nonnull
-    static List<String> getLoreAddition(int amount) {
-        return List.of(
-            "",
-            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
-        );
     }
 
     @Override
@@ -296,93 +296,104 @@ public class NetworkCraftingGrid extends NetworkObject {
                 }
 
                 menu.replaceExistingItem(CRAFT_BUTTON_SLOT, CRAFT_BUTTON_STACK);
-                menu.addMenuClickHandler(CRAFT_BUTTON_SLOT, (player, slot, item, action) -> {
-                    long startTime = System.nanoTime();
-                    final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
-
-                    if (definition.getNode() == null) {
-                        return false;
-                    }
-
-                    final ItemStack[] inputs = new ItemStack[CRAFT_ITEMS.length];
-                    int i = 0;
-
-                    // Fill the inputs
-                    for (int recipeSlot : CRAFT_ITEMS) {
-                        ItemStack stack = menu.getItemInSlot(recipeSlot);
-                        inputs[i] = stack;
-                        i++;
-                    }
-
-                    ItemStack crafted = null;
-
-                    // Go through each recipe, test and set the ItemStack if found
-                    for (Map.Entry<ItemStack[], ItemStack> entry : RECIPES.entrySet()) {
-                        if (testRecipe(inputs, entry.getKey())) {
-                            crafted = entry.getValue().clone();
-                            break;
-                        }
-                    }
-
-                    if (crafted == null) {
-                        crafted = Bukkit.craftItem(inputs, player.getWorld(), player);
-                    }
-
-                    if (crafted.getType() != Material.AIR && menu.fits(crafted, CRAFT_OUTPUT_SLOT)) {
-                        menu.pushItem(crafted, CRAFT_OUTPUT_SLOT);
-                        for (int recipeSlot : CRAFT_ITEMS) {
-                            final ItemStack itemInSlot = menu.getItemInSlot(recipeSlot);
-                            if (itemInSlot != null) {
-                                final ItemStack itemInSlotClone = itemInSlot.clone();
-                                itemInSlotClone.setAmount(1);
-                                ItemUtils.consumeItem(menu.getItemInSlot(recipeSlot), 1, true);
-                                if (menu.getItemInSlot(recipeSlot) == null) {
-
-                                    final GridItemRequest request = new GridItemRequest(itemInSlotClone, player, 1);
-                                    // Process item request
-                                    ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
-                                    if (requestingStack != null) {
-                                        menu.replaceExistingItem(recipeSlot, requestingStack);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    long finishTime = System.nanoTime();
-                    String message = MessageFormat.format("{0}Crafting Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-                    // player.sendMessage(message);
-                    return false;
-                });
+                menu.addMenuClickHandler(CRAFT_BUTTON_SLOT, (player, slot, item, action) -> tryCraft(menu, player));
             }
         };
     }
 
-    public static boolean allowedRecipe(SlimefunItemStack i) {
-        return allowedRecipe(i.getItemId());
+    private boolean tryCraft(@Nonnull BlockMenu menu, @Nonnull Player player) {
+        long startTime = System.nanoTime();
+
+        // Get node and, if doesn't exist - escape
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
+        if (definition.getNode() == null) {
+            return false;
+        }
+
+        // Get the recipe input
+        final ItemStack[] inputs = new ItemStack[CRAFT_ITEMS.length];
+        int i = 0;
+        for (int recipeSlot : CRAFT_ITEMS) {
+            ItemStack stack = menu.getItemInSlot(recipeSlot);
+            inputs[i] = stack;
+            i++;
+        }
+
+        ItemStack crafted = null;
+
+        // Go through each slimefun recipe, test and set the ItemStack if found
+        for (Map.Entry<ItemStack[], ItemStack> entry : RECIPES.entrySet()) {
+            if (testRecipe(inputs, entry.getKey())) {
+                crafted = entry.getValue().clone();
+                break;
+            }
+        }
+
+        // If no slimefun recipe found, try a vanilla one
+        if (crafted == null) {
+            crafted = Bukkit.craftItem(inputs, player.getWorld(), player);
+        }
+
+        // If no item crafted OR result doesn't fit, escape
+        if (crafted.getType() == Material.AIR || !menu.fits(crafted, CRAFT_OUTPUT_SLOT)) {
+            return false;
+        }
+
+        // Push item
+        menu.pushItem(crafted, CRAFT_OUTPUT_SLOT);
+
+        // Lets clear down all the items
+        for (int recipeSlot : CRAFT_ITEMS) {
+            final ItemStack itemInSlot = menu.getItemInSlot(recipeSlot);
+            if (itemInSlot != null) {
+                // Grab a clone for potential retrieval
+                final ItemStack itemInSlotClone = itemInSlot.clone();
+                itemInSlotClone.setAmount(1);
+                ItemUtils.consumeItem(menu.getItemInSlot(recipeSlot), 1, true);
+                // We have consumed a slot item and now the slot it empty - try to refill
+                if (menu.getItemInSlot(recipeSlot) == null) {
+                    // Process item request
+                    final GridItemRequest request = new GridItemRequest(itemInSlotClone, player, 1);
+                    final ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+                    if (requestingStack != null) {
+                        menu.replaceExistingItem(recipeSlot, requestingStack);
+                    }
+                }
+            }
+        }
+
+        long finishTime = System.nanoTime();
+        final String message = MessageFormat.format("{0}Crafting Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
+        // player.sendMessage(message);
+        return false;
     }
 
-    public static boolean allowedRecipe(String s) {
-        return !isBackpack(s);
-    }
-
-    public static boolean isBackpack(String s) {
-        return s.matches("(.*)BACKPACK(.*)");
-    }
-
-    public static boolean allowedRecipe(SlimefunItem i) {
-        return allowedRecipe(i.getId());
-    }
-
-    public static void addRecipe(ItemStack[] input, ItemStack output) {
-        RECIPES.put(input, output);
-    }
-
-    private boolean testRecipe(ItemStack[] input, ItemStack[] recipe) {
+    private boolean testRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
             if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static boolean allowedRecipe(@Nonnull SlimefunItemStack i) {
+        return allowedRecipe(i.getItemId());
+    }
+
+    public static boolean allowedRecipe(@Nonnull String s) {
+        return !isBackpack(s);
+    }
+
+    public static boolean isBackpack(@Nonnull String s) {
+        return s.matches("(.*)BACKPACK(.*)");
+    }
+
+    public static boolean allowedRecipe(@Nonnull SlimefunItem i) {
+        return allowedRecipe(i.getId());
+    }
+
+    public static void addRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack output) {
+        RECIPES.put(input, output);
     }
 }

@@ -36,29 +36,9 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         this.branch = "master";
     }
 
-    public static Networks getInstance() {
-        return Networks.instance;
-    }
-
-    @Nonnull
-    public static PluginManager getPluginManager() {
-        return Networks.getInstance().getServer().getPluginManager();
-    }
-
-    public static ConfigManager getConfigManager() {
-        return Networks.getInstance().configManager;
-    }
-
-    public static ListenerManager getListenerManager() {
-        return Networks.getInstance().listenerManager;
-    }
-
-    public static SupportedPluginManager getSupportedPluginManager() {
-        return Networks.getInstance().supportedPluginManager;
-    }
-
-    public static RunnableManager getRunnableManager() {
-        return Networks.getInstance().runnableManager;
+    @Override
+    public void onDisable() {
+        this.configManager.saveAll();
     }
 
     @Override
@@ -83,11 +63,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         this.getCommand("networks").setExecutor(new NetworksMain());
     }
 
-    @Override
-    public void onDisable() {
-        this.configManager.saveAll();
-    }
-
     public void tryUpdate() {
         if (getConfig().getBoolean("auto-update")
             && getDescription().getVersion().startsWith("DEV")
@@ -102,6 +77,10 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         NetworkSlimefunItems.setup();
     }
 
+    public void setupMetrics() {
+        final Metrics metrics = new Metrics(this, 99999);
+    }
+
     @Nonnull
     @Override
     public JavaPlugin getJavaPlugin() {
@@ -114,8 +93,29 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         return MessageFormat.format("https://github.com/{0}/{1}/issues/", this.username, this.repo);
     }
 
-    public void setupMetrics() {
-        final Metrics metrics = new Metrics(this, 99999);
+    @Nonnull
+    public static PluginManager getPluginManager() {
+        return Networks.getInstance().getServer().getPluginManager();
+    }
+
+    public static Networks getInstance() {
+        return Networks.instance;
+    }
+
+    public static ConfigManager getConfigManager() {
+        return Networks.getInstance().configManager;
+    }
+
+    public static ListenerManager getListenerManager() {
+        return Networks.getInstance().listenerManager;
+    }
+
+    public static SupportedPluginManager getSupportedPluginManager() {
+        return Networks.getInstance().supportedPluginManager;
+    }
+
+    public static RunnableManager getRunnableManager() {
+        return Networks.getInstance().runnableManager;
     }
 
 }

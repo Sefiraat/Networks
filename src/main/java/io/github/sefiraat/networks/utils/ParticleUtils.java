@@ -22,11 +22,6 @@ public class ParticleUtils {
     }
 
     @ParametersAreNonnullByDefault
-    public static void displayParticleEffect(Entity entity, Particle particle, double rangeRadius, int numberOfParticles, @Nullable Vector vector) {
-        displayParticleEffect(entity.getLocation().clone().add(0, 1, 0), particle, rangeRadius, numberOfParticles, vector);
-    }
-
-    @ParametersAreNonnullByDefault
     public static void displayParticleEffect(Location location, Particle particle, double rangeRadius, int numberOfParticles) {
         displayParticleEffect(location, particle, rangeRadius, numberOfParticles, null);
     }
@@ -45,13 +40,13 @@ public class ParticleUtils {
     }
 
     @ParametersAreNonnullByDefault
-    public static void displayParticleEffect(Entity entity, double rangeRadius, int numberOfParticles, Particle.DustOptions dustOptions) {
-        displayParticleEffect(entity.getLocation(), rangeRadius, numberOfParticles, dustOptions);
+    public static void displayParticleEffect(Entity entity, Particle particle, double rangeRadius, int numberOfParticles, @Nullable Vector vector) {
+        displayParticleEffect(entity.getLocation().clone().add(0, 1, 0), particle, rangeRadius, numberOfParticles, vector);
     }
 
     @ParametersAreNonnullByDefault
-    public static void displayParticleEffect(Entity entity, double rangeRadius, int numberOfParticles, Particle.DustOptions dustOptions, @Nullable Vector vector) {
-        displayParticleEffect(entity.getLocation(), rangeRadius, numberOfParticles, dustOptions, vector);
+    public static void displayParticleEffect(Entity entity, double rangeRadius, int numberOfParticles, Particle.DustOptions dustOptions) {
+        displayParticleEffect(entity.getLocation(), rangeRadius, numberOfParticles, dustOptions);
     }
 
     @ParametersAreNonnullByDefault
@@ -72,12 +67,13 @@ public class ParticleUtils {
         }
     }
 
-    public static void drawLine(Particle particle, Location start, Location end, double space) {
-        drawLine(particle, start, end, space, null);
+    @ParametersAreNonnullByDefault
+    public static void displayParticleEffect(Entity entity, double rangeRadius, int numberOfParticles, Particle.DustOptions dustOptions, @Nullable Vector vector) {
+        displayParticleEffect(entity.getLocation(), rangeRadius, numberOfParticles, dustOptions, vector);
     }
 
-    public static void drawLine(Particle.DustOptions dustOptions, Location start, Location end, double space) {
-        drawLine(Particle.REDSTONE, start, end, space, dustOptions);
+    public static void drawLine(Particle particle, Location start, Location end, double space) {
+        drawLine(particle, start, end, space, null);
     }
 
     public static void drawLine(Particle particle, Location start, Location end, double space, @Nullable Particle.DustOptions dustOptions) {
@@ -111,6 +107,10 @@ public class ParticleUtils {
         }
     }
 
+    public static void drawLine(Particle.DustOptions dustOptions, Location start, Location end, double space) {
+        drawLine(Particle.REDSTONE, start, end, space, dustOptions);
+    }
+
     public static List<Location> getLine(Location start, Location end, double space) {
         final double distance = start.distance(end);
         double currentPoint = 0;
@@ -136,10 +136,6 @@ public class ParticleUtils {
 
     public static void drawCube(Particle particle, Location corner1, Location corner2, double space) {
         drawCube(particle, corner1, corner2, space, null);
-    }
-
-    public static void drawCube(Particle.DustOptions dustOptions, Location corner1, Location corner2, double space) {
-        drawCube(Particle.REDSTONE, corner1, corner2, space, dustOptions);
     }
 
     /**
@@ -171,5 +167,9 @@ public class ParticleUtils {
                 }
             }
         }
+    }
+
+    public static void drawCube(Particle.DustOptions dustOptions, Location corner1, Location corner2, double space) {
+        drawCube(Particle.REDSTONE, corner1, corner2, space, dustOptions);
     }
 }

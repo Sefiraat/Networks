@@ -113,6 +113,25 @@ public class NetworkGrid extends NetworkObject {
         );
     }
 
+    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
+        final long startTime = System.nanoTime();
+        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return;
+        }
+
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+        if (definition.getNode() == null) {
+            return;
+        }
+
+        definition.getNode().getRoot().addItemStack(itemStack);
+        long finishTime = System.nanoTime();
+        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
+        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+    }
+
     void updateDisplay(@Nonnull BlockMenu blockMenu) {
         if (blockMenu.hasViewer()) {
             final long startTime = System.nanoTime();
@@ -174,23 +193,12 @@ public class NetworkGrid extends NetworkObject {
         }
     }
 
-    private void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final long startTime = System.nanoTime();
-        final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
-
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return;
-        }
-
-        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
-        if (definition.getNode() == null) {
-            return;
-        }
-
-        definition.getNode().getRoot().addItemStack(itemStack);
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
+    @Nonnull
+    static List<String> getLoreAddition(int amount) {
+        return List.of(
+            "",
+            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
+        );
     }
 
     @ParametersAreNonnullByDefault
@@ -224,14 +232,6 @@ public class NetworkGrid extends NetworkObject {
         // player.sendMessage(message);
 
         return false;
-    }
-
-    @Nonnull
-    static List<String> getLoreAddition(int amount) {
-        return List.of(
-            "",
-            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
-        );
     }
 
     @Override

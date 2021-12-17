@@ -81,15 +81,28 @@ public class NetworkRoot extends NetworkNode {
         return networkImporters;
     }
 
-    public Set<BlockMenu> getCellMenus() {
-        final Set<BlockMenu> menus = new HashSet<>();
-        for (Location cellLocation : networkCells) {
-            BlockMenu menu = BlockStorage.getInventory(cellLocation);
-            if (menu != null) {
-                menus.add(menu);
+    public Map<ItemStack, Integer> getAllNetworkItems() {
+        final Map<ItemStack, Integer> itemStacks = new LinkedHashMap<>();
+
+        for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
+            itemStacks.put(barrelIdentity.getItemStack(), barrelIdentity.getAmount());
+        }
+
+        for (BlockMenu blockMenu : getCellMenus()) {
+            for (ItemStack itemStack : blockMenu.getContents()) {
+                if (itemStack != null && itemStack.getType() != Material.AIR) {
+                    final ItemStack clone = itemStack.clone();
+
+                    clone.setAmount(1);
+
+                    final Integer currentAmount = itemStacks.get(clone);
+                    final int newAmount = currentAmount == null ? itemStack.getAmount() : currentAmount + itemStack.getAmount();
+
+                    itemStacks.put(clone, newAmount);
+                }
             }
         }
-        return menus;
+        return itemStacks;
     }
 
     public Map<ItemStack, BarrelIdentity> getBarrelItems() {
@@ -126,28 +139,15 @@ public class NetworkRoot extends NetworkNode {
         return barrelItemMap;
     }
 
-    public Map<ItemStack, Integer> getAllNetworkItems() {
-        final Map<ItemStack, Integer> itemStacks = new LinkedHashMap<>();
-
-        for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
-            itemStacks.put(barrelIdentity.getItemStack(), barrelIdentity.getAmount());
-        }
-
-        for (BlockMenu blockMenu : getCellMenus()) {
-            for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack != null && itemStack.getType() != Material.AIR) {
-                    final ItemStack clone = itemStack.clone();
-
-                    clone.setAmount(1);
-
-                    final Integer currentAmount = itemStacks.get(clone);
-                    final int newAmount = currentAmount == null ? itemStack.getAmount() : currentAmount + itemStack.getAmount();
-
-                    itemStacks.put(clone, newAmount);
-                }
+    public Set<BlockMenu> getCellMenus() {
+        final Set<BlockMenu> menus = new HashSet<>();
+        for (Location cellLocation : networkCells) {
+            BlockMenu menu = BlockStorage.getInventory(cellLocation);
+            if (menu != null) {
+                menus.add(menu);
             }
         }
-        return itemStacks;
+        return menus;
     }
 
     @Nullable
