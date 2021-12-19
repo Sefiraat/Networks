@@ -25,5 +25,5 @@ Infinity Barrels
 ## Network Importer
 The Network Importer is a 9-slot inventory that accepts items IN via cargo. Every slimefun tick, these items are consumed into the network following the normal priorities.
 
-## Network Exported
+## Network Exporter
 The Network Exported accepts an item "template" in one side and every tick it will pull out matching items into the output slot, this slot can be accessed via cargo.
