@@ -59,7 +59,7 @@ public class NetworkCraftingGrid extends NetworkObject {
     private static final int INPUT_SLOT = 2;
     private static final int CRAFT_BUTTON_SLOT = 34;
     private static final int CRAFT_OUTPUT_SLOT = 43;
-    private static final int CHANGE_SORT = 26;
+    private static final int CHANGE_SORT = 47;
     private static final int PAGE_PREVIOUS = 46;
     private static final int PAGE_NEXT = 48;
 
