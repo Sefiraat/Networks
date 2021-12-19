@@ -59,11 +59,9 @@ public class NetworkCraftingGrid extends NetworkObject {
     private static final int INPUT_SLOT = 2;
     private static final int CRAFT_BUTTON_SLOT = 34;
     private static final int CRAFT_OUTPUT_SLOT = 43;
+    private static final int CHANGE_SORT = 26;
     private static final int PAGE_PREVIOUS = 46;
     private static final int PAGE_NEXT = 48;
-
-    private static final Map<Location, Integer> PAGE_MAP = new HashMap<>();
-    private static final Map<Location, Integer> MAX_PAGE_MAP = new HashMap<>();
 
     private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
         Material.CRAFTING_TABLE,
@@ -80,9 +78,33 @@ public class NetworkCraftingGrid extends NetworkObject {
         Theme.CLICK_INFO.getColor() + "Next Page"
     );
 
+    private static final CustomItemStack CHANGE_SORT_STACK = new CustomItemStack(
+        Material.BLUE_STAINED_GLASS_PANE,
+        Theme.CLICK_INFO.getColor() + "Change Sort Order"
+    );
+
+    private static final Comparator<Map.Entry<ItemStack, Integer>> ALPHABETICAL_SORT = Comparator.comparing(
+        itemStackIntegerEntry -> {
+            ItemStack itemStack = itemStackIntegerEntry.getKey();
+            SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+            if (slimefunItem != null) {
+                return ChatColor.stripColor(slimefunItem.getItemName());
+            } else {
+                ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
+                return itemMeta.hasDisplayName()
+                    ? ChatColor.stripColor(itemMeta.getDisplayName())
+                    : itemStackIntegerEntry.getKey().getType().name();
+            }
+        }
+    );
+
+    private static final Comparator<Map.Entry<ItemStack, Integer>> NUMERICAL_SORT = Map.Entry.comparingByValue();
+
     private static final Map<ItemStack[], ItemStack> RECIPES = new HashMap<>();
 
     private static final ItemStack BLANK_SLOT_STACK = new CustomItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ");
+
+    private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
 
     static {
         for (SlimefunItem i : Slimefun.getRegistry().getEnabledSlimefunItems()) {
@@ -152,33 +174,29 @@ public class NetworkCraftingGrid extends NetworkObject {
 
     void updateDisplay(@Nonnull BlockMenu blockMenu) {
         if (blockMenu.hasViewer()) {
-            final long startTime = System.nanoTime();
             final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
             if (definition.getNode() == null) {
                 return;
             }
 
+            GridCache gridCache = CACHE_MAP.get(blockMenu.getLocation());
+
             // Update Screen
             NetworkRoot root = definition.getNode().getRoot();
             final List<Map.Entry<ItemStack, Integer>> entries = root.getAllNetworkItems().entrySet().stream()
-                .sorted(
-                    Comparator.comparing(itemStackIntegerEntry -> {
-                        ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
-                        return itemMeta.hasDisplayName()
-                            ? ChatColor.stripColor(itemMeta.getDisplayName())
-                            : itemStackIntegerEntry.getKey().getType().name();
-                    }))
+                .sorted(gridCache.getSortOrder() == GridCache.SortOrder.ALPHABETICAL ? ALPHABETICAL_SORT : NUMERICAL_SORT.reversed())
                 .toList();
 
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
-            final int page = PAGE_MAP.getOrDefault(blockMenu.getLocation(), 0);
+            final int page = gridCache.getPage();
 
             final int start = page * DISPLAY_SLOTS.length;
             final int end = Math.min(start + DISPLAY_SLOTS.length, entries.size());
             final List<Map.Entry<ItemStack, Integer>> validEntries = entries.subList(start, end);
 
-            MAX_PAGE_MAP.put(blockMenu.getLocation(), pages);
+            gridCache.setMaxPages(pages);
+            CACHE_MAP.put(blockMenu.getLocation(), gridCache);
 
             for (int i = 0; i < DISPLAY_SLOTS.length; i++) {
                 if (validEntries.size() > i) {
@@ -265,22 +283,33 @@ public class NetworkCraftingGrid extends NetworkObject {
 
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                PAGE_MAP.put(menu.getLocation(), 0);
+                CACHE_MAP.put(menu.getLocation(), new GridCache(0, 0, GridCache.SortOrder.ALPHABETICAL));
 
                 menu.replaceExistingItem(PAGE_PREVIOUS, PAGE_PREVIOUS_STACK);
                 menu.addMenuClickHandler(PAGE_PREVIOUS, (p, slot, item, action) -> {
-                    Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
-                    page = page <= 0 ? 0 : page - 1;
-                    PAGE_MAP.put(menu.getLocation(), page);
+                    GridCache gridCache = CACHE_MAP.get(menu.getLocation());
+                    gridCache.setPage(gridCache.getPage() <= 0 ? 0 : gridCache.getPage() - 1);
+                    CACHE_MAP.put(menu.getLocation(), gridCache);
                     return false;
                 });
 
                 menu.replaceExistingItem(PAGE_NEXT, PAGE_NEXT_STACK);
                 menu.addMenuClickHandler(PAGE_NEXT, (p, slot, item, action) -> {
-                    Integer page = PAGE_MAP.getOrDefault(menu.getLocation(), 0);
-                    Integer maxPages = MAX_PAGE_MAP.getOrDefault(menu.getLocation(), 0);
-                    page = page >= maxPages ? maxPages : page + 1;
-                    PAGE_MAP.put(menu.getLocation(), page);
+                    GridCache gridCache = CACHE_MAP.get(menu.getLocation());
+                    gridCache.setPage(gridCache.getPage() >= gridCache.getMaxPages() ? gridCache.getMaxPages() : gridCache.getPage() + 1);
+                    CACHE_MAP.put(menu.getLocation(), gridCache);
+                    return false;
+                });
+
+                menu.replaceExistingItem(CHANGE_SORT, CHANGE_SORT_STACK);
+                menu.addMenuClickHandler(CHANGE_SORT, (p, slot, item, action) -> {
+                    GridCache gridCache = CACHE_MAP.get(menu.getLocation());
+                    if (gridCache.getSortOrder() == GridCache.SortOrder.ALPHABETICAL) {
+                        gridCache.setSortOrder(GridCache.SortOrder.NUMBER);
+                    } else {
+                        gridCache.setSortOrder(GridCache.SortOrder.ALPHABETICAL);
+                    }
+                    CACHE_MAP.put(menu.getLocation(), gridCache);
                     return false;
                 });
 

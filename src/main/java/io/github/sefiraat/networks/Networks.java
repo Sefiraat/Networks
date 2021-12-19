@@ -1,8 +1,6 @@
 package io.github.sefiraat.networks;
 
-import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ConfigManager;
-import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.RunnableManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
@@ -26,7 +24,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     private final String branch;
 
     private ConfigManager configManager;
-    private ListenerManager listenerManager;
     private SupportedPluginManager supportedPluginManager;
     private RunnableManager runnableManager;
 
@@ -54,13 +51,10 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         setupSlimefun();
 
         this.configManager = new ConfigManager();
-        this.listenerManager = new ListenerManager();
         this.supportedPluginManager = new SupportedPluginManager();
         this.runnableManager = new RunnableManager();
 
         setupMetrics();
-
-        this.getCommand("networks").setExecutor(new NetworksMain());
     }
 
     public void tryUpdate() {
@@ -104,10 +98,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public static ConfigManager getConfigManager() {
         return Networks.getInstance().configManager;
-    }
-
-    public static ListenerManager getListenerManager() {
-        return Networks.getInstance().listenerManager;
     }
 
     public static SupportedPluginManager getSupportedPluginManager() {

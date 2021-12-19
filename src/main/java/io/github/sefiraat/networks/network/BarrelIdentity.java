@@ -4,20 +4,9 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-public class BarrelIdentity {
-
-    private final BlockMenu blockMenu;
-    private final ItemStack itemStack;
-    private final int amount;
-
-    private final BarrelType type;
-
-    public BarrelIdentity(BlockMenu blockMenu, ItemStack itemStack, int amount, BarrelType type) {
-        this.blockMenu = blockMenu;
-        this.itemStack = itemStack;
-        this.amount = amount;
-        this.type = type;
-    }
+public record BarrelIdentity(BlockMenu blockMenu,
+                             ItemStack itemStack, int amount,
+                             io.github.sefiraat.networks.network.BarrelIdentity.BarrelType type) {
 
     public BlockMenu getBlockMenu() {
         return blockMenu;

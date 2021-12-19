@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
-import io.github.sefiraat.networks.network.GridItemRequest;
 import io.github.sefiraat.networks.network.ItemRequest;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;

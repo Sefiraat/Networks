@@ -2,10 +2,8 @@ package io.github.sefiraat.networks.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -17,13 +15,7 @@ import java.util.Set;
 
 public class NetworkNode {
 
-    public static final Set<Material> VALID_CONTAINERS = Set.of(
-        Material.CHEST,
-        Material.BARREL,
-        Material.SHULKER_BOX
-    );
-
-    public static final Set<BlockFace> VALID_FACES = EnumSet.of(
+    protected static final Set<BlockFace> VALID_FACES = EnumSet.of(
         BlockFace.UP,
         BlockFace.DOWN,
         BlockFace.NORTH,
@@ -31,7 +23,6 @@ public class NetworkNode {
         BlockFace.SOUTH,
         BlockFace.WEST
     );
-    private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.RED, 1);
 
     protected final Set<NetworkNode> childrenNodes = new HashSet<>();
     protected NetworkNode parent = null;

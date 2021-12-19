@@ -67,6 +67,8 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLACK_STAINED_GLASS),
             Theme.MACHINE,
             "Network Controller"
+            , "The Network controller is the brain",
+            "for the whole network. Max 1 per network."
         );
 
         NETWORK_BRIDGE = Theme.themedSlimefunItemStack(
@@ -74,13 +76,21 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.WHITE_STAINED_GLASS),
             Theme.MACHINE,
             "Network Bridge"
+            , "The bridge allows you to cheaply",
+            "connect network objects together."
         );
 
         NETWORK_MONITOR = Theme.themedSlimefunItemStack(
             "NTW_MONITOR",
             new ItemStack(Material.GREEN_STAINED_GLASS),
             Theme.MACHINE,
-            "Network Monitor"
+            "Network Monitor",
+            "The Network Monitor allows simple",
+            "import/export interaction with adjacent",
+            "objects.",
+            "",
+            "Currently Supports:",
+            "Infinity Barrels"
         );
 
         NETWORK_IMPORT = Theme.themedSlimefunItemStack(
