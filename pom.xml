@@ -150,6 +150,12 @@
         </dependency>
 
         <!-- Supported Plugins -->
+        <dependency>
+            <groupId>io.github.mooy1</groupId>
+            <artifactId>InfinityExpansion</artifactId>
+            <version>9a0c8dd</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

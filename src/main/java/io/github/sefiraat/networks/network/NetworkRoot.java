@@ -1,5 +1,9 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
+import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
+import io.github.sefiraat.networks.Networks;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -10,6 +14,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,6 +46,7 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkCells = new HashSet<>();
     protected final Set<Location> networkExporters = new HashSet<>();
     protected final Set<Location> networkImporters = new HashSet<>();
+    protected final Map<Location, BlockMenu> networkBarrels = new HashMap<>();
 
     public NetworkRoot(Location location, NodeType type) {
         super(location, type);
@@ -82,7 +88,7 @@ public class NetworkRoot extends NetworkNode {
     }
 
     public Map<ItemStack, Integer> getAllNetworkItems() {
-        final Map<ItemStack, Integer> itemStacks = new LinkedHashMap<>();
+        final Map<ItemStack, Integer> itemStacks = new HashMap<>();
 
         for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
             itemStacks.put(barrelIdentity.getItemStack(), barrelIdentity.getAmount());
@@ -105,34 +111,37 @@ public class NetworkRoot extends NetworkNode {
         return itemStacks;
     }
 
+    // https://spark.lucko.me/hCQOlb7UnI
     public Map<ItemStack, BarrelIdentity> getBarrelItems() {
         final Map<ItemStack, BarrelIdentity> barrelItemMap = new LinkedHashMap<>();
         for (Location cellLocation : networkMonitors) {
             for (BlockFace face : VALID_FACES) {
                 final Location testLocation = cellLocation.clone().add(face.getDirection());
-                final BlockMenu menu = BlockStorage.getInventory(testLocation);
-                if (menu != null) {
-                    final Config config = BlockStorage.getLocationInfo(testLocation);
-                    final String id = config.getString("id");
+                final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
-                    // final boolean fluffy = BARREL_FLUFFY.contains(id);  TODO add fluffy when workaround 2 slots
-                    final boolean infinity = BARREL_INFINITY.contains(id);
+                if (Networks.getSupportedPluginManager().isInfinityExpansion()
+                    && slimefunItem instanceof StorageUnit
+                ) {
+                    BlockMenu menu = BlockStorage.getInventory(testLocation);
+                    Config config = BlockStorage.getLocationInfo(testLocation);
+                    final ItemStack itemStack = menu.getItemInSlot(16);
 
-                    if (infinity) {
-                        final ItemStack itemStack = menu.getItemInSlot(16);
-
-                        if (itemStack == null || itemStack.getType() == Material.AIR) {
-                            continue;
-                        }
-
-                        final ItemStack clone = itemStack.clone();
-                        final String storedString = config.getString("stored");
-                        final int storedInt = Integer.parseInt(storedString);
-
-                        clone.setAmount(1);
-                        BarrelIdentity identity = new BarrelIdentity(menu.getLocation(), clone, storedInt + itemStack.getAmount(), 10, 16);
-                        barrelItemMap.put(clone, identity);
+                    if (itemStack == null || itemStack.getType() == Material.AIR) {
+                        continue;
                     }
+
+                    final ItemStack clone = itemStack.clone();
+                    final String storedString = config.getString("stored");
+                    final int storedInt = Integer.parseInt(storedString);
+
+                    clone.setAmount(1);
+                    BarrelIdentity identity = new BarrelIdentity(
+                        menu,
+                        clone,
+                        storedInt + itemStack.getAmount(),
+                        BarrelIdentity.BarrelType.INFINITY
+                    );
+                    barrelItemMap.put(clone, identity);
                 }
             }
         }
@@ -151,7 +160,7 @@ public class NetworkRoot extends NetworkNode {
     }
 
     @Nullable
-    public ItemStack getItemStack(GridItemRequest request) {
+    public ItemStack getItemStack(ItemRequest request) {
         ItemStack requestedStack = null;
 
         for (BlockMenu blockMenu : getCellMenus()) {
@@ -232,60 +241,62 @@ public class NetworkRoot extends NetworkNode {
         // Run for matching barrels
         for (BarrelIdentity barrelIdentity : getBarrelItems().values()) {
             if (SlimefunUtils.isItemSimilar(incomingStack, barrelIdentity.getItemStack(), true, false)) {
-                final BlockMenu menu = BlockStorage.getInventory(barrelIdentity.getLocation());
-                final ItemStack itemStack = menu.getItemInSlot(barrelIdentity.getInputSlot());
+                final BlockMenu menu = barrelIdentity.getBlockMenu();
+                final SlimefunItem slimefunItem = BlockStorage.check(menu.getLocation());
 
-                if (SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
-                    && itemStack.getAmount() < itemStack.getMaxStackSize()
+                if (barrelIdentity.getType() == BarrelIdentity.BarrelType.INFINITY
+                    && Networks.getSupportedPluginManager().isInfinityExpansion()
+                    && slimefunItem instanceof StorageUnit unit
                 ) {
-                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStack.getAmount();
-                    final int amountToAdd = Math.min(maxCanAdd, incomingStack.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() + amountToAdd);
-                    incomingStack.setAmount(incomingStack.getAmount() - amountToAdd);
-                } else {
-                    menu.replaceExistingItem(barrelIdentity.getInputSlot(), incomingStack.clone());
-                    incomingStack.setAmount(0);
-                }
-
-                // All distributed, can escape
-                if (incomingStack.getAmount() == 0) {
-                    return;
-                }
-            }
-        }
-
-        // Then run for matching items in cells
-        for (BlockMenu blockMenu : getCellMenus()) {
-            for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack != null
-                    && itemStack.getType() != Material.AIR
-                    && SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
-                    && itemStack.getAmount() < itemStack.getMaxStackSize()
-                ) {
-                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStack.getAmount();
-                    final int amountToAdd = Math.min(maxCanAdd, incomingStack.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() + amountToAdd);
-                    incomingStack.setAmount(incomingStack.getAmount() - amountToAdd);
-
-                    // All distributed, can escape
-                    if (incomingStack.getAmount() == 0) {
-                        return;
+                    StorageCache i = unit.getCache(menu.getLocation());
+                    if (i != null) {
+                        i.depositAll(new ItemStack[]{incomingStack});
                     }
                 }
             }
         }
 
-        // Now run for empty slots
+        // Then run for matching items in cells
+        BlockMenu fallbackBlockMenu = null;
+        int fallBackSlot = 0;
+
         for (BlockMenu blockMenu : getCellMenus()) {
             int i = 0;
             for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack == null || itemStack.getType() == Material.AIR) {
-                    blockMenu.replaceExistingItem(i, incomingStack.clone());
-                    incomingStack.setAmount(0);
-                    return;
+                // If this is an empty slot - move on, if it's our first, store it for later.
+                if (itemStack == null || itemStack.getType().isAir()) {
+                    if (fallbackBlockMenu == null) {
+                        fallbackBlockMenu = blockMenu;
+                        fallBackSlot = i;
+                    }
+                    continue;
+                }
+
+                final int itemStackAmount = itemStack.getAmount();
+                final int incomingStackAmount = incomingStack.getAmount();
+
+                if (itemStackAmount < itemStack.getMaxStackSize()
+                    && SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                ) {
+                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
+                    final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
+
+                    itemStack.setAmount(itemStackAmount + amountToAdd);
+                    incomingStack.setAmount(incomingStackAmount - amountToAdd);
+
+                    // All distributed, can escape
+                    if (incomingStackAmount == 0) {
+                        return;
+                    }
                 }
                 i++;
             }
+        }
+
+        // Add to fallback slot
+        if (fallbackBlockMenu != null) {
+            fallbackBlockMenu.replaceExistingItem(fallBackSlot, incomingStack.clone());
+            incomingStack.setAmount(0);
         }
     }
 

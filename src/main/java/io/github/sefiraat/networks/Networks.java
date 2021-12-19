@@ -78,7 +78,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
 
     public void setupMetrics() {
-        final Metrics metrics = new Metrics(this, 99999);
+        final Metrics metrics = new Metrics(this, 13644);
     }
 
     @Nonnull

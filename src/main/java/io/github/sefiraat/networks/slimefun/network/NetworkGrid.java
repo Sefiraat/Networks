@@ -82,6 +82,8 @@ public class NetworkGrid extends NetworkObject {
     public NetworkGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.GRID);
 
+        this.getSlotsToDrop().add(INPUT_SLOT);
+
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
@@ -92,7 +94,7 @@ public class NetworkGrid extends NetworkObject {
 
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override
@@ -114,7 +116,6 @@ public class NetworkGrid extends NetworkObject {
     }
 
     private void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final long startTime = System.nanoTime();
         final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
@@ -127,14 +128,10 @@ public class NetworkGrid extends NetworkObject {
         }
 
         definition.getNode().getRoot().addItemStack(itemStack);
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
     }
 
     void updateDisplay(@Nonnull BlockMenu blockMenu) {
         if (blockMenu.hasViewer()) {
-            final long startTime = System.nanoTime();
             final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
             if (definition.getNode() == null) {
@@ -144,13 +141,24 @@ public class NetworkGrid extends NetworkObject {
             // Update Screen
             NetworkRoot root = definition.getNode().getRoot();
 
+            /*
+            Stream = 80ms
+            TreeMap start = 228ms
+            HashMap + TreeMap#putAll = 180ms
+             */
             final List<Map.Entry<ItemStack, Integer>> entries = root.getAllNetworkItems().entrySet().stream()
                 .sorted(
                     Comparator.comparing(itemStackIntegerEntry -> {
-                        ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
-                        return itemMeta.hasDisplayName()
-                            ? ChatColor.stripColor(itemMeta.getDisplayName())
-                            : itemStackIntegerEntry.getKey().getType().name();
+                        ItemStack itemStack = itemStackIntegerEntry.getKey();
+                        SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+                        if (slimefunItem != null) {
+                            return ChatColor.stripColor(slimefunItem.getItemName());
+                        } else {
+                            ItemMeta itemMeta = itemStackIntegerEntry.getKey().getItemMeta();
+                            return itemMeta.hasDisplayName()
+                                ? ChatColor.stripColor(itemMeta.getDisplayName())
+                                : itemStackIntegerEntry.getKey().getType().name();
+                        }
                     }))
                 .toList();
 
@@ -187,9 +195,6 @@ public class NetworkGrid extends NetworkObject {
                     blockMenu.addMenuClickHandler(DISPLAY_SLOTS[i], (p, slot, item, action) -> false);
                 }
             }
-            long finishTime = System.nanoTime();
-            String message = MessageFormat.format("{0}Updating Display: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-            // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
         }
     }
 
@@ -203,7 +208,6 @@ public class NetworkGrid extends NetworkObject {
 
     @ParametersAreNonnullByDefault
     boolean retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action) {
-        final long startTime = System.nanoTime();
         final ItemStack clone = itemStack.clone();
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
@@ -218,7 +222,7 @@ public class NetworkGrid extends NetworkObject {
             amount = clone.getMaxStackSize();
         }
 
-        final GridItemRequest request = new GridItemRequest(clone, player, amount);
+        final GridItemRequest request = new GridItemRequest(clone, amount, player);
 
         // Process item request
         if (player.getItemOnCursor().getType() == Material.AIR) {
@@ -227,10 +231,6 @@ public class NetworkGrid extends NetworkObject {
                 request.getPlayer().setItemOnCursor(requestingStack);
             }
         }
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Retrieving Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // player.sendMessage(message);
-
         return false;
     }
 

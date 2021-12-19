@@ -31,7 +31,7 @@ public class NetworkController extends NetworkObject {
             new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override

@@ -147,8 +147,9 @@ public class NetworkNode {
         final ItemStack toDrop = BlockStorage.retrieve(block);
         if (toDrop != null) {
             location.getWorld().dropItemNaturally(location, toDrop);
+            block.setType(Material.AIR);
+            NetworkStorage.getAllNetworkObjects().remove(location);
         }
-        block.setType(Material.AIR);
     }
 
     @Nonnull

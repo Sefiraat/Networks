@@ -18,6 +18,11 @@ import javax.annotation.Nonnull;
 @UtilityClass
 public class NetworksSlimefunItemStacks {
 
+    // Materials
+    public static final SlimefunItemStack OPTIC_GLASS;
+    public static final SlimefunItemStack OPTIC_CABLE;
+    public static final SlimefunItemStack OPTIC_STAR;
+
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
     public static final SlimefunItemStack NETWORK_BRIDGE;
@@ -29,6 +34,33 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
 
     static {
+
+        OPTIC_GLASS = Theme.themedSlimefunItemStack(
+            "NTW_OPTIC_GLASS",
+            new ItemStack(Material.GLASS),
+            Theme.CRAFTING,
+            "Optic Glass",
+            "A simple glass that is able to",
+            "transfer small bits of information."
+        );
+
+        OPTIC_CABLE = Theme.themedSlimefunItemStack(
+            "NTW_OPTIC_CABLE",
+            new ItemStack(Material.STRING),
+            Theme.CRAFTING,
+            "Optic Cable",
+            "A simple wire that is able to",
+            "transfer large bits of information."
+        );
+
+        OPTIC_STAR = Theme.themedSlimefunItemStack(
+            "NTW_OPTIC_STAR",
+            new ItemStack(Material.NETHER_STAR),
+            Theme.CRAFTING,
+            "Optic Star",
+            "A crystalline star structure that",
+            "can transfer large bits of information."
+        );
 
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
             "NTW_CONTROLLER",

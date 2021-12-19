@@ -16,8 +16,17 @@ public final class NetworksItemGroups {
     public static final NestedItemGroup MAIN = new NestedItemGroup(
         Keys.newKey("main"),
         new CustomItemStack(
-            new ItemStack(Material.SOUL_TORCH),
-            Theme.MAIN.getColor() + "Alone"
+            new ItemStack(Material.BLACK_STAINED_GLASS),
+            Theme.MAIN.getColor() + "Networks"
+        )
+    );
+
+    public static final SubItemGroup MATERIALS = new SubItemGroup(
+        Keys.newKey("materials"),
+        MAIN,
+        new CustomItemStack(
+            new ItemStack(Material.GLASS),
+            Theme.MAIN.getColor() + "Materials"
         )
     );
 
@@ -25,7 +34,7 @@ public final class NetworksItemGroups {
         Keys.newKey("network_items"),
         MAIN,
         new CustomItemStack(
-            new ItemStack(Material.PISTON),
+            new ItemStack(Material.BLACK_STAINED_GLASS),
             Theme.MAIN.getColor() + "Network Items"
         )
     );
@@ -35,6 +44,7 @@ public final class NetworksItemGroups {
 
         // Slimefun Registry
         NetworksItemGroups.MAIN.register(plugin);
+        NetworksItemGroups.MATERIALS.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS.register(plugin);
     }
 }

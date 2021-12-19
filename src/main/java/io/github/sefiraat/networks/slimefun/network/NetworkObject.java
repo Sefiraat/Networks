@@ -12,18 +12,22 @@ import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkObject extends SlimefunItem {
 
     @Getter
     private final NodeType nodeType;
+    @Getter
+    private final List<Integer> slotsToDrop = new ArrayList<>();
 
     public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type) {
         super(itemGroup, item, recipeType, recipe);
@@ -33,7 +37,7 @@ public class NetworkObject extends SlimefunItem {
 
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override
@@ -45,8 +49,7 @@ public class NetworkObject extends SlimefunItem {
                 @Override
                 @ParametersAreNonnullByDefault
                 public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
-                    NetworkStorage.getAllNetworkObjects().remove(event.getBlock().getLocation());
-                    BlockStorage.clearBlockInfo(event.getBlock().getLocation());
+                    onBreak(event);
                 }
             }
         );
@@ -56,5 +59,14 @@ public class NetworkObject extends SlimefunItem {
         if (!NetworkStorage.getAllNetworkObjects().containsKey(block.getLocation())) {
             NetworkStorage.getAllNetworkObjects().put(block.getLocation(), new NodeDefinition(nodeType));
         }
+    }
+
+    public void onBreak(@Nonnull BlockBreakEvent event) {
+        BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
+        for (Integer i : this.slotsToDrop) {
+            blockMenu.dropItems(blockMenu.getLocation(), i);
+        }
+        NetworkStorage.getAllNetworkObjects().remove(event.getBlock().getLocation());
+        BlockStorage.clearBlockInfo(event.getBlock().getLocation());
     }
 }

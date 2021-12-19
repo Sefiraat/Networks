@@ -98,6 +98,12 @@ public class NetworkCraftingGrid extends NetworkObject {
     public NetworkCraftingGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.GRID);
 
+        for (int craftItem : CRAFT_ITEMS) {
+            this.getSlotsToDrop().add(craftItem);
+        }
+        this.getSlotsToDrop().add(CRAFT_OUTPUT_SLOT);
+        this.getSlotsToDrop().add(INPUT_SLOT);
+
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
@@ -108,7 +114,7 @@ public class NetworkCraftingGrid extends NetworkObject {
 
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override
@@ -130,7 +136,6 @@ public class NetworkCraftingGrid extends NetworkObject {
     }
 
     private void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final long startTime = System.nanoTime();
         final ItemStack itemStack = blockMenu.getItemInSlot(INPUT_SLOT);
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
@@ -143,9 +148,6 @@ public class NetworkCraftingGrid extends NetworkObject {
         }
 
         definition.getNode().getRoot().addItemStack(itemStack);
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Trying to add item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
     }
 
     void updateDisplay(@Nonnull BlockMenu blockMenu) {
@@ -202,9 +204,6 @@ public class NetworkCraftingGrid extends NetworkObject {
                     blockMenu.addMenuClickHandler(DISPLAY_SLOTS[i], (p, slot, item, action) -> false);
                 }
             }
-            long finishTime = System.nanoTime();
-            String message = MessageFormat.format("{0}Updating Display: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-            // blockMenu.toInventory().getViewers().get(0).sendMessage(message);
         }
     }
 
@@ -218,7 +217,6 @@ public class NetworkCraftingGrid extends NetworkObject {
 
     @ParametersAreNonnullByDefault
     boolean retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action) {
-        final long startTime = System.nanoTime();
         final ItemStack clone = itemStack.clone();
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
@@ -233,7 +231,7 @@ public class NetworkCraftingGrid extends NetworkObject {
             amount = clone.getMaxStackSize();
         }
 
-        final GridItemRequest request = new GridItemRequest(clone, player, amount);
+        final GridItemRequest request = new GridItemRequest(clone, amount, player);
 
         // Process item request
         if (player.getItemOnCursor().getType() == Material.AIR) {
@@ -242,10 +240,6 @@ public class NetworkCraftingGrid extends NetworkObject {
                 request.getPlayer().setItemOnCursor(requestingStack);
             }
         }
-        long finishTime = System.nanoTime();
-        String message = MessageFormat.format("{0}Retrieving Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // player.sendMessage(message);
-
         return false;
     }
 
@@ -302,9 +296,7 @@ public class NetworkCraftingGrid extends NetworkObject {
     }
 
     private boolean tryCraft(@Nonnull BlockMenu menu, @Nonnull Player player) {
-        long startTime = System.nanoTime();
-
-        // Get node and, if doesn't exist - escape
+        // Get node and, if it doesn't exist - escape
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
         if (definition.getNode() == null) {
             return false;
@@ -342,7 +334,7 @@ public class NetworkCraftingGrid extends NetworkObject {
         // Push item
         menu.pushItem(crafted, CRAFT_OUTPUT_SLOT);
 
-        // Lets clear down all the items
+        // Let's clear down all the items
         for (int recipeSlot : CRAFT_ITEMS) {
             final ItemStack itemInSlot = menu.getItemInSlot(recipeSlot);
             if (itemInSlot != null) {
@@ -353,7 +345,7 @@ public class NetworkCraftingGrid extends NetworkObject {
                 // We have consumed a slot item and now the slot it empty - try to refill
                 if (menu.getItemInSlot(recipeSlot) == null) {
                     // Process item request
-                    final GridItemRequest request = new GridItemRequest(itemInSlotClone, player, 1);
+                    final GridItemRequest request = new GridItemRequest(itemInSlotClone, 1, player);
                     final ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
                     if (requestingStack != null) {
                         menu.replaceExistingItem(recipeSlot, requestingStack);
@@ -361,10 +353,6 @@ public class NetworkCraftingGrid extends NetworkObject {
                 }
             }
         }
-
-        long finishTime = System.nanoTime();
-        final String message = MessageFormat.format("{0}Crafting Item: {1}", Theme.CLICK_INFO.getColor(), finishTime - startTime);
-        // player.sendMessage(message);
         return false;
     }
 

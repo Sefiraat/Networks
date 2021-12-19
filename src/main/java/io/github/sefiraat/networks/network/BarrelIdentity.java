@@ -1,26 +1,30 @@
 package io.github.sefiraat.networks.network;
 
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 public class BarrelIdentity {
 
-    private final Location location;
+    private final BlockMenu blockMenu;
     private final ItemStack itemStack;
     private final int amount;
-    private final int inputSlot;
-    private final int outputSlot;
 
-    public BarrelIdentity(Location location, ItemStack itemStack, int amount, int inputSlot, int outputSlot) {
-        this.location = location;
+    private final BarrelType type;
+
+    public BarrelIdentity(BlockMenu blockMenu, ItemStack itemStack, int amount, BarrelType type) {
+        this.blockMenu = blockMenu;
         this.itemStack = itemStack;
         this.amount = amount;
-        this.inputSlot = inputSlot;
-        this.outputSlot = outputSlot;
+        this.type = type;
+    }
+
+    public BlockMenu getBlockMenu() {
+        return blockMenu;
     }
 
     public Location getLocation() {
-        return location;
+        return blockMenu.getLocation();
     }
 
     public ItemStack getItemStack() {
@@ -31,11 +35,28 @@ public class BarrelIdentity {
         return amount;
     }
 
+    public BarrelType getType() {
+        return type;
+    }
+
     public int getInputSlot() {
-        return inputSlot;
+        if (this.type == BarrelType.INFINITY) {
+            return 10;
+        } else {
+            return 0;
+        }
     }
 
     public int getOutputSlot() {
-        return outputSlot;
+        if (this.type == BarrelType.INFINITY) {
+            return 16;
+        } else {
+            return 0;
+        }
+    }
+
+    public enum BarrelType {
+        INFINITY,
+        FLUFFY
     }
 }
