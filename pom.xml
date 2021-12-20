@@ -146,12 +146,6 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>de.jeff_media</groupId>
-            <artifactId>MorePersistentDataTypes</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- Supported Plugins -->
         <dependency>
