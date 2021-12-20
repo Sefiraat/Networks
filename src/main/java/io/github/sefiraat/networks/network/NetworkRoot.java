@@ -13,32 +13,15 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class NetworkRoot extends NetworkNode {
-
-    protected static final List<String> BARREL_INFINITY = List.of(
-        "BASIC_STORAGE",
-        "ADVANCED_STORAGE",
-        "REINFORCED_STORAGE",
-        "VOID_STORAGE",
-        "INFINITY_STORAGE"
-    );
-
-    protected static final List<String> BARREL_FLUFFY = List.of(
-        "SMALL_FLUFFY_BARREL",
-        "MEDIUM_FLUFFY_BARREL",
-        "BIG_FLUFFY_BARREL",
-        "LARGE_FLUFFY_BARREL",
-        "MASSIVE_FLUFFY_BARREL",
-        "BOTTOMLESS_FLUFFY_BARREL"
-    );
 
     protected final Set<Location> networkLocations = new HashSet<>();
     protected final Set<Location> networkBridges = new HashSet<>();
@@ -46,7 +29,6 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkCells = new HashSet<>();
     protected final Set<Location> networkExporters = new HashSet<>();
     protected final Set<Location> networkImporters = new HashSet<>();
-    protected final Map<Location, BlockMenu> networkBarrels = new HashMap<>();
 
     public NetworkRoot(Location location, NodeType type) {
         super(location, type);
@@ -111,9 +93,9 @@ public class NetworkRoot extends NetworkNode {
         return itemStacks;
     }
 
-    // https://spark.lucko.me/hCQOlb7UnI
-    public Map<ItemStack, BarrelIdentity> getBarrelItems() {
-        final Map<ItemStack, BarrelIdentity> barrelItemMap = new LinkedHashMap<>();
+    @Nonnull
+    public Set<BlockMenu> getNetworkBarrels() {
+        final Set<BlockMenu> menus = new HashSet<>();
         for (Location cellLocation : networkMonitors) {
             for (BlockFace face : VALID_FACES) {
                 final Location testLocation = cellLocation.clone().add(face.getDirection());
@@ -123,31 +105,42 @@ public class NetworkRoot extends NetworkNode {
                     && slimefunItem instanceof StorageUnit
                 ) {
                     BlockMenu menu = BlockStorage.getInventory(testLocation);
-                    Config config = BlockStorage.getLocationInfo(testLocation);
-                    final ItemStack itemStack = menu.getItemInSlot(16);
-
-                    if (itemStack == null || itemStack.getType() == Material.AIR) {
-                        continue;
-                    }
-
-                    final ItemStack clone = itemStack.clone();
-                    final String storedString = config.getString("stored");
-                    final int storedInt = Integer.parseInt(storedString);
-
-                    clone.setAmount(1);
-                    BarrelIdentity identity = new BarrelIdentity(
-                        menu,
-                        clone,
-                        storedInt + itemStack.getAmount(),
-                        BarrelIdentity.BarrelType.INFINITY
-                    );
-                    barrelItemMap.put(clone, identity);
+                    menus.add(menu);
                 }
             }
+        }
+        return menus;
+    }
+
+    @Nonnull
+    public Map<ItemStack, BarrelIdentity> getBarrelItems() {
+        final Map<ItemStack, BarrelIdentity> barrelItemMap = new LinkedHashMap<>();
+
+        for (BlockMenu blockMenu : getNetworkBarrels()) {
+            final ItemStack itemStack = blockMenu.getItemInSlot(16);
+
+            if (itemStack == null || itemStack.getType() == Material.AIR) {
+                continue;
+            }
+
+            final Config config = BlockStorage.getLocationInfo(blockMenu.getLocation());
+            final ItemStack clone = itemStack.clone();
+            final String storedString = config.getString("stored");
+            final int storedInt = Integer.parseInt(storedString);
+
+            clone.setAmount(1);
+            BarrelIdentity identity = new BarrelIdentity(
+                blockMenu,
+                clone,
+                storedInt + itemStack.getAmount(),
+                BarrelIdentity.BarrelType.INFINITY
+            );
+            barrelItemMap.put(clone, identity);
         }
         return barrelItemMap;
     }
 
+    @Nonnull
     public Set<BlockMenu> getCellMenus() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location cellLocation : networkCells) {

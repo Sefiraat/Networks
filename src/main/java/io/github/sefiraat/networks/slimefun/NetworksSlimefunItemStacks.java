@@ -33,6 +33,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
 
+    // Tools
+    public static final SlimefunItemStack NETWORK_PROBE;
+
     static {
 
         OPTIC_GLASS = Theme.themedSlimefunItemStack(
@@ -97,35 +100,64 @@ public class NetworksSlimefunItemStacks {
             "NTW_IMPORT",
             new ItemStack(Material.RED_STAINED_GLASS),
             Theme.MACHINE,
-            "Network Importer"
+            "Network Importer",
+            "The Network Importer brings any",
+            "item inside it into the network, up",
+            "to 9 stacks per SF tick.",
+            "Accepts items in from cargo."
         );
 
         NETWORK_EXPORT = Theme.themedSlimefunItemStack(
             "NTW_EXPORT",
             new ItemStack(Material.BLUE_STAINED_GLASS),
             Theme.MACHINE,
-            "Network Exporter"
+            "Network Exporter",
+            "The Network Exporter can be set to",
+            "constantly export 1 stack of any",
+            "given item.",
+            "Accepts item withdrawal from cargo."
         );
 
         NETWORK_GRID = Theme.themedSlimefunItemStack(
             "NTW_GRID",
             new ItemStack(Material.NOTE_BLOCK),
             Theme.MACHINE,
-            "Network Grid"
+            "Network Grid",
+            "The Network Grid shows you all",
+            "the items you have in the network",
+            "and lets you insert or withdraw",
+            "directly."
         );
 
         NETWORK_CRAFTING_GRID = Theme.themedSlimefunItemStack(
             "NTW_CRAFTING_GRID",
             new ItemStack(Material.REDSTONE_LAMP),
             Theme.MACHINE,
-            "Network Crafting Grid"
+            "Network Crafting Grid",
+            "The Network Crafting Grid acts",
+            "like a normal grid but displays less",
+            "items but allows crafting using items",
+            "directly from the network."
         );
 
         NETWORK_CELL = Theme.themedSlimefunItemStack(
             "NTW_CELL",
             new ItemStack(Material.HONEYCOMB_BLOCK),
             Theme.MACHINE,
-            "Network Cell"
+            "Network Cell",
+            "The Network Cell is a large",
+            "(double chest) inventory that can",
+            "be accessed both from the network",
+            "and in the world."
+        );
+
+        NETWORK_PROBE = Theme.themedSlimefunItemStack(
+            "NTW_PROBE",
+            new ItemStack(Material.CLOCK),
+            Theme.TOOL,
+            "Network Probe",
+            "When used on a controller, this will",
+            "show the nodes on the network."
         );
     }
 
