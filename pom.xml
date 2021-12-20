@@ -8,6 +8,14 @@
     <artifactId>Networks</artifactId>
     <version>MODIFIED</version>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Sefiraat/Networks</url>
+        </repository>
+    </distributionManagement>
+
     <pluginRepositories>
         <pluginRepository>
             <releases>
