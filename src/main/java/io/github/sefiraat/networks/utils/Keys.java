@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 @UtilityClass
 public class Keys {
 
+    public static final NamespacedKey ON_COOLDOWN = newKey("cooldown");
+
     @Nonnull
     public static NamespacedKey newKey(@Nonnull String value) {
         return new NamespacedKey(Networks.getInstance(), value);

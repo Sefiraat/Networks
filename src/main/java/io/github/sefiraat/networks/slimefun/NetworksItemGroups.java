@@ -25,8 +25,8 @@ public final class NetworksItemGroups {
         Keys.newKey("materials"),
         MAIN,
         new CustomItemStack(
-            new ItemStack(Material.GLASS),
-            Theme.MAIN.getColor() + "Materials"
+            new ItemStack(Material.WHITE_STAINED_GLASS),
+            Theme.MAIN.getColor() + "Materials and Tools"
         )
     );
 

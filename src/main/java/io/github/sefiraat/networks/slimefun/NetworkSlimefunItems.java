@@ -9,7 +9,10 @@ import io.github.sefiraat.networks.slimefun.network.NetworkExport;
 import io.github.sefiraat.networks.slimefun.network.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.network.NetworkImport;
 import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
+import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
 import io.github.sefiraat.networks.utils.StackUtils;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
@@ -32,6 +35,8 @@ public class NetworkSlimefunItems {
     public static final NetworkGrid NETWORK_GRID;
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
     public static final NetworkCell NETWORK_CELL;
+
+    public static final NetworkProbe NETWORK_PROBE;
 
     static {
 
@@ -159,6 +164,17 @@ public class NetworkSlimefunItems {
                 NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
             }
         );
+
+        NETWORK_PROBE = new NetworkProbe(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.NETWORK_PROBE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, SlimefunItems.DURALUMIN_INGOT, null,
+                null, OPTIC_CABLE.getItem(), null,
+                null, NETWORK_BRIDGE.getItem(), null
+            }
+        );
     }
 
     public static void setup() {
@@ -176,6 +192,8 @@ public class NetworkSlimefunItems {
         NETWORK_GRID.register(plugin);
         NETWORK_CRAFTING_GRID.register(plugin);
         NETWORK_CELL.register(plugin);
+
+        NETWORK_PROBE.register(plugin);
     }
 
 
