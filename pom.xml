@@ -16,13 +16,20 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <id>snapshots</id>
+            <name>maven-snapshots</name>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
             <id>central</id>
             <name>Maven Plugin Repository</name>
             <url>https://repo1.maven.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>apache.snapshots</id>
-            <url>https://repository.apache.org/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -57,10 +64,6 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>io.github.sefiraat.alone.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>de.jeff_media.morepersistentdatatypes</pattern>
-                            <shadedPattern>io.github.sefiraat.alone.morepersistentdatatypes</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
