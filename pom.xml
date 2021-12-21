@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat.networks</groupId>
-    <artifactId>Networks</artifactId>
+    <artifactId>networks</artifactId>
     <version>MODIFIED</version>
 
     <distributionManagement>
