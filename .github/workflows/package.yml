@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: '16'
-          distribution: 'adopt'
+          distribution: 'temurin'
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}

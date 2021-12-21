@@ -189,6 +189,11 @@ public class NetworkCraftingGrid extends NetworkObject {
                 .toList();
 
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
+
+            if (pages < 0) {
+                return;
+            }
+
             final int page = gridCache.getPage();
 
             final int start = page * DISPLAY_SLOTS.length;
