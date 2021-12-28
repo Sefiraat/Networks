@@ -56,6 +56,9 @@ public class NetworkExport extends NetworkObject {
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
+        this.getSlotsToDrop().add(TEST_ITEM_SLOT);
+        this.getSlotsToDrop().add(OUTPUT_ITEM_SLOT);
+
         addItemHandler(
             new BlockTicker() {
 
@@ -71,7 +74,7 @@ public class NetworkExport extends NetworkObject {
                     if (tick <= 1) {
                         final BlockMenu blockMenu = BlockStorage.getInventory(block);
                         addToRegistry(block);
-                        tryGrabItemBitch(blockMenu);
+                        tryFetchItem(blockMenu);
                     }
                 }
 
@@ -91,7 +94,7 @@ public class NetworkExport extends NetworkObject {
         );
     }
 
-    private void tryGrabItemBitch(BlockMenu blockMenu) {
+    private void tryFetchItem(BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         if (definition.getNode() == null) {

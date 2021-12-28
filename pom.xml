@@ -4,16 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.sefiraat.networks</groupId>
+    <groupId>io.github.sefiraat</groupId>
     <artifactId>networks</artifactId>
     <version>MODIFIED_1.0.1</version>
 
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Sefiraat/Networks</url>
+            <id>central</id>
+            <name>sefi-central</name>
+            <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
         </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>sefi-snapshot</name>
+            <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <pluginRepositories>

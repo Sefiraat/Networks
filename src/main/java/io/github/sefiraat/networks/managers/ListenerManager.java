@@ -1,6 +1,7 @@
-package io.github.sefiraat.networks.listeners;
+package io.github.sefiraat.networks.managers;
 
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.listeners.MiscListener;
 import org.bukkit.event.Listener;
 
 public class ListenerManager {
