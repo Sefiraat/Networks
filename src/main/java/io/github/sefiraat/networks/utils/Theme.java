@@ -16,21 +16,21 @@ import java.util.List;
 
 @Getter
 public enum Theme {
-    WARNING(ChatColor.YELLOW, "Warning"),
-    ERROR(ChatColor.RED, "Error"),
-    NOTICE(ChatColor.WHITE, "Notice"),
+    WARNING(ChatColor.YELLOW, "警告"),
+    ERROR(ChatColor.RED, "錯誤"),
+    NOTICE(ChatColor.WHITE, "通知"),
     PASSIVE(ChatColor.GRAY, ""),
-    SUCCESS(ChatColor.GREEN, "Success"),
-    MAIN(ChatColor.of("#21588f"), "Alone"),
-    CLICK_INFO(ChatColor.of("#e4ed32"), "Click here"),
-    RESEARCH(ChatColor.of("#a60e03"), "Research"),
-    CRAFTING(ChatColor.of("#dbcea9"), "Crafting Material"),
-    MACHINE(ChatColor.of("#3295a8"), "Machine"),
-    TOOL(ChatColor.of("#6b32a8"), "Tool"),
-    MECHANISM(ChatColor.of("#3295a8"), "Mechanism"),
-    FUEL(ChatColor.of("#112211"), "Fossil Fuel"),
-    MATERIAL_CLASS(ChatColor.of("#a4c2ba"), "Material Class"),
-    RECIPE_TYPE(ChatColor.of("#ffe89c"), "Recipe Type");
+    SUCCESS(ChatColor.GREEN, "成功"),
+    MAIN(ChatColor.of("#21588f"), "獨自"),
+    CLICK_INFO(ChatColor.of("#e4ed32"), "點擊這裡"),
+    RESEARCH(ChatColor.of("#a60e03"), "研究"),
+    CRAFTING(ChatColor.of("#dbcea9"), "製作材料"),
+    MACHINE(ChatColor.of("#3295a8"), "機器"),
+    TOOL(ChatColor.of("#6b32a8"), "工具"),
+    MECHANISM(ChatColor.of("#3295a8"), "機制"),
+    FUEL(ChatColor.of("#112211"), "化石燃料"),
+    MATERIAL_CLASS(ChatColor.of("#a4c2ba"), "材料類"),
+    RECIPE_TYPE(ChatColor.of("#ffe89c"), "配方類型");
 
     @Getter
     protected static final Theme[] cachedValues = values();

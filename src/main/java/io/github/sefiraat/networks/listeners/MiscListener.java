@@ -22,7 +22,7 @@ public class MiscListener implements Listener {
             || event.getAction() == Action.RIGHT_CLICK_BLOCK)
             && GeneralUtils.isOnCooldown(itemStack)
         ) {
-            event.getPlayer().sendMessage(Theme.WARNING + "This is still on cooldown");
+            event.getPlayer().sendMessage(Theme.WARNING + "這個仍在冷卻");
             event.setCancelled(true);
         }
     }

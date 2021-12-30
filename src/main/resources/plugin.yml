@@ -1,6 +1,6 @@
 name: Networks
 author: Sefiraat
-description: No idea yet
+description: 黏液科技附加 網路 繁體翻譯版.
 main: io.github.sefiraat.networks.Networks
 website: https://github.com/Sefiraat/Networks
 version: ${project.version}

@@ -69,13 +69,13 @@ public class NetworkProbe extends SlimefunItem {
             long timeItems = System.nanoTime();
 
             player.sendMessage("");
-            player.sendMessage(MessageFormat.format("Bridges: {0} (Time taken: {1} ns)", bridges, timeBridge - time));
-            player.sendMessage(MessageFormat.format("Importers: {0} (Time taken: {1} ns)", importers, timeImporter - timeBridge));
-            player.sendMessage(MessageFormat.format("Exporters: {0} (Time taken: {1} ns)", exporters, timeExporter - timeImporter));
-            player.sendMessage(MessageFormat.format("Monitors: {0} (Time taken: {1} ns)", monitors, timeMonitors - timeExporter));
-            player.sendMessage(MessageFormat.format("Cells: {0} (Time taken: {1} ns)", cells, timeCells - timeMonitors));
-            player.sendMessage(MessageFormat.format("Barrels: {0} (Time taken: {1} ns)", barrels, timeBarrels - timeCells));
-            player.sendMessage(MessageFormat.format("Items: {0} (Time taken: {1} ns)", items, timeItems - timeBarrels));
+            player.sendMessage(MessageFormat.format("網路橋: {0} (所用時間: {1} ns)", bridges, timeBridge - time));
+            player.sendMessage(MessageFormat.format("輸入器: {0} (所用時間: {1} ns)", importers, timeImporter - timeBridge));
+            player.sendMessage(MessageFormat.format("輸出器: {0} (所用時間: {1} ns)", exporters, timeExporter - timeImporter));
+            player.sendMessage(MessageFormat.format("監控器: {0} (所用時間: {1} ns)", monitors, timeMonitors - timeExporter));
+            player.sendMessage(MessageFormat.format("單元: {0} (所用時間: {1} ns)", cells, timeCells - timeMonitors));
+            player.sendMessage(MessageFormat.format("木桶: {0} (所用時間: {1} ns)", barrels, timeBarrels - timeCells));
+            player.sendMessage(MessageFormat.format("物品: {0} (所用時間: {1} ns)", items, timeItems - timeBarrels));
         }
     }
 

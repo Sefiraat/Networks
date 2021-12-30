@@ -17,7 +17,7 @@ public final class NetworksItemGroups {
         Keys.newKey("main"),
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Networks"
+            Theme.MAIN.getColor() + "網路"
         )
     );
 
@@ -26,7 +26,7 @@ public final class NetworksItemGroups {
         MAIN,
         new CustomItemStack(
             new ItemStack(Material.WHITE_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Materials and Tools"
+            Theme.MAIN.getColor() + "材料與工具"
         )
     );
 
@@ -35,7 +35,7 @@ public final class NetworksItemGroups {
         MAIN,
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Network Items"
+            Theme.MAIN.getColor() + "網路物品"
         )
     );
 

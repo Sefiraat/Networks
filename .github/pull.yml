@@ -1,0 +1,9 @@
+version: "1"
+rules:
+  - base: master
+    upstream: Sefiraat:master
+    mergeMethod: merge
+    conflictReviewers:
+      - weiii-joe
+      - xwinhyukx
+      - xMikux

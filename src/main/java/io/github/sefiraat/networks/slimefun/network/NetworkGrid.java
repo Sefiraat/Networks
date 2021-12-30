@@ -67,17 +67,17 @@ public class NetworkGrid extends NetworkObject {
 
     private static final CustomItemStack CHANGE_SORT_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Change Sort Order"
+        Theme.CLICK_INFO.getColor() + "變更排序方式"
     );
 
     private static final CustomItemStack PAGE_PREVIOUS_STACK = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Previous Page"
+        Theme.CLICK_INFO.getColor() + "上一頁"
     );
 
     private static final CustomItemStack PAGE_NEXT_STACK = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Next Page"
+        Theme.CLICK_INFO.getColor() + "下一頁"
     );
 
     private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
@@ -220,7 +220,7 @@ public class NetworkGrid extends NetworkObject {
     static List<String> getLoreAddition(int amount) {
         return List.of(
             "",
-            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
+            MessageFormat.format("{0}數量: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
         );
     }
 
