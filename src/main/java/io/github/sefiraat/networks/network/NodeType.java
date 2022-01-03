@@ -7,5 +7,6 @@ public enum NodeType {
     IMPORT,
     EXPORT,
     GRID,
-    CELL
+    CELL,
+    SHELL
 }

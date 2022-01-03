@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.sefiraat.networks</groupId>
-  <artifactId>Networks</artifactId>
-  <version>MODIFIED</version>
+  <groupId>io.github.sefiraat</groupId>
+  <artifactId>networks</artifactId>
+  <version>MODIFIED_1.0.1</version>
   <build>
     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
     <defaultGoal>clean package</defaultGoal>
@@ -105,16 +105,21 @@
     <dependency>
       <groupId>io.github.mooy1</groupId>
       <artifactId>InfinityExpansion</artifactId>
-      <version>9a0c8dd</version>
+      <version>90e11bc</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/Sefiraat/Networks</url>
+      <id>central</id>
+      <name>sefi-central</name>
+      <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
     </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>sefi-snapshot</name>
+      <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
+    </snapshotRepository>
   </distributionManagement>
   <properties>
     <sonar.issue.ignore.multicriteria.e3.ruleKey>java:S2245</sonar.issue.ignore.multicriteria.e3.ruleKey>

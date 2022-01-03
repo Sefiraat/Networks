@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.network;
+package io.github.sefiraat.networks.slimefun.network.grid;
 
 public class GridCache {
 
