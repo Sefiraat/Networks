@@ -1,11 +1,14 @@
 package io.github.sefiraat.networks.slimefun;
 
+import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,6 +25,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack OPTIC_GLASS;
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
+    public static final SlimefunItemStack RADIOACTIVE_OPTIC_STAR;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -30,9 +34,10 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_IMPORT;
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRID;
+    public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
-    public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
+    public static final SlimefunItemStack NETWORK_MEMORY_WIPER;
 
     // Tools
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
@@ -43,7 +48,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_9;
     public static final SlimefunItemStack NETWORK_PROBE;
 
     static {
@@ -73,6 +77,15 @@ public class NetworksSlimefunItemStacks {
             "Optic Star",
             "A crystalline star structure that",
             "can transfer large bits of information."
+        );
+
+        RADIOACTIVE_OPTIC_STAR = Theme.themedSlimefunItemStack(
+            "NTW_RADIOACTIVE_OPTIC_STAR",
+            getPreEnchantedItemStack(Material.NETHER_STAR, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Radioactive Optic Star",
+            "A crystalline star structure that",
+            "can store insane amounts of information."
         );
 
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
@@ -171,12 +184,32 @@ public class NetworksSlimefunItemStacks {
             "to the memory cards inside of it."
         );
 
+        NETWORK_MEMORY_WIPER = Theme.themedSlimefunItemStack(
+            "NTW_MEMORY_WIPER",
+            new ItemStack(Material.BASALT),
+            Theme.MACHINE,
+            "Network Memory Wiper",
+            "The Network Wiper is a block",
+            "that will slowly try to empty a",
+            "memory card's content back into",
+            "the network."
+        );
+
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
             "NTW_MEMORY_CARD_1",
             new ItemStack(Material.LIGHT_GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (4K)",
-            "Stores 4,096 items"
+            "Stores " + NetworkCard.SIZES[0] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_2 = Theme.themedSlimefunItemStack(
@@ -184,7 +217,16 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (32K)",
-            "Stores 32,768 items"
+            "Stores " + NetworkCard.SIZES[1] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_3 = Theme.themedSlimefunItemStack(
@@ -192,7 +234,16 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIME_DYE),
             Theme.TOOL,
             "Network Memory Card (262K)",
-            "Stores 262,144 items"
+            "Stores " + NetworkCard.SIZES[2] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_4 = Theme.themedSlimefunItemStack(
@@ -200,7 +251,16 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GREEN_DYE),
             Theme.TOOL,
             "Network Memory Card (2M)",
-            "Stores 2,097,152 items"
+            "Stores " + NetworkCard.SIZES[3] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_5 = Theme.themedSlimefunItemStack(
@@ -208,7 +268,16 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (16M)",
-            "Stores 16,777,216 items"
+            "Stores " + NetworkCard.SIZES[4] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_6 = Theme.themedSlimefunItemStack(
@@ -216,7 +285,16 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (134M)",
-            "Stores 134,217,728 items"
+            "Stores " + NetworkCard.SIZES[5] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_7 = Theme.themedSlimefunItemStack(
@@ -224,23 +302,33 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PINK_DYE),
             Theme.TOOL,
             "Network Memory Card (1B)",
-            "Stores 1,073,741,824 items"
+            "Stores " + NetworkCard.SIZES[6] + " items",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_MEMORY_CARD_8 = Theme.themedSlimefunItemStack(
             "NTW_MEMORY_CARD_8",
-            new ItemStack(Material.MAGENTA_DYE),
-            Theme.TOOL,
-            "Network Memory Card (8B)",
-            "Stores 8,589,934,592 items"
-        );
-
-        NETWORK_MEMORY_CARD_9 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_9",
             new ItemStack(Material.RED_DYE),
             Theme.TOOL,
             "Network Memory Card (∞)",
-            "Stores ∞ items... almost"
+            "Stores ∞ items... almost",
+            "",
+            "Right click with an item in your",
+            "offhand to set the card's item.",
+            "Card must be empty to set item.",
+            "",
+            Theme.WARNING + "Voids extra incoming items.",
+            Theme.WARNING + "Upgrading will wipe memory.",
+            "",
+            Theme.WARNING + "Empty"
         );
 
         NETWORK_PROBE = Theme.themedSlimefunItemStack(
@@ -255,11 +343,14 @@ public class NetworksSlimefunItemStacks {
 
     @Nonnull
     @SafeVarargs
-    public static ItemStack getPreEnchantedItemStack(Material material, @Nonnull Pair<Enchantment, Integer>... enchantments) {
+    public static ItemStack getPreEnchantedItemStack(Material material, boolean hide, @Nonnull Pair<Enchantment, Integer>... enchantments) {
         ItemStack itemStack = new ItemStack(material);
         ItemMeta itemMeta = itemStack.getItemMeta();
         for (Pair<Enchantment, Integer> pair : enchantments) {
             itemMeta.addEnchant(pair.getFirstValue(), pair.getSecondValue(), true);
+        }
+        if (hide) {
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         itemStack.setItemMeta(itemMeta);
         return itemStack;

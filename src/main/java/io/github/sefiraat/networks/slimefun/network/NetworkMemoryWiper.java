@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.tools.CardInstance;
@@ -16,7 +18,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -33,24 +34,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class NetworkMemoryShell extends NetworkObject {
+public class NetworkMemoryWiper extends NetworkObject {
 
-    public static final int INPUT_SLOT = 1;
-    public static final int CARD_SLOT = 4;
-    public static final int OUTPUT_SLOT = 7;
+    private static final int CARD_SLOT = 4;
 
-    private static final ItemStack BACK_INPUT = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, Theme.PASSIVE + "Input");
     private static final ItemStack BACK_CARD = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Memory Card");
-    private static final ItemStack BACK_OUTPUT = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, Theme.PASSIVE + "Output");
 
-    private static final int[] INPUT_SLOTS = new int[]{0, 2};
+    private static final int[] BACKGROUND_SLOTS = new int[]{0, 1, 2, 6, 7, 8};
     private static final int[] CARD_SLOTS = new int[]{3, 5};
-    private static final int[] OUTPUT_SLOTS = new int[]{6, 8};
 
-    public NetworkMemoryShell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.SHELL);
+    public NetworkMemoryWiper(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe, NodeType.WIPER);
         this.getSlotsToDrop().add(CARD_SLOT);
-        this.getSlotsToDrop().add(OUTPUT_SLOT);
         addItemHandler(new BlockTicker() {
             @Override
             public boolean isSynchronized() {
@@ -74,46 +69,13 @@ public class NetworkMemoryShell extends NetworkObject {
                     return;
                 }
 
-                final ItemStack input = blockMenu.getItemInSlot(INPUT_SLOT);
-                if (input != null && input.getType() != Material.AIR) {
-                    tryInputItem(card, input);
-                }
-
-                final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
-
-                // No item in output, try to fill
-                if (output == null || output.getType() == Material.AIR) {
-                    fillEmptySlot(blockMenu, card);
-                    return;
-                }
-
-                // Item in output exists but has no room left - escape
-                if (output.getAmount() >= output.getMaxStackSize()) {
-                    return;
-                }
-
-                fillFilledSlot(blockMenu, card, output);
-
+                tryPushStack(blockMenu, card);
             }
         });
     }
 
     @ParametersAreNonnullByDefault
-    private void tryInputItem(ItemStack card, ItemStack input) {
-        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
-        if (cardItem instanceof NetworkCard) {
-            final CardInstance cardInstance = getCardInstance(card);
-            if (cardInstance == null || !SlimefunUtils.isItemSimilar(cardInstance.getItemStack(), input, true, false)) {
-                return;
-            }
-            cardInstance.increaseAmount(input.getAmount());
-            input.setAmount(0);
-            setCardInstance(card, cardInstance);
-        }
-    }
-
-    @ParametersAreNonnullByDefault
-    private void fillEmptySlot(BlockMenu blockMenu, ItemStack card) {
+    private void tryPushStack(BlockMenu blockMenu, ItemStack card) {
         final SlimefunItem cardItem = SlimefunItem.getByItem(card);
         if (cardItem instanceof NetworkCard) {
             final CardInstance amountInstance = getAmountInstance(card);
@@ -129,27 +91,18 @@ public class NetworkMemoryShell extends NetworkObject {
                 return;
             }
 
-            blockMenu.pushItem(itemStack, OUTPUT_SLOT);
-            setCardInstance(card, cardInstance);
-        }
-    }
+            final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-    @ParametersAreNonnullByDefault
-    private void fillFilledSlot(BlockMenu blockMenu, ItemStack card, ItemStack output) {
-        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
-        if (cardItem instanceof NetworkCard) {
-            final CardInstance cardInstance = getCardInstance(card);
-            if (cardInstance == null || cardInstance.getAmount() <= 0) {
-                return;
-            }
-            final int requestAmount = output.getMaxStackSize() - output.getAmount();
-            final ItemStack itemStack = cardInstance.withdrawStack(requestAmount);
-
-            if (itemStack == null) {
+            if (definition.getNode() == null) {
                 return;
             }
 
-            blockMenu.pushItem(itemStack, OUTPUT_SLOT);
+            definition.getNode().getRoot().addItemStack(itemStack);
+
+            if (itemStack.getType() != Material.AIR && itemStack.getAmount() > 0) {
+                cardInstance.increaseAmount(itemStack.getAmount());
+            }
+
             setCardInstance(card, cardInstance);
         }
     }
@@ -179,15 +132,11 @@ public class NetworkMemoryShell extends NetworkObject {
 
             @Override
             public void init() {
-                for (int i : INPUT_SLOTS) {
-                    addItem(i, BACK_INPUT, (p, slot, item, action) -> false);
-                }
+                drawBackground(BACKGROUND_SLOTS);
                 for (int i : CARD_SLOTS) {
                     addItem(i, BACK_CARD, (p, slot, item, action) -> false);
                 }
-                for (int i : OUTPUT_SLOTS) {
-                    addItem(i, BACK_OUTPUT, (p, slot, item, action) -> false);
-                }
+
             }
 
             @Override

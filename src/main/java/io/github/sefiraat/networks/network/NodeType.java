@@ -8,5 +8,6 @@ public enum NodeType {
     EXPORT,
     GRID,
     CELL,
-    SHELL
+    SHELL,
+    WIPER
 }
