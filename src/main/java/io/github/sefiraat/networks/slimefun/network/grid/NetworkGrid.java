@@ -166,11 +166,6 @@ public class NetworkGrid extends NetworkObject {
 
             GridCache gridCache = CACHE_MAP.get(blockMenu.getLocation());
 
-            /*
-            Stream = 80ms
-            TreeMap start = 228ms
-            HashMap + TreeMap#putAll = 180ms
-             */
             final List<Map.Entry<ItemStack, Integer>> entries = root.getAllNetworkItems().entrySet().stream()
                 .sorted(gridCache.getSortOrder() == GridCache.SortOrder.ALPHABETICAL ? ALPHABETICAL_SORT : NUMERICAL_SORT.reversed())
                 .toList();
@@ -178,6 +173,10 @@ public class NetworkGrid extends NetworkObject {
             final int pages = (int) Math.ceil(entries.size() / (double) DISPLAY_SLOTS.length) - 1;
 
             if (pages < 0) {
+                for (int displaySlot : DISPLAY_SLOTS) {
+                    blockMenu.replaceExistingItem(displaySlot, BLANK_SLOT_STACK);
+                    blockMenu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
+                }
                 return;
             }
 

@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 public class Keys {
 
     public static final NamespacedKey ON_COOLDOWN = newKey("cooldown");
+    public static final NamespacedKey CARD_INSTANCE = newKey("ntw_card");
 
     @Nonnull
     public static NamespacedKey newKey(@Nonnull String value) {
