@@ -11,6 +11,7 @@ import io.github.sefiraat.networks.slimefun.tools.CardInstance;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
+import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
 import io.github.sefiraat.networks.utils.datatypes.PersistentCardInstanceType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
@@ -109,7 +110,17 @@ public class NetworkRoot extends NetworkNode {
 
         for (BarrelIdentity barrelIdentity : getBarrels()) {
             final Integer currentAmount = itemStacks.get(barrelIdentity.getReferenceStack());
-            final int newAmount = currentAmount == null ? barrelIdentity.getAmount() : currentAmount + barrelIdentity.getAmount();
+            final int newAmount;
+            if (currentAmount == null) {
+                newAmount = barrelIdentity.getAmount();
+            } else {
+                long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
+                if (newLong > Integer.MAX_VALUE) {
+                    newAmount = Integer.MAX_VALUE;
+                } else {
+                    newAmount = currentAmount + barrelIdentity.getAmount();
+                }
+            }
             itemStacks.put(barrelIdentity.getReferenceStack(), newAmount);
         }
 
@@ -121,7 +132,18 @@ public class NetworkRoot extends NetworkNode {
                     clone.setAmount(1);
 
                     final Integer currentAmount = itemStacks.get(clone);
-                    final int newAmount = currentAmount == null ? itemStack.getAmount() : currentAmount + itemStack.getAmount();
+                    int newAmount;
+
+                    if (currentAmount == null) {
+                        newAmount = itemStack.getAmount();
+                    } else {
+                        long newLong = (long) currentAmount + (long) itemStack.getAmount();
+                        if (newLong > Integer.MAX_VALUE) {
+                            newAmount = Integer.MAX_VALUE;
+                        } else {
+                            newAmount = currentAmount + itemStack.getAmount();
+                        }
+                    }
 
                     itemStacks.put(clone, newAmount);
                 }
@@ -150,7 +172,7 @@ public class NetworkRoot extends NetworkNode {
                     continue;
                 }
 
-                if (slimefunItem instanceof NetworkMemoryShell) {
+                if (slimefunItem instanceof NetworkMemoryShell memoryShell) {
                     BlockMenu menu = BlockStorage.getInventory(testLocation);
                     NetworkShell shell = getShell(menu);
                     if (shell != null) {
@@ -193,8 +215,19 @@ public class NetworkRoot extends NetworkNode {
         final SlimefunItem cardItem = SlimefunItem.getByItem(card);
 
         if (cardItem instanceof NetworkCard) {
-            ItemMeta itemMeta = card.getItemMeta();
-            CardInstance instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE);
+            final ItemMeta itemMeta = card.getItemMeta();
+            final ItemStack cachedStack = NetworkMemoryShell.CACHES.get(blockMenu.getLocation()).getItemStack();
+
+            CardInstance instance;
+
+            if (cachedStack == null) {
+                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE);
+            } else {
+                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE);
+                if (instance != null) {
+                    instance.setItemStack(cachedStack);
+                }
+            }
 
             if (instance == null || instance.getItemStack() == null) {
                 return null;
@@ -306,7 +339,7 @@ public class NetworkRoot extends NetworkNode {
                 } else {
                     requestedStack.setAmount(requestedStack.getAmount() + preserveAmount);
                     request.receiveAmount(preserveAmount);
-                    itemStack.setAmount(1);
+                    itemStack.setAmount(itemStack.getAmount() - preserveAmount);
                 }
             }
         }

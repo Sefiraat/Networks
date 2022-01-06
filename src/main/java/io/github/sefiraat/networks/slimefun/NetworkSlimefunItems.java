@@ -38,7 +38,10 @@ public class NetworkSlimefunItems {
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
     public static final NetworkCell NETWORK_CELL;
     public static final NetworkMemoryShell NETWORK_MEMORY_SHELL;
-    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER;
+    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_1;
+    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_2;
+    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_3;
+    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_4;
 
     public static final NetworkCard NETWORK_MEMORY_CARD_1;
     public static final NetworkCard NETWORK_MEMORY_CARD_2;
@@ -200,15 +203,52 @@ public class NetworkSlimefunItems {
             }
         );
 
-        NETWORK_MEMORY_WIPER = new NetworkMemoryWiper(
+        NETWORK_MEMORY_WIPER_1 = new NetworkMemoryWiper(
             NetworksItemGroups.NETWORK_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER,
+            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_1,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_BRIDGE.getItem(), OPTIC_STAR.getItem(), NETWORK_BRIDGE.getItem(),
                 OPTIC_CABLE.getItem(), NETWORK_MEMORY_SHELL.getItem(), OPTIC_CABLE.getItem(),
                 NETWORK_BRIDGE.getItem(), OPTIC_STAR.getItem(), NETWORK_BRIDGE.getItem(),
-            }
+            },
+            0
+        );
+
+        NETWORK_MEMORY_WIPER_2 = new NetworkMemoryWiper(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_2,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(),
+                NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(),
+                NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(), NETWORK_MEMORY_WIPER_1.getItem(),
+            },
+            1
+        );
+
+        NETWORK_MEMORY_WIPER_3 = new NetworkMemoryWiper(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_3,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(),
+                NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(),
+                NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(), NETWORK_MEMORY_WIPER_2.getItem(),
+            },
+            2
+        );
+
+        NETWORK_MEMORY_WIPER_4 = new NetworkMemoryWiper(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_4,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(),
+                NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(),
+                NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(), NETWORK_MEMORY_WIPER_3.getItem(),
+            },
+            3
         );
 
         NETWORK_MEMORY_CARD_1 = new NetworkCard(
@@ -228,9 +268,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_2,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[1]
         );
@@ -240,9 +280,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_3,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[2]
         );
@@ -252,9 +292,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_4,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[3]
         );
@@ -264,9 +304,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_5,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[4]
         );
@@ -276,9 +316,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_6,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[5]
         );
@@ -288,9 +328,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_7,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem(),
                 NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_CABLE.getItem(),
-                NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem()
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[6]
         );
@@ -300,9 +340,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_8,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
-                SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3,
-                NETWORK_MEMORY_CARD_7.getItem(), RADIOACTIVE_OPTIC_STAR.getItem(), NETWORK_MEMORY_CARD_7.getItem(),
-                SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem(),
+                NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(),
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem()
             },
             NetworkCard.SIZES[7]
         );
@@ -336,7 +376,10 @@ public class NetworkSlimefunItems {
         NETWORK_CRAFTING_GRID.register(plugin);
         NETWORK_CELL.register(plugin);
         NETWORK_MEMORY_SHELL.register(plugin);
-        NETWORK_MEMORY_WIPER.register(plugin);
+        NETWORK_MEMORY_WIPER_1.register(plugin);
+        NETWORK_MEMORY_WIPER_2.register(plugin);
+        NETWORK_MEMORY_WIPER_3.register(plugin);
+        NETWORK_MEMORY_WIPER_4.register(plugin);
 
         NETWORK_MEMORY_CARD_1.register(plugin);
         NETWORK_MEMORY_CARD_2.register(plugin);

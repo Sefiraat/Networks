@@ -43,8 +43,18 @@ public class NetworkMemoryWiper extends NetworkObject {
     private static final int[] BACKGROUND_SLOTS = new int[]{0, 1, 2, 6, 7, 8};
     private static final int[] CARD_SLOTS = new int[]{3, 5};
 
-    public NetworkMemoryWiper(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public static final int[] STACKS_TO_PUSH = new int[]{
+        1,
+        3,
+        9,
+        27
+    };
+
+    private final int tier;
+
+    public NetworkMemoryWiper(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int tier) {
         super(itemGroup, item, recipeType, recipe, NodeType.WIPER);
+        this.tier = tier;
         this.getSlotsToDrop().add(CARD_SLOT);
         addItemHandler(new BlockTicker() {
             @Override
@@ -69,13 +79,13 @@ public class NetworkMemoryWiper extends NetworkObject {
                     return;
                 }
 
-                tryPushStack(blockMenu, card);
+                tryPushStack(blockMenu, card, STACKS_TO_PUSH[tier]);
             }
         });
     }
 
     @ParametersAreNonnullByDefault
-    private void tryPushStack(BlockMenu blockMenu, ItemStack card) {
+    private void tryPushStack(BlockMenu blockMenu, ItemStack card, int stacks) {
         final SlimefunItem cardItem = SlimefunItem.getByItem(card);
         if (cardItem instanceof NetworkCard) {
             final CardInstance amountInstance = getAmountInstance(card);
@@ -85,22 +95,26 @@ public class NetworkMemoryWiper extends NetworkObject {
             }
 
             final CardInstance cardInstance = getCardInstance(card);
-            final ItemStack itemStack = cardInstance.withdrawStack();
 
-            if (itemStack == null) {
-                return;
-            }
+            for (int i = 0; i < stacks; i++) {
+                final ItemStack itemStack = cardInstance.withdrawStack();
 
-            final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+                if (itemStack == null) {
+                    return;
+                }
 
-            if (definition.getNode() == null) {
-                return;
-            }
+                final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-            definition.getNode().getRoot().addItemStack(itemStack);
+                if (definition.getNode() == null) {
+                    return;
+                }
 
-            if (itemStack.getType() != Material.AIR && itemStack.getAmount() > 0) {
-                cardInstance.increaseAmount(itemStack.getAmount());
+                definition.getNode().getRoot().addItemStack(itemStack);
+
+                if (itemStack.getType() != Material.AIR && itemStack.getAmount() > 0) {
+                    cardInstance.increaseAmount(itemStack.getAmount());
+                    return;
+                }
             }
 
             setCardInstance(card, cardInstance);
@@ -153,4 +167,7 @@ public class NetworkMemoryWiper extends NetworkObject {
         };
     }
 
+    public int getTier() {
+        return tier;
+    }
 }

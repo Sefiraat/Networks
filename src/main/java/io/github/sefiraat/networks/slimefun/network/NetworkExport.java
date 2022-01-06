@@ -66,7 +66,7 @@ public class NetworkExport extends NetworkObject {
 
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override
@@ -94,7 +94,7 @@ public class NetworkExport extends NetworkObject {
         );
     }
 
-    private void tryFetchItem(BlockMenu blockMenu) {
+    private void tryFetchItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         if (definition.getNode() == null) {
@@ -102,8 +102,9 @@ public class NetworkExport extends NetworkObject {
         }
 
         ItemStack testItem = blockMenu.getItemInSlot(TEST_ITEM_SLOT);
+        ItemStack itemInOutput = blockMenu.getItemInSlot(OUTPUT_ITEM_SLOT);
 
-        if (testItem == null || blockMenu.getItemInSlot(OUTPUT_ITEM_SLOT) != null) {
+        if (testItem == null || (itemInOutput != null && itemInOutput.getType() != Material.AIR)) {
             return;
         }
 
@@ -126,7 +127,6 @@ public class NetworkExport extends NetworkObject {
                 drawBackground(BACKGROUND_SLOTS);
                 drawBackground(TEST_BACKDROP_STACK, TEST_ITEM_BACKDROP);
                 drawBackground(OUTPUT_BACKDROP_STACK, OUTPUT_ITEM_BACKDROP);
-                setSize(45);
             }
 
             @Override
@@ -144,5 +144,4 @@ public class NetworkExport extends NetworkObject {
             }
         };
     }
-
 }

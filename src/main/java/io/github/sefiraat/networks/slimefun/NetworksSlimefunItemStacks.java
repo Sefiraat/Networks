@@ -1,9 +1,9 @@
 package io.github.sefiraat.networks.slimefun;
 
+import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.text.MessageFormat;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -37,7 +38,10 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER;
+    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_1;
+    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
+    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
+    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
 
     // Tools
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
@@ -184,15 +188,56 @@ public class NetworksSlimefunItemStacks {
             "to the memory cards inside of it."
         );
 
-        NETWORK_MEMORY_WIPER = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER",
+        NETWORK_MEMORY_WIPER_1 = Theme.themedSlimefunItemStack(
+            "NTW_MEMORY_WIPER_1",
             new ItemStack(Material.BASALT),
             Theme.MACHINE,
-            "Network Memory Wiper",
+            "Network Memory Wiper α",
             "The Network Wiper is a block",
             "that will slowly try to empty a",
             "memory card's content back into",
-            "the network."
+            "the network.",
+            "",
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[0])
+        );
+
+        NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
+            "NTW_MEMORY_WIPER_2",
+            new ItemStack(Material.POLISHED_BASALT),
+            Theme.MACHINE,
+            "Network Memory Wiper β",
+            "The Network Wiper is a block",
+            "that will slowly try to empty a",
+            "memory card's content back into",
+            "the network.",
+            "",
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[1])
+        );
+
+        NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
+            "NTW_MEMORY_WIPER_3",
+            new ItemStack(Material.SMOOTH_BASALT),
+            Theme.MACHINE,
+            "Network Memory Wiper γ",
+            "The Network Wiper is a block",
+            "that will slowly try to empty a",
+            "memory card's content back into",
+            "the network.",
+            "",
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[2])
+        );
+
+        NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
+            "NTW_MEMORY_WIPER_4",
+            new ItemStack(Material.POLISHED_BLACKSTONE),
+            Theme.MACHINE,
+            "Network Memory Wiper δ",
+            "The Network Wiper is a block",
+            "that will slowly try to empty a",
+            "memory card's content back into",
+            "the network.",
+            "",
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[3])
         );
 
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(

@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun.tools;
 
 import io.github.sefiraat.networks.utils.Theme;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,18 +13,36 @@ public class CardInstance {
 
     @Nullable
     private ItemStack itemStack;
+    @Nullable
+    private Material type;
+    @Nullable
+    private ItemMeta itemMeta;
     private int amount;
     private final int limit;
 
     public CardInstance(@Nullable ItemStack itemStack, int amount, int limit) {
         this.itemStack = itemStack;
+        if (this.itemStack != null) {
+            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+            this.type = itemStack.getType();
+        }
         this.amount = amount;
         this.limit = limit;
     }
 
     @Nullable
     public ItemStack getItemStack() {
-        return itemStack;
+        return this.itemStack;
+    }
+
+    @Nullable
+    public Material getType() {
+        return type;
+    }
+
+    @Nullable
+    public ItemMeta getItemMeta() {
+        return itemMeta;
     }
 
     public int getAmount() {
@@ -36,6 +55,10 @@ public class CardInstance {
 
     public void setItemStack(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
+        if (this.itemStack != null) {
+            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+            this.type = itemStack.getType();
+        }
     }
 
     public void setAmount(int amount) {
@@ -52,6 +75,7 @@ public class CardInstance {
         reduceAmount(clone.getAmount());
         return clone;
     }
+
     @Nullable
     public ItemStack withdrawStack() {
         if (this.itemStack == null) {

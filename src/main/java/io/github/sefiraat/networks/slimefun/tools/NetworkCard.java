@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
+
 public class NetworkCard extends SlimefunItem {
 
     public static final int[] SIZES = new int[]{
@@ -36,12 +38,18 @@ public class NetworkCard extends SlimefunItem {
         addItemHandler(new ItemUseHandler() {
             @Override
             public void onRightClick(PlayerRightClickEvent e) {
-                e.cancel();
                 final Player player = e.getPlayer();
                 final ItemStack card = player.getInventory().getItemInMainHand();
                 final ItemStack stackToSet = player.getInventory().getItemInOffHand().clone();
 
-                if (stackToSet.getType() == Material.AIR) {
+                e.cancel();
+                if (card.getAmount() > 1) {
+                    player.sendMessage(Theme.WARNING + "Unstack cards before assigning an item.");
+                    return;
+                }
+
+                if (isBlacklisted(stackToSet)) {
+                    player.sendMessage(Theme.WARNING + "This type of item cannot be stored in a Network Card.");
                     return;
                 }
 
@@ -60,7 +68,6 @@ public class NetworkCard extends SlimefunItem {
                         return;
                     }
 
-                    stackToSet.setAmount(1);
                     cardInstance.setItemStack(stackToSet);
                     DataTypeMethods.setCustom(cardMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE, cardInstance);
                     cardInstance.updateLore(cardMeta);
@@ -68,6 +75,11 @@ public class NetworkCard extends SlimefunItem {
                 }
             }
         });
+    }
+
+    private boolean isBlacklisted(@Nonnull ItemStack itemStack) {
+        return itemStack.getType() == Material.AIR
+            || itemStack.getType().getMaxDurability() < 0;
     }
 
     public int getSize() {
