@@ -37,6 +37,10 @@ public class NetworkImport extends NetworkObject {
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
+        for (int inputSlot : INPUT_SLOTS) {
+            this.getSlotsToDrop().add(inputSlot);
+        }
+
         addItemHandler(
             new BlockTicker() {
 
