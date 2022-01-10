@@ -1,9 +1,9 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
-import io.github.sefiraat.networks.network.ItemRequest;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -57,11 +57,7 @@ public class NetworkPusher extends NetworkDirectional {
         clone.setAmount(1);
         final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
 
-        int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, null);
-
-        if (slots.length == 0) {
-            slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
-        }
+        int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
 
         for (int slot : slots) {
             final ItemStack itemStack = targetMenu.getItemInSlot(slot);

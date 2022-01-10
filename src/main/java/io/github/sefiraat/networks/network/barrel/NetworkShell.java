@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network.barrel;
 
+import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;

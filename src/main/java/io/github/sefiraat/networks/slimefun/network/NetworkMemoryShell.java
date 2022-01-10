@@ -1,8 +1,8 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.network.NodeType;
+import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
-import io.github.sefiraat.networks.slimefun.tools.CardInstance;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -277,9 +277,9 @@ public class NetworkMemoryShell extends NetworkObject {
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
                 if (flow == ItemTransportFlow.INSERT) {
-                    return new int[] {INPUT_SLOT};
+                    return new int[]{INPUT_SLOT};
                 } else if (flow == ItemTransportFlow.WITHDRAW) {
-                    return new int[] {OUTPUT_SLOT};
+                    return new int[]{OUTPUT_SLOT};
                 }
                 return new int[0];
             }

@@ -48,10 +48,6 @@ public class NetworkGrabber extends NetworkDirectional {
 
         int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
 
-        if (slots.length == 0) {
-            slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
-        }
-
         for (int slot : slots) {
             final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 

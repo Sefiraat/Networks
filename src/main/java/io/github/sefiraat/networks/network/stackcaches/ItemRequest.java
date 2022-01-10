@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.network;
+package io.github.sefiraat.networks.network.stackcaches;
 
 import org.bukkit.inventory.ItemStack;
 

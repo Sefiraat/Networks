@@ -1,12 +1,10 @@
-package io.github.sefiraat.networks.network.barrel;
+package io.github.sefiraat.networks.network.stackcaches;
 
-import io.github.sefiraat.networks.network.ItemStackCache;
+import io.github.sefiraat.networks.network.barrel.BarrelCore;
+import io.github.sefiraat.networks.network.barrel.BarrelType;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;

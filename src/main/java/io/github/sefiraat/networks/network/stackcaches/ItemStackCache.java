@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.network;
+package io.github.sefiraat.networks.network.stackcaches;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ public class ItemStackCache {
     @Nullable
     private Material itemType = null;
 
-    public ItemStackCache(@Nullable ItemStack itemStack) {
+    protected ItemStackCache(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
         if (itemStack != null) {
             this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
@@ -22,7 +22,7 @@ public class ItemStackCache {
         }
     }
 
-    public ItemStackCache(@Nullable ItemStack itemStack, @Nullable ItemMeta itemMeta, @Nullable Material itemType) {
+    protected ItemStackCache(@Nullable ItemStack itemStack, @Nullable ItemMeta itemMeta, @Nullable Material itemType) {
         this.itemStack = itemStack;
         this.itemMeta = itemMeta;
         this.itemType = itemType;

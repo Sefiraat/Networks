@@ -1,9 +1,7 @@
-package io.github.sefiraat.networks.slimefun.tools;
+package io.github.sefiraat.networks.network.stackcaches;
 
-import io.github.sefiraat.networks.network.ItemStackCache;
 import io.github.sefiraat.networks.utils.Theme;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -77,7 +75,7 @@ public class CardInstance extends ItemStackCache {
             return Theme.WARNING + "Empty";
         }
         ItemMeta itemMeta = this.getItemMeta();
-        String name = itemMeta.hasDisplayName() ? ChatColor.stripColor(itemMeta.getDisplayName()) : this.getItemType().name();
+        String name = itemMeta != null && itemMeta.hasDisplayName() ? ChatColor.stripColor(itemMeta.getDisplayName()) : this.getItemType().name();
         return Theme.CLICK_INFO + name + ": " + Theme.PASSIVE + this.amount;
     }
 }

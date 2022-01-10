@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
