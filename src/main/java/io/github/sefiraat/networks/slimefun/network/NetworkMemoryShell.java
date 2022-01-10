@@ -233,11 +233,13 @@ public class NetworkMemoryShell extends NetworkObject {
     }
 
     private static boolean itemMatch(@Nonnull ItemStack itemStack, @Nonnull CardInstance instance) {
-        if (itemStack.getType() != instance.getType()) {
+        if (itemStack.getType() != instance.getItemType()) {
             return false;
         }
         if (itemStack.hasItemMeta()) {
-            return instance.getItemMeta() != null && itemStack.getItemMeta().equals(instance.getItemMeta());
+            final ItemMeta itemMeta = itemStack.getItemMeta();
+            final ItemMeta cachedMeta = instance.getItemMeta();
+            return itemMeta.equals(cachedMeta);
         } else {
             return instance.getItemMeta() == null;
         }
@@ -274,6 +276,11 @@ public class NetworkMemoryShell extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
+                if (flow == ItemTransportFlow.INSERT) {
+                    return new int[] {INPUT_SLOT};
+                } else if (flow == ItemTransportFlow.WITHDRAW) {
+                    return new int[] {OUTPUT_SLOT};
+                }
                 return new int[0];
             }
 

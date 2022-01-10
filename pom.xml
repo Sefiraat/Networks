@@ -6,18 +6,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat</groupId>
     <artifactId>networks</artifactId>
-    <version>MODIFIED_1.0.1</version>
+    <version>MODIFIED_1.0.2</version>
 
     <distributionManagement>
         <repository>
             <id>central</id>
             <name>sefi-central</name>
-            <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
+            <url>https://sefiraat.jfrog.io/artifactory/default-maven-local</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>sefi-snapshot</name>
-            <url>https://sefiraat.jfrog.io/artifactory/default-maven-remote</url>
+            <url>https://sefiraat.jfrog.io/artifactory/default-maven-local</url>
         </snapshotRepository>
     </distributionManagement>
 

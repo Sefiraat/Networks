@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
@@ -16,6 +17,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.ActionType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -241,15 +243,29 @@ public class NetworkGrid extends NetworkObject {
         }
 
         final GridItemRequest request = new GridItemRequest(clone, amount, player);
+        final ItemStack cursor = player.getItemOnCursor();
 
-        // Process item request
-        if (player.getItemOnCursor().getType() == Material.AIR) {
-            ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
-            if (requestingStack != null) {
-                request.getPlayer().setItemOnCursor(requestingStack);
-            }
+        // Quickly check if the cursor has an item and if we can add more to it
+        if (cursor.getType() != Material.AIR && !canAddMore(action, cursor, request)) {
+            return false;
         }
+
+        final ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+        if (requestingStack != null) {
+            if (cursor.getType() != Material.AIR) {
+                requestingStack.setAmount(cursor.getAmount() + 1);
+            }
+            request.getPlayer().setItemOnCursor(requestingStack);
+        }
+
         return false;
+    }
+
+    private boolean canAddMore(@Nonnull ClickAction action, @Nonnull ItemStack cursor, @Nonnull GridItemRequest request) {
+        return !action.isRightClicked()
+            && request.getAmount() == 1
+            && cursor.getAmount() < cursor.getMaxStackSize()
+            && StackUtils.itemsMatch(request, cursor);
     }
 
     @Override

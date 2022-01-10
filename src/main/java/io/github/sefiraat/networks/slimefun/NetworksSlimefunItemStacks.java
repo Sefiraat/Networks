@@ -34,6 +34,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MONITOR;
     public static final SlimefunItemStack NETWORK_IMPORT;
     public static final SlimefunItemStack NETWORK_EXPORT;
+    public static final SlimefunItemStack NETWORK_GRABBER;
+    public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_PURGER;
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
@@ -143,6 +146,37 @@ public class NetworksSlimefunItemStacks {
             "constantly export 1 stack of any",
             "given item.",
             "Accepts item withdrawal from cargo."
+        );
+
+        NETWORK_GRABBER = Theme.themedSlimefunItemStack(
+            "NTW_GRABBER",
+            new ItemStack(Material.MAGENTA_STAINED_GLASS),
+            Theme.MACHINE,
+            "Network Grabber",
+            "The Network Grabber will try",
+            "to grab the first item it finds",
+            "from within the selected machine."
+        );
+
+        NETWORK_PUSHER = Theme.themedSlimefunItemStack(
+            "NTW_PUSHER",
+            new ItemStack(Material.BROWN_STAINED_GLASS),
+            Theme.MACHINE,
+            "Network Pusher",
+            "The Network Pusher will try",
+            "to push a matching item from a",
+            "given item into the chosen machine."
+        );
+
+        NETWORK_PURGER = Theme.themedSlimefunItemStack(
+            "NTW_TRASH",
+            new ItemStack(Material.OBSERVER),
+            Theme.MACHINE,
+            "Network Purger",
+            "The Network Purger will pull",
+            "matching items from the network",
+            "and instantly void them.",
+            "Use with great care!"
         );
 
         NETWORK_GRID = Theme.themedSlimefunItemStack(

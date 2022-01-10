@@ -9,5 +9,8 @@ public enum NodeType {
     GRID,
     CELL,
     SHELL,
-    WIPER
+    WIPER,
+    GRABBER,
+    PUSHER,
+    TRASH
 }

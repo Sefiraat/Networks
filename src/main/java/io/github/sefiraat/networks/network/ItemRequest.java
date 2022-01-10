@@ -2,22 +2,19 @@ package io.github.sefiraat.networks.network;
 
 import org.bukkit.inventory.ItemStack;
 
-public class ItemRequest {
+import javax.annotation.Nonnull;
 
-    private final ItemStack itemStack;
+public class ItemRequest extends ItemStackCache {
+
     private int amount;
 
-    public ItemRequest(ItemStack itemStack, int amount) {
-        this.itemStack = itemStack;
+    public ItemRequest(@Nonnull ItemStack itemStack, int amount) {
+        super(itemStack);
         this.amount = amount;
     }
 
-    public ItemStack getItemStack() {
-        return itemStack;
-    }
-
     public int getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(int amount) {

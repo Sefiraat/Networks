@@ -13,6 +13,7 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -62,11 +63,15 @@ public class NetworkObject extends SlimefunItem {
     }
 
     public void onBreak(@Nonnull BlockBreakEvent event) {
-        BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
-        for (Integer i : this.slotsToDrop) {
-            blockMenu.dropItems(blockMenu.getLocation(), i);
+        final Location location = event.getBlock().getLocation();
+        final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
+
+        if (blockMenu != null) {
+            for (int i : this.slotsToDrop) {
+                blockMenu.dropItems(location, i);
+            }
         }
-        NetworkStorage.getAllNetworkObjects().remove(event.getBlock().getLocation());
-        BlockStorage.clearBlockInfo(event.getBlock().getLocation());
+        NetworkStorage.removeNode(location);
+        BlockStorage.clearBlockInfo(location);
     }
 }

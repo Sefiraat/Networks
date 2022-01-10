@@ -1,33 +1,32 @@
 package io.github.sefiraat.networks.network.barrel;
 
+import io.github.sefiraat.networks.network.ItemStackCache;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public abstract class BarrelIdentity implements BarrelCore {
+public abstract class BarrelIdentity extends ItemStackCache implements BarrelCore {
 
     private final Location location;
-    private final ItemStack referenceStack;
     private final int amount;
     private final BarrelType type;
 
     @ParametersAreNonnullByDefault
-    protected BarrelIdentity(Location location, ItemStack referenceStack, int amount, BarrelType type) {
+    protected BarrelIdentity(Location location, ItemStack itemStack, int amount, BarrelType type) {
+        super(itemStack);
         this.location = location;
-        this.referenceStack = referenceStack;
         this.amount = amount;
         this.type = type;
     }
 
     public Location getLocation() {
         return this.location;
-    }
-
-    public ItemStack getReferenceStack() {
-        return this.referenceStack;
     }
 
     public int getAmount() {
@@ -39,7 +38,7 @@ public abstract class BarrelIdentity implements BarrelCore {
     }
 
     public boolean holdsMatchingItem(@Nonnull ItemStack itemStack) {
-        return SlimefunUtils.isItemSimilar(itemStack, this.referenceStack, true, false);
+        return StackUtils.itemsMatch(this, itemStack);
     }
 
 }
