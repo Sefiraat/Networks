@@ -13,5 +13,4 @@ public class ListenerManager {
     private void addListener(Listener listener) {
         Networks.getPluginManager().registerEvents(listener, Networks.getInstance());
     }
-
 }

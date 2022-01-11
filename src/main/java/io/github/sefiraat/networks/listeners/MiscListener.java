@@ -1,6 +1,6 @@
 package io.github.sefiraat.networks.listeners;
 
-import io.github.sefiraat.networks.utils.GeneralUtils;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -20,7 +20,7 @@ public class MiscListener implements Listener {
         if (itemStack.getType() != Material.AIR
             && (event.getAction() == Action.RIGHT_CLICK_AIR
             || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-            && GeneralUtils.isOnCooldown(itemStack)
+            && StackUtils.isOnCooldown(itemStack)
         ) {
             event.getPlayer().sendMessage(Theme.WARNING + "This is still on cooldown");
             event.setCancelled(true);

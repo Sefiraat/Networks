@@ -1,6 +1,7 @@
 package io.github.sefiraat.networks.network.barrel;
 
 import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
+import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;

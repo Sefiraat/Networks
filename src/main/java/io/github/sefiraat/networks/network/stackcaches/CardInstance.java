@@ -1,48 +1,23 @@
-package io.github.sefiraat.networks.slimefun.tools;
+package io.github.sefiraat.networks.network.stackcaches;
 
 import io.github.sefiraat.networks.utils.Theme;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CardInstance {
+public class CardInstance extends ItemStackCache {
 
-    @Nullable
-    private ItemStack itemStack;
-    @Nullable
-    private Material type;
-    @Nullable
-    private ItemMeta itemMeta;
     private int amount;
     private final int limit;
 
     public CardInstance(@Nullable ItemStack itemStack, int amount, int limit) {
-        this.itemStack = itemStack;
-        if (this.itemStack != null) {
-            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
-            this.type = itemStack.getType();
-        }
+        super(itemStack);
         this.amount = amount;
         this.limit = limit;
-    }
-
-    @Nullable
-    public ItemStack getItemStack() {
-        return this.itemStack;
-    }
-
-    @Nullable
-    public Material getType() {
-        return type;
-    }
-
-    @Nullable
-    public ItemMeta getItemMeta() {
-        return itemMeta;
     }
 
     public int getAmount() {
@@ -53,24 +28,16 @@ public class CardInstance {
         return this.limit;
     }
 
-    public void setItemStack(@Nullable ItemStack itemStack) {
-        this.itemStack = itemStack;
-        if (this.itemStack != null) {
-            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
-            this.type = itemStack.getType();
-        }
-    }
-
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
     @Nullable
     public ItemStack withdrawStack(int amount) {
-        if (this.itemStack == null) {
+        if (this.getItemStack() == null) {
             return null;
         }
-        final ItemStack clone = this.itemStack.clone();
+        final ItemStack clone = this.getItemStack().clone();
         clone.setAmount(Math.min(this.amount, amount));
         reduceAmount(clone.getAmount());
         return clone;
@@ -78,10 +45,10 @@ public class CardInstance {
 
     @Nullable
     public ItemStack withdrawStack() {
-        if (this.itemStack == null) {
+        if (this.getItemStack() == null) {
             return null;
         }
-        return withdrawStack(this.itemStack.getMaxStackSize());
+        return withdrawStack(this.getItemStack().getMaxStackSize());
     }
 
     public void increaseAmount(int amount) {
@@ -97,18 +64,25 @@ public class CardInstance {
         this.amount = this.amount - amount;
     }
 
-    public void updateLore(ItemMeta itemMeta) {
+    public void updateLore(@Nonnull ItemMeta itemMeta) {
         List<String> lore = itemMeta.getLore();
         lore.set(10, getLoreLine());
         itemMeta.setLore(lore);
     }
 
     public String getLoreLine() {
-        if (this.itemStack == null) {
+        if (this.getItemStack() == null) {
             return Theme.WARNING + "Empty";
         }
-        ItemMeta itemMeta = this.itemStack.getItemMeta();
-        String name = itemMeta.hasDisplayName() ? ChatColor.stripColor(itemMeta.getDisplayName()) : this.itemStack.getType().name();
+        ItemMeta itemMeta = this.getItemMeta();
+        String name;
+        if (itemMeta != null && itemMeta.hasDisplayName()) {
+            name = ChatColor.stripColor(itemMeta.getDisplayName());
+        } else if (this.getItemType() != null) {
+            name = this.getItemType().name();
+        } else {
+            name = "Unknown/Error";
+        }
         return Theme.CLICK_INFO + name + ": " + Theme.PASSIVE + this.amount;
     }
 }

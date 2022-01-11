@@ -22,7 +22,9 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -31,33 +33,25 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class NetworkExport extends NetworkObject {
+public class NetworkPurger extends NetworkObject {
 
-    private static final int[] BACKGROUND_SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 17, 18, 22, 26, 27, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44};
-    private static final int TEST_ITEM_SLOT = 20;
-    private static final int[] TEST_ITEM_BACKDROP = {10, 11, 12, 19, 21, 28, 29, 30};
-    private static final int OUTPUT_ITEM_SLOT = 24;
-    private static final int[] OUTPUT_ITEM_BACKDROP = {14, 15, 16, 23, 25, 32, 33, 34};
+    private static final int[] BACKGROUND_SLOTS = {0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+    private static final int TEST_ITEM_SLOT = 13;
+    private static final int[] TEST_ITEM_BACKDROP = {3, 4, 5, 12, 14, 21, 22, 23};
 
     private static final CustomItemStack TEST_BACKDROP_STACK = new CustomItemStack(
         Material.GREEN_STAINED_GLASS_PANE,
-        Theme.SUCCESS + "Export Item Matching"
-    );
-
-    private static final CustomItemStack OUTPUT_BACKDROP_STACK = new CustomItemStack(
-        Material.ORANGE_STAINED_GLASS_PANE,
-        Theme.SUCCESS + "Output Slot"
+        Theme.SUCCESS + "Purge Item Matching"
     );
 
     private final ItemSetting<Integer> tickRate;
 
-    public NetworkExport(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.EXPORT);
+    public NetworkPurger(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe, NodeType.TRASH);
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
         this.getSlotsToDrop().add(TEST_ITEM_SLOT);
-        this.getSlotsToDrop().add(OUTPUT_ITEM_SLOT);
 
         addItemHandler(
             new BlockTicker() {
@@ -74,7 +68,7 @@ public class NetworkExport extends NetworkObject {
                     if (tick <= 1) {
                         final BlockMenu blockMenu = BlockStorage.getInventory(block);
                         addToRegistry(block);
-                        tryFetchItem(blockMenu);
+                        tryKillItem(blockMenu);
                     }
                 }
 
@@ -88,13 +82,12 @@ public class NetworkExport extends NetworkObject {
                 public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
                     BlockMenu blockMenu = BlockStorage.getInventory(e.getBlock());
                     blockMenu.dropItems(blockMenu.getLocation(), TEST_ITEM_SLOT);
-                    blockMenu.dropItems(blockMenu.getLocation(), OUTPUT_ITEM_SLOT);
                 }
             }
         );
     }
 
-    private void tryFetchItem(@Nonnull BlockMenu blockMenu) {
+    private void tryKillItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         if (definition.getNode() == null) {
@@ -102,18 +95,20 @@ public class NetworkExport extends NetworkObject {
         }
 
         ItemStack testItem = blockMenu.getItemInSlot(TEST_ITEM_SLOT);
-        ItemStack itemInOutput = blockMenu.getItemInSlot(OUTPUT_ITEM_SLOT);
 
-        if (testItem == null || (itemInOutput != null && itemInOutput.getType() != Material.AIR)) {
+        if (testItem == null) {
             return;
         }
 
         ItemStack clone = testItem.clone();
+        clone.setAmount(1);
 
         ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
         ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
         if (retrieved != null) {
-            blockMenu.pushItem(retrieved, OUTPUT_ITEM_SLOT);
+            retrieved.setAmount(0);
+            Location location = blockMenu.getLocation().clone().add(0.5, 1.2, 0.5);
+            location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 1, 0.5, 0, 0.2, 0);
         }
     }
 
@@ -125,7 +120,6 @@ public class NetworkExport extends NetworkObject {
             public void init() {
                 drawBackground(BACKGROUND_SLOTS);
                 drawBackground(TEST_BACKDROP_STACK, TEST_ITEM_BACKDROP);
-                drawBackground(OUTPUT_BACKDROP_STACK, OUTPUT_ITEM_BACKDROP);
             }
 
             @Override
@@ -136,9 +130,6 @@ public class NetworkExport extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (flow == ItemTransportFlow.WITHDRAW) {
-                    return new int[]{OUTPUT_ITEM_SLOT};
-                }
                 return new int[0];
             }
         };
