@@ -211,11 +211,12 @@ public abstract class AbstractGrid extends NetworkObject {
                 }
 
                 final ItemStack itemStack = entry.getKey();
-                final String name;
+                String name = itemStack.getType().name().toLowerCase(Locale.ROOT);
                 if (itemStack.hasItemMeta()) {
-                    name = ChatColor.stripColor(itemStack.getItemMeta().getDisplayName().toLowerCase(Locale.ROOT));
-                } else {
-                    name = itemStack.getType().name().toLowerCase(Locale.ROOT);
+                    final ItemMeta itemMeta = itemStack.getItemMeta();
+                    if (itemMeta.hasDisplayName()) {
+                        name = ChatColor.stripColor(itemMeta.getDisplayName().toLowerCase(Locale.ROOT));
+                    }
                 }
                 return name.contains(cache.getFilter());
             })
