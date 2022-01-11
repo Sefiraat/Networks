@@ -264,7 +264,7 @@ public class NetworkRoot extends NetworkNode {
             final ItemStack itemStack = instance.getItemStack();
             int storedInt = instance.getAmount();
 
-            if (StackUtils.itemsMatch(instance, output)) {
+            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(instance, output)) {
                 storedInt = storedInt + output.getAmount();
             }
 

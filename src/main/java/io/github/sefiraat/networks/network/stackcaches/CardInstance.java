@@ -75,7 +75,14 @@ public class CardInstance extends ItemStackCache {
             return Theme.WARNING + "Empty";
         }
         ItemMeta itemMeta = this.getItemMeta();
-        String name = itemMeta != null && itemMeta.hasDisplayName() ? ChatColor.stripColor(itemMeta.getDisplayName()) : this.getItemType().name();
+        String name;
+        if (itemMeta != null && itemMeta.hasDisplayName()) {
+            name = ChatColor.stripColor(itemMeta.getDisplayName());
+        } else if (this.getItemType() != null) {
+            name = this.getItemType().name();
+        } else {
+            name = "Unknown/Error";
+        }
         return Theme.CLICK_INFO + name + ": " + Theme.PASSIVE + this.amount;
     }
 }
