@@ -8,9 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class NetworkBridge extends NetworkObject {
 
-    public NetworkBridge(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.BRIDGE);
+    public NetworkBridge(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
+        super(itemGroup, item, recipeType, recipe, recipeOutput, NodeType.BRIDGE);
     }
-
-
 }

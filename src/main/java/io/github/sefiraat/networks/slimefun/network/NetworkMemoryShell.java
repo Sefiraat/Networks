@@ -169,6 +169,11 @@ public class NetworkMemoryShell extends NetworkObject {
             }
 
             final CardInstance cardInstance = getCardInstance(card, cache);
+
+            if (cardInstance == null) {
+                return;
+            }
+
             final ItemStack itemStack = cardInstance.withdrawStack();
 
             if (itemStack == null) {

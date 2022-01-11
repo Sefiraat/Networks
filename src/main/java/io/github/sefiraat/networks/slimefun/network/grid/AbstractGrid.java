@@ -136,62 +136,68 @@ public abstract class AbstractGrid extends NetworkObject {
     }
 
     protected void updateDisplay(@Nonnull BlockMenu blockMenu) {
-        if (blockMenu.hasViewer()) {
-            final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+        // No viewer - lets not bother updating
+        if (!blockMenu.hasViewer()) {
+            return;
+        }
 
-            if (definition.getNode() == null) {
-                return;
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+
+        // No node located, weird
+        if (definition.getNode() == null) {
+            return;
+        }
+
+        // Update Screen
+        final NetworkRoot root = definition.getNode().getRoot();
+        final GridCache gridCache = getCacheMap().get(blockMenu.getLocation());
+        final List<Map.Entry<ItemStack, Integer>> entries = getEntries(root, gridCache);
+        final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
+
+        gridCache.setMaxPages(pages);
+
+        // Set everything to blank and return if there are no pages (no items)
+        if (pages < 0) {
+            for (int displaySlot : getDisplaySlots()) {
+                blockMenu.replaceExistingItem(displaySlot, BLANK_SLOT_STACK);
+                blockMenu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
             }
+            return;
+        }
 
-            // Update Screen
-            NetworkRoot root = definition.getNode().getRoot();
+        // Reset selected page if it no longer exists due to items being removed
+        if (gridCache.getPage() > pages) {
+            gridCache.setPage(0);
+        }
 
-            GridCache gridCache = getCacheMap().get(blockMenu.getLocation());
+        final int start = gridCache.getPage() * getDisplaySlots().length;
+        final int end = Math.min(start + getDisplaySlots().length, entries.size());
+        final List<Map.Entry<ItemStack, Integer>> validEntries = entries.subList(start, end);
 
-            final List<Map.Entry<ItemStack, Integer>> entries = getEntries(root, gridCache);
+        getCacheMap().put(blockMenu.getLocation(), gridCache);
 
-            final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
+        for (int i = 0; i < getDisplaySlots().length; i++) {
+            if (validEntries.size() > i) {
+                final Map.Entry<ItemStack, Integer> entry = validEntries.get(i);
+                final ItemStack displayStack = entry.getKey().clone();
+                final ItemMeta itemMeta = displayStack.getItemMeta();
+                List<String> lore = itemMeta.getLore();
 
-            if (pages < 0) {
-                for (int displaySlot : getDisplaySlots()) {
-                    blockMenu.replaceExistingItem(displaySlot, BLANK_SLOT_STACK);
-                    blockMenu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
-                }
-                return;
-            }
-
-            final int page = gridCache.getPage() > pages ? 0 : gridCache.getPage();
-
-            final int start = page * getDisplaySlots().length;
-            final int end = Math.min(start + getDisplaySlots().length, entries.size());
-            final List<Map.Entry<ItemStack, Integer>> validEntries = entries.subList(start, end);
-
-            gridCache.setMaxPages(pages);
-            getCacheMap().put(blockMenu.getLocation(), gridCache);
-
-            for (int i = 0; i < getDisplaySlots().length; i++) {
-                if (validEntries.size() > i) {
-                    final Map.Entry<ItemStack, Integer> entry = validEntries.get(i);
-                    final ItemStack displayStack = entry.getKey().clone();
-                    final ItemMeta itemMeta = displayStack.getItemMeta();
-                    List<String> lore = itemMeta.getLore();
-
-                    if (lore == null) {
-                        lore = getLoreAddition(entry.getValue());
-                    } else {
-                        lore.addAll(getLoreAddition(entry.getValue()));
-                    }
-
-                    itemMeta.setLore(lore);
-                    displayStack.setItemMeta(itemMeta);
-                    blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
-                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) ->
-                        retrieveItem(player, definition, item, action)
-                    );
+                if (lore == null) {
+                    lore = getLoreAddition(entry.getValue());
                 } else {
-                    blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
-                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
+                    lore.addAll(getLoreAddition(entry.getValue()));
                 }
+
+                itemMeta.setLore(lore);
+                displayStack.setItemMeta(itemMeta);
+                blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
+                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) ->
+                    retrieveItem(player, definition, item, action)
+                );
+            } else {
+                blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
+                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
             }
         }
     }

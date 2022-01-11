@@ -31,7 +31,11 @@ public class NetworkObject extends SlimefunItem {
     private final List<Integer> slotsToDrop = new ArrayList<>();
 
     public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type) {
-        super(itemGroup, item, recipeType, recipe);
+        this(itemGroup, item, recipeType, recipe, null, type);
+    }
+
+    public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput, NodeType type) {
+        super(itemGroup, item, recipeType, recipe, recipeOutput);
         this.nodeType = type;
         addItemHandler(
             new BlockTicker() {

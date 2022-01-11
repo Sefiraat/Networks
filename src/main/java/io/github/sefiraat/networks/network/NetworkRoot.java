@@ -53,6 +53,11 @@ public class NetworkRoot extends NetworkNode {
         this.root = this;
     }
 
+    /*
+     *  TODO
+     *  Move to a single map Location, Type and build up the Type enum - push to
+     *  metrics and probe
+     */
     public void addNode(Location location, NodeType type) {
         networkLocations.add(location);
         switch (type) {

@@ -50,7 +50,7 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.projectKey>Crystamae_Historia</sonar.projectKey>
+        <sonar.projectKey>Networks</sonar.projectKey>
         <sonar.organization>sefiraat</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
@@ -76,7 +76,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.sefiraat.alone.bstats</shadedPattern>
+                            <shadedPattern>io.github.sefiraat.networks.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>

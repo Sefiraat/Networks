@@ -129,7 +129,8 @@ public class NetworkSlimefunItems {
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
                 OPTIC_CABLE.getItem(), SlimefunItems.CARGO_CONNECTOR_NODE, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-            }
+            },
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.NETWORK_BRIDGE, 5)
         );
 
         NETWORK_MONITOR = new NetworkMonitor(
