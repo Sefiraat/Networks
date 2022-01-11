@@ -172,6 +172,7 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<BarrelIdentity> getBarrels() {
+        final Set<Location> addedLocations = new HashSet<>();
         final Set<BarrelIdentity> barrelItemMap = new HashSet<>();
 
         for (Location cellLocation : networkMonitors) {
@@ -182,6 +183,13 @@ public class NetworkRoot extends NetworkNode {
             }
 
             final Location testLocation = cellLocation.clone().add(face.getDirection());
+
+            if (addedLocations.contains(testLocation)) {
+                continue;
+            } else {
+                addedLocations.add(testLocation);
+            }
+
             final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
             if (Networks.getSupportedPluginManager().isInfinityExpansion()
