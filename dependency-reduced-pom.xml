@@ -93,13 +93,13 @@
     <dependency>
       <groupId>com.github.Slimefun</groupId>
       <artifactId>Slimefun4</artifactId>
-      <version>b8f7dc</version>
+      <version>SEFI-TEST</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.20</version>
+      <version>1.18.22</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

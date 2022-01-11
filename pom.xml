@@ -140,7 +140,7 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>b8f7dc</version>
+            <version>SEFI-TEST</version>
             <scope>provided</scope>
         </dependency>
 

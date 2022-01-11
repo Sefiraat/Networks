@@ -16,6 +16,7 @@ import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
 import io.github.sefiraat.networks.utils.datatypes.PersistentCardInstanceType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.core.attributes.ExposedStorage;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -126,20 +127,25 @@ public class NetworkRoot extends NetworkNode {
     public Map<ItemStack, Integer> getAllNetworkItems() {
         final Map<ItemStack, Integer> itemStacks = new HashMap<>();
 
-        for (BarrelIdentity barrelIdentity : getBarrels()) {
-            final Integer currentAmount = itemStacks.get(barrelIdentity.getItemStack());
-            final int newAmount;
-            if (currentAmount == null) {
-                newAmount = barrelIdentity.getAmount();
-            } else {
-                long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
-                if (newLong > Integer.MAX_VALUE) {
-                    newAmount = Integer.MAX_VALUE;
+        for (ExposedStorageInstance instance : getStorages()) {
+            final Map<ItemStack, Integer> instanceItems = instance.getExposedStorage().getStoredItems(instance.getLocation());
+
+            for (Map.Entry<ItemStack, Integer> entry : instanceItems.entrySet()) {
+                final Integer currentAmount = itemStacks.get(entry.getKey());
+                final int newAmount;
+
+                if (currentAmount == null) {
+                    newAmount = entry.getValue();
                 } else {
-                    newAmount = currentAmount + barrelIdentity.getAmount();
+                    long newLong = (long) currentAmount + (long) entry.getValue();
+                    if (newLong > Integer.MAX_VALUE) {
+                        newAmount = Integer.MAX_VALUE;
+                    } else {
+                        newAmount = currentAmount + entry.getValue();
+                    }
                 }
+                itemStacks.put(entry.getKey(), newAmount);
             }
-            itemStacks.put(barrelIdentity.getItemStack(), newAmount);
         }
 
         for (BlockMenu blockMenu : getCellMenus()) {
@@ -171,8 +177,8 @@ public class NetworkRoot extends NetworkNode {
     }
 
     @Nonnull
-    public Set<BarrelIdentity> getBarrels() {
-        final Set<BarrelIdentity> barrelItemMap = new HashSet<>();
+    public Set<ExposedStorageInstance> getStorages() {
+        final Set<ExposedStorageInstance> storages = new HashSet<>();
 
         for (Location cellLocation : networkMonitors) {
             final BlockFace face = NetworkDirectional.getSelectedFace(cellLocation);
@@ -184,28 +190,13 @@ public class NetworkRoot extends NetworkNode {
             final Location testLocation = cellLocation.clone().add(face.getDirection());
             final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
-            if (Networks.getSupportedPluginManager().isInfinityExpansion()
-                && slimefunItem instanceof StorageUnit unit
-            ) {
-                BlockMenu menu = BlockStorage.getInventory(testLocation);
-                InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
-                if (infinityBarrel != null) {
-                    barrelItemMap.add(infinityBarrel);
-                }
-                continue;
-            }
-
-            if (slimefunItem instanceof NetworkMemoryShell) {
-                BlockMenu menu = BlockStorage.getInventory(testLocation);
-                NetworkShell shell = getShell(menu);
-                if (shell != null) {
-                    barrelItemMap.add(shell);
-                }
+            if (slimefunItem instanceof ExposedStorage exposedStorage) {
+                storages.add(new ExposedStorageInstance(testLocation, exposedStorage));
             }
 
         }
 
-        return barrelItemMap;
+        return storages;
     }
 
     @Nullable
@@ -299,6 +290,11 @@ public class NetworkRoot extends NetworkNode {
 
     @Nullable
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
+
+        if (request.getItemStack() == null) {
+            return null;
+        }
+
         ItemStack stackToReturn = null;
 
         for (BlockMenu blockMenu : getCellMenus()) {
@@ -336,42 +332,24 @@ public class NetworkRoot extends NetworkNode {
             }
         }
 
-        for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (barrelIdentity.holdsMatchingItem(request.getItemStack())) {
-                final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
-                boolean infinity = barrelIdentity instanceof InfinityBarrel;
-
-                if (itemStack == null
-                    || (infinity && itemStack.getAmount() == 1)
-                    //|| !SlimefunUtils.isItemSimilar(request.getItemStack(), itemStack, true, false)
-                    || !StackUtils.itemsMatch(request, itemStack)
-                ) {
-                    continue;
-                }
+        for (ExposedStorageInstance instance : getStorages()) {
+            if (instance.getExposedStorage().contains(instance.getLocation(), request.getItemStack())) {
+                final int amountWithdrawn = instance.getExposedStorage().withdrawItem(
+                    instance.getLocation(),
+                    request.getItemStack(),
+                    request.getAmount()
+                );
 
                 // Stack is null, so we can fill it here
                 if (stackToReturn == null) {
-                    stackToReturn = itemStack.clone();
-                    stackToReturn.setAmount(1);
-                    request.receiveAmount(1);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
+                    stackToReturn = request.getItemStack().clone();
+                    stackToReturn.setAmount(amountWithdrawn);
+                    request.receiveAmount(amountWithdrawn);
                 }
 
                 // Escape if fulfilled request
                 if (request.getAmount() <= 0) {
                     return stackToReturn;
-                }
-
-                final int preserveAmount = infinity ? itemStack.getAmount() - 1 : itemStack.getAmount();
-
-                if (request.getAmount() <= preserveAmount) {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
-                    return stackToReturn;
-                } else {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
-                    request.receiveAmount(preserveAmount);
-                    itemStack.setAmount(itemStack.getAmount() - preserveAmount);
                 }
             }
         }
@@ -381,15 +359,10 @@ public class NetworkRoot extends NetworkNode {
 
     public void addItemStack(@Nonnull ItemStack incomingStack) {
         // Run for matching barrels
-        for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (StackUtils.itemsMatch(barrelIdentity, incomingStack)) {
-
-                barrelIdentity.depositItemStack(incomingStack);
-
-                // All distributed, can escape
-                if (incomingStack.getAmount() == 0) {
-                    return;
-                }
+        for (ExposedStorageInstance instance : getStorages()) {
+            instance.getExposedStorage().depositItemStack(instance.getLocation(), incomingStack);
+            if (incomingStack.getAmount() == 0) {
+                return;
             }
         }
 

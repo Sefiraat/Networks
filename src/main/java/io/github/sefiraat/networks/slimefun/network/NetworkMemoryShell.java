@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
@@ -13,6 +14,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.attributes.ExposedStorage;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
@@ -35,7 +37,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetworkMemoryShell extends NetworkObject {
+public class NetworkMemoryShell extends NetworkObject implements ExposedStorage {
 
     public static final int INPUT_SLOT = 1;
     public static final int CARD_SLOT = 4;
@@ -139,6 +141,114 @@ public class NetworkMemoryShell extends NetworkObject {
         CACHES.put(blockMenu.getLocation(), cache);
     }
 
+    @Nonnull
+    @Override
+    public Map<ItemStack, Integer> getStoredItems(@Nonnull Location location) {
+
+        Map<ItemStack, Integer> contents = new HashMap<>();
+
+        BlockMenu blockMenu = BlockStorage.getInventory(location);
+
+        if (blockMenu != null) {
+
+            final ItemStack card = blockMenu.getItemInSlot(NetworkMemoryShell.CARD_SLOT);
+            final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+
+            if (cardItem instanceof NetworkCard) {
+                final ItemMeta itemMeta = card.getItemMeta();
+                final ItemStack cachedStack = NetworkMemoryShell.CACHES.get(blockMenu.getLocation()).getItemStack();
+
+                CardInstance instance;
+
+                if (cachedStack == null) {
+                    instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE);
+                } else {
+                    instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE);
+                    if (instance != null) {
+                        instance.setItemStack(cachedStack);
+                    }
+                }
+
+                if (instance != null && instance.getItemStack() != null) {
+
+                    final ItemStack itemStack = instance.getItemStack();
+                    final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
+                    int stored = instance.getAmount();
+
+                    if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(instance, output)) {
+                        stored = stored + output.getAmount();
+                    }
+
+                    if (itemStack != null && itemStack.getType() != Material.AIR) {
+                        final ItemStack clone = itemStack.clone();
+                        clone.setAmount(1);
+                        contents.put(clone, stored);
+                    }
+                }
+            }
+        }
+        return contents;
+    }
+
+    @Override
+    public int withdrawItem(@Nonnull Location location, @Nonnull ItemStack similarStack, int amount) {
+        final BlockMenu blockMenu = BlockStorage.getInventory(location);
+
+        final ItemStack card = blockMenu.getItemInSlot(CARD_SLOT);
+
+        // No card, quick exit
+        if (card == null || card.getType() == Material.AIR) {
+            return 0;
+        }
+
+        NetworkMemoryShellCache cache = NetworkMemoryShell.CACHES.get(location);
+        if (cache != null) {
+            return NetworkMemoryShell.withdrawItem(blockMenu, card, cache, amount);
+        }
+
+        return 0;
+    }
+
+    @Override
+    public void depositItemStacks(@Nonnull Location location, @Nonnull ItemStack[] itemsToDeposit) {
+        final BlockMenu blockMenu = BlockStorage.getInventory(location);
+        final ItemStack card = blockMenu.getItemInSlot(CARD_SLOT);
+
+        // No card, quick exit
+        if (card == null || card.getType() == Material.AIR) {
+            return;
+        }
+
+        NetworkMemoryShellCache cache = NetworkMemoryShell.CACHES.get(location);
+        if (cache != null) {
+            tryInputItem(card, itemsToDeposit, cache);
+        }
+
+    }
+
+    @Override
+    public boolean contains(@Nonnull Location location, @Nonnull ItemStack testItemStack) {
+        final BlockMenu blockMenu = BlockStorage.getInventory(location);
+        final ItemStack card = blockMenu.getItemInSlot(CARD_SLOT);
+        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+
+        // No card, quick exit
+        if (card == null || card.getType() == Material.AIR) {
+            return false;
+        }
+
+        NetworkMemoryShellCache cache = NetworkMemoryShell.CACHES.get(location);
+        if (cache != null && cardItem instanceof NetworkCard) {
+            final CardInstance cardInstance = getCardInstance(card, cache);
+            if (cardInstance == null) {
+                return false;
+            }
+            return StackUtils.itemsMatch(cardInstance, testItemStack);
+        }
+
+        return false;
+    }
+
     @ParametersAreNonnullByDefault
     public static void tryInputItem(ItemStack card, ItemStack[] input, NetworkMemoryShellCache cache) {
         final SlimefunItem cardItem = SlimefunItem.getByItem(card);
@@ -148,7 +258,7 @@ public class NetworkMemoryShell extends NetworkObject {
                 return;
             }
             for (ItemStack itemStack : input) {
-                if (itemMatch(itemStack, cardInstance)) {
+                if (StackUtils.itemsMatch(cardInstance, itemStack)) {
                     cardInstance.increaseAmount(itemStack.getAmount());
                     itemStack.setAmount(0);
                     setCardInstance(card, cardInstance);
@@ -184,6 +294,31 @@ public class NetworkMemoryShell extends NetworkObject {
             setCardInstance(card, cardInstance);
             cache.setNeedsLoreRefresh(true);
         }
+    }
+
+    @ParametersAreNonnullByDefault
+    private static int withdrawItem(BlockMenu blockMenu, ItemStack card, NetworkMemoryShellCache cache, int amount) {
+        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+        if (cardItem instanceof NetworkCard) {
+            final CardInstance amountInstance = getAmountInstance(card);
+
+            if (amountInstance == null || amountInstance.getAmount() <= 0) {
+                return 0;
+            }
+
+            final CardInstance cardInstance = getCardInstance(card, cache);
+
+            if (cardInstance == null) {
+                return 0;
+            }
+
+            final int amountWithdrawn = cardInstance.withdrawAmount(amount);
+
+            setCardInstance(card, cardInstance);
+            cache.setNeedsLoreRefresh(true);
+            return amountWithdrawn;
+        }
+        return 0;
     }
 
     @ParametersAreNonnullByDefault
@@ -235,19 +370,6 @@ public class NetworkMemoryShell extends NetworkObject {
     private static CardInstance getAmountInstance(@Nonnull ItemStack card) {
         final ItemMeta cardMeta = card.getItemMeta();
         return DataTypeMethods.getCustom(cardMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE);
-    }
-
-    private static boolean itemMatch(@Nonnull ItemStack itemStack, @Nonnull CardInstance instance) {
-        if (itemStack.getType() != instance.getItemType()) {
-            return false;
-        }
-        if (itemStack.hasItemMeta()) {
-            final ItemMeta itemMeta = itemStack.getItemMeta();
-            final ItemMeta cachedMeta = instance.getItemMeta();
-            return itemMeta.equals(cachedMeta);
-        } else {
-            return instance.getItemMeta() == null;
-        }
     }
 
     private static void setCardInstance(@Nonnull ItemStack card, @Nonnull CardInstance cardInstance) {

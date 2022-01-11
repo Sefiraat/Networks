@@ -32,6 +32,15 @@ public class CardInstance extends ItemStackCache {
         this.amount = amount;
     }
 
+    public int withdrawAmount(int amount) {
+        if (this.getItemStack() == null) {
+            return 0;
+        }
+        int withdrawAmount = Math.min(this.amount, amount);
+        reduceAmount(withdrawAmount);
+        return withdrawAmount;
+    }
+
     @Nullable
     public ItemStack withdrawStack(int amount) {
         if (this.getItemStack() == null) {
