@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

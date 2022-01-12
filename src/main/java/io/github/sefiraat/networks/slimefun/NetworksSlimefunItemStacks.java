@@ -34,6 +34,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MONITOR;
     public static final SlimefunItemStack NETWORK_IMPORT;
     public static final SlimefunItemStack NETWORK_EXPORT;
+    public static final SlimefunItemStack NETWORK_GRABBER;
+    public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_PURGER;
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
@@ -143,6 +146,37 @@ public class NetworksSlimefunItemStacks {
             "設置為不斷導出任何",
             "所指定的物品一組.",
             "接受從物流中提取的物品."
+        );
+
+        NETWORK_GRABBER = Theme.themedSlimefunItemStack(
+            "NTW_GRABBER",
+            new ItemStack(Material.MAGENTA_STAINED_GLASS),
+            Theme.MACHINE,
+            "網路抓取器",
+            "網路抓取器將嘗試從",
+            "選定的機器中抓取",
+            "它第一個找到的物品."
+        );
+
+        NETWORK_PUSHER = Theme.themedSlimefunItemStack(
+            "NTW_PUSHER",
+            new ItemStack(Material.BROWN_STAINED_GLASS),
+            Theme.MACHINE,
+            "網路推送器",
+            "網路推送器將嘗試",
+            "推送匹配的物品",
+            "到所選的機器中."
+        );
+
+        NETWORK_PURGER = Theme.themedSlimefunItemStack(
+            "NTW_TRASH",
+            new ItemStack(Material.OBSERVER),
+            Theme.MACHINE,
+            "網路清理器",
+            "網路清理器將從",
+            "網路中拉出匹配的物品,",
+            "並立即丟入虛空銷毀.",
+            "請小心使用!"
         );
 
         NETWORK_GRID = Theme.themedSlimefunItemStack(

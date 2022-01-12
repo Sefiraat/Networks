@@ -102,7 +102,17 @@ public class NetworkNode {
     }
 
     public Set<NetworkNode> getChildrenNodes() {
-        return childrenNodes;
+        return this.childrenNodes;
+    }
+
+    public Set<NetworkNode> getAllChildrenNodes() {
+        final Set<NetworkNode> nodes = new HashSet<>();
+
+        for (NetworkNode childrenNode : getChildrenNodes()) {
+            nodes.addAll(childrenNode.getAllChildrenNodes());
+        }
+        nodes.addAll(this.childrenNodes);
+        return nodes;
     }
 
     public void addAllChildren() {

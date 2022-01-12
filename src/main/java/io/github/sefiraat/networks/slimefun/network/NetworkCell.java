@@ -14,14 +14,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NetworkCell extends NetworkObject {
+
+    private static final int[] SLOTS;
+
+    static {
+        List<Integer> integers = new ArrayList<>();
+        for (int i = 0; i < 54; i++) {
+            integers.add(i);
+        }
+        SLOTS = integers.stream().mapToInt(Integer::intValue).toArray();
+    }
 
     public NetworkCell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.CELL);
 
-        for (int i = 0; i < 54; i++) {
-            this.getSlotsToDrop().add(i);
+        for (int slot : SLOTS) {
+            this.getSlotsToDrop().add(slot);
         }
     }
 
@@ -42,7 +54,7 @@ public class NetworkCell extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[0];
+                return new int[]{0};
             }
 
         };

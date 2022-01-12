@@ -1,7 +1,7 @@
 package io.github.sefiraat.networks.utils.datatypes;
 
 import de.jeff_media.morepersistentdatatypes.DataType;
-import io.github.sefiraat.networks.slimefun.tools.CardInstance;
+import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.utils.Keys;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataAdapterContext;
