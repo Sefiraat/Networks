@@ -2,6 +2,8 @@ package io.github.sefiraat.networks.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,6 +39,7 @@ public class NetworkNode {
         this.nodeType = type;
     }
 
+    @Nonnull
     public NetworkNode addChild(@Nonnull NetworkNode child) {
         child.setParent(this);
         child.setRoot(this.getRoot());
@@ -45,10 +48,12 @@ public class NetworkNode {
         return child;
     }
 
+    @Nonnull
     public Location getNodePosition() {
         return nodePosition;
     }
 
+    @Nonnull
     public NodeType getNodeType() {
         return nodeType;
     }
@@ -66,6 +71,7 @@ public class NetworkNode {
         return getRoot().networkLocations;
     }
 
+    @Nonnull
     public NetworkRoot getRoot() {
         return this.root;
     }
@@ -171,6 +177,26 @@ public class NetworkNode {
             }
         }
         return itemList;
+    }
+
+    public long getDownstreamCharge() {
+        long c = this.getNodeCharge();
+        for (NetworkNode childNode : getChildrenNodes()) {
+            c += childNode.getDownstreamCharge();
+        }
+        return c;
+    }
+
+    protected long getNodeCharge() {
+        if (this.nodeType == NodeType.POWER) {
+            int blockCharge = 0;
+            final SlimefunItem item = BlockStorage.check(this.nodePosition);
+            if (item instanceof NetworkPowerNode powerNode) {
+                blockCharge = powerNode.getCharge(this.nodePosition);
+            }
+            return blockCharge;
+        }
+        return 0;
     }
 
 }

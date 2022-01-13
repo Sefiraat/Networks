@@ -12,5 +12,8 @@ public enum NodeType {
     WIPER,
     GRABBER,
     PUSHER,
-    TRASH
+    TRASH,
+    CRAFTER,
+    POWER,
+    PACKAGER
 }

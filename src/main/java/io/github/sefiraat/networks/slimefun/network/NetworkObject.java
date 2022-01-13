@@ -23,18 +23,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetworkObject extends SlimefunItem {
+public abstract class NetworkObject extends SlimefunItem {
 
     @Getter
     private final NodeType nodeType;
     @Getter
     private final List<Integer> slotsToDrop = new ArrayList<>();
 
-    public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type) {
+    protected NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type) {
         this(itemGroup, item, recipeType, recipe, null, type);
     }
 
-    public NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput, NodeType type) {
+    protected NetworkObject(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput, NodeType type) {
         super(itemGroup, item, recipeType, recipe, recipeOutput);
         this.nodeType = type;
         addItemHandler(
@@ -60,13 +60,13 @@ public class NetworkObject extends SlimefunItem {
         );
     }
 
-    public void addToRegistry(@Nonnull Block block) {
+    protected void addToRegistry(@Nonnull Block block) {
         if (!NetworkStorage.getAllNetworkObjects().containsKey(block.getLocation())) {
             NetworkStorage.getAllNetworkObjects().put(block.getLocation(), new NodeDefinition(nodeType));
         }
     }
 
-    public void onBreak(@Nonnull BlockBreakEvent event) {
+    protected void onBreak(@Nonnull BlockBreakEvent event) {
         final Location location = event.getBlock().getLocation();
         final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
 

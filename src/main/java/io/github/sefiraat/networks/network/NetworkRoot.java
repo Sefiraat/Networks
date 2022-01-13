@@ -9,6 +9,7 @@ import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -47,6 +48,10 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkGrabbers = new HashSet<>();
     protected final Set<Location> networkPushers = new HashSet<>();
     protected final Set<Location> networkPurgers = new HashSet<>();
+    protected final Set<Location> networkPowerNodes = new HashSet<>();
+    protected final Set<Location> networkCrafters = new HashSet<>();
+
+    private long totalPower = 0;
 
     public NetworkRoot(Location location, NodeType type) {
         super(location, type);
@@ -72,6 +77,8 @@ public class NetworkRoot extends NetworkNode {
             case GRABBER -> networkGrabbers.add(location);
             case PUSHER -> networkPushers.add(location);
             case TRASH -> networkPurgers.add(location);
+            case POWER -> networkPowerNodes.add(location);
+            case CRAFTER -> networkCrafters.add(location);
             default -> {
                 // Not required
             }
@@ -434,6 +441,22 @@ public class NetworkRoot extends NetworkNode {
         if (fallbackBlockMenu != null) {
             fallbackBlockMenu.replaceExistingItem(fallBackSlot, incomingStack.clone());
             incomingStack.setAmount(0);
+        }
+    }
+
+    @Override
+    public long getNodeCharge() {
+        return 0;
+    }
+
+    public void removeCharge(long chargeToRemove) {
+        for (Location node : networkPowerNodes) {
+            final SlimefunItem item = BlockStorage.check(node);
+            if (item instanceof NetworkPowerNode powerNode) {
+                final int charge = powerNode.getCharge(node);
+                powerNode.removeCharge(node, (int) Math.max(chargeToRemove, charge));
+                chargeToRemove -= charge;
+            }
         }
     }
 }

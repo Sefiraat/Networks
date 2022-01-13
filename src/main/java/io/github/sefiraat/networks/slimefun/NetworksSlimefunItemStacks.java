@@ -29,7 +29,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack RADIOACTIVE_OPTIC_STAR;
     public static final SlimefunItemStack SHRINKING_BASE;
     public static final SlimefunItemStack SIMPLE_NANOBOTS;
-    public static final SlimefunItemStack UPGRADED_NANOBOTS;
+    public static final SlimefunItemStack ADVANCED_NANOBOTS;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -48,6 +48,11 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_1;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_RECIPE_ENCODER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
     // Tools
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
@@ -59,9 +64,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
     public static final SlimefunItemStack NETWORK_PROBE;
-
-    // Machines
-    public static final SlimefunItemStack RECIPE_PACKAGER;
+    public static final SlimefunItemStack CRAFTING_BLUEPRINT;
 
     static {
 
@@ -119,11 +122,11 @@ public class NetworksSlimefunItemStacks {
             "help you with precise tasks."
         );
 
-        UPGRADED_NANOBOTS = Theme.themedSlimefunItemStack(
-            "NTW_UPGRADED_NANOBOTS",
+        ADVANCED_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_ADVANCED_NANOBOTS",
             getPreEnchantedItemStack(Material.MELON_SEEDS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
             Theme.CRAFTING,
-            "Simple Nanobots",
+            "Advanced Nanobots",
             "Teeny Tiny little bots that can",
             "help you with precise tasks.",
             "This version is smarter and faster."
@@ -308,6 +311,64 @@ public class NetworksSlimefunItemStacks {
             MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[3])
         );
 
+        NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_1",
+            new ItemStack(Material.BROWN_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Capacitor (1)",
+            "The Network Capacitor can take",
+            "power in and store it for use",
+            "within the network.",
+            "",
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+        );
+
+        NETWORK_CAPACITOR_2 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_2",
+            new ItemStack(Material.LIGHT_BLUE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Capacitor (2)",
+            "The Network Capacitor can take",
+            "power in and store it for use",
+            "within the network.",
+            "",
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+        );
+
+        NETWORK_AUTO_CRAFTER = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER",
+            new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Auto Crafter",
+            "The Network Auto Crafter accepts",
+            "a crafting blueprint. When the",
+            "blueprint output item is requested",
+            "while there is none in the network",
+            "it will be crafted if you have",
+            "materials.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+        );
+
+        NETWORK_AUTO_CRAFTER_WITHHOLDING = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER_WITHHOLDING",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Auto Crafter (Withholding)",
+            "The Network Auto Crafter accepts",
+            "a crafting blueprint. When the",
+            "blueprint output item is requested",
+            "while there is none in the network",
+            "it will be crafted if you have",
+            "materials.",
+            "A Withholding Crafter will keep",
+            "a stack in the output and stop",
+            "crafting. The stack can bee seen",
+            "in the Network.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 2000)
+        );
+
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
             "NTW_MEMORY_CARD_1",
             new ItemStack(Material.LIGHT_GRAY_DYE),
@@ -453,13 +514,25 @@ public class NetworksSlimefunItemStacks {
             "show the nodes on the network."
         );
 
-        RECIPE_PACKAGER = Theme.themedSlimefunItemStack(
+        CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_BLUEPRINT",
+            new ItemStack(Material.BLUE_DYE),
+            Theme.TOOL,
+            "Crafting Blueprint",
+            "A blank blueprint that can",
+            "be used to store a crafting",
+            "recipe."
+        );
+
+        NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
             "NTW_RECIPE_PACKAGER",
             new ItemStack(Material.TARGET),
             Theme.MACHINE,
-            "Recipe Packager",
+            "Network Recipe Encoder",
             "Used to form a Crafting Blueprint",
-            "from input items."
+            "from input items.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/encode", Theme.CLICK_INFO, Theme.PASSIVE, 5000)
         );
     }
 
