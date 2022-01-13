@@ -27,6 +27,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
     public static final SlimefunItemStack RADIOACTIVE_OPTIC_STAR;
+    public static final SlimefunItemStack SHRINKING_BASE;
+    public static final SlimefunItemStack SIMPLE_NANOBOTS;
+    public static final SlimefunItemStack UPGRADED_NANOBOTS;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -56,6 +59,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
     public static final SlimefunItemStack NETWORK_PROBE;
+
+    // Machines
+    public static final SlimefunItemStack RECIPE_PACKAGER;
 
     static {
 
@@ -93,6 +99,34 @@ public class NetworksSlimefunItemStacks {
             "Radioactive Optic Star",
             "A crystalline star structure that",
             "can store insane amounts of information."
+        );
+
+        SHRINKING_BASE = Theme.themedSlimefunItemStack(
+            "NTW_SHRINKING_BASE",
+            getPreEnchantedItemStack(Material.PISTON, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Shrinking Base",
+            "An advanced construct able to make",
+            "big things go small."
+        );
+
+        SIMPLE_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_SIMPLE_NANOBOTS",
+            new ItemStack(Material.MELON_SEEDS),
+            Theme.CRAFTING,
+            "Simple Nanobots",
+            "Teeny Tiny little bots that can",
+            "help you with precise tasks."
+        );
+
+        UPGRADED_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_UPGRADED_NANOBOTS",
+            getPreEnchantedItemStack(Material.MELON_SEEDS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Simple Nanobots",
+            "Teeny Tiny little bots that can",
+            "help you with precise tasks.",
+            "This version is smarter and faster."
         );
 
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
@@ -417,6 +451,15 @@ public class NetworksSlimefunItemStacks {
             "Network Probe",
             "When used on a controller, this will",
             "show the nodes on the network."
+        );
+
+        RECIPE_PACKAGER = Theme.themedSlimefunItemStack(
+            "NTW_RECIPE_PACKAGER",
+            new ItemStack(Material.TARGET),
+            Theme.MACHINE,
+            "Recipe Packager",
+            "Used to form a Crafting Blueprint",
+            "from input items."
         );
     }
 

@@ -1,6 +1,7 @@
 package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.machines.Packager;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
@@ -31,6 +32,9 @@ public class NetworkSlimefunItems {
     public static final UnplaceableBlock OPTIC_CABLE;
     public static final UnplaceableBlock OPTIC_STAR;
     public static final UnplaceableBlock RADIOACTIVE_OPTIC_STAR;
+    public static final UnplaceableBlock SHRINKING_BASE;
+    public static final UnplaceableBlock SIMPLE_NANOBOTS;
+    public static final UnplaceableBlock UPGRADED_NANOBOTS;
 
     public static final NetworkController NETWORK_CONTROLLER;
     public static final NetworkBridge NETWORK_BRIDGE;
@@ -59,6 +63,7 @@ public class NetworkSlimefunItems {
     public static final NetworkCard NETWORK_MEMORY_CARD_8;
     public static final NetworkProbe NETWORK_PROBE;
 
+    public static final Packager RECIPE_PACKAGER;
 
     static {
 
@@ -107,6 +112,16 @@ public class NetworkSlimefunItems {
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3,
                 OPTIC_CABLE.getItem(), OPTIC_STAR.getItem(), OPTIC_CABLE.getItem(),
                 SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.BLISTERING_INGOT_3
+            }
+        );
+
+        SHRINKING_BASE = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.SHRINKING_BASE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.CORINTHIAN_BRONZE_INGOT, SlimefunItems.ANDROID_INTERFACE_ITEMS, SlimefunItems.CORINTHIAN_BRONZE_INGOT,
+
             }
         );
 
@@ -394,6 +409,17 @@ public class NetworkSlimefunItems {
             new ItemStack[]{
                 null, SlimefunItems.DURALUMIN_INGOT, null,
                 null, OPTIC_CABLE.getItem(), null,
+                null, NETWORK_BRIDGE.getItem(), null
+            }
+        );
+
+        RECIPE_PACKAGER = new Packager(
+            NetworksItemGroups.MACHINES,
+            NetworksSlimefunItemStacks.RECIPE_PACKAGER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, SlimefunItems.DURALUMIN_INGOT, null,
+                null, SlimefunItems.ENHANCED_AUTO_CRAFTER, null,
                 null, NETWORK_BRIDGE.getItem(), null
             }
         );

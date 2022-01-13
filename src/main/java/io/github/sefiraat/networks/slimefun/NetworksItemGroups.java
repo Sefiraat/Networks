@@ -39,6 +39,15 @@ public final class NetworksItemGroups {
         )
     );
 
+    public static final SubItemGroup MACHINES = new SubItemGroup(
+        Keys.newKey("machines"),
+        MAIN,
+        new CustomItemStack(
+            new ItemStack(Material.TARGET),
+            Theme.MAIN.getColor() + "Machinery"
+        )
+    );
+
     static {
         final Networks plugin = Networks.getInstance();
 
@@ -46,5 +55,6 @@ public final class NetworksItemGroups {
         NetworksItemGroups.MAIN.register(plugin);
         NetworksItemGroups.MATERIALS.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS.register(plugin);
+        NetworksItemGroups.MACHINES.register(plugin);
     }
 }
