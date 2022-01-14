@@ -180,6 +180,7 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<BarrelIdentity> getBarrels() {
+        final Set<Location> addedLocations = new HashSet<>();
         final Set<BarrelIdentity> barrelItemMap = new HashSet<>();
 
         for (Location cellLocation : networkMonitors) {
@@ -190,6 +191,13 @@ public class NetworkRoot extends NetworkNode {
             }
 
             final Location testLocation = cellLocation.clone().add(face.getDirection());
+
+            if (addedLocations.contains(testLocation)) {
+                continue;
+            } else {
+                addedLocations.add(testLocation);
+            }
+
             final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
             if (Networks.getSupportedPluginManager().isInfinityExpansion()
@@ -232,6 +240,12 @@ public class NetworkRoot extends NetworkNode {
             return null;
         }
 
+        final StorageCache cache = storageUnit.getCache(blockMenu.getLocation());
+
+        if (cache == null) {
+            return null;
+        }
+
         final ItemStack clone = itemStack.clone();
         clone.setAmount(1);
 
@@ -239,7 +253,7 @@ public class NetworkRoot extends NetworkNode {
             blockMenu.getLocation(),
             clone,
             storedInt + itemStack.getAmount(),
-            storageUnit.getCache(blockMenu.getLocation())
+            cache
         );
     }
 
