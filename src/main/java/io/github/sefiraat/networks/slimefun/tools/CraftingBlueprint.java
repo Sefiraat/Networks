@@ -35,6 +35,7 @@ public class CraftingBlueprint extends UnplaceableBlock {
 
         for (ItemStack item : recipe) {
             if (item == null) {
+                lore.add(Theme.PASSIVE + "Nothing");
                 continue;
             }
             ItemMeta recipeItemMeta = item.getItemMeta();
@@ -44,6 +45,8 @@ public class CraftingBlueprint extends UnplaceableBlock {
                 lore.add(Theme.PASSIVE + StringUtils.toTitleCase(item.getType().name()));
             }
         }
+
+        lore.add("");
         lore.add(Theme.CLICK_INFO + "Outputting");
 
         if (outputMeta.hasDisplayName()) {

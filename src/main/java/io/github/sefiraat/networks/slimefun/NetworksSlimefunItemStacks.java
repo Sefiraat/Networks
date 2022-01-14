@@ -50,6 +50,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
     public static final SlimefunItemStack NETWORK_RECIPE_ENCODER;
     public static final SlimefunItemStack NETWORK_AUTO_CRAFTER;
     public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
@@ -335,6 +336,27 @@ public class NetworksSlimefunItemStacks {
             MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
         );
 
+        NETWORK_POWER_DISPLAY = Theme.themedSlimefunItemStack(
+            "NTW_POWER_DISPLAY",
+            new ItemStack(Material.TINTED_GLASS),
+            Theme.MACHINE,
+            "Network Power Display",
+            "The Network Power Display will",
+            "display the power in the network.",
+            "Simple, right?"
+        );
+
+        NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
+            "NTW_RECIPE_PACKAGER",
+            new ItemStack(Material.TARGET),
+            Theme.MACHINE,
+            "Network Recipe Encoder",
+            "Used to form a Crafting Blueprint",
+            "from input items.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/encode", Theme.CLICK_INFO, Theme.PASSIVE, 20000)
+        );
+
         NETWORK_AUTO_CRAFTER = Theme.themedSlimefunItemStack(
             "NTW_AUTO_CRAFTER",
             new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
@@ -522,17 +544,6 @@ public class NetworksSlimefunItemStacks {
             "A blank blueprint that can",
             "be used to store a crafting",
             "recipe."
-        );
-
-        NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
-            "NTW_RECIPE_PACKAGER",
-            new ItemStack(Material.TARGET),
-            Theme.MACHINE,
-            "Network Recipe Encoder",
-            "Used to form a Crafting Blueprint",
-            "from input items.",
-            "",
-            MessageFormat.format("{0}Network Drain: {1}{2}/encode", Theme.CLICK_INFO, Theme.PASSIVE, 5000)
         );
     }
 

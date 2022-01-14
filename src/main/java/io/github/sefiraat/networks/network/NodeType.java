@@ -15,5 +15,6 @@ public enum NodeType {
     TRASH,
     CRAFTER,
     POWER,
-    PACKAGER
+    PACKAGER,
+    POWER_DISPLAY
 }

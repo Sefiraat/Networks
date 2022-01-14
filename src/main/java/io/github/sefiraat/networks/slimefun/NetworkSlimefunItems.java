@@ -1,7 +1,7 @@
 package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.slimefun.machines.Packager;
+import io.github.sefiraat.networks.slimefun.network.NetworkPackager;
 import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
@@ -12,6 +12,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkImport;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
@@ -57,6 +58,8 @@ public class NetworkSlimefunItems {
     public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_4;
     public static final NetworkPowerNode NETWORK_CAPACITOR_1;
     public static final NetworkPowerNode NETWORK_CAPACITOR_2;
+    public static final NetworkPowerDisplay NETWORK_POWER_DISPLAY;
+    public static final NetworkPackager NETWORK_RECIPE_ENCODER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
@@ -71,7 +74,6 @@ public class NetworkSlimefunItems {
     public static final NetworkProbe NETWORK_PROBE;
     public static final CraftingBlueprint CRAFTING_BLUEPRINT;
 
-    public static final Packager NETWORK_RECIPE_ENCODER;
 
     static {
 
@@ -357,7 +359,18 @@ public class NetworkSlimefunItems {
             100000
         );
 
-        NETWORK_RECIPE_ENCODER = new Packager(
+        NETWORK_POWER_DISPLAY = new NetworkPowerDisplay(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_REGULATOR, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_CAPACITOR_1.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_CONNECTOR, OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_RECIPE_ENCODER = new NetworkPackager(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_RECIPE_ENCODER,
             RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -374,8 +387,8 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.ENHANCED_AUTO_CRAFTER, OPTIC_CABLE.getItem(),
-                OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), SIMPLE_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), SlimefunItems.ENHANCED_AUTO_CRAFTER, OPTIC_GLASS.getItem(),
             },
             1000,
             true
@@ -387,8 +400,8 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-                OPTIC_CABLE.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_CABLE.getItem(),
-                OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
             },
             2000,
             false
@@ -543,6 +556,7 @@ public class NetworkSlimefunItems {
         NETWORK_MEMORY_WIPER_4.register(plugin);
         NETWORK_CAPACITOR_1.register(plugin);
         NETWORK_CAPACITOR_2.register(plugin);
+        NETWORK_POWER_DISPLAY.register(plugin);
         NETWORK_RECIPE_ENCODER.register(plugin);
         NETWORK_AUTO_CRAFTER.register(plugin);
         NETWORK_AUTO_CRAFTER_WITHHOLDING.register(plugin);

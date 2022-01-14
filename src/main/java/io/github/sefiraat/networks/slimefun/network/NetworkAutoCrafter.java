@@ -35,6 +35,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
@@ -79,7 +80,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {
-                    return true;
+                    return false;
                 }
 
                 @Override
@@ -143,7 +144,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             final ItemStack outputItem = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
             if (outputItem != null
-                && outputItem.getType() == Material.AIR
+                && outputItem.getType() != Material.AIR
                 && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize())
             ) {
                 return;
@@ -185,11 +186,12 @@ public class NetworkAutoCrafter extends NetworkObject {
 
         // If no slimefun recipe found, try a vanilla one
         if (crafted == null) {
-            crafted = Bukkit.craftItem(inputs, blockMenu.getBlock().getWorld(), player);
+            final Recipe recipe = Bukkit.getCraftingRecipe(inputs, blockMenu.getBlock().getWorld());
+            crafted = recipe == null ? null : recipe.getResult();
         }
 
         // If no item crafted OR result doesn't fit, escape
-        if (crafted.getType() == Material.AIR) {
+        if (crafted == null || crafted.getType() == Material.AIR) {
             for (ItemStack input : inputs) {
                 root.addItemStack(input);
             }

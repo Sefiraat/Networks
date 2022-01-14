@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
@@ -450,12 +451,17 @@ public class NetworkRoot extends NetworkNode {
     }
 
     public void removeCharge(long chargeToRemove) {
+        int removed = 0;
         for (Location node : networkPowerNodes) {
             final SlimefunItem item = BlockStorage.check(node);
             if (item instanceof NetworkPowerNode powerNode) {
                 final int charge = powerNode.getCharge(node);
-                powerNode.removeCharge(node, (int) Math.max(chargeToRemove, charge));
-                chargeToRemove -= charge;
+                final int toRemove = (int) Math.min(chargeToRemove - removed, charge);
+                powerNode.removeCharge(node, toRemove);
+                removed = removed + toRemove;
+            }
+            if (removed >= chargeToRemove) {
+                return;
             }
         }
     }

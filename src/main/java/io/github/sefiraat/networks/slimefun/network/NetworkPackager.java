@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.machines;
+package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
@@ -6,7 +6,6 @@ import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.SupportedRecipes;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
-import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -29,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class Packager extends NetworkObject {
+public class NetworkPackager extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -47,6 +46,8 @@ public class Packager extends NetworkObject {
     private static final int ENCODE_SLOT = 16;
     private static final int OUTPUT_SLOT = 34;
 
+    private static final int CHARGE_COST = 20000;
+
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Blank Blueprint"
     );
@@ -55,8 +56,13 @@ public class Packager extends NetworkObject {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Click to encode when valid"
     );
 
-    public Packager(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkPackager(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.PACKAGER);
+        for (int recipeSlot : RECIPE_SLOTS) {
+            this.getSlotsToDrop().add(recipeSlot);
+        }
+        this.getSlotsToDrop().add(BLANK_BLUEPRINT_SLOT);
+        this.getSlotsToDrop().add(OUTPUT_SLOT);
     }
 
 
@@ -96,24 +102,29 @@ public class Packager extends NetworkObject {
     public void tryEncode(@Nonnull Player player, @Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             return;
         }
 
         final NetworkRoot root = definition.getNode().getRoot();
         final long networkCharge = root.getDownstreamCharge();
 
-        if (networkCharge < 5000) {
+        if (networkCharge < CHARGE_COST) {
+            player.sendMessage(Theme.WARNING + "Not enough Network power to fulfill this task.");
             return;
         }
 
-        if (blockMenu.getItemInSlot(OUTPUT_SLOT) != null) {
+        final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
+
+        if (outputStack != null && outputStack.getType() != Material.AIR) {
+            player.sendMessage(Theme.WARNING + "The output slot must be empty.");
             return;
         }
 
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
         if (!(SlimefunItem.getByItem(blueprint) instanceof CraftingBlueprint)) {
+            player.sendMessage(Theme.WARNING + "You need to provide a blank blueprint");
             return;
         }
 
@@ -135,7 +146,7 @@ public class Packager extends NetworkObject {
         // Go through each slimefun recipe, test and set the ItemStack if found
         for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
             if (SupportedRecipes.testRecipe(inputs, entry.getKey())) {
-                crafted = entry.getValue().clone();
+                crafted = new ItemStack(entry.getValue().clone());
                 break;
             }
         }
@@ -147,6 +158,7 @@ public class Packager extends NetworkObject {
 
         // If no item crafted OR result doesn't fit, escape
         if (crafted.getType() == Material.AIR) {
+            player.sendMessage(Theme.WARNING + "Doesn't look like this is a valid recipe.");
             return;
         }
 
@@ -163,6 +175,6 @@ public class Packager extends NetworkObject {
         }
 
         blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
-        root.removeCharge(5000);
+        root.removeCharge(CHARGE_COST);
     }
 }
