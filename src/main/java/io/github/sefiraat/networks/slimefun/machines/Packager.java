@@ -123,7 +123,7 @@ public class Packager extends NetworkObject {
         for (int recipeSlot : RECIPE_SLOTS) {
             ItemStack stackInSlot = blockMenu.getItemInSlot(recipeSlot);
             if (stackInSlot == null) {
-                inputs[1] = null;
+                inputs[i] = null;
             } else {
                 inputs[i] = StackUtils.getAsQuantity(stackInSlot, 1);
             }
@@ -142,7 +142,7 @@ public class Packager extends NetworkObject {
 
         // If no slimefun recipe found, try a vanilla one
         if (crafted == null) {
-            crafted = Bukkit.craftItem(inputs, player.getWorld(), player);
+            crafted = Bukkit.craftItem(inputs.clone(), player.getWorld(), player);
         }
 
         // If no item crafted OR result doesn't fit, escape
@@ -154,6 +154,13 @@ public class Packager extends NetworkObject {
 
         blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);
+
+        for (int recipeSlot : RECIPE_SLOTS) {
+            ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
+            if (slotItem != null) {
+                slotItem.setAmount(slotItem.getAmount() - 1);
+            }
+        }
 
         blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         root.removeCharge(5000);

@@ -79,13 +79,14 @@ public class NetworkAutoCrafter extends NetworkObject {
             new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {
-                    return false;
+                    return true;
                 }
 
                 @Override
                 public void tick(Block block, SlimefunItem slimefunItem, Config config) {
                     BlockMenu blockMenu = BlockStorage.getInventory(block);
                     if (blockMenu != null) {
+                        addToRegistry(block);
                         craftPreFlight(blockMenu);
                     }
                 }
@@ -163,8 +164,13 @@ public class NetworkAutoCrafter extends NetworkObject {
         final ItemStack[] inputs = new ItemStack[9];
 
         for (int i = 0; i < 9; i++) {
-            final ItemStack fetched = root.getItemStack(new ItemRequest(instance.getRecipe()[i], 1));
-            inputs[i] = fetched;
+            final ItemStack requested = instance.getRecipe()[i];
+            if (requested != null) {
+                final ItemStack fetched = root.getItemStack(new ItemRequest(instance.getRecipe()[i], 1));
+                inputs[i] = fetched;
+            } else {
+                inputs[i] = null;
+            }
         }
 
         ItemStack crafted = null;
