@@ -51,6 +51,7 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkPurgers = new HashSet<>();
     protected final Set<Location> networkPowerNodes = new HashSet<>();
     protected final Set<Location> networkCrafters = new HashSet<>();
+    protected Set<BarrelIdentity> barrels = null;
 
     private long totalPower = 0;
 
@@ -180,8 +181,13 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<BarrelIdentity> getBarrels() {
+
+        if (this.barrels != null) {
+            return this.barrels;
+        }
+
         final Set<Location> addedLocations = new HashSet<>();
-        final Set<BarrelIdentity> barrelItemMap = new HashSet<>();
+        final Set<BarrelIdentity> barrelSet = new HashSet<>();
 
         for (Location cellLocation : networkMonitors) {
             final BlockFace face = NetworkDirectional.getSelectedFace(cellLocation);
@@ -206,7 +212,7 @@ public class NetworkRoot extends NetworkNode {
                 BlockMenu menu = BlockStorage.getInventory(testLocation);
                 InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
                 if (infinityBarrel != null) {
-                    barrelItemMap.add(infinityBarrel);
+                    barrelSet.add(infinityBarrel);
                 }
                 continue;
             }
@@ -215,13 +221,14 @@ public class NetworkRoot extends NetworkNode {
                 BlockMenu menu = BlockStorage.getInventory(testLocation);
                 NetworkShell shell = getShell(menu);
                 if (shell != null) {
-                    barrelItemMap.add(shell);
+                    barrelSet.add(shell);
                 }
             }
 
         }
 
-        return barrelItemMap;
+        this.barrels = barrelSet;
+        return barrelSet;
     }
 
     @Nullable
