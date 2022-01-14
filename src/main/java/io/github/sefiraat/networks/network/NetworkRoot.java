@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
@@ -47,6 +48,7 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkGrabbers = new HashSet<>();
     protected final Set<Location> networkPushers = new HashSet<>();
     protected final Set<Location> networkPurgers = new HashSet<>();
+    protected Set<BarrelIdentity> barrels = null;
 
     public NetworkRoot(Location location, NodeType type) {
         super(location, type);
@@ -172,8 +174,13 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<BarrelIdentity> getBarrels() {
+
+        if (this.barrels != null) {
+            return this.barrels;
+        }
+
         final Set<Location> addedLocations = new HashSet<>();
-        final Set<BarrelIdentity> barrelItemMap = new HashSet<>();
+        final Set<BarrelIdentity> barrelSet = new HashSet<>();
 
         for (Location cellLocation : networkMonitors) {
             final BlockFace face = NetworkDirectional.getSelectedFace(cellLocation);
@@ -198,7 +205,7 @@ public class NetworkRoot extends NetworkNode {
                 BlockMenu menu = BlockStorage.getInventory(testLocation);
                 InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
                 if (infinityBarrel != null) {
-                    barrelItemMap.add(infinityBarrel);
+                    barrelSet.add(infinityBarrel);
                 }
                 continue;
             }
@@ -207,13 +214,14 @@ public class NetworkRoot extends NetworkNode {
                 BlockMenu menu = BlockStorage.getInventory(testLocation);
                 NetworkShell shell = getShell(menu);
                 if (shell != null) {
-                    barrelItemMap.add(shell);
+                    barrelSet.add(shell);
                 }
             }
 
         }
 
-        return barrelItemMap;
+        this.barrels = barrelSet;
+        return barrelSet;
     }
 
     @Nullable
