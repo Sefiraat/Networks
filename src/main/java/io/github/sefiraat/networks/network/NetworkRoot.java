@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
@@ -232,6 +233,12 @@ public class NetworkRoot extends NetworkNode {
             return null;
         }
 
+        final StorageCache cache = storageUnit.getCache(blockMenu.getLocation());
+
+        if (cache == null) {
+            return null;
+        }
+
         final ItemStack clone = itemStack.clone();
         clone.setAmount(1);
 
@@ -239,7 +246,7 @@ public class NetworkRoot extends NetworkNode {
             blockMenu.getLocation(),
             clone,
             storedInt + itemStack.getAmount(),
-            storageUnit.getCache(blockMenu.getLocation())
+            cache
         );
     }
 

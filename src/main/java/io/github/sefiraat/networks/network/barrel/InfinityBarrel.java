@@ -7,12 +7,16 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class InfinityBarrel extends BarrelIdentity {
 
+    @Nonnull
     private final StorageCache cache;
 
+    @ParametersAreNonnullByDefault
     public InfinityBarrel(Location location, ItemStack itemStack, int amount, StorageCache cache) {
         super(location, itemStack, amount, BarrelType.INFINITY);
         this.cache = cache;
