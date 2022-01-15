@@ -37,5 +37,5 @@ consumed into the network following the normal priorities.
 
 ## Network Exporter
 
-The Network Exported accepts an item "template" in one side and every tick it will pull out matching items into the
+The Network Exporter accepts an item "template" in one side and every tick it will pull out matching items into the
 output slot, this slot can be accessed via cargo.
