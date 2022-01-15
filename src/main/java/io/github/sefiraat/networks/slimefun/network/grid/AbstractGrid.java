@@ -331,9 +331,10 @@ public abstract class AbstractGrid extends NetworkObject {
 
     @Nonnull
     private static List<String> getLoreAddition(int amount) {
+        final MessageFormat format = new MessageFormat("{0}Amount: {1}{2}", Locale.ROOT);
         return List.of(
             "",
-            MessageFormat.format("{0}Amount: {1}{2}", Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount)
+            format.format(new Object[] { Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount }, new StringBuffer(), null).toString()
         );
     }
 }
