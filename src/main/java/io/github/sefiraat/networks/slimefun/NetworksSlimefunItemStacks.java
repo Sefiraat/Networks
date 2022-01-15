@@ -369,7 +369,7 @@ public class NetworksSlimefunItemStacks {
             "it will be crafted if you have",
             "materials.",
             "",
-            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 64)
         );
 
         NETWORK_AUTO_CRAFTER_WITHHOLDING = Theme.themedSlimefunItemStack(
@@ -385,10 +385,11 @@ public class NetworksSlimefunItemStacks {
             "materials.",
             "A Withholding Crafter will keep",
             "a stack in the output and stop",
-            "crafting. The stack can bee seen",
-            "in the Network.",
+            "crafting. The stack can been seen",
+            "in the Network and also allows for",
+            "cargo.",
             "",
-            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 2000)
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 128)
         );
 
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(

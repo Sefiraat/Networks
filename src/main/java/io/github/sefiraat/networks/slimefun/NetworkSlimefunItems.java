@@ -390,8 +390,8 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SIMPLE_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.ENHANCED_AUTO_CRAFTER, OPTIC_GLASS.getItem(),
             },
-            1000,
-            true
+            64,
+            false
         );
 
         NETWORK_AUTO_CRAFTER_WITHHOLDING = new NetworkAutoCrafter(
@@ -403,8 +403,8 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
             },
-            2000,
-            false
+            128,
+            true
         );
 
 

@@ -60,15 +60,15 @@ public class NetworkAutoCrafter extends NetworkObject {
     );
 
     private final int chargePerCraft;
-    private final boolean directSubmit;
+    private final boolean withholding;
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
-    public NetworkAutoCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean directSubmit) {
+    public NetworkAutoCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean withholding) {
         super(itemGroup, item, recipeType, recipe, NodeType.CRAFTER);
 
         this.chargePerCraft = chargePerCraft;
-        this.directSubmit = directSubmit;
+        this.withholding = withholding;
 
         this.getSlotsToDrop().add(BLUEPRINT_SLOT);
         this.getSlotsToDrop().add(OUTPUT_SLOT);
@@ -98,8 +98,17 @@ public class NetworkAutoCrafter extends NetworkObject {
 
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             return;
+        }
+
+        final NetworkRoot root = definition.getNode().getRoot();
+
+        if (!this.withholding) {
+            final ItemStack stored = blockMenu.getItemInSlot(OUTPUT_SLOT);
+            if (stored != null && stored.getType() != Material.AIR) {
+                root.addItemStack(stored);
+            }
         }
 
         final ItemStack blueprint = blockMenu.getItemInSlot(BLUEPRINT_SLOT);
@@ -108,7 +117,6 @@ public class NetworkAutoCrafter extends NetworkObject {
             return;
         }
 
-        final NetworkRoot root = definition.getNode().getRoot();
         final long networkCharge = root.getDownstreamCharge();
 
         if (networkCharge > this.chargePerCraft) {
@@ -136,20 +144,13 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             if (outputItem != null
                 && outputItem.getType() != Material.AIR
-                && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize())
-            ) {
+                && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize()))
+            {
                 return;
             }
 
             if (tryCraft(blockMenu, instance, root)) {
                 root.removeCharge(this.chargePerCraft);
-            }
-
-            if (this.directSubmit) {
-                final ItemStack crafted = blockMenu.getItemInSlot(OUTPUT_SLOT);
-                if (crafted != null && crafted.getType() != Material.AIR) {
-                    root.addItemStack(crafted);
-                }
             }
         }
     }
@@ -237,6 +238,9 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
+                if (NetworkAutoCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
+                    return new int[]{OUTPUT_SLOT};
+                }
                 return new int[0];
             }
         };

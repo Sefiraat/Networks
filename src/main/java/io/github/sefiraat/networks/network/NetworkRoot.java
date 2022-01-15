@@ -22,6 +22,7 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -52,8 +53,6 @@ public class NetworkRoot extends NetworkNode {
     protected final Set<Location> networkPowerNodes = new HashSet<>();
     protected final Set<Location> networkCrafters = new HashSet<>();
     protected Set<BarrelIdentity> barrels = null;
-
-    private long totalPower = 0;
 
     public NetworkRoot(Location location, NodeType type) {
         super(location, type);
@@ -131,10 +130,15 @@ public class NetworkRoot extends NetworkNode {
         return networkPurgers;
     }
 
+    public Set<Location> getCrafters() {
+        return networkCrafters;
+    }
+
     @Nonnull
     public Map<ItemStack, Integer> getAllNetworkItems() {
         final Map<ItemStack, Integer> itemStacks = new HashMap<>();
 
+        // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
             final Integer currentAmount = itemStacks.get(barrelIdentity.getItemStack());
             final int newAmount;
@@ -149,6 +153,30 @@ public class NetworkRoot extends NetworkNode {
                 }
             }
             itemStacks.put(barrelIdentity.getItemStack(), newAmount);
+        }
+
+        for (BlockMenu blockMenu : getCrafterOutputs()) {
+            int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+            for (int slot : slots) {
+                final ItemStack itemStack = blockMenu.getItemInSlot(slot);
+                if (itemStack == null || itemStack.getType() == Material.AIR) {
+                    continue;
+                }
+                final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
+                final Integer currentAmount = itemStacks.get(clone);
+                final int newAmount;
+                if (currentAmount == null) {
+                    newAmount = itemStack.getAmount();
+                } else {
+                    long newLong = (long) currentAmount + (long) itemStack.getAmount();
+                    if (newLong > Integer.MAX_VALUE) {
+                        newAmount = Integer.MAX_VALUE;
+                    } else {
+                        newAmount = currentAmount + itemStack.getAmount();
+                    }
+                }
+                itemStacks.put(clone, newAmount);
+            }
         }
 
         for (BlockMenu blockMenu : getCellMenus()) {
@@ -326,10 +354,23 @@ public class NetworkRoot extends NetworkNode {
         return menus;
     }
 
+    @Nonnull
+    public Set<BlockMenu> getCrafterOutputs() {
+        final Set<BlockMenu> menus = new HashSet<>();
+        for (Location location : networkCrafters) {
+            BlockMenu menu = BlockStorage.getInventory(location);
+            if (menu != null) {
+                menus.add(menu);
+            }
+        }
+        return menus;
+    }
+
     @Nullable
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
         ItemStack stackToReturn = null;
 
+        // Cells first
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack == null
@@ -365,6 +406,41 @@ public class NetworkRoot extends NetworkNode {
             }
         }
 
+        // Crafters
+        for (BlockMenu blockMenu : getCrafterOutputs()) {
+            int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+            for (int slot : slots) {
+                final ItemStack itemStack = blockMenu.getItemInSlot(slot);
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack)) {
+                    continue;
+                }
+
+                // Stack is null, so we can fill it here
+                if (stackToReturn == null) {
+                    stackToReturn = itemStack.clone();
+                    stackToReturn.setAmount(1);
+                    request.receiveAmount(1);
+                    itemStack.setAmount(itemStack.getAmount() - 1);
+                }
+
+                // Escape if fulfilled request
+                if (request.getAmount() <= 0) {
+                    return stackToReturn;
+                }
+
+                if (request.getAmount() <= itemStack.getAmount()) {
+                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                    return stackToReturn;
+                } else {
+                    stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
+                    request.receiveAmount(itemStack.getAmount());
+                    itemStack.setAmount(0);
+                }
+            }
+        }
+
+        // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
             if (barrelIdentity.holdsMatchingItem(request.getItemStack())) {
                 final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
@@ -372,7 +448,6 @@ public class NetworkRoot extends NetworkNode {
 
                 if (itemStack == null
                     || (infinity && itemStack.getAmount() == 1)
-                    //|| !SlimefunUtils.isItemSimilar(request.getItemStack(), itemStack, true, false)
                     || !StackUtils.itemsMatch(request, itemStack)
                 ) {
                     continue;
