@@ -18,7 +18,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
@@ -28,21 +27,18 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 public class NetworkAutoCrafter extends NetworkObject {
 
@@ -65,7 +61,8 @@ public class NetworkAutoCrafter extends NetworkObject {
 
     private final int chargePerCraft;
     private final boolean directSubmit;
-    private static final Map<Location, UUID> OWNER_MAP = new HashMap<>();
+
+    private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
     public NetworkAutoCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean directSubmit) {
         super(itemGroup, item, recipeType, recipe, NodeType.CRAFTER);
@@ -91,25 +88,13 @@ public class NetworkAutoCrafter extends NetworkObject {
                         craftPreFlight(blockMenu);
                     }
                 }
-            },
-            new BlockPlaceHandler(false) {
-                @Override
-                public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
-                    final UUID uuid = event.getPlayer().getUniqueId();
-                    BlockStorage.addBlockInfo(event.getBlock(), "owner", uuid.toString());
-                    OWNER_MAP.put(event.getBlock().getLocation(), uuid);
-                }
             }
         );
     }
 
     protected void craftPreFlight(@Nonnull BlockMenu blockMenu) {
 
-        final Player player = Bukkit.getPlayer(OWNER_MAP.get(blockMenu.getLocation()));
-
-        if (player == null) {
-            return;
-        }
+        releaseCache(blockMenu);
 
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
@@ -133,14 +118,20 @@ public class NetworkAutoCrafter extends NetworkObject {
                 return;
             }
 
-            final ItemMeta blueprintMeta = blueprint.getItemMeta();
-            final Optional<BlueprintInstance> optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE, PersistentCraftingBlueprintType.TYPE);
+            BlueprintInstance instance = INSTANCE_MAP.get(blockMenu.getLocation());
 
-            if (optional.isEmpty()) {
-                return;
+            if (instance == null) {
+                final ItemMeta blueprintMeta = blueprint.getItemMeta();
+                final Optional<BlueprintInstance> optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE, PersistentCraftingBlueprintType.TYPE);
+
+                if (optional.isEmpty()) {
+                    return;
+                }
+
+                instance = optional.get();
+                setCache(blockMenu, instance);
             }
 
-            final BlueprintInstance instance = optional.get();
             final ItemStack outputItem = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
             if (outputItem != null
@@ -150,24 +141,27 @@ public class NetworkAutoCrafter extends NetworkObject {
                 return;
             }
 
-            if (tryCraft(blockMenu, player, instance, root)) {
+            if (tryCraft(blockMenu, instance, root)) {
                 root.removeCharge(this.chargePerCraft);
             }
 
             if (this.directSubmit) {
-                root.addItemStack(blockMenu.getItemInSlot(OUTPUT_SLOT));
+                final ItemStack crafted = blockMenu.getItemInSlot(OUTPUT_SLOT);
+                if (crafted != null && crafted.getType() != Material.AIR) {
+                    root.addItemStack(crafted);
+                }
             }
         }
     }
 
-    private boolean tryCraft(@Nonnull BlockMenu blockMenu, @Nonnull Player player, @Nonnull BlueprintInstance instance, @Nonnull NetworkRoot root) {
+    private boolean tryCraft(@Nonnull BlockMenu blockMenu, @Nonnull BlueprintInstance instance, @Nonnull NetworkRoot root) {
         // Get the recipe input
         final ItemStack[] inputs = new ItemStack[9];
 
         for (int i = 0; i < 9; i++) {
-            final ItemStack requested = instance.getRecipe()[i];
+            final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
-                final ItemStack fetched = root.getItemStack(new ItemRequest(instance.getRecipe()[i], 1));
+                final ItemStack fetched = root.getItemStack(new ItemRequest(instance.getRecipeItems()[i], 1));
                 inputs[i] = fetched;
             } else {
                 inputs[i] = null;
@@ -186,21 +180,41 @@ public class NetworkAutoCrafter extends NetworkObject {
 
         // If no slimefun recipe found, try a vanilla one
         if (crafted == null) {
-            final Recipe recipe = Bukkit.getCraftingRecipe(inputs, blockMenu.getBlock().getWorld());
-            crafted = recipe == null ? null : recipe.getResult();
+            instance.generateVanillaRecipe(blockMenu.getLocation().getWorld());
+            if (instance.getRecipe() == null) {
+                return false;
+            }
+            setCache(blockMenu, instance);
+            crafted = instance.getRecipe().getResult();
         }
 
         // If no item crafted OR result doesn't fit, escape
-        if (crafted == null || crafted.getType() == Material.AIR) {
+        if (crafted.getType() == Material.AIR) {
             for (ItemStack input : inputs) {
-                root.addItemStack(input);
+                if (input != null) {
+                    root.addItemStack(input);
+                }
             }
             return false;
         }
 
         // Push item
+        final Location location = blockMenu.getLocation().clone().add(0.5, 1.1, 0.5);
+        location.getWorld().spawnParticle(Particle.WAX_OFF, location, 0, 0, 4, 0);
         blockMenu.pushItem(crafted, OUTPUT_SLOT);
         return true;
+    }
+
+    public void releaseCache(@Nonnull BlockMenu blockMenu) {
+        if (blockMenu.hasViewer()) {
+            INSTANCE_MAP.remove(blockMenu.getLocation());
+        }
+    }
+
+    public void setCache(@Nonnull BlockMenu blockMenu, @Nonnull BlueprintInstance blueprintInstance) {
+        if (!blockMenu.hasViewer()) {
+            INSTANCE_MAP.putIfAbsent(blockMenu.getLocation(), blueprintInstance);
+        }
     }
 
 
@@ -215,17 +229,10 @@ public class NetworkAutoCrafter extends NetworkObject {
                 drawBackground(OUTPUT_BACKGROUND_STACK, OUTPUT_BACKGROUND);
             }
 
-
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return NetworkSlimefunItems.NETWORK_AUTO_CRAFTER.canUse(player, false)
                     && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
-            }
-
-            @Override
-            public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                String owner = BlockStorage.getLocationInfo(b.getLocation(), "owner");
-                OWNER_MAP.put(b.getLocation(), UUID.fromString(owner));
             }
 
             @Override

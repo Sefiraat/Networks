@@ -326,7 +326,7 @@ public class NetworksSlimefunItemStacks {
 
         NETWORK_CAPACITOR_2 = Theme.themedSlimefunItemStack(
             "NTW_CAPACITOR_2",
-            new ItemStack(Material.LIGHT_BLUE_GLAZED_TERRACOTTA),
+            new ItemStack(Material.GREEN_GLAZED_TERRACOTTA),
             Theme.MACHINE,
             "Network Capacitor (2)",
             "The Network Capacitor can take",

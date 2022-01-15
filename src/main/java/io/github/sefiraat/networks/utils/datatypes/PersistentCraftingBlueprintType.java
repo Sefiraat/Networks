@@ -44,7 +44,7 @@ public class PersistentCraftingBlueprintType implements PersistentDataType<Persi
     public PersistentDataContainer toPrimitive(@Nonnull BlueprintInstance complex, @Nonnull PersistentDataAdapterContext context) {
         final PersistentDataContainer container = context.newPersistentDataContainer();
 
-        container.set(RECIPE, DataType.ITEM_STACK_ARRAY, complex.getRecipe());
+        container.set(RECIPE, DataType.ITEM_STACK_ARRAY, complex.getRecipeItems());
         container.set(OUTPUT, DataType.ITEM_STACK, complex.getItemStack());
         return container;
     }

@@ -25,12 +25,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public class NetworkPowerDisplay extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-        0,1,2,3,5,6,7,8
+        0, 1, 2, 3, 5, 6, 7, 8
     };
     private static final int DISPLAY_SLOT = 4;
 
