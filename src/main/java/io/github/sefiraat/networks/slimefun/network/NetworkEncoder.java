@@ -28,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class NetworkPackager extends NetworkObject {
+public class NetworkEncoder extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -56,7 +56,7 @@ public class NetworkPackager extends NetworkObject {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Click to encode when valid"
     );
 
-    public NetworkPackager(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.PACKAGER);
         for (int recipeSlot : RECIPE_SLOTS) {
             this.getSlotsToDrop().add(recipeSlot);
@@ -107,7 +107,7 @@ public class NetworkPackager extends NetworkObject {
         }
 
         final NetworkRoot root = definition.getNode().getRoot();
-        final long networkCharge = root.getDownstreamCharge();
+        final long networkCharge = root.getNetworkPower();
 
         if (networkCharge < CHARGE_COST) {
             player.sendMessage(Theme.WARNING + "Not enough Network power to fulfill this task.");
@@ -175,6 +175,6 @@ public class NetworkPackager extends NetworkObject {
         }
 
         blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
-        root.removeCharge(CHARGE_COST);
+        root.removeNetworkPower(CHARGE_COST);
     }
 }

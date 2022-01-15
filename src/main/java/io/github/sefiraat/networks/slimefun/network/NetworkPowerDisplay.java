@@ -70,7 +70,7 @@ public class NetworkPowerDisplay extends NetworkObject {
             }
 
             final NetworkRoot root = definition.getNode().getRoot();
-            final long networkCharge = root.getDownstreamCharge();
+            final long networkCharge = root.getNetworkPower();
             blockMenu.replaceExistingItem(DISPLAY_SLOT, getChargeStack(networkCharge));
         }
     }

@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -36,7 +37,10 @@ public final class SupportedRecipes {
 
     public boolean testRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
-            if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false)) {
+//            if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false)) {
+//                return false;
+//            }
+            if (!StackUtils.itemsMatch(input[test], recipe[test])) {
                 return false;
             }
         }

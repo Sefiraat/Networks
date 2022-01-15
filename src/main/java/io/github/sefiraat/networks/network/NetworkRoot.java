@@ -38,23 +38,26 @@ import java.util.Set;
 
 public class NetworkRoot extends NetworkNode {
 
-    protected final Set<Location> networkLocations = new HashSet<>();
-    protected final Set<Location> networkBridges = new HashSet<>();
-    protected final Set<Location> networkMonitors = new HashSet<>();
-    protected final Set<Location> networkCells = new HashSet<>();
-    protected final Set<Location> networkExporters = new HashSet<>();
-    protected final Set<Location> networkImporters = new HashSet<>();
-    protected final Set<Location> networkGrids = new HashSet<>();
-    protected final Set<Location> networkShells = new HashSet<>();
-    protected final Set<Location> networkWipers = new HashSet<>();
-    protected final Set<Location> networkGrabbers = new HashSet<>();
-    protected final Set<Location> networkPushers = new HashSet<>();
-    protected final Set<Location> networkPurgers = new HashSet<>();
-    protected final Set<Location> networkPowerNodes = new HashSet<>();
-    protected final Set<Location> networkCrafters = new HashSet<>();
-    protected Set<BarrelIdentity> barrels = null;
+    private final Set<Location> networkLocations = new HashSet<>();
+    private final Set<Location> networkBridges = new HashSet<>();
+    private final Set<Location> networkMonitors = new HashSet<>();
+    private final Set<Location> networkCells = new HashSet<>();
+    private final Set<Location> networkExporters = new HashSet<>();
+    private final Set<Location> networkImporters = new HashSet<>();
+    private final Set<Location> networkGrids = new HashSet<>();
+    private final Set<Location> networkShells = new HashSet<>();
+    private final Set<Location> networkWipers = new HashSet<>();
+    private final Set<Location> networkGrabbers = new HashSet<>();
+    private final Set<Location> networkPushers = new HashSet<>();
+    private final Set<Location> networkPurgers = new HashSet<>();
+    private final Set<Location> networkPowerNodes = new HashSet<>();
+    private final Set<Location> networkCrafters = new HashSet<>();
 
-    public NetworkRoot(Location location, NodeType type) {
+    private Set<BarrelIdentity> barrels = null;
+
+    private long power = 0;
+
+    public NetworkRoot(@Nonnull Location location, @Nonnull NodeType type) {
         super(location, type);
         this.root = this;
     }
@@ -64,7 +67,7 @@ public class NetworkRoot extends NetworkNode {
      *  Move to a single map Location, Type and build up the Type enum - push to
      *  metrics and probe
      */
-    public void addNode(Location location, NodeType type) {
+    public void addNode(@Nonnull Location location, @Nonnull NodeType type) {
         networkLocations.add(location);
         switch (type) {
             case BRIDGE -> networkBridges.add(location);
@@ -86,52 +89,56 @@ public class NetworkRoot extends NetworkNode {
         }
     }
 
+    public Set<Location> getNetworkLocations() {
+        return this.networkLocations;
+    }
+
     public Set<Location> getBridges() {
-        return networkBridges;
+        return this.networkBridges;
     }
 
     public Set<Location> getMonitors() {
-        return networkMonitors;
+        return this.networkMonitors;
     }
 
     public Set<Location> getImports() {
-        return networkImporters;
+        return this.networkImporters;
     }
 
     public Set<Location> getExports() {
-        return networkExporters;
+        return this.networkExporters;
     }
 
     public Set<Location> getCells() {
-        return networkCells;
+        return this.networkCells;
     }
 
     public Set<Location> getGrids() {
-        return networkGrids;
+        return this.networkGrids;
     }
 
     public Set<Location> getShells() {
-        return networkShells;
+        return this.networkShells;
     }
 
     public Set<Location> getWipers() {
-        return networkWipers;
+        return this.networkWipers;
     }
 
     public Set<Location> getGrabbers() {
-        return networkGrabbers;
+        return this.networkGrabbers;
     }
 
     public Set<Location> getPushers() {
-        return networkPushers;
+        return this.networkPushers;
     }
 
     public Set<Location> getPurgers() {
-        return networkPurgers;
+        return this.networkPurgers;
     }
 
     public Set<Location> getCrafters() {
-        return networkCrafters;
+        return this.networkCrafters;
     }
 
     @Nonnull
@@ -542,21 +549,34 @@ public class NetworkRoot extends NetworkNode {
     }
 
     @Override
-    public long getNodeCharge() {
+    public long retrieveBlockCharge() {
         return 0;
     }
 
-    public void removeCharge(long chargeToRemove) {
+    public long getNetworkPower() {
+        return this.power;
+    }
+
+    public void setNetworkPower(long power) {
+        this.power = power;
+    }
+
+    public void addNetworkPower(long power) {
+        this.power += power;
+    }
+
+    public void removeNetworkPower(long power) {
         int removed = 0;
         for (Location node : networkPowerNodes) {
             final SlimefunItem item = BlockStorage.check(node);
             if (item instanceof NetworkPowerNode powerNode) {
                 final int charge = powerNode.getCharge(node);
-                final int toRemove = (int) Math.min(chargeToRemove - removed, charge);
+                final int toRemove = (int) Math.min(power - removed, charge);
                 powerNode.removeCharge(node, toRemove);
+                this.power -= power;
                 removed = removed + toRemove;
             }
-            if (removed >= chargeToRemove) {
+            if (removed >= power) {
                 return;
             }
         }

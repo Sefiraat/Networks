@@ -117,7 +117,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             return;
         }
 
-        final long networkCharge = root.getDownstreamCharge();
+        final long networkCharge = root.getNetworkPower();
 
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
@@ -150,7 +150,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             }
 
             if (tryCraft(blockMenu, instance, root)) {
-                root.removeCharge(this.chargePerCraft);
+                root.removeNetworkPower(this.chargePerCraft);
             }
         }
     }

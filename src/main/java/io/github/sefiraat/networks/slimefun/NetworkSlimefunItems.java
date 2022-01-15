@@ -1,7 +1,7 @@
 package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.slimefun.network.NetworkPackager;
+import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
@@ -59,7 +59,7 @@ public class NetworkSlimefunItems {
     public static final NetworkPowerNode NETWORK_CAPACITOR_1;
     public static final NetworkPowerNode NETWORK_CAPACITOR_2;
     public static final NetworkPowerDisplay NETWORK_POWER_DISPLAY;
-    public static final NetworkPackager NETWORK_RECIPE_ENCODER;
+    public static final NetworkEncoder NETWORK_RECIPE_ENCODER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
@@ -370,7 +370,7 @@ public class NetworkSlimefunItems {
             }
         );
 
-        NETWORK_RECIPE_ENCODER = new NetworkPackager(
+        NETWORK_RECIPE_ENCODER = new NetworkEncoder(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_RECIPE_ENCODER,
             RecipeType.ENHANCED_CRAFTING_TABLE,

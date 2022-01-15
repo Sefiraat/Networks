@@ -347,7 +347,7 @@ public class NetworksSlimefunItemStacks {
         );
 
         NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
-            "NTW_RECIPE_PACKAGER",
+            "NTW_RECIPE_ENCODER",
             new ItemStack(Material.TARGET),
             Theme.MACHINE,
             "Network Recipe Encoder",

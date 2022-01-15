@@ -33,19 +33,20 @@ public class NetworkNode {
     protected NetworkRoot root = null;
     protected Location nodePosition;
     protected NodeType nodeType;
+    protected long power;
 
     public NetworkNode(Location location, NodeType type) {
         this.nodePosition = location;
         this.nodeType = type;
+        this.power = retrieveBlockCharge();
     }
 
-    @Nonnull
-    public NetworkNode addChild(@Nonnull NetworkNode child) {
+    public void addChild(@Nonnull NetworkNode child) {
         child.setParent(this);
         child.setRoot(this.getRoot());
+        this.root.addNetworkPower(child.getPower());
         this.root.addNode(child.nodePosition, child.nodeType);
         this.childrenNodes.add(child);
-        return child;
     }
 
     @Nonnull
@@ -63,12 +64,7 @@ public class NetworkNode {
     }
 
     public boolean networkContains(@Nonnull Location location) {
-        return getNetworkLocations().contains(location);
-    }
-
-    @Nonnull
-    public Set<Location> getNetworkLocations() {
-        return getRoot().networkLocations;
+        return this.root.getNetworkLocations().contains(location);
     }
 
     @Nonnull
@@ -122,7 +118,6 @@ public class NetworkNode {
     }
 
     public void addAllChildren() {
-
         // Loop through all possible locations
         for (BlockFace face : VALID_FACES) {
             final Location testLocation = this.nodePosition.clone().add(face.getDirection());
@@ -147,7 +142,6 @@ public class NetworkNode {
                 testDefinition.setNode(networkNode);
                 NetworkStorage.getAllNetworkObjects().put(testLocation, testDefinition);
             }
-
         }
     }
 
@@ -179,15 +173,7 @@ public class NetworkNode {
         return itemList;
     }
 
-    public long getDownstreamCharge() {
-        long c = this.getNodeCharge();
-        for (NetworkNode childNode : getChildrenNodes()) {
-            c += childNode.getDownstreamCharge();
-        }
-        return c;
-    }
-
-    protected long getNodeCharge() {
+    protected long retrieveBlockCharge() {
         if (this.nodeType == NodeType.POWER) {
             int blockCharge = 0;
             final SlimefunItem item = BlockStorage.check(this.nodePosition);
@@ -199,4 +185,7 @@ public class NetworkNode {
         return 0;
     }
 
+    public long getPower() {
+        return this.power;
+    }
 }
