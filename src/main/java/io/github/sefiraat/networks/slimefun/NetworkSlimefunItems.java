@@ -22,7 +22,9 @@ import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.StackUtils;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
@@ -40,6 +42,10 @@ public class NetworkSlimefunItems {
     public static final UnplaceableBlock SHRINKING_BASE;
     public static final UnplaceableBlock SIMPLE_NANOBOTS;
     public static final UnplaceableBlock ADVANCED_NANOBOTS;
+    public static final UnplaceableBlock AI_CORE;
+    public static final UnplaceableBlock EMPOWERED_AI_CORE;
+    public static final UnplaceableBlock PRISTINE_AI_CORE;
+    public static final UnplaceableBlock INTERDIMENSIONAL_PRESENCE;
 
     public static final NetworkController NETWORK_CONTROLLER;
     public static final NetworkBridge NETWORK_BRIDGE;
@@ -74,6 +80,10 @@ public class NetworkSlimefunItems {
     public static final NetworkCard NETWORK_MEMORY_CARD_8;
     public static final CraftingBlueprint CRAFTING_BLUEPRINT;
     public static final NetworkProbe NETWORK_PROBE;
+    public static final NetworkRemote NETWORK_REMOTE;
+    public static final NetworkRemote NETWORK_REMOTE_EMPOWERED;
+    public static final NetworkRemote NETWORK_REMOTE_PRISTINE;
+    public static final NetworkRemote NETWORK_REMOTE_ULTIMATE;
     public static final NetworkCrayon NETWORK_CRAYON;
 
 
@@ -87,10 +97,10 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 glass, SlimefunItems.SYNTHETIC_EMERALD, glass,
-                SlimefunItems.SYNTHETIC_EMERALD, glass, SlimefunItems.SYNTHETIC_EMERALD,
+                glass, SlimefunItems.SYNTHETIC_EMERALD, glass,
                 glass, SlimefunItems.SYNTHETIC_EMERALD, glass
             },
-            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_GLASS, 5)
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_GLASS, 6)
         );
 
         OPTIC_CABLE = new UnplaceableBlock(
@@ -102,7 +112,7 @@ public class NetworkSlimefunItems {
                 SlimefunItems.COPPER_WIRE, SlimefunItems.COPPER_WIRE, SlimefunItems.COPPER_WIRE,
                 OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem()
             },
-            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_CABLE, 6)
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_CABLE, 16)
         );
 
         OPTIC_STAR = new UnplaceableBlock(
@@ -144,7 +154,8 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 SHRINKING_BASE.getItem(), SlimefunItems.PROGRAMMABLE_ANDROID
-            }
+            },
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.SIMPLE_NANOBOTS, 4)
         );
 
         ADVANCED_NANOBOTS = new UnplaceableBlock(
@@ -153,6 +164,51 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 SHRINKING_BASE.getItem(), SlimefunItems.PROGRAMMABLE_ANDROID_3
+            },
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.ADVANCED_NANOBOTS, 4)
+        );
+
+        AI_CORE = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.AI_CORE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
+                SlimefunItems.BASIC_CIRCUIT_BOARD, ADVANCED_NANOBOTS.getItem(), SlimefunItems.BASIC_CIRCUIT_BOARD,
+                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD
+            }
+        );
+
+        EMPOWERED_AI_CORE = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.EMPOWERED_AI_CORE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.ADVANCED_CIRCUIT_BOARD, RADIOACTIVE_OPTIC_STAR.getItem(), SlimefunItems.ADVANCED_CIRCUIT_BOARD,
+                SlimefunItems.ADVANCED_CIRCUIT_BOARD, AI_CORE.getItem(), SlimefunItems.ADVANCED_CIRCUIT_BOARD,
+                SlimefunItems.ADVANCED_CIRCUIT_BOARD, RADIOACTIVE_OPTIC_STAR.getItem(), SlimefunItems.ADVANCED_CIRCUIT_BOARD
+            }
+        );
+
+        PRISTINE_AI_CORE = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.PRISTINE_AI_CORE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.NEPTUNIUM, SlimefunItems.DAMASCUS_STEEL_MULTI_TOOL, SlimefunItems.NEPTUNIUM,
+                SlimefunItems.NEPTUNIUM, EMPOWERED_AI_CORE.getItem(), SlimefunItems.NEPTUNIUM,
+                SlimefunItems.NEPTUNIUM, SlimefunItems.ELECTRIFIED_CRUCIBLE_3, SlimefunItems.NEPTUNIUM
+            }
+        );
+
+        INTERDIMENSIONAL_PRESENCE = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.INTERDIMENSIONAL_PRESENCE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.PLUTONIUM, SlimefunItems.REINFORCED_ALLOY_MULTI_TOOL, SlimefunItems.PLUTONIUM,
+                SlimefunItems.PLUTONIUM, PRISTINE_AI_CORE.getItem(), SlimefunItems.PLUTONIUM,
+                SlimefunItems.PLUTONIUM, SlimefunItems.NETHER_STAR_REACTOR, SlimefunItems.PLUTONIUM
             }
         );
 
@@ -176,7 +232,7 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SlimefunItems.CARGO_CONNECTOR_NODE, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
-            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.NETWORK_BRIDGE, 5)
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.NETWORK_BRIDGE, 8)
         );
 
         NETWORK_MONITOR = new NetworkMonitor(
@@ -411,7 +467,7 @@ public class NetworkSlimefunItems {
 
 
         NETWORK_MEMORY_CARD_1 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_1,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -423,7 +479,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_2 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_2,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -435,7 +491,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_3 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_3,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -447,7 +503,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_4 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_4,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -459,7 +515,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_5 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_5,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -471,7 +527,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_6 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_6,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -483,7 +539,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_7 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_7,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -495,7 +551,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_MEMORY_CARD_8 = new NetworkCard(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_8,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -507,7 +563,7 @@ public class NetworkSlimefunItems {
         );
 
         CRAFTING_BLUEPRINT = new CraftingBlueprint(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.CRAFTING_BLUEPRINT,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -518,7 +574,7 @@ public class NetworkSlimefunItems {
         );
 
         NETWORK_PROBE = new NetworkProbe(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_PROBE,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -528,8 +584,56 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_REMOTE = new NetworkRemote(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_REMOTE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, NETWORK_GRID.getItem(), null,
+                null, AI_CORE.getItem(), null,
+                null, OPTIC_STAR.getItem(), null
+            },
+            NetworkRemote.getRanges()[0]
+        );
+
+        NETWORK_REMOTE_EMPOWERED = new NetworkRemote(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_REMOTE_EMPOWERED,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, NETWORK_REMOTE.getItem(), null,
+                null, EMPOWERED_AI_CORE.getItem(), null,
+                null, NETWORK_REMOTE.getItem(), null
+            },
+            NetworkRemote.getRanges()[1]
+        );
+
+        NETWORK_REMOTE_PRISTINE = new NetworkRemote(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_REMOTE_PRISTINE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, NETWORK_REMOTE_EMPOWERED.getItem(), null,
+                null, PRISTINE_AI_CORE.getItem(), null,
+                null, NETWORK_REMOTE_EMPOWERED.getItem(), null
+            },
+            NetworkRemote.getRanges()[2]
+        );
+
+        NETWORK_REMOTE_ULTIMATE = new NetworkRemote(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_REMOTE_ULTIMATE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, NETWORK_REMOTE_PRISTINE.getItem(), null,
+                null, INTERDIMENSIONAL_PRESENCE.getItem(), null,
+                null, NETWORK_REMOTE_PRISTINE.getItem(), null
+            },
+            NetworkRemote.getRanges()[3]
+        );
+
         NETWORK_CRAYON = new NetworkCrayon(
-            NetworksItemGroups.MATERIALS,
+            NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_CRAYON,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
@@ -550,6 +654,10 @@ public class NetworkSlimefunItems {
         SHRINKING_BASE.register(plugin);
         SIMPLE_NANOBOTS.register(plugin);
         ADVANCED_NANOBOTS.register(plugin);
+        AI_CORE.register(plugin);
+        EMPOWERED_AI_CORE.register(plugin);
+        PRISTINE_AI_CORE.register(plugin);
+        INTERDIMENSIONAL_PRESENCE.register(plugin);
 
         NETWORK_CONTROLLER.register(plugin);
         NETWORK_BRIDGE.register(plugin);
@@ -585,6 +693,10 @@ public class NetworkSlimefunItems {
 
         CRAFTING_BLUEPRINT.register(plugin);
         NETWORK_PROBE.register(plugin);
+        NETWORK_REMOTE.register(plugin);
+        NETWORK_REMOTE_EMPOWERED.register(plugin);
+        NETWORK_REMOTE_PRISTINE.register(plugin);
+        NETWORK_REMOTE_ULTIMATE.register(plugin);
         NETWORK_CRAYON.register(plugin);
     }
 }

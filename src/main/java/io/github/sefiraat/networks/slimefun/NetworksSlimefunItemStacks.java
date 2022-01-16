@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
+import java.util.Locale;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -30,6 +32,10 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack SHRINKING_BASE;
     public static final SlimefunItemStack SIMPLE_NANOBOTS;
     public static final SlimefunItemStack ADVANCED_NANOBOTS;
+    public static final SlimefunItemStack AI_CORE;
+    public static final SlimefunItemStack EMPOWERED_AI_CORE;
+    public static final SlimefunItemStack PRISTINE_AI_CORE;
+    public static final SlimefunItemStack INTERDIMENSIONAL_PRESENCE;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -66,6 +72,10 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
     public static final SlimefunItemStack CRAFTING_BLUEPRINT;
     public static final SlimefunItemStack NETWORK_PROBE;
+    public static final SlimefunItemStack NETWORK_REMOTE;
+    public static final SlimefunItemStack NETWORK_REMOTE_EMPOWERED;
+    public static final SlimefunItemStack NETWORK_REMOTE_PRISTINE;
+    public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
     public static final SlimefunItemStack NETWORK_CRAYON;
 
     static {
@@ -134,6 +144,43 @@ public class NetworksSlimefunItemStacks {
             "This version is smarter and faster."
         );
 
+        AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_AI_CORE",
+            new ItemStack(Material.BRAIN_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "A.I. Core",
+            "A burgeoning artificial intelligence",
+            "resides within this weak shell."
+        );
+
+        EMPOWERED_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_EMPOWERED_AI_CORE",
+            new ItemStack(Material.TUBE_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "Empowered A.I. Core",
+            "A flourishing artificial intelligence",
+            "resides within this shell."
+        );
+
+        PRISTINE_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_PRISTINE_AI_CORE",
+            getPreEnchantedItemStack(Material.TUBE_CORAL_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Pristine A.I. Core",
+            "A perfected artificial intelligence",
+            "resides within this defined shell."
+        );
+
+        INTERDIMENSIONAL_PRESENCE = Theme.themedSlimefunItemStack(
+            "NTW_INTERDIMENSIONAL_PRESENCE",
+            getPreEnchantedItemStack(Material.ARMOR_STAND, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Interdimensional Presence",
+            "An artificial intelligence that has",
+            "grown too powerful for just a",
+            "single dimension."
+        );
+
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
             "NTW_CONTROLLER",
             new ItemStack(Material.BLACK_STAINED_GLASS),
@@ -162,7 +209,8 @@ public class NetworksSlimefunItemStacks {
             "objects.",
             "",
             "Currently Supports:",
-            "Infinity Barrels"
+            "Infinity Barrels",
+            "Network Shells"
         );
 
         NETWORK_IMPORT = Theme.themedSlimefunItemStack(
@@ -384,6 +432,7 @@ public class NetworksSlimefunItemStacks {
             "while there is none in the network",
             "it will be crafted if you have",
             "materials.",
+            "",
             "A Withholding Crafter will keep",
             "a stack in the output and stop",
             "crafting. The stack can been seen",
@@ -546,6 +595,50 @@ public class NetworksSlimefunItemStacks {
             "Network Probe",
             "When used on a controller, this will",
             "show the nodes on the network."
+        );
+
+        NETWORK_REMOTE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE",
+            new ItemStack(Material.PAINTING),
+            Theme.TOOL,
+            "Network Remote",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
+        );
+
+        NETWORK_REMOTE_EMPOWERED = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_EMPOWERED",
+            new ItemStack(Material.ITEM_FRAME),
+            Theme.TOOL,
+            "Network Empowered",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
+        );
+
+        NETWORK_REMOTE_PRISTINE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_PRISTINE",
+            new ItemStack(Material.GLOW_ITEM_FRAME),
+            Theme.TOOL,
+            "Network Remote Pristine",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Unlimited")
+        );
+
+        NETWORK_REMOTE_ULTIMATE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_ULTIMATE",
+            getPreEnchantedItemStack(Material.GLOW_ITEM_FRAME, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.TOOL,
+            "Network Remote Ultimate",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Cross Dimensional")
         );
 
         NETWORK_CRAYON = Theme.themedSlimefunItemStack(
