@@ -49,7 +49,7 @@ public class NetworkMemoryShell extends NetworkObject {
     private static final int[] CARD_SLOTS = new int[]{3, 5};
     private static final int[] OUTPUT_SLOTS = new int[]{6, 8};
 
-    public static final Map<Location, NetworkMemoryShellCache> CACHES = new HashMap<>();
+    private static final Map<Location, NetworkMemoryShellCache> CACHES = new HashMap<>();
 
     public NetworkMemoryShell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.SHELL);
@@ -290,6 +290,10 @@ public class NetworkMemoryShell extends NetworkObject {
             }
 
         };
+    }
+
+    public static Map<Location, NetworkMemoryShellCache> getCaches() {
+        return CACHES;
     }
 
 }

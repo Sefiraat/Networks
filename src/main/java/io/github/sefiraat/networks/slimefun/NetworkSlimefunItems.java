@@ -1,11 +1,11 @@
 package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
+import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
 import io.github.sefiraat.networks.slimefun.network.NetworkGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkImport;
@@ -20,6 +20,7 @@ import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -71,8 +72,9 @@ public class NetworkSlimefunItems {
     public static final NetworkCard NETWORK_MEMORY_CARD_6;
     public static final NetworkCard NETWORK_MEMORY_CARD_7;
     public static final NetworkCard NETWORK_MEMORY_CARD_8;
-    public static final NetworkProbe NETWORK_PROBE;
     public static final CraftingBlueprint CRAFTING_BLUEPRINT;
+    public static final NetworkProbe NETWORK_PROBE;
+    public static final NetworkCrayon NETWORK_CRAYON;
 
 
     static {
@@ -417,7 +419,7 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SlimefunItems.CARGO_MOTOR, OPTIC_CABLE.getItem(),
                 SlimefunItems.BRASS_INGOT, SlimefunItems.BRASS_INGOT, SlimefunItems.BRASS_INGOT
             },
-            NetworkCard.SIZES[0]
+            NetworkCard.getSizes()[0]
         );
 
         NETWORK_MEMORY_CARD_2 = new NetworkCard(
@@ -429,7 +431,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[1]
+            NetworkCard.getSizes()[1]
         );
 
         NETWORK_MEMORY_CARD_3 = new NetworkCard(
@@ -441,7 +443,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[2]
+            NetworkCard.getSizes()[2]
         );
 
         NETWORK_MEMORY_CARD_4 = new NetworkCard(
@@ -453,7 +455,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[3]
+            NetworkCard.getSizes()[3]
         );
 
         NETWORK_MEMORY_CARD_5 = new NetworkCard(
@@ -465,7 +467,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[4]
+            NetworkCard.getSizes()[4]
         );
 
         NETWORK_MEMORY_CARD_6 = new NetworkCard(
@@ -477,7 +479,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[5]
+            NetworkCard.getSizes()[5]
         );
 
         NETWORK_MEMORY_CARD_7 = new NetworkCard(
@@ -489,7 +491,7 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[6]
+            NetworkCard.getSizes()[6]
         );
 
         NETWORK_MEMORY_CARD_8 = new NetworkCard(
@@ -501,7 +503,18 @@ public class NetworkSlimefunItems {
                 NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem()
             },
-            NetworkCard.SIZES[7]
+            NetworkCard.getSizes()[7]
+        );
+
+        CRAFTING_BLUEPRINT = new CraftingBlueprint(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.CRAFTING_BLUEPRINT,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_CABLE.getItem(), new ItemStack(Material.PAPER), OPTIC_CABLE.getItem(),
+                OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem()
+            }
         );
 
         NETWORK_PROBE = new NetworkProbe(
@@ -515,14 +528,14 @@ public class NetworkSlimefunItems {
             }
         );
 
-        CRAFTING_BLUEPRINT = new CraftingBlueprint(
+        NETWORK_CRAYON = new NetworkCrayon(
             NetworksItemGroups.MATERIALS,
-            NetworksSlimefunItemStacks.CRAFTING_BLUEPRINT,
+            NetworksSlimefunItemStacks.NETWORK_CRAYON,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
-                OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(),
-                OPTIC_CABLE.getItem(), new ItemStack(Material.PAPER), OPTIC_CABLE.getItem(),
-                OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem()
+                null, OPTIC_CABLE.getItem(), null,
+                null, new ItemStack(Material.HONEYCOMB), null,
+                null, new ItemStack(Material.HONEYCOMB), null
             }
         );
     }
@@ -570,7 +583,8 @@ public class NetworkSlimefunItems {
         NETWORK_MEMORY_CARD_7.register(plugin);
         NETWORK_MEMORY_CARD_8.register(plugin);
 
-        NETWORK_PROBE.register(plugin);
         CRAFTING_BLUEPRINT.register(plugin);
+        NETWORK_PROBE.register(plugin);
+        NETWORK_CRAYON.register(plugin);
     }
 }

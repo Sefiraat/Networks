@@ -64,8 +64,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
-    public static final SlimefunItemStack NETWORK_PROBE;
     public static final SlimefunItemStack CRAFTING_BLUEPRINT;
+    public static final SlimefunItemStack NETWORK_PROBE;
+    public static final SlimefunItemStack NETWORK_CRAYON;
 
     static {
 
@@ -270,7 +271,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[0])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[0])
         );
 
         NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
@@ -283,7 +284,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[1])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[1])
         );
 
         NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
@@ -296,7 +297,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[2])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[2])
         );
 
         NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
@@ -309,7 +310,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[3])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[3])
         );
 
         NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
@@ -397,7 +398,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (4K)",
-            "Stores " + NetworkCard.SIZES[0] + " items",
+            "Stores " + NetworkCard.getSizes()[0] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -414,7 +415,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (32K)",
-            "Stores " + NetworkCard.SIZES[1] + " items",
+            "Stores " + NetworkCard.getSizes()[1] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -431,7 +432,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIME_DYE),
             Theme.TOOL,
             "Network Memory Card (262K)",
-            "Stores " + NetworkCard.SIZES[2] + " items",
+            "Stores " + NetworkCard.getSizes()[2] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -448,7 +449,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GREEN_DYE),
             Theme.TOOL,
             "Network Memory Card (2M)",
-            "Stores " + NetworkCard.SIZES[3] + " items",
+            "Stores " + NetworkCard.getSizes()[3] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -465,7 +466,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (16M)",
-            "Stores " + NetworkCard.SIZES[4] + " items",
+            "Stores " + NetworkCard.getSizes()[4] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -482,7 +483,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (134M)",
-            "Stores " + NetworkCard.SIZES[5] + " items",
+            "Stores " + NetworkCard.getSizes()[5] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -499,7 +500,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PINK_DYE),
             Theme.TOOL,
             "Network Memory Card (1B)",
-            "Stores " + NetworkCard.SIZES[6] + " items",
+            "Stores " + NetworkCard.getSizes()[6] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -528,6 +529,16 @@ public class NetworksSlimefunItemStacks {
             Theme.WARNING + "Empty"
         );
 
+        CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_BLUEPRINT",
+            new ItemStack(Material.BLUE_DYE),
+            Theme.TOOL,
+            "Crafting Blueprint",
+            "A blank blueprint that can",
+            "be used to store a crafting",
+            "recipe."
+        );
+
         NETWORK_PROBE = Theme.themedSlimefunItemStack(
             "NTW_PROBE",
             new ItemStack(Material.CLOCK),
@@ -537,14 +548,14 @@ public class NetworksSlimefunItemStacks {
             "show the nodes on the network."
         );
 
-        CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(
-            "NTW_CRAFTING_BLUEPRINT",
-            new ItemStack(Material.BLUE_DYE),
+        NETWORK_CRAYON = Theme.themedSlimefunItemStack(
+            "NTW_CRAYON",
+            new ItemStack(Material.RED_CANDLE),
             Theme.TOOL,
-            "Crafting Blueprint",
-            "A blank blueprint that can",
-            "be used to store a crafting",
-            "recipe."
+            "Network Crayon",
+            "When used on a controller, this will",
+            "enable particle display from specific",
+            "blocks when working."
         );
     }
 

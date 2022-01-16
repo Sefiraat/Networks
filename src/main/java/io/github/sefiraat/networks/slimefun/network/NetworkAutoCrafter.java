@@ -117,7 +117,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             return;
         }
 
-        final long networkCharge = root.getNetworkPower();
+        final long networkCharge = root.getRootPower();
 
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
@@ -144,13 +144,12 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             if (outputItem != null
                 && outputItem.getType() != Material.AIR
-                && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize()))
-            {
+                && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
                 return;
             }
 
             if (tryCraft(blockMenu, instance, root)) {
-                root.removeNetworkPower(this.chargePerCraft);
+                root.removeRootPower(this.chargePerCraft);
             }
         }
     }
@@ -201,7 +200,9 @@ public class NetworkAutoCrafter extends NetworkObject {
 
         // Push item
         final Location location = blockMenu.getLocation().clone().add(0.5, 1.1, 0.5);
-        location.getWorld().spawnParticle(Particle.WAX_OFF, location, 0, 0, 4, 0);
+        if (root.isDisplayParticles()) {
+            location.getWorld().spawnParticle(Particle.WAX_OFF, location, 0, 0, 4, 0);
+        }
         blockMenu.pushItem(crafted, OUTPUT_SLOT);
         return true;
     }

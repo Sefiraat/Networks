@@ -15,7 +15,7 @@ public class NetworkPowerNode extends NetworkObject implements EnergyNetComponen
     private final int capacity;
 
     public NetworkPowerNode(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int capacity) {
-        super(itemGroup, item, recipeType, recipe, NodeType.POWER);
+        super(itemGroup, item, recipeType, recipe, NodeType.POWER_NODE);
         this.capacity = capacity;
     }
 

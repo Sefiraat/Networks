@@ -44,7 +44,7 @@ public class NetworkNode {
     public void addChild(@Nonnull NetworkNode child) {
         child.setParent(this);
         child.setRoot(this.getRoot());
-        this.root.addNetworkPower(child.getPower());
+        this.root.addRootPower(child.getPower());
         this.root.addNode(child.nodePosition, child.nodeType);
         this.childrenNodes.add(child);
     }
@@ -64,7 +64,7 @@ public class NetworkNode {
     }
 
     public boolean networkContains(@Nonnull Location location) {
-        return this.root.getNetworkLocations().contains(location);
+        return this.root.getNodeLocations().contains(location);
     }
 
     @Nonnull
@@ -84,37 +84,8 @@ public class NetworkNode {
         this.parent = parent;
     }
 
-    public int numberOfChildren() {
-        return this.childrenNodes.size();
-    }
-
-    public boolean isLeaf() {
-        return this.childrenNodes.isEmpty();
-    }
-
-    public boolean isBranch() {
-        return !this.childrenNodes.isEmpty();
-    }
-
-    public void delete() {
-        if (parent != null) {
-            this.parent.getChildrenNodes().remove(this);
-        }
-        this.getChildrenNodes().clear();
-    }
-
     public Set<NetworkNode> getChildrenNodes() {
         return this.childrenNodes;
-    }
-
-    public Set<NetworkNode> getAllChildrenNodes() {
-        final Set<NetworkNode> nodes = new HashSet<>();
-
-        for (NetworkNode childrenNode : getChildrenNodes()) {
-            nodes.addAll(childrenNode.getAllChildrenNodes());
-        }
-        nodes.addAll(this.childrenNodes);
-        return nodes;
     }
 
     public void addAllChildren() {
@@ -161,20 +132,8 @@ public class NetworkNode {
         }
     }
 
-    @Nonnull
-    protected Set<Location> getMatchingChildren(@Nonnull NodeType nodeType) {
-        Set<Location> itemList = new HashSet<>();
-        for (NetworkNode networkNode : getChildrenNodes()) {
-            itemList.addAll(networkNode.getMatchingChildren(nodeType));
-            if (this.nodeType == nodeType) {
-                itemList.add(this.nodePosition);
-            }
-        }
-        return itemList;
-    }
-
     protected long retrieveBlockCharge() {
-        if (this.nodeType == NodeType.POWER) {
+        if (this.nodeType == NodeType.POWER_NODE) {
             int blockCharge = 0;
             final SlimefunItem item = BlockStorage.check(this.nodePosition);
             if (item instanceof NetworkPowerNode powerNode) {

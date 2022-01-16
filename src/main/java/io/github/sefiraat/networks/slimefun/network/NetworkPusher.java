@@ -13,8 +13,11 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -54,7 +57,7 @@ public class NetworkPusher extends NetworkDirectional {
     private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             return;
         }
 
@@ -64,7 +67,8 @@ public class NetworkPusher extends NetworkDirectional {
             return;
         }
 
-        final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(getCurrentDirection(blockMenu)));
+        final BlockFace direction = getCurrentDirection(blockMenu);
+        final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(direction));
 
         if (targetMenu == null) {
             return;
@@ -91,6 +95,9 @@ public class NetworkPusher extends NetworkDirectional {
             ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
             if (retrieved != null) {
                 targetMenu.pushItem(retrieved, slots);
+                if (definition.getNode().getRoot().isDisplayParticles()) {
+                    showParticle(blockMenu.getLocation(), direction);
+                }
             }
             break;
         }
@@ -142,5 +149,10 @@ public class NetworkPusher extends NetworkDirectional {
     @Override
     protected int getDownSlot() {
         return DOWN_SLOT;
+    }
+
+    @Override
+    protected Particle.DustOptions getDustOptions() {
+        return new Particle.DustOptions(Color.MAROON, 1);
     }
 }

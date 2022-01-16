@@ -21,7 +21,10 @@ public class StackUtils {
         return clone;
     }
 
-    public static boolean itemsMatch(@Nonnull ItemStackCache cache, @Nonnull ItemStack itemStack) {
+    public static boolean itemsMatch(@Nonnull ItemStackCache cache, @Nullable ItemStack itemStack) {
+        if (cache.getItemStack() == null || itemStack == null) {
+            return itemStack == null && cache.getItemStack() == null;
+        }
         if (itemStack.getType() != cache.getItemType()) {
             return false;
         }

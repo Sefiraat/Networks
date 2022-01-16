@@ -57,7 +57,7 @@ public class NetworkEncoder extends NetworkObject {
     );
 
     public NetworkEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.PACKAGER);
+        super(itemGroup, item, recipeType, recipe, NodeType.ENCODER);
         for (int recipeSlot : RECIPE_SLOTS) {
             this.getSlotsToDrop().add(recipeSlot);
         }
@@ -107,7 +107,7 @@ public class NetworkEncoder extends NetworkObject {
         }
 
         final NetworkRoot root = definition.getNode().getRoot();
-        final long networkCharge = root.getNetworkPower();
+        final long networkCharge = root.getRootPower();
 
         if (networkCharge < CHARGE_COST) {
             player.sendMessage(Theme.WARNING + "Not enough Network power to fulfill this task.");
@@ -175,6 +175,6 @@ public class NetworkEncoder extends NetworkObject {
         }
 
         blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
-        root.removeNetworkPower(CHARGE_COST);
+        root.removeRootPower(CHARGE_COST);
     }
 }

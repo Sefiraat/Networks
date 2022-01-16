@@ -47,7 +47,7 @@ public class NetworkPurger extends NetworkObject {
     private final ItemSetting<Integer> tickRate;
 
     public NetworkPurger(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.TRASH);
+        super(itemGroup, item, recipeType, recipe, NodeType.PURGER);
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
 
@@ -90,7 +90,7 @@ public class NetworkPurger extends NetworkObject {
     private void tryKillItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             return;
         }
 
@@ -108,7 +108,9 @@ public class NetworkPurger extends NetworkObject {
         if (retrieved != null) {
             retrieved.setAmount(0);
             Location location = blockMenu.getLocation().clone().add(0.5, 1.2, 0.5);
-            location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 1, 0.5, 0, 0.2, 0);
+            if (definition.getNode().getRoot().isDisplayParticles()) {
+                location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 1, 0.5, 0, 0.2, 0);
+            }
         }
     }
 

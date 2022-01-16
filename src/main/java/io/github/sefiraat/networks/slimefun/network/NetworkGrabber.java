@@ -9,7 +9,9 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +37,7 @@ public class NetworkGrabber extends NetworkDirectional {
     private void tryGrabItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             return;
         }
 
@@ -52,9 +54,18 @@ public class NetworkGrabber extends NetworkDirectional {
             final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
             if (itemStack != null && itemStack.getType() != Material.AIR) {
+                int before = itemStack.getAmount();
                 definition.getNode().getRoot().addItemStack(itemStack);
+                if (definition.getNode().getRoot().isDisplayParticles() && itemStack.getAmount() < before) {
+                    showParticle(blockMenu.getLocation(), direction);
+                }
                 break;
             }
         }
+    }
+
+    @Override
+    protected Particle.DustOptions getDustOptions() {
+        return new Particle.DustOptions(Color.FUCHSIA, 1);
     }
 }

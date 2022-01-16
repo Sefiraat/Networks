@@ -12,9 +12,9 @@ public enum NodeType {
     WIPER,
     GRABBER,
     PUSHER,
-    TRASH,
+    PURGER,
     CRAFTER,
-    POWER,
-    PACKAGER,
-    POWER_DISPLAY
+    POWER_NODE,
+    POWER_DISPLAY,
+    ENCODER
 }

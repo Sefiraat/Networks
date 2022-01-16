@@ -38,107 +38,121 @@ import java.util.Set;
 
 public class NetworkRoot extends NetworkNode {
 
-    private final Set<Location> networkLocations = new HashSet<>();
-    private final Set<Location> networkBridges = new HashSet<>();
-    private final Set<Location> networkMonitors = new HashSet<>();
-    private final Set<Location> networkCells = new HashSet<>();
-    private final Set<Location> networkExporters = new HashSet<>();
-    private final Set<Location> networkImporters = new HashSet<>();
-    private final Set<Location> networkGrids = new HashSet<>();
-    private final Set<Location> networkShells = new HashSet<>();
-    private final Set<Location> networkWipers = new HashSet<>();
-    private final Set<Location> networkGrabbers = new HashSet<>();
-    private final Set<Location> networkPushers = new HashSet<>();
-    private final Set<Location> networkPurgers = new HashSet<>();
-    private final Set<Location> networkPowerNodes = new HashSet<>();
-    private final Set<Location> networkCrafters = new HashSet<>();
+    private final Set<Location> nodeLocations = new HashSet<>();
+
+    private final Set<Location> bridges = new HashSet<>();
+    private final Set<Location> monitors = new HashSet<>();
+    private final Set<Location> importers = new HashSet<>();
+    private final Set<Location> exporters = new HashSet<>();
+    private final Set<Location> grids = new HashSet<>();
+    private final Set<Location> cells = new HashSet<>();
+    private final Set<Location> shells = new HashSet<>();
+    private final Set<Location> wipers = new HashSet<>();
+    private final Set<Location> grabbers = new HashSet<>();
+    private final Set<Location> pushers = new HashSet<>();
+    private final Set<Location> purgers = new HashSet<>();
+    private final Set<Location> crafters = new HashSet<>();
+    private final Set<Location> powerNodes = new HashSet<>();
+    private final Set<Location> powerDisplays = new HashSet<>();
+    private final Set<Location> encoders = new HashSet<>();
 
     private Set<BarrelIdentity> barrels = null;
 
-    private long power = 0;
+    private long rootPower = 0;
+
+    private boolean displayParticles = false;
 
     public NetworkRoot(@Nonnull Location location, @Nonnull NodeType type) {
         super(location, type);
         this.root = this;
     }
 
-    /*
-     *  TODO
-     *  Move to a single map Location, Type and build up the Type enum - push to
-     *  metrics and probe
-     */
     public void addNode(@Nonnull Location location, @Nonnull NodeType type) {
-        networkLocations.add(location);
+        nodeLocations.add(location);
         switch (type) {
-            case BRIDGE -> networkBridges.add(location);
-            case STORAGE_MONITOR -> networkMonitors.add(location);
-            case IMPORT -> networkImporters.add(location);
-            case EXPORT -> networkExporters.add(location);
-            case CELL -> networkCells.add(location);
-            case GRID -> networkGrids.add(location);
-            case SHELL -> networkShells.add(location);
-            case WIPER -> networkWipers.add(location);
-            case GRABBER -> networkGrabbers.add(location);
-            case PUSHER -> networkPushers.add(location);
-            case TRASH -> networkPurgers.add(location);
-            case POWER -> networkPowerNodes.add(location);
-            case CRAFTER -> networkCrafters.add(location);
-            default -> {
-                // Not required
+            case CONTROLLER -> {
+                // Nothing here guvnor
             }
+            case BRIDGE -> bridges.add(location);
+            case STORAGE_MONITOR -> monitors.add(location);
+            case IMPORT -> importers.add(location);
+            case EXPORT -> exporters.add(location);
+            case GRID -> grids.add(location);
+            case CELL -> cells.add(location);
+            case SHELL -> shells.add(location);
+            case WIPER -> wipers.add(location);
+            case GRABBER -> grabbers.add(location);
+            case PUSHER -> pushers.add(location);
+            case PURGER -> purgers.add(location);
+            case CRAFTER -> crafters.add(location);
+            case POWER_NODE -> powerNodes.add(location);
+            case POWER_DISPLAY -> powerDisplays.add(location);
+            case ENCODER -> encoders.add(location);
         }
     }
 
-    public Set<Location> getNetworkLocations() {
-        return this.networkLocations;
+    public Set<Location> getNodeLocations() {
+        return this.nodeLocations;
     }
 
     public Set<Location> getBridges() {
-        return this.networkBridges;
+        return this.bridges;
     }
 
     public Set<Location> getMonitors() {
-        return this.networkMonitors;
+        return this.monitors;
     }
 
-    public Set<Location> getImports() {
-        return this.networkImporters;
+    public Set<Location> getImporters() {
+        return this.importers;
     }
 
-    public Set<Location> getExports() {
-        return this.networkExporters;
-    }
-
-    public Set<Location> getCells() {
-        return this.networkCells;
+    public Set<Location> getExporters() {
+        return this.exporters;
     }
 
     public Set<Location> getGrids() {
-        return this.networkGrids;
+        return this.grids;
+    }
+
+    public Set<Location> getCells() {
+        return this.cells;
     }
 
     public Set<Location> getShells() {
-        return this.networkShells;
+        return this.shells;
     }
 
     public Set<Location> getWipers() {
-        return this.networkWipers;
+        return this.wipers;
     }
 
     public Set<Location> getGrabbers() {
-        return this.networkGrabbers;
+        return this.grabbers;
     }
 
     public Set<Location> getPushers() {
-        return this.networkPushers;
+        return this.pushers;
     }
 
     public Set<Location> getPurgers() {
-        return this.networkPurgers;
+        return this.purgers;
     }
 
     public Set<Location> getCrafters() {
-        return this.networkCrafters;
+        return this.crafters;
+    }
+
+    public Set<Location> getPowerNodes() {
+        return this.powerNodes;
+    }
+
+    public Set<Location> getPowerDisplays() {
+        return this.powerDisplays;
+    }
+
+    public Set<Location> getEncoders() {
+        return this.encoders;
     }
 
     @Nonnull
@@ -224,7 +238,7 @@ public class NetworkRoot extends NetworkNode {
         final Set<Location> addedLocations = new HashSet<>();
         final Set<BarrelIdentity> barrelSet = new HashSet<>();
 
-        for (Location cellLocation : networkMonitors) {
+        for (Location cellLocation : this.monitors) {
             final BlockFace face = NetworkDirectional.getSelectedFace(cellLocation);
 
             if (face == null) {
@@ -308,7 +322,7 @@ public class NetworkRoot extends NetworkNode {
 
         if (cardItem instanceof NetworkCard) {
             final ItemMeta itemMeta = card.getItemMeta();
-            final ItemStack cachedStack = NetworkMemoryShell.CACHES.get(blockMenu.getLocation()).getItemStack();
+            final ItemStack cachedStack = NetworkMemoryShell.getCaches().get(blockMenu.getLocation()).getItemStack();
 
             CardInstance instance;
 
@@ -352,7 +366,7 @@ public class NetworkRoot extends NetworkNode {
     @Nonnull
     public Set<BlockMenu> getCellMenus() {
         final Set<BlockMenu> menus = new HashSet<>();
-        for (Location cellLocation : networkCells) {
+        for (Location cellLocation : this.cells) {
             BlockMenu menu = BlockStorage.getInventory(cellLocation);
             if (menu != null) {
                 menus.add(menu);
@@ -364,7 +378,7 @@ public class NetworkRoot extends NetworkNode {
     @Nonnull
     public Set<BlockMenu> getCrafterOutputs() {
         final Set<BlockMenu> menus = new HashSet<>();
-        for (Location location : networkCrafters) {
+        for (Location location : this.crafters) {
             BlockMenu menu = BlockStorage.getInventory(location);
             if (menu != null) {
                 menus.add(menu);
@@ -553,32 +567,40 @@ public class NetworkRoot extends NetworkNode {
         return 0;
     }
 
-    public long getNetworkPower() {
-        return this.power;
+    public long getRootPower() {
+        return this.rootPower;
     }
 
-    public void setNetworkPower(long power) {
-        this.power = power;
+    public void setRootPower(long power) {
+        this.rootPower = power;
     }
 
-    public void addNetworkPower(long power) {
-        this.power += power;
+    public void addRootPower(long power) {
+        this.rootPower += power;
     }
 
-    public void removeNetworkPower(long power) {
+    public void removeRootPower(long power) {
         int removed = 0;
-        for (Location node : networkPowerNodes) {
+        for (Location node : powerNodes) {
             final SlimefunItem item = BlockStorage.check(node);
             if (item instanceof NetworkPowerNode powerNode) {
                 final int charge = powerNode.getCharge(node);
                 final int toRemove = (int) Math.min(power - removed, charge);
                 powerNode.removeCharge(node, toRemove);
-                this.power -= power;
+                this.rootPower -= power;
                 removed = removed + toRemove;
             }
             if (removed >= power) {
                 return;
             }
         }
+    }
+
+    public boolean isDisplayParticles() {
+        return displayParticles;
+    }
+
+    public void setDisplayParticles(boolean displayParticles) {
+        this.displayParticles = displayParticles;
     }
 }
