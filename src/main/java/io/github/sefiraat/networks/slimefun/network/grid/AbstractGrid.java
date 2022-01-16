@@ -145,6 +145,7 @@ public abstract class AbstractGrid extends NetworkObject {
 
         // No node located, weird
         if (definition.getNode() == null) {
+            clearDisplay(blockMenu);
             return;
         }
 
@@ -158,10 +159,7 @@ public abstract class AbstractGrid extends NetworkObject {
 
         // Set everything to blank and return if there are no pages (no items)
         if (pages < 0) {
-            for (int displaySlot : getDisplaySlots()) {
-                blockMenu.replaceExistingItem(displaySlot, BLANK_SLOT_STACK);
-                blockMenu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
-            }
+            clearDisplay(blockMenu);
             return;
         }
 
@@ -192,13 +190,22 @@ public abstract class AbstractGrid extends NetworkObject {
                 itemMeta.setLore(lore);
                 displayStack.setItemMeta(itemMeta);
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
-                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) ->
-                    retrieveItem(player, definition, item, action)
+                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
+                        retrieveItem(player, definition, item, action);
+                        return false;
+                    }
                 );
             } else {
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
                 blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
             }
+        }
+    }
+
+    protected void clearDisplay(BlockMenu blockMenu) {
+        for (int displaySlot : getDisplaySlots()) {
+            blockMenu.replaceExistingItem(displaySlot, BLANK_SLOT_STACK);
+            blockMenu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
         }
     }
 
@@ -242,7 +249,7 @@ public abstract class AbstractGrid extends NetworkObject {
     }
 
     @ParametersAreNonnullByDefault
-    protected boolean retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action) {
+    protected void retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action) {
         final ItemStack clone = itemStack.clone();
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
@@ -262,7 +269,7 @@ public abstract class AbstractGrid extends NetworkObject {
 
         // Quickly check if the cursor has an item and if we can add more to it
         if (cursor.getType() != Material.AIR && !canAddMore(action, cursor, request)) {
-            return false;
+            return;
         }
 
         final ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
@@ -272,8 +279,6 @@ public abstract class AbstractGrid extends NetworkObject {
             }
             request.getPlayer().setItemOnCursor(requestingStack);
         }
-
-        return false;
     }
 
     private boolean canAddMore(@Nonnull ClickAction action, @Nonnull ItemStack cursor, @Nonnull GridItemRequest request) {

@@ -20,8 +20,10 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
@@ -30,6 +32,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +43,13 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class NetworkDirectional extends NetworkObject {
+
+    private static final int NORTH_SLOT = 11;
+    private static final int SOUTH_SLOT = 29;
+    private static final int EAST_SLOT = 21;
+    private static final int WEST_SLOT = 19;
+    private static final int UP_SLOT = 14;
+    private static final int DOWN_SLOT = 32;
 
     protected static final String DIRECTION = "direction";
     protected static final String UUID = "uuid";
@@ -212,27 +222,27 @@ public abstract class NetworkDirectional extends NetworkObject {
     }
 
     protected int getNorthSlot() {
-        return 12;
+        return NORTH_SLOT;
     }
 
     protected int getSouthSlot() {
-        return 30;
+        return SOUTH_SLOT;
     }
 
     protected int getEastSlot() {
-        return 22;
+        return EAST_SLOT;
     }
 
     protected int getWestSlot() {
-        return 20;
+        return WEST_SLOT;
     }
 
     protected int getUpSlot() {
-        return 15;
+        return UP_SLOT;
     }
 
     protected int getDownSlot() {
-        return 33;
+        return DOWN_SLOT;
     }
 
     @Nonnull
@@ -262,5 +272,16 @@ public abstract class NetworkDirectional extends NetworkObject {
     @Nullable
     public static BlockFace getSelectedFace(@Nonnull Location location) {
         return SELECTED_DIRECTION_MAP.get(location);
+    }
+
+    protected Particle.DustOptions getDustOptions() {
+        return new Particle.DustOptions(Color.RED, 1);
+    }
+
+    protected void showParticle(@Nonnull Location location, @Nonnull BlockFace blockFace) {
+        final Vector faceVector = blockFace.getDirection().clone().multiply(-1);
+        final Vector pushVector = faceVector.clone().multiply(2);
+        final Location displayLocation = location.clone().add(0.5, 0.5, 0.5).add(faceVector);
+        location.getWorld().spawnParticle(Particle.REDSTONE, displayLocation, 0, pushVector.getX(), pushVector.getY(), pushVector.getZ(), getDustOptions());
     }
 }

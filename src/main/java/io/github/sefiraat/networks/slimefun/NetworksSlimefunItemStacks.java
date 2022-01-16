@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
+import java.util.Locale;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -27,6 +29,13 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
     public static final SlimefunItemStack RADIOACTIVE_OPTIC_STAR;
+    public static final SlimefunItemStack SHRINKING_BASE;
+    public static final SlimefunItemStack SIMPLE_NANOBOTS;
+    public static final SlimefunItemStack ADVANCED_NANOBOTS;
+    public static final SlimefunItemStack AI_CORE;
+    public static final SlimefunItemStack EMPOWERED_AI_CORE;
+    public static final SlimefunItemStack PRISTINE_AI_CORE;
+    public static final SlimefunItemStack INTERDIMENSIONAL_PRESENCE;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -45,6 +54,12 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_1;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
+    public static final SlimefunItemStack NETWORK_RECIPE_ENCODER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
     // Tools
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
@@ -55,7 +70,13 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
+    public static final SlimefunItemStack CRAFTING_BLUEPRINT;
     public static final SlimefunItemStack NETWORK_PROBE;
+    public static final SlimefunItemStack NETWORK_REMOTE;
+    public static final SlimefunItemStack NETWORK_REMOTE_EMPOWERED;
+    public static final SlimefunItemStack NETWORK_REMOTE_PRISTINE;
+    public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
+    public static final SlimefunItemStack NETWORK_CRAYON;
 
     static {
 
@@ -95,6 +116,71 @@ public class NetworksSlimefunItemStacks {
             "can store insane amounts of information."
         );
 
+        SHRINKING_BASE = Theme.themedSlimefunItemStack(
+            "NTW_SHRINKING_BASE",
+            getPreEnchantedItemStack(Material.PISTON, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Shrinking Base",
+            "An advanced construct able to make",
+            "big things go small."
+        );
+
+        SIMPLE_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_SIMPLE_NANOBOTS",
+            new ItemStack(Material.MELON_SEEDS),
+            Theme.CRAFTING,
+            "Simple Nanobots",
+            "Teeny Tiny little bots that can",
+            "help you with precise tasks."
+        );
+
+        ADVANCED_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_ADVANCED_NANOBOTS",
+            getPreEnchantedItemStack(Material.MELON_SEEDS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Advanced Nanobots",
+            "Teeny Tiny little bots that can",
+            "help you with precise tasks.",
+            "This version is smarter and faster."
+        );
+
+        AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_AI_CORE",
+            new ItemStack(Material.BRAIN_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "A.I. Core",
+            "A burgeoning artificial intelligence",
+            "resides within this weak shell."
+        );
+
+        EMPOWERED_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_EMPOWERED_AI_CORE",
+            new ItemStack(Material.TUBE_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "Empowered A.I. Core",
+            "A flourishing artificial intelligence",
+            "resides within this shell."
+        );
+
+        PRISTINE_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_PRISTINE_AI_CORE",
+            getPreEnchantedItemStack(Material.TUBE_CORAL_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Pristine A.I. Core",
+            "A perfected artificial intelligence",
+            "resides within this defined shell."
+        );
+
+        INTERDIMENSIONAL_PRESENCE = Theme.themedSlimefunItemStack(
+            "NTW_INTERDIMENSIONAL_PRESENCE",
+            getPreEnchantedItemStack(Material.ARMOR_STAND, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "Interdimensional Presence",
+            "An artificial intelligence that has",
+            "grown too powerful for just a",
+            "single dimension."
+        );
+
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
             "NTW_CONTROLLER",
             new ItemStack(Material.BLACK_STAINED_GLASS),
@@ -123,7 +209,8 @@ public class NetworksSlimefunItemStacks {
             "objects.",
             "",
             "Currently Supports:",
-            "Infinity Barrels"
+            "Infinity Barrels",
+            "Network Shells"
         );
 
         NETWORK_IMPORT = Theme.themedSlimefunItemStack(
@@ -232,7 +319,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[0])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[0])
         );
 
         NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
@@ -245,7 +332,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[1])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[1])
         );
 
         NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
@@ -258,7 +345,7 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[2])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[2])
         );
 
         NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
@@ -271,7 +358,88 @@ public class NetworksSlimefunItemStacks {
             "memory card's content back into",
             "the network.",
             "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[3])
+            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[3])
+        );
+
+        NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_1",
+            new ItemStack(Material.BROWN_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Capacitor (1)",
+            "The Network Capacitor can take",
+            "power in and store it for use",
+            "within the network.",
+            "",
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+        );
+
+        NETWORK_CAPACITOR_2 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_2",
+            new ItemStack(Material.GREEN_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Capacitor (2)",
+            "The Network Capacitor can take",
+            "power in and store it for use",
+            "within the network.",
+            "",
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+        );
+
+        NETWORK_POWER_DISPLAY = Theme.themedSlimefunItemStack(
+            "NTW_POWER_DISPLAY",
+            new ItemStack(Material.TINTED_GLASS),
+            Theme.MACHINE,
+            "Network Power Display",
+            "The Network Power Display will",
+            "display the power in the network.",
+            "Simple, right?"
+        );
+
+        NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
+            "NTW_RECIPE_ENCODER",
+            new ItemStack(Material.TARGET),
+            Theme.MACHINE,
+            "Network Recipe Encoder",
+            "Used to form a Crafting Blueprint",
+            "from input items.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/encode", Theme.CLICK_INFO, Theme.PASSIVE, 20000)
+        );
+
+        NETWORK_AUTO_CRAFTER = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER",
+            new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Auto Crafter",
+            "The Network Auto Crafter accepts",
+            "a crafting blueprint. When the",
+            "blueprint output item is requested",
+            "while there is none in the network",
+            "it will be crafted if you have",
+            "materials.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 64)
+        );
+
+        NETWORK_AUTO_CRAFTER_WITHHOLDING = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER_WITHHOLDING",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Auto Crafter (Withholding)",
+            "The Network Auto Crafter accepts",
+            "a crafting blueprint. When the",
+            "blueprint output item is requested",
+            "while there is none in the network",
+            "it will be crafted if you have",
+            "materials.",
+            "",
+            "A Withholding Crafter will keep",
+            "a stack in the output and stop",
+            "crafting. The stack can been seen",
+            "in the Network and also allows for",
+            "cargo.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 128)
         );
 
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
@@ -279,7 +447,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (4K)",
-            "Stores " + NetworkCard.SIZES[0] + " items",
+            "Stores " + NetworkCard.getSizes()[0] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -296,7 +464,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_DYE),
             Theme.TOOL,
             "Network Memory Card (32K)",
-            "Stores " + NetworkCard.SIZES[1] + " items",
+            "Stores " + NetworkCard.getSizes()[1] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -313,7 +481,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIME_DYE),
             Theme.TOOL,
             "Network Memory Card (262K)",
-            "Stores " + NetworkCard.SIZES[2] + " items",
+            "Stores " + NetworkCard.getSizes()[2] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -330,7 +498,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GREEN_DYE),
             Theme.TOOL,
             "Network Memory Card (2M)",
-            "Stores " + NetworkCard.SIZES[3] + " items",
+            "Stores " + NetworkCard.getSizes()[3] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -347,7 +515,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (16M)",
-            "Stores " + NetworkCard.SIZES[4] + " items",
+            "Stores " + NetworkCard.getSizes()[4] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -364,7 +532,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLUE_DYE),
             Theme.TOOL,
             "Network Memory Card (134M)",
-            "Stores " + NetworkCard.SIZES[5] + " items",
+            "Stores " + NetworkCard.getSizes()[5] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -381,7 +549,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PINK_DYE),
             Theme.TOOL,
             "Network Memory Card (1B)",
-            "Stores " + NetworkCard.SIZES[6] + " items",
+            "Stores " + NetworkCard.getSizes()[6] + " items",
             "",
             "Right click with an item in your",
             "offhand to set the card's item.",
@@ -410,6 +578,16 @@ public class NetworksSlimefunItemStacks {
             Theme.WARNING + "Empty"
         );
 
+        CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_BLUEPRINT",
+            new ItemStack(Material.BLUE_DYE),
+            Theme.TOOL,
+            "Crafting Blueprint",
+            "A blank blueprint that can",
+            "be used to store a crafting",
+            "recipe."
+        );
+
         NETWORK_PROBE = Theme.themedSlimefunItemStack(
             "NTW_PROBE",
             new ItemStack(Material.CLOCK),
@@ -417,6 +595,60 @@ public class NetworksSlimefunItemStacks {
             "Network Probe",
             "When used on a controller, this will",
             "show the nodes on the network."
+        );
+
+        NETWORK_REMOTE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE",
+            new ItemStack(Material.PAINTING),
+            Theme.TOOL,
+            "Network Remote",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
+        );
+
+        NETWORK_REMOTE_EMPOWERED = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_EMPOWERED",
+            new ItemStack(Material.ITEM_FRAME),
+            Theme.TOOL,
+            "Network Empowered",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
+        );
+
+        NETWORK_REMOTE_PRISTINE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_PRISTINE",
+            new ItemStack(Material.GLOW_ITEM_FRAME),
+            Theme.TOOL,
+            "Network Remote Pristine",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Unlimited")
+        );
+
+        NETWORK_REMOTE_ULTIMATE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_ULTIMATE",
+            getPreEnchantedItemStack(Material.GLOW_ITEM_FRAME, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.TOOL,
+            "Network Remote Ultimate",
+            "Opens a bound grid wireless.",
+            "The grid must be chunk loaded.",
+            "",
+            MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Cross Dimensional")
+        );
+
+        NETWORK_CRAYON = Theme.themedSlimefunItemStack(
+            "NTW_CRAYON",
+            new ItemStack(Material.RED_CANDLE),
+            Theme.TOOL,
+            "Network Crayon",
+            "When used on a controller, this will",
+            "enable particle display from specific",
+            "blocks when working."
         );
     }
 

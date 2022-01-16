@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @UtilityClass
@@ -20,7 +21,10 @@ public class StackUtils {
         return clone;
     }
 
-    public static boolean itemsMatch(@Nonnull ItemStackCache cache, @Nonnull ItemStack itemStack) {
+    public static boolean itemsMatch(@Nonnull ItemStackCache cache, @Nullable ItemStack itemStack) {
+        if (cache.getItemStack() == null || itemStack == null) {
+            return itemStack == null && cache.getItemStack() == null;
+        }
         if (itemStack.getType() != cache.getItemType()) {
             return false;
         }
@@ -30,6 +34,22 @@ public class StackUtils {
             return itemMeta.equals(cachedMeta);
         } else {
             return cache.getItemMeta() == null;
+        }
+    }
+
+    public static boolean itemsMatch(@Nullable ItemStack itemStack1, @Nullable ItemStack itemStack2) {
+        if (itemStack1 == null || itemStack2 == null) {
+            return itemStack2 == null && itemStack1 == null;
+        }
+        if (itemStack2.getType() != itemStack1.getType()) {
+            return false;
+        }
+        if (itemStack2.hasItemMeta()) {
+            final ItemMeta itemMeta2 = itemStack2.getItemMeta();
+            final ItemMeta itemMeta1 = itemStack1.getItemMeta();
+            return itemMeta2.equals(itemMeta1);
+        } else {
+            return !itemStack1.hasItemMeta();
         }
     }
 

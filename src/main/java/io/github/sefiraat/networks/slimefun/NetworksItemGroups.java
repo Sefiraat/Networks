@@ -26,7 +26,16 @@ public final class NetworksItemGroups {
         MAIN,
         new CustomItemStack(
             new ItemStack(Material.WHITE_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Materials and Tools"
+            Theme.MAIN.getColor() + "Crafting Materials"
+        )
+    );
+
+    public static final SubItemGroup TOOLS = new SubItemGroup(
+        Keys.newKey("tools"),
+        MAIN,
+        new CustomItemStack(
+            new ItemStack(Material.PAINTING),
+            Theme.MAIN.getColor() + "Memory Cards and Tools"
         )
     );
 
@@ -45,6 +54,7 @@ public final class NetworksItemGroups {
         // Slimefun Registry
         NetworksItemGroups.MAIN.register(plugin);
         NetworksItemGroups.MATERIALS.register(plugin);
+        NetworksItemGroups.TOOLS.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS.register(plugin);
     }
 }

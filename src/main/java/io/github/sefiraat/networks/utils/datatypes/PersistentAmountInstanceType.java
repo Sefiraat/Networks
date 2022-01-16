@@ -56,8 +56,7 @@ public class PersistentAmountInstanceType implements PersistentDataType<Persiste
     public CardInstance fromPrimitive(@Nonnull PersistentDataContainer primitive, @Nonnull PersistentDataAdapterContext context) {
         final int amount = primitive.get(AMOUNT, DataType.INTEGER);
         final int limit = primitive.get(LIMIT, DataType.INTEGER);
-        final CardInstance instance = new CardInstance(null, amount, limit);
 
-        return instance;
+        return new CardInstance(null, amount, limit);
     }
 }
