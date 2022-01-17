@@ -33,7 +33,7 @@ public class StackUtils {
             final ItemMeta cachedMeta = cache.getItemMeta();
             return itemMeta.equals(cachedMeta);
         } else {
-            return cache.getItemMeta() == null;
+            return !cache.getItemStack().hasItemMeta();
         }
     }
 

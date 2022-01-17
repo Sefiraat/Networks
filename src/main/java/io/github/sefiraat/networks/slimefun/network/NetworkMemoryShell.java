@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
@@ -148,7 +149,7 @@ public class NetworkMemoryShell extends NetworkObject {
                 return;
             }
             for (ItemStack itemStack : input) {
-                if (itemMatch(itemStack, cardInstance)) {
+                if (StackUtils.itemsMatch(cardInstance, itemStack)) {
                     cardInstance.increaseAmount(itemStack.getAmount());
                     itemStack.setAmount(0);
                     setCardInstance(card, cardInstance);

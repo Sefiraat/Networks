@@ -23,9 +23,6 @@ public class ItemStackCache {
 
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
-        if (itemStack != null) {
-            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
-        }
     }
 
     @Nullable
