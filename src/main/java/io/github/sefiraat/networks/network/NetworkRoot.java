@@ -67,7 +67,7 @@ public class NetworkRoot extends NetworkNode {
         this.root = this;
     }
 
-    public void addNode(@Nonnull Location location, @Nonnull NodeType type) {
+    public void registerNode(@Nonnull Location location, @Nonnull NodeType type) {
         nodeLocations.add(location);
         switch (type) {
             case CONTROLLER -> {

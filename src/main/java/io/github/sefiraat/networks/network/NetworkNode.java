@@ -45,7 +45,7 @@ public class NetworkNode {
         child.setParent(this);
         child.setRoot(this.getRoot());
         this.root.addRootPower(child.getPower());
-        this.root.addNode(child.nodePosition, child.nodeType);
+        this.root.registerNode(child.nodePosition, child.nodeType);
         this.childrenNodes.add(child);
     }
 
