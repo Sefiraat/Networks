@@ -136,7 +136,7 @@ public class NetworkEncoder extends NetworkObject {
             if (stackInSlot == null) {
                 inputs[i] = null;
             } else {
-                inputs[i] = StackUtils.getAsQuantity(stackInSlot, 1);
+                inputs[i] = new ItemStack(stackInSlot);
             }
             i++;
         }

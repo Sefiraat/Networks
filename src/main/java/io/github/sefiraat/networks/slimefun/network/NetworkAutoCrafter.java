@@ -182,6 +182,7 @@ public class NetworkAutoCrafter extends NetworkObject {
         if (crafted == null) {
             instance.generateVanillaRecipe(blockMenu.getLocation().getWorld());
             if (instance.getRecipe() == null) {
+                returnItems(root, inputs);
                 return false;
             }
             setCache(blockMenu, instance);
@@ -190,11 +191,7 @@ public class NetworkAutoCrafter extends NetworkObject {
 
         // If no item crafted OR result doesn't fit, escape
         if (crafted.getType() == Material.AIR) {
-            for (ItemStack input : inputs) {
-                if (input != null) {
-                    root.addItemStack(input);
-                }
-            }
+            returnItems(root, inputs);
             return false;
         }
 
@@ -205,6 +202,14 @@ public class NetworkAutoCrafter extends NetworkObject {
         }
         blockMenu.pushItem(crafted, OUTPUT_SLOT);
         return true;
+    }
+
+    private void returnItems(@Nonnull NetworkRoot root, @Nonnull ItemStack[] inputs) {
+        for (ItemStack input : inputs) {
+            if (input != null) {
+                root.addItemStack(input);
+            }
+        }
     }
 
     public void releaseCache(@Nonnull BlockMenu blockMenu) {
