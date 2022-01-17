@@ -44,12 +44,12 @@ import java.util.Set;
 
 public abstract class NetworkDirectional extends NetworkObject {
 
-    private static final int NORTH_SLOT = 11;
-    private static final int SOUTH_SLOT = 29;
-    private static final int EAST_SLOT = 21;
-    private static final int WEST_SLOT = 19;
-    private static final int UP_SLOT = 14;
-    private static final int DOWN_SLOT = 32;
+    private static final int NORTH_SLOT = 12;
+    private static final int SOUTH_SLOT = 30;
+    private static final int EAST_SLOT = 22;
+    private static final int WEST_SLOT = 20;
+    private static final int UP_SLOT = 15;
+    private static final int DOWN_SLOT = 33;
 
     protected static final String DIRECTION = "direction";
     protected static final String UUID = "uuid";
