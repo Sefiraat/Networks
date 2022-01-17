@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -182,19 +183,17 @@ public class NetworkAutoCrafter extends NetworkObject {
         if (crafted == null) {
             instance.generateVanillaRecipe(blockMenu.getLocation().getWorld());
             if (instance.getRecipe() == null) {
+                returnItems(root, inputs);
                 return false;
+            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
+                setCache(blockMenu, instance);
+                crafted = instance.getRecipe().getResult();
             }
-            setCache(blockMenu, instance);
-            crafted = instance.getRecipe().getResult();
         }
 
         // If no item crafted OR result doesn't fit, escape
-        if (crafted.getType() == Material.AIR) {
-            for (ItemStack input : inputs) {
-                if (input != null) {
-                    root.addItemStack(input);
-                }
-            }
+        if (crafted == null || crafted.getType() == Material.AIR) {
+            returnItems(root, inputs);
             return false;
         }
 
@@ -205,6 +204,14 @@ public class NetworkAutoCrafter extends NetworkObject {
         }
         blockMenu.pushItem(crafted, OUTPUT_SLOT);
         return true;
+    }
+
+    private void returnItems(@Nonnull NetworkRoot root, @Nonnull ItemStack[] inputs) {
+        for (ItemStack input : inputs) {
+            if (input != null) {
+                root.addItemStack(input);
+            }
+        }
     }
 
     public void releaseCache(@Nonnull BlockMenu blockMenu) {
