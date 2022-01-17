@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -184,13 +185,14 @@ public class NetworkAutoCrafter extends NetworkObject {
             if (instance.getRecipe() == null) {
                 returnItems(root, inputs);
                 return false;
+            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
+                setCache(blockMenu, instance);
+                crafted = instance.getRecipe().getResult();
             }
-            setCache(blockMenu, instance);
-            crafted = instance.getRecipe().getResult();
         }
 
         // If no item crafted OR result doesn't fit, escape
-        if (crafted.getType() == Material.AIR) {
+        if (crafted == null || crafted.getType() == Material.AIR) {
             returnItems(root, inputs);
             return false;
         }
