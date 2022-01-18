@@ -31,7 +31,7 @@ public class StackUtils {
         if (itemStack.getType() != cache.getItemType()) {
             return false;
         }
-        if (itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta() && cache.getItemStack().hasItemMeta()) {
             final ItemMeta itemMeta = itemStack.getItemMeta();
             final ItemMeta cachedMeta = cache.getItemMeta();
             final Optional<String> optionalStackId1 = Slimefun.getItemDataService().getItemData(itemMeta);
@@ -41,7 +41,7 @@ public class StackUtils {
             }
             return itemMeta.equals(cachedMeta);
         } else {
-            return cache.getItemMeta() == null;
+            return itemStack.hasItemMeta() == cache.getItemStack().hasItemMeta();
         }
     }
 
@@ -52,7 +52,7 @@ public class StackUtils {
         if (itemStack2.getType() != itemStack1.getType()) {
             return false;
         }
-        if (itemStack2.hasItemMeta()) {
+        if (itemStack1.hasItemMeta() && itemStack2.hasItemMeta()) {
             final ItemMeta itemMeta2 = itemStack2.getItemMeta();
             final ItemMeta itemMeta1 = itemStack1.getItemMeta();
             final Optional<String> optionalStackId1 = Slimefun.getItemDataService().getItemData(itemMeta1);
@@ -62,7 +62,7 @@ public class StackUtils {
             }
             return itemMeta2.equals(itemMeta1);
         } else {
-            return !itemStack1.hasItemMeta();
+            return itemStack1.hasItemMeta() == itemStack2.hasItemMeta();
         }
     }
 
