@@ -43,6 +43,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         getLogger().info("         Networks - By Sefiraat         ");
         getLogger().info("########################################");
 
+        saveDefaultConfig();
         tryUpdate();
 
         setupSlimefun();
