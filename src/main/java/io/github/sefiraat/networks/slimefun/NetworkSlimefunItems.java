@@ -402,7 +402,7 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
-            10000
+            1000
         );
 
         NETWORK_CAPACITOR_2 = new NetworkPowerNode(
@@ -414,7 +414,7 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_1.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
-            100000
+            10000
         );
 
         NETWORK_POWER_DISPLAY = new NetworkPowerDisplay(

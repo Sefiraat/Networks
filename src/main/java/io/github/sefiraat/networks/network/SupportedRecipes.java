@@ -18,10 +18,20 @@ public final class SupportedRecipes {
     private static final Map<ItemStack[], ItemStack> RECIPES = new HashMap<>();
 
     static {
-        for (SlimefunItem i : Slimefun.getRegistry().getEnabledSlimefunItems()) {
-            RecipeType recipeType = i.getRecipeType();
-            if ((recipeType == RecipeType.ENHANCED_CRAFTING_TABLE) && allowedRecipe(i)) {
-                SupportedRecipes.addRecipe(i.getRecipe(), i.getRecipeOutput());
+        for (SlimefunItem item : Slimefun.getRegistry().getEnabledSlimefunItems()) {
+            RecipeType recipeType = item.getRecipeType();
+            if ((recipeType == RecipeType.ENHANCED_CRAFTING_TABLE) && allowedRecipe(item)) {
+                ItemStack[] itemStacks = new ItemStack[9];
+                int i = 0;
+                for (ItemStack itemStack : item.getRecipe()) {
+                    if (itemStack == null) {
+                        itemStacks[i] = null;
+                    } else {
+                        itemStacks[i] = new ItemStack(itemStack.clone());
+                    }
+                    i++;
+                }
+                SupportedRecipes.addRecipe(itemStacks, item.getRecipeOutput());
             }
         }
     }
@@ -36,7 +46,7 @@ public final class SupportedRecipes {
 
     public boolean testRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
-            if (!StackUtils.itemsMatch(input[test], recipe[test])) {
+            if (!StackUtils.itemsMatchCrafting(input[test], recipe[test])) {
                 return false;
             }
         }
