@@ -43,7 +43,7 @@ public class NetworkMemoryWiper extends NetworkObject {
     private static final int[] BACKGROUND_SLOTS = new int[]{0, 1, 2, 6, 7, 8};
     private static final int[] CARD_SLOTS = new int[]{3, 5};
 
-    public static final int[] STACKS_TO_PUSH = new int[]{
+    private static final int[] STACKS_TO_PUSH = new int[]{
         1,
         3,
         9,
@@ -169,5 +169,9 @@ public class NetworkMemoryWiper extends NetworkObject {
 
     public int getTier() {
         return tier;
+    }
+
+    public static int[] getStacksToPush() {
+        return STACKS_TO_PUSH;
     }
 }

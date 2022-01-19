@@ -58,8 +58,7 @@ public class PersistentCardInstanceType implements PersistentDataType<Persistent
         final ItemStack item = primitive.get(ITEM, DataType.ITEM_STACK);
         final int amount = primitive.get(AMOUNT, DataType.INTEGER);
         final int limit = primitive.get(LIMIT, DataType.INTEGER);
-        final CardInstance instance = new CardInstance(item, amount, limit);
 
-        return instance;
+        return new CardInstance(item, amount, limit);
     }
 }

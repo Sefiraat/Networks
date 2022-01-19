@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-//TODO Temp only until the PR and/or fix for UUID goes through
-
 @UtilityClass
 public class DataTypeMethods {
 

@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
+import java.util.Locale;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -27,6 +29,13 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
     public static final SlimefunItemStack RADIOACTIVE_OPTIC_STAR;
+    public static final SlimefunItemStack SHRINKING_BASE;
+    public static final SlimefunItemStack SIMPLE_NANOBOTS;
+    public static final SlimefunItemStack ADVANCED_NANOBOTS;
+    public static final SlimefunItemStack AI_CORE;
+    public static final SlimefunItemStack EMPOWERED_AI_CORE;
+    public static final SlimefunItemStack PRISTINE_AI_CORE;
+    public static final SlimefunItemStack INTERDIMENSIONAL_PRESENCE;
 
     // Network Items
     public static final SlimefunItemStack NETWORK_CONTROLLER;
@@ -45,6 +54,12 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_1;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
+    public static final SlimefunItemStack NETWORK_RECIPE_ENCODER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER;
+    public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
     // Tools
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
@@ -55,7 +70,13 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
     public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
+    public static final SlimefunItemStack CRAFTING_BLUEPRINT;
     public static final SlimefunItemStack NETWORK_PROBE;
+    public static final SlimefunItemStack NETWORK_REMOTE;
+    public static final SlimefunItemStack NETWORK_REMOTE_EMPOWERED;
+    public static final SlimefunItemStack NETWORK_REMOTE_PRISTINE;
+    public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
+    public static final SlimefunItemStack NETWORK_CRAYON;
 
     static {
 
@@ -95,6 +116,71 @@ public class NetworksSlimefunItemStacks {
             "能夠儲存瘋狂數量的位元的資訊."
         );
 
+        SHRINKING_BASE = Theme.themedSlimefunItemStack(
+            "NTW_SHRINKING_BASE",
+            getPreEnchantedItemStack(Material.PISTON, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "伸縮基地",
+            "一種能夠使大東西變成",
+            "小東西的先進構造."
+        );
+
+        SIMPLE_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_SIMPLE_NANOBOTS",
+            new ItemStack(Material.MELON_SEEDS),
+            Theme.CRAFTING,
+            "簡單的奈米機器人",
+            "小小機器人, 可以幫你",
+            "完成精確的任務."
+        );
+
+        ADVANCED_NANOBOTS = Theme.themedSlimefunItemStack(
+            "NTW_ADVANCED_NANOBOTS",
+            getPreEnchantedItemStack(Material.MELON_SEEDS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "進階奈米機器人",
+            "小小機器人, 可以幫你",
+            "完成精確的任務.",
+            "這個版本更加的聰明, 更快速."
+        );
+
+        AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_AI_CORE",
+            new ItemStack(Material.BRAIN_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "A.I. 核心",
+            "一種迅速發展的人工智能,",
+            "存在這個脆弱的外殼之中."
+        );
+
+        EMPOWERED_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_EMPOWERED_AI_CORE",
+            new ItemStack(Material.TUBE_CORAL_BLOCK),
+            Theme.CRAFTING,
+            "授權 A.I. 核心",
+            "一種盛行的人工智能,",
+            "存在這個外殼之中."
+        );
+
+        PRISTINE_AI_CORE = Theme.themedSlimefunItemStack(
+            "NTW_PRISTINE_AI_CORE",
+            getPreEnchantedItemStack(Material.TUBE_CORAL_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "初始版 A.I. 核心",
+            "一種完美的人工智能,",
+            "存在這個輪廓分明的外殼之中."
+        );
+
+        INTERDIMENSIONAL_PRESENCE = Theme.themedSlimefunItemStack(
+            "NTW_INTERDIMENSIONAL_PRESENCE",
+            getPreEnchantedItemStack(Material.ARMOR_STAND, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.CRAFTING,
+            "跨維度的存在",
+            "一種人工智能已經",
+            "成長得太過於強大,",
+            "對於單一維度來說."
+        );
+
         NETWORK_CONTROLLER = Theme.themedSlimefunItemStack(
             "NTW_CONTROLLER",
             new ItemStack(Material.BLACK_STAINED_GLASS),
@@ -123,7 +209,8 @@ public class NetworksSlimefunItemStacks {
             "互動.",
             "",
             "目前支持:",
-            "無限附加 - 儲存單元"
+            "無限附加 - 儲存單元",
+            "網路 - 網路記憶體外殼"
         );
 
         NETWORK_IMPORT = Theme.themedSlimefunItemStack(
@@ -232,7 +319,7 @@ public class NetworksSlimefunItemStacks {
             "記憶卡內的內容清空",
             "至網路中.",
             "",
-            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[0])
+            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[0])
         );
 
         NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
@@ -245,7 +332,7 @@ public class NetworksSlimefunItemStacks {
             "記憶卡內的內容清空",
             "至網路中.",
             "",
-            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[1])
+            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[1])
         );
 
         NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
@@ -258,7 +345,7 @@ public class NetworksSlimefunItemStacks {
             "記憶卡內的內容清空",
             "至網路中.",
             "",
-            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[2])
+            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[2])
         );
 
         NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
@@ -271,7 +358,88 @@ public class NetworksSlimefunItemStacks {
             "記憶卡內的內容清空",
             "至網路中.",
             "",
-            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.STACKS_TO_PUSH[3])
+            MessageFormat.format("{0}速度: {1}{2} 組/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[3])
+        );
+
+        NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_1",
+            new ItemStack(Material.BROWN_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "網路電容 (1)",
+            "網路電容可以獲取",
+            "電力並將其儲存在",
+            "網路中使用.",
+            "",
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+        );
+
+        NETWORK_CAPACITOR_2 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_2",
+            new ItemStack(Material.GREEN_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "網路電容 (2)",
+            "網路電容可以獲取",
+            "電力並將其儲存在",
+            "網路中使用.",
+            "",
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+        );
+
+        NETWORK_POWER_DISPLAY = Theme.themedSlimefunItemStack(
+            "NTW_POWER_DISPLAY",
+            new ItemStack(Material.TINTED_GLASS),
+            Theme.MACHINE,
+            "網路電量顯示器",
+            "網路電量顯示器",
+            "將會顯示網路中的電量.",
+            "很簡單, 對吧?"
+        );
+
+        NETWORK_RECIPE_ENCODER = Theme.themedSlimefunItemStack(
+            "NTW_RECIPE_ENCODER",
+            new ItemStack(Material.TARGET),
+            Theme.MACHINE,
+            "網路配方編碼器",
+            "用於從輸入進的物品",
+            "形成製作藍圖.",
+            "",
+            MessageFormat.format("{0}網路流失: {1}{2}/編碼", Theme.CLICK_INFO, Theme.PASSIVE, 20000)
+        );
+
+        NETWORK_AUTO_CRAFTER = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER",
+            new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "網路自動製作器",
+            "網路自動製作器接受",
+            "製作藍圖. 當藍圖",
+            "輸出物品被請求且",
+            "網路中沒有該請求物品,",
+            "它將會被自動製作出來",
+            "當你有足夠的材料時.",
+            "",
+            MessageFormat.format("{0}網路流失: {1}{2}/製作", Theme.CLICK_INFO, Theme.PASSIVE, 64)
+        );
+
+        NETWORK_AUTO_CRAFTER_WITHHOLDING = Theme.themedSlimefunItemStack(
+            "NTW_AUTO_CRAFTER_WITHHOLDING",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "網路自動製作器 (預留版)",
+            "網路自動製作器接受",
+            "製作藍圖. 當藍圖",
+            "輸出物品被請求且",
+            "網路中沒有該請求物品,",
+            "它將會被自動製作出來",
+            "當你有足夠的材料時.",
+            "",
+            "預留版製作器將保持",
+            "一組製作物在輸出區,",
+            "並停止製作. 該一組物品",
+            "可以在網路中看到,",
+            "也可以使用物流.",
+            "",
+            MessageFormat.format("{0}網路流失: {1}{2}/製作", Theme.CLICK_INFO, Theme.PASSIVE, 128)
         );
 
         NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
@@ -279,7 +447,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_GRAY_DYE),
             Theme.TOOL,
             "網路記憶卡 (4K)",
-            "儲存 " + NetworkCard.SIZES[0] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[0] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -296,7 +464,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_DYE),
             Theme.TOOL,
             "網路記憶卡 (32K)",
-            "儲存 " + NetworkCard.SIZES[1] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[1] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -313,7 +481,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIME_DYE),
             Theme.TOOL,
             "網路記憶卡 (262K)",
-            "儲存 " + NetworkCard.SIZES[2] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[2] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -330,7 +498,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GREEN_DYE),
             Theme.TOOL,
             "網路記憶卡 (2M)",
-            "儲存 " + NetworkCard.SIZES[3] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[3] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -347,7 +515,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_BLUE_DYE),
             Theme.TOOL,
             "網路記憶卡 (16M)",
-            "儲存 " + NetworkCard.SIZES[4] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[4] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -364,7 +532,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLUE_DYE),
             Theme.TOOL,
             "網路記憶卡 (134M)",
-            "儲存 " + NetworkCard.SIZES[5] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[5] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -381,7 +549,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PINK_DYE),
             Theme.TOOL,
             "網路記憶卡 (1B)",
-            "儲存 " + NetworkCard.SIZES[6] + " 個物品",
+            "儲存 " + NetworkCard.getSizes()[6] + " 個物品",
             "",
             "右鍵點擊來設定",
             "你副手所放的物品.",
@@ -410,6 +578,16 @@ public class NetworksSlimefunItemStacks {
             Theme.WARNING + "空"
         );
 
+        CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_BLUEPRINT",
+            new ItemStack(Material.BLUE_DYE),
+            Theme.TOOL,
+            "製作藍圖",
+            "一張空的藍圖,",
+            "可以用於儲存",
+            "製作配方."
+        );
+
         NETWORK_PROBE = Theme.themedSlimefunItemStack(
             "NTW_PROBE",
             new ItemStack(Material.CLOCK),
@@ -417,6 +595,60 @@ public class NetworksSlimefunItemStacks {
             "網路探測器",
             "當使用在控制器上時,",
             "將會顯示這個網路上所有的節點資訊."
+        );
+
+        NETWORK_REMOTE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE",
+            new ItemStack(Material.PAINTING),
+            Theme.TOOL,
+            "網路遠端遙控",
+            "遠端的方式打開一個綁定的網路格.",
+            "該網路格必須有區塊加載.",
+            "",
+            MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
+        );
+
+        NETWORK_REMOTE_EMPOWERED = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_EMPOWERED",
+            new ItemStack(Material.ITEM_FRAME),
+            Theme.TOOL,
+            "網路遠端遙控 - 充能",
+            "遠端的方式打開一個綁定的網路格.",
+            "該網路格必須有區塊加載.",
+            "",
+            MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
+        );
+
+        NETWORK_REMOTE_PRISTINE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_PRISTINE",
+            new ItemStack(Material.GLOW_ITEM_FRAME),
+            Theme.TOOL,
+            "網路遠端遙控 - 原始版",
+            "遠端的方式打開一個綁定的網路格.",
+            "該網路格必須有區塊加載.",
+            "",
+            MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "無限")
+        );
+
+        NETWORK_REMOTE_ULTIMATE = Theme.themedSlimefunItemStack(
+            "NTW_REMOTE_ULTIMATE",
+            getPreEnchantedItemStack(Material.GLOW_ITEM_FRAME, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
+            Theme.TOOL,
+            "網路遠端遙控 - 終極",
+            "遠端的方式打開一個綁定的網路格.",
+            "該網路格必須有區塊加載.",
+            "",
+            MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "跨維度")
+        );
+
+        NETWORK_CRAYON = Theme.themedSlimefunItemStack(
+            "NTW_CRAYON",
+            new ItemStack(Material.RED_CANDLE),
+            Theme.TOOL,
+            "網路蠟筆",
+            "當使用在控制器時,",
+            "這將在正在工作的特定方塊上",
+            "顯示粒子效果."
         );
     }
 

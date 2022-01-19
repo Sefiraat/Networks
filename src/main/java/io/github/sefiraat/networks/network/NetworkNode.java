@@ -2,6 +2,8 @@ package io.github.sefiraat.networks.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,24 +33,28 @@ public class NetworkNode {
     protected NetworkRoot root = null;
     protected Location nodePosition;
     protected NodeType nodeType;
+    protected long power;
 
     public NetworkNode(Location location, NodeType type) {
         this.nodePosition = location;
         this.nodeType = type;
+        this.power = retrieveBlockCharge();
     }
 
-    public NetworkNode addChild(@Nonnull NetworkNode child) {
+    public void addChild(@Nonnull NetworkNode child) {
         child.setParent(this);
         child.setRoot(this.getRoot());
+        this.root.addRootPower(child.getPower());
         this.root.addNode(child.nodePosition, child.nodeType);
         this.childrenNodes.add(child);
-        return child;
     }
 
+    @Nonnull
     public Location getNodePosition() {
         return nodePosition;
     }
 
+    @Nonnull
     public NodeType getNodeType() {
         return nodeType;
     }
@@ -58,14 +64,10 @@ public class NetworkNode {
     }
 
     public boolean networkContains(@Nonnull Location location) {
-        return getNetworkLocations().contains(location);
+        return this.root.getNodeLocations().contains(location);
     }
 
     @Nonnull
-    public Set<Location> getNetworkLocations() {
-        return getRoot().networkLocations;
-    }
-
     public NetworkRoot getRoot() {
         return this.root;
     }
@@ -82,41 +84,11 @@ public class NetworkNode {
         this.parent = parent;
     }
 
-    public int numberOfChildren() {
-        return this.childrenNodes.size();
-    }
-
-    public boolean isLeaf() {
-        return this.childrenNodes.isEmpty();
-    }
-
-    public boolean isBranch() {
-        return !this.childrenNodes.isEmpty();
-    }
-
-    public void delete() {
-        if (parent != null) {
-            this.parent.getChildrenNodes().remove(this);
-        }
-        this.getChildrenNodes().clear();
-    }
-
     public Set<NetworkNode> getChildrenNodes() {
         return this.childrenNodes;
     }
 
-    public Set<NetworkNode> getAllChildrenNodes() {
-        final Set<NetworkNode> nodes = new HashSet<>();
-
-        for (NetworkNode childrenNode : getChildrenNodes()) {
-            nodes.addAll(childrenNode.getAllChildrenNodes());
-        }
-        nodes.addAll(this.childrenNodes);
-        return nodes;
-    }
-
     public void addAllChildren() {
-
         // Loop through all possible locations
         for (BlockFace face : VALID_FACES) {
             final Location testLocation = this.nodePosition.clone().add(face.getDirection());
@@ -141,7 +113,6 @@ public class NetworkNode {
                 testDefinition.setNode(networkNode);
                 NetworkStorage.getAllNetworkObjects().put(testLocation, testDefinition);
             }
-
         }
     }
 
@@ -161,16 +132,19 @@ public class NetworkNode {
         }
     }
 
-    @Nonnull
-    protected Set<Location> getMatchingChildren(@Nonnull NodeType nodeType) {
-        Set<Location> itemList = new HashSet<>();
-        for (NetworkNode networkNode : getChildrenNodes()) {
-            itemList.addAll(networkNode.getMatchingChildren(nodeType));
-            if (this.nodeType == nodeType) {
-                itemList.add(this.nodePosition);
+    protected long retrieveBlockCharge() {
+        if (this.nodeType == NodeType.POWER_NODE) {
+            int blockCharge = 0;
+            final SlimefunItem item = BlockStorage.check(this.nodePosition);
+            if (item instanceof NetworkPowerNode powerNode) {
+                blockCharge = powerNode.getCharge(this.nodePosition);
             }
+            return blockCharge;
         }
-        return itemList;
+        return 0;
     }
 
+    public long getPower() {
+        return this.power;
+    }
 }

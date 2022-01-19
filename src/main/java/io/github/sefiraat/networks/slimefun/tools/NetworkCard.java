@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 public class NetworkCard extends SlimefunItem {
 
-    public static final int[] SIZES = new int[]{
+    private static final int[] SIZES = new int[]{
         4096,
         32768,
         262144,
@@ -85,5 +85,9 @@ public class NetworkCard extends SlimefunItem {
 
     public int getSize() {
         return this.size;
+    }
+
+    public static int[] getSizes() {
+        return SIZES;
     }
 }

@@ -10,16 +10,21 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
 public class NetworkProbe extends SlimefunItem {
+
+    private static final MessageFormat MESSAGE_FORMAT = new MessageFormat("{0}{1}: {2}{3}", Locale.ROOT);
 
     public NetworkProbe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -27,12 +32,12 @@ public class NetworkProbe extends SlimefunItem {
             new ItemUseHandler() {
                 @Override
                 public void onRightClick(PlayerRightClickEvent e) {
-                    Optional<Block> optional = e.getClickedBlock();
+                    final Optional<Block> optional = e.getClickedBlock();
                     if (optional.isPresent()) {
-                        Block block = optional.get();
-                        Player player = e.getPlayer();
-                        SlimefunItem slimefunItem = SlimefunItem.getByItem(player.getInventory().getItemInMainHand());
-                        if (slimefunItem instanceof NetworkProbe) {
+                        final Block block = optional.get();
+                        final Player player = e.getPlayer();
+                        final SlimefunItem slimefunItem = BlockStorage.check(block);
+                        if (slimefunItem instanceof NetworkController) {
                             displayToPlayer(block, player);
                             StackUtils.putOnCooldown(e.getItem(), 10);
                             e.cancel();
@@ -44,38 +49,51 @@ public class NetworkProbe extends SlimefunItem {
     }
 
     private void displayToPlayer(@Nonnull Block block, @Nonnull Player player) {
-        NetworkRoot root = NetworkController.NETWORKS.get(block.getLocation());
+        final NetworkRoot root = NetworkController.getNetworks().get(block.getLocation());
         if (root != null) {
             final int bridges = root.getBridges().size();
-            final int importers = root.getImports().size();
-            final int exporters = root.getExports().size();
             final int monitors = root.getMonitors().size();
-            final int shells = root.getShells().size();
+            final int importers = root.getImporters().size();
+            final int exporters = root.getExporters().size();
+            final int grids = root.getGrids().size();
             final int cells = root.getCells().size();
+            final int shells = root.getShells().size();
             final int wipers = root.getWipers().size();
             final int grabbers = root.getGrabbers().size();
             final int pushers = root.getPushers().size();
             final int purgers = root.getPushers().size();
+            final int crafters = root.getCrafters().size();
+            final int powerNodes = root.getPowerNodes().size();
+            final int powerDisplays = root.getPowerDisplays().size();
+            final int encoders = root.getEncoders().size();
 
             final Map<ItemStack, Integer> allNetworkItems = root.getAllNetworkItems();
             final int distinctItems = allNetworkItems.size();
             long totalItems = allNetworkItems.values().stream().mapToLong(integer -> integer).sum();
 
+            final ChatColor c = Theme.CLICK_INFO.getColor();
+            final ChatColor p = Theme.PASSIVE.getColor();
+
             player.sendMessage("------------------------------");
             player.sendMessage("            網路概要           ");
             player.sendMessage("------------------------------");
-            player.sendMessage(MessageFormat.format("{1}網路橋: {2}{0}", bridges, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}輸入器: {2}{0}", importers, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}輸出器: {2}{0}", exporters, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}監控器: {2}{0}", monitors, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}記憶體外殼: {2}{0}", shells, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}單元: {2}{0}", cells, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}記憶體擦除器: {2}{0}", wipers, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}抓取器: {2}{0}", grabbers, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}推送器: {2}{0}", pushers, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}清理器: {2}{0}", purgers, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}不同物品數量: {2}{0}", distinctItems, Theme.CLICK_INFO, Theme.PASSIVE));
-            player.sendMessage(MessageFormat.format("{1}總物品數量: {2}{0}", totalItems, Theme.CLICK_INFO, Theme.PASSIVE));
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "網路橋", p, bridges}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "監控器", p, monitors}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "輸入器", p, importers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "輸出器", p, exporters}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "網路格", p, grids}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "單元", p, cells}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "記憶體外殼", p, shells}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "擦除器", p, wipers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "抓取器", p, grabbers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "推送器", p, pushers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "清理器", p, purgers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "製作器", p, crafters}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "電量節點", p, powerNodes}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "電量顯示器", p, powerDisplays}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "編碼器", p, encoders}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "不同物品數量", p, distinctItems}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "總物品數量", p, totalItems}, new StringBuffer(), null).toString());
         }
     }
 

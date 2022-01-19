@@ -35,7 +35,7 @@ public class NetworkShell extends BarrelIdentity {
                 return;
             }
 
-            NetworkMemoryShellCache cache = NetworkMemoryShell.CACHES.get(this.getLocation());
+            NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(this.getLocation());
             if (cache != null) {
                 NetworkMemoryShell.tryInputItem(card, itemsToDeposit, cache);
             }
