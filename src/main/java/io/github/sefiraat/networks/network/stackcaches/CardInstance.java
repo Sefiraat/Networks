@@ -33,7 +33,7 @@ public class CardInstance extends ItemStackCache {
     }
 
     @Nullable
-    public ItemStack withdrawStack(int amount) {
+    public ItemStack withdrawItem(int amount) {
         if (this.getItemStack() == null) {
             return null;
         }
@@ -44,11 +44,11 @@ public class CardInstance extends ItemStackCache {
     }
 
     @Nullable
-    public ItemStack withdrawStack() {
+    public ItemStack withdrawItem() {
         if (this.getItemStack() == null) {
             return null;
         }
-        return withdrawStack(this.getItemStack().getMaxStackSize());
+        return withdrawItem(this.getItemStack().getMaxStackSize());
     }
 
     public void increaseAmount(int amount) {

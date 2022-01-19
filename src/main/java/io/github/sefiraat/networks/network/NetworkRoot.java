@@ -6,12 +6,11 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
 import io.github.sefiraat.networks.network.barrel.NetworkShell;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
-import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
+import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
-import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
@@ -27,7 +26,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -316,51 +314,36 @@ public class NetworkRoot extends NetworkNode {
     @Nullable
     private NetworkShell getShell(@Nonnull BlockMenu blockMenu) {
 
-        final ItemStack card = blockMenu.getItemInSlot(NetworkMemoryShell.CARD_SLOT);
-        final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
-        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+        final NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(blockMenu.getLocation());
 
-        if (cardItem instanceof NetworkCard) {
-            final ItemMeta itemMeta = card.getItemMeta();
-            final ItemStack cachedStack = NetworkMemoryShell.getCaches().get(blockMenu.getLocation()).getItemStack();
-
-            CardInstance instance;
-
-            if (cachedStack == null) {
-                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE);
-            } else {
-                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE);
-                if (instance != null) {
-                    instance.setItemStack(cachedStack);
-                }
-            }
-
-            if (instance == null || instance.getItemStack() == null) {
-                return null;
-            }
-
-            final ItemStack itemStack = instance.getItemStack();
-            int storedInt = instance.getAmount();
-
-            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(instance, output)) {
-                storedInt = storedInt + output.getAmount();
-            }
-
-            if (itemStack == null || itemStack.getType() == Material.AIR) {
-                return null;
-            }
-
-            final ItemStack clone = itemStack.clone();
-            clone.setAmount(1);
-
-            return new NetworkShell(
-                blockMenu.getLocation(),
-                clone,
-                storedInt
-            );
+        if (cache == null) {
+            return null;
         }
 
-        return null;
+        if (cache.getCardInstance() == null || cache.getCardInstance().getItemStack() == null) {
+            return null;
+        }
+
+        final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
+        final ItemStack itemStack = cache.getCardInstance().getItemStack();
+        int storedInt = cache.getCardInstance().getAmount();
+
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output)) {
+            storedInt = storedInt + output.getAmount();
+        }
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return null;
+        }
+
+        final ItemStack clone = itemStack.clone();
+        clone.setAmount(1);
+
+        return new NetworkShell(
+            blockMenu.getLocation(),
+            clone,
+            storedInt
+        );
     }
 
     @Nonnull
@@ -464,7 +447,7 @@ public class NetworkRoot extends NetworkNode {
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
 
-            final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
+            final ItemStack itemStack = barrelIdentity.requestItem(request);
             boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
             if (itemStack == null

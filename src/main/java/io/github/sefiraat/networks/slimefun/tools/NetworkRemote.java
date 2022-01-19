@@ -113,9 +113,6 @@ public class NetworkRemote extends SlimefunItem {
             blockMenu.open(player);
         } else {
             player.sendMessage(Theme.ERROR + "The bound grid can no longer be found.");
-            Firework firework;
-            FireworkEffectMeta effectMeta;
-            effectMeta.setEffect(FireworkEffect.builder().withColor());
         }
     }
 

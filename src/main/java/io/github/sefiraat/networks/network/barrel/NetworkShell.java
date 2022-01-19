@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.network.barrel;
 
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.network.stackcaches.CardInstance;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
@@ -15,6 +16,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,7 +31,7 @@ public class NetworkShell extends BarrelIdentity {
 
     @Override
     @Nullable
-    public ItemStack requestItem(ItemStack similarStack) {
+    public ItemStack requestItem(@Nonnull ItemRequest itemRequest) {
 
         final BlockMenu blockMenu = BlockStorage.getInventory(this.getLocation());
 
@@ -38,40 +40,12 @@ public class NetworkShell extends BarrelIdentity {
         }
 
         final NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(blockMenu.getLocation());
-        final ItemStack card = blockMenu.getItemInSlot(NetworkMemoryShell.CARD_SLOT);
 
-        // No card, quick exit
-        if (card == null || card.getType() == Material.AIR || cache == null) {
+        if (cache == null) {
             return null;
         }
 
-        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
-        if (!(cardItem instanceof NetworkCard)) {
-            return null;
-        }
-
-        final CardInstance amountInstance = getAmountInstance(card);
-
-        if (amountInstance == null || amountInstance.getAmount() <= 0) {
-            return blockMenu.getItemInSlot(this.getOutputSlot());
-        }
-
-        final CardInstance cardInstance = getCardInstance(card, cache);
-
-        if (cardInstance == null || !StackUtils.itemsMatch(cardInstance, similarStack)) {
-            return null;
-        }
-
-        final ItemStack itemStack = cardInstance.withdrawStack();
-
-        if (itemStack == null) {
-            blockMenu.getItemInSlot(this.getOutputSlot());
-        }
-
-        setCardInstance(card, cardInstance);
-        cache.setNeedsLoreRefresh(true);
-
-        return itemStack;
+        return NetworkMemoryShell.getItemStack(cache, itemRequest.getAmount());
     }
 
     @Override
@@ -89,10 +63,9 @@ public class NetworkShell extends BarrelIdentity {
 
             NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(this.getLocation());
             if (cache != null) {
-                NetworkMemoryShell.tryInputItem(card, itemsToDeposit, cache);
+                NetworkMemoryShell.tryInputItem(itemsToDeposit, cache);
             }
         }
-
     }
 
     @Nullable
