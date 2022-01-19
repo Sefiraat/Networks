@@ -447,7 +447,7 @@ public class NetworkRoot extends NetworkNode {
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
 
-            final ItemStack itemStack = barrelIdentity.requestItem(request);
+            final ItemStack itemStack = barrelIdentity.getItemStack();
             boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
             if (itemStack == null
@@ -457,12 +457,17 @@ public class NetworkRoot extends NetworkNode {
                 continue;
             }
 
+            final ItemStack fetched = barrelIdentity.requestItem(request);
+            if (fetched == null || fetched.getType() == Material.AIR) {
+                continue;
+            }
+
             // Stack is null, so we can fill it here
             if (stackToReturn == null) {
-                stackToReturn = itemStack.clone();
+                stackToReturn = fetched.clone();
                 stackToReturn.setAmount(1);
                 request.receiveAmount(1);
-                itemStack.setAmount(itemStack.getAmount() - 1);
+                fetched.setAmount(fetched.getAmount() - 1);
             }
 
             // Escape if fulfilled request
@@ -470,16 +475,16 @@ public class NetworkRoot extends NetworkNode {
                 return stackToReturn;
             }
 
-            final int preserveAmount = infinity ? itemStack.getAmount() - 1 : itemStack.getAmount();
+            final int preserveAmount = infinity ? fetched.getAmount() - 1 : fetched.getAmount();
 
             if (request.getAmount() <= preserveAmount) {
                 stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                fetched.setAmount(fetched.getAmount() - request.getAmount());
                 return stackToReturn;
             } else {
                 stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
                 request.receiveAmount(preserveAmount);
-                itemStack.setAmount(itemStack.getAmount() - preserveAmount);
+                fetched.setAmount(fetched.getAmount() - preserveAmount);
             }
 
         }

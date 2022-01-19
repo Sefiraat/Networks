@@ -70,6 +70,7 @@ public class NetworkMemoryShell extends NetworkObject {
 
                 // No card, quick exit
                 if (card == null || card.getType() == Material.AIR) {
+                    CACHES.remove(blockMenu.getLocation());
                     return;
                 }
 
@@ -92,14 +93,16 @@ public class NetworkMemoryShell extends NetworkObject {
 
                 // Output items
                 final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
+                ItemStack fetched = null;
                 if (output == null || output.getType() == Material.AIR) {
                     // No item in output, try output
-                    final ItemStack fetched = getItemStack(cache);
-                    blockMenu.pushItem(fetched, OUTPUT_SLOT);
+                    fetched = getItemStack(cache);
                 } else if (output.getAmount() < output.getMaxStackSize()) {
                     // There is an item but its not filled so lets top it up if we can
                     final int requestAmount = output.getMaxStackSize() - output.getAmount();
-                    final ItemStack fetched = getItemStack(cache, requestAmount);
+                    fetched = getItemStack(cache, requestAmount);
+                }
+                if (fetched != null) {
                     blockMenu.pushItem(fetched, OUTPUT_SLOT);
                 }
 
