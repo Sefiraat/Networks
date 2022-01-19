@@ -463,42 +463,42 @@ public class NetworkRoot extends NetworkNode {
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (barrelIdentity.holdsMatchingItem(request.getItemStack())) {
-                final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
-                boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
-                if (itemStack == null
-                    || (infinity && itemStack.getAmount() == 1)
-                    || !StackUtils.itemsMatch(request, itemStack)
-                ) {
-                    continue;
-                }
+            final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
+            boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
-                // Stack is null, so we can fill it here
-                if (stackToReturn == null) {
-                    stackToReturn = itemStack.clone();
-                    stackToReturn.setAmount(1);
-                    request.receiveAmount(1);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                }
-
-                // Escape if fulfilled request
-                if (request.getAmount() <= 0) {
-                    return stackToReturn;
-                }
-
-                final int preserveAmount = infinity ? itemStack.getAmount() - 1 : itemStack.getAmount();
-
-                if (request.getAmount() <= preserveAmount) {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
-                    return stackToReturn;
-                } else {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
-                    request.receiveAmount(preserveAmount);
-                    itemStack.setAmount(itemStack.getAmount() - preserveAmount);
-                }
+            if (itemStack == null
+                || (infinity && itemStack.getAmount() == 1)
+                || !StackUtils.itemsMatch(request, itemStack)
+            ) {
+                continue;
             }
+
+            // Stack is null, so we can fill it here
+            if (stackToReturn == null) {
+                stackToReturn = itemStack.clone();
+                stackToReturn.setAmount(1);
+                request.receiveAmount(1);
+                itemStack.setAmount(itemStack.getAmount() - 1);
+            }
+
+            // Escape if fulfilled request
+            if (request.getAmount() <= 0) {
+                return stackToReturn;
+            }
+
+            final int preserveAmount = infinity ? itemStack.getAmount() - 1 : itemStack.getAmount();
+
+            if (request.getAmount() <= preserveAmount) {
+                stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                return stackToReturn;
+            } else {
+                stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
+                request.receiveAmount(preserveAmount);
+                itemStack.setAmount(itemStack.getAmount() - preserveAmount);
+            }
+
         }
 
         return stackToReturn;

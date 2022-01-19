@@ -1,6 +1,7 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import de.jeff_media.morepersistentdatatypes.DataType;
+import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -11,13 +12,18 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
@@ -48,7 +54,9 @@ public class NetworkRemote extends SlimefunItem {
                         if (optional.isPresent()) {
                             final Block block = optional.get();
                             final SlimefunItem slimefunItem = BlockStorage.check(block);
-                            if (slimefunItem instanceof NetworkGrid) {
+                            if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)
+                                && slimefunItem instanceof NetworkGrid
+                            ) {
                                 setGrid(e.getItem(), block, player);
                             } else {
                                 player.sendMessage(Theme.ERROR + "Must be set to a Network Grid (not crafting grid).");
@@ -99,10 +107,15 @@ public class NetworkRemote extends SlimefunItem {
     private void openGrid(@Nonnull Location location, @Nonnull Player player) {
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         SlimefunItem slimefunItem = BlockStorage.check(location);
-        if (slimefunItem instanceof NetworkGrid) {
+        if (Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)
+            && slimefunItem instanceof NetworkGrid
+        ) {
             blockMenu.open(player);
         } else {
             player.sendMessage(Theme.ERROR + "The bound grid can no longer be found.");
+            Firework firework;
+            FireworkEffectMeta effectMeta;
+            effectMeta.setEffect(FireworkEffect.builder().withColor());
         }
     }
 

@@ -77,6 +77,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_REMOTE_PRISTINE;
     public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
     public static final SlimefunItemStack NETWORK_CRAYON;
+    public static final SlimefunItemStack NETWORK_CONFIGURATOR;
 
     static {
 
@@ -649,6 +650,19 @@ public class NetworksSlimefunItemStacks {
             "When used on a controller, this will",
             "enable particle display from specific",
             "blocks when working."
+        );
+
+        NETWORK_CONFIGURATOR = Theme.themedSlimefunItemStack(
+            "NTW_CONFIGURATOR",
+            new ItemStack(Material.BLAZE_ROD),
+            Theme.TOOL,
+            "Network Configurator",
+            "Used to copy and paste the",
+            "configurations of directional",
+            "interfaces.",
+            "",
+            MessageFormat.format("{0}Right Click: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Apply Config"),
+            MessageFormat.format("{0}Shift Right Click: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Store Config")
         );
     }
 

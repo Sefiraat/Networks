@@ -198,7 +198,7 @@ public abstract class NetworkDirectional extends NetworkObject {
         };
     }
 
-    private boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
+    public boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
         SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), blockFace);
         BlockStorage.addBlockInfo(blockMenu.getBlock(), DIRECTION, blockFace.name());
         return false;
@@ -221,28 +221,32 @@ public abstract class NetworkDirectional extends NetworkObject {
         return null;
     }
 
-    protected int getNorthSlot() {
+    public int getNorthSlot() {
         return NORTH_SLOT;
     }
 
-    protected int getSouthSlot() {
+    public int getSouthSlot() {
         return SOUTH_SLOT;
     }
 
-    protected int getEastSlot() {
+    public int getEastSlot() {
         return EAST_SLOT;
     }
 
-    protected int getWestSlot() {
+    public int getWestSlot() {
         return WEST_SLOT;
     }
 
-    protected int getUpSlot() {
+    public int getUpSlot() {
         return UP_SLOT;
     }
 
-    protected int getDownSlot() {
+    public int getDownSlot() {
         return DOWN_SLOT;
+    }
+
+    public int getItemSlot() {
+        return -1;
     }
 
     @Nonnull

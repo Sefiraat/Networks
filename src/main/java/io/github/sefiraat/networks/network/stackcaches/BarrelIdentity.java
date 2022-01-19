@@ -38,5 +38,4 @@ public abstract class BarrelIdentity extends ItemStackCache implements BarrelCor
     public boolean holdsMatchingItem(@Nonnull ItemStack itemStack) {
         return StackUtils.itemsMatch(this, itemStack);
     }
-
 }

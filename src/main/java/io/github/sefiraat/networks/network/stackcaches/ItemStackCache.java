@@ -11,6 +11,7 @@ public class ItemStackCache {
     private ItemStack itemStack;
     @Nullable
     private ItemMeta itemMeta = null;
+    private boolean metaCached = false;
 
     protected ItemStackCache(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -27,8 +28,9 @@ public class ItemStackCache {
 
     @Nullable
     public ItemMeta getItemMeta() {
-        if (this.itemMeta == null) {
-            this.itemMeta = itemStack.getItemMeta();
+        if (this.itemMeta == null && !this.metaCached) {
+            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+            this.metaCached = !this.metaCached;
         }
         return this.itemMeta;
     }
