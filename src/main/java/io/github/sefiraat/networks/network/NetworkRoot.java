@@ -585,6 +585,9 @@ public class NetworkRoot extends NetworkNode {
             final SlimefunItem item = BlockStorage.check(node);
             if (item instanceof NetworkPowerNode powerNode) {
                 final int charge = powerNode.getCharge(node);
+                if (charge <= 0) {
+                    continue;
+                }
                 final int toRemove = (int) Math.min(power - removed, charge);
                 powerNode.removeCharge(node, toRemove);
                 this.rootPower -= power;
