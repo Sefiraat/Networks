@@ -21,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -59,57 +60,61 @@ public class NetworkMemoryShell extends NetworkObject {
             @Override
             public void tick(Block b, SlimefunItem item, Config data) {
                 addToRegistry(b);
-
-                final BlockMenu blockMenu = BlockStorage.getInventory(b);
-
-                if (blockMenu == null) {
-                    return;
-                }
-
-                final ItemStack card = blockMenu.getItemInSlot(CARD_SLOT);
-
-                // No card, quick exit
-                if (card == null || card.getType() == Material.AIR) {
-                    CACHES.remove(blockMenu.getLocation());
-                    return;
-                }
-
-                NetworkMemoryShellCache cache = CACHES.get(blockMenu.getLocation());
-
-                if (cache == null) {
-                    cache = new NetworkMemoryShellCache(card);
-                }
-
-                // There is a viewer, update the stack
-                if (blockMenu.hasViewer()) {
-                    cache.refreshMemoryCard();
-                }
-
-                // Move items from the input slot into the card
-                final ItemStack input = blockMenu.getItemInSlot(INPUT_SLOT);
-                if (input != null && input.getType() != Material.AIR) {
-                    tryInputItem(new ItemStack[]{input}, cache);
-                }
-
-                // Output items
-                final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
-                ItemStack fetched = null;
-                if (output == null || output.getType() == Material.AIR) {
-                    // No item in output, try output
-                    fetched = getItemStack(cache);
-                } else if (output.getAmount() < output.getMaxStackSize()) {
-                    // There is an item but its not filled so lets top it up if we can
-                    final int requestAmount = output.getMaxStackSize() - output.getAmount();
-                    fetched = getItemStack(cache, requestAmount);
-                }
-                if (fetched != null) {
-                    blockMenu.pushItem(fetched, OUTPUT_SLOT);
-                }
-
-                CACHES.put(blockMenu.getLocation(), cache);
-
+                onTick(b);
             }
         });
+    }
+
+    private void onTick(Block block) {
+        final BlockMenu blockMenu = BlockStorage.getInventory(block);
+
+        if (blockMenu == null) {
+            CACHES.remove(block.getLocation());
+            return;
+        }
+
+        final ItemStack card = blockMenu.getItemInSlot(CARD_SLOT);
+
+        // No card, quick exit
+        if (card == null || card.getType() == Material.AIR) {
+            CACHES.remove(blockMenu.getLocation());
+            return;
+        }
+
+        NetworkMemoryShellCache cache = CACHES.get(blockMenu.getLocation());
+
+        if (cache == null) {
+            cache = new NetworkMemoryShellCache(card);
+        }
+
+        // There is a viewer, update the stack then remake the cache
+        if (blockMenu.hasViewer()) {
+            cache.refreshMemoryCard();
+            cache = new NetworkMemoryShellCache(card);
+        }
+
+        // Move items from the input slot into the card
+        final ItemStack input = blockMenu.getItemInSlot(INPUT_SLOT);
+        if (input != null && input.getType() != Material.AIR) {
+            tryInputItem(new ItemStack[]{input}, cache);
+        }
+
+        // Output items
+        final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
+        ItemStack fetched = null;
+        if (output == null || output.getType() == Material.AIR) {
+            // No item in output, try output
+            fetched = getItemStackFromCard(cache);
+        } else if (output.getAmount() < output.getMaxStackSize()) {
+            // There is an item but its not filled so lets top it up if we can
+            final int requestAmount = output.getMaxStackSize() - output.getAmount();
+            fetched = getItemStackFromCard(cache, requestAmount);
+        }
+        if (fetched != null && fetched.getType() != Material.AIR) {
+            blockMenu.pushItem(fetched, OUTPUT_SLOT);
+        }
+
+        CACHES.put(blockMenu.getLocation(), cache);
     }
 
     @ParametersAreNonnullByDefault
@@ -128,8 +133,17 @@ public class NetworkMemoryShell extends NetworkObject {
 
     @ParametersAreNonnullByDefault
     @Nullable
-    public static ItemStack getItemStack(NetworkMemoryShellCache cache) {
-        if (cache.getCardInstance() == null || cache.getCardInstance().getAmount() <= 0) {
+    public static ItemStack getItemStackFromCard(@Nonnull NetworkMemoryShellCache cache, int amount) {
+        if (cache.getCardInstance() == null || cache.getItemStack() == null || cache.getCardInstance().getAmount() <= 0) {
+            return null;
+        }
+        return cache.getCardInstance().withdrawItem(amount);
+    }
+
+    @ParametersAreNonnullByDefault
+    @Nullable
+    public static ItemStack getItemStackFromCard(@Nonnull NetworkMemoryShellCache cache) {
+        if (cache.getCardInstance() == null || cache.getItemStack() == null || cache.getCardInstance().getAmount() <= 0) {
             return null;
         }
         return cache.getCardInstance().withdrawItem();
@@ -137,11 +151,45 @@ public class NetworkMemoryShell extends NetworkObject {
 
     @ParametersAreNonnullByDefault
     @Nullable
-    public static ItemStack getItemStack(@Nonnull NetworkMemoryShellCache cache, int amount) {
-        if (cache.getCardInstance() == null || cache.getCardInstance().getAmount() <= 0) {
+    public static ItemStack getItemStack(@Nonnull NetworkMemoryShellCache cache, @Nonnull BlockMenu blockMenu) {
+        if (cache.getCardInstance() == null || cache.getItemStack() == null || cache.getCardInstance().getAmount() <= 0) {
             return null;
         }
-        return cache.getCardInstance().withdrawItem(amount);
+        return getItemStack(cache, blockMenu, cache.getItemStack().getMaxStackSize());
+    }
+
+    @ParametersAreNonnullByDefault
+    @Nullable
+    public static ItemStack getItemStack(@Nonnull NetworkMemoryShellCache cache, @Nonnull BlockMenu blockMenu, int amount) {
+        if (cache.getCardInstance() == null) {
+            // No card instance, abort!
+            return null;
+        } else if (cache.getCardInstance().getAmount() < amount) {
+            // Card has no content or not enough, mix and match!
+            ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
+            ItemStack fetched = cache.getCardInstance().withdrawItem(amount);
+
+            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output)) {
+                // We have an output item we can use also
+                if (fetched == null || fetched.getType() == Material.AIR) {
+                    // Card was totally empty - just use output slot
+                    fetched = output.clone();
+                    if (fetched.getAmount() > amount) {
+                        fetched.setAmount(amount);
+                    }
+                    output.setAmount(output.getAmount() - fetched.getAmount());
+                } else {
+                    // Card had content, lets add on top of it
+                    int additional = Math.min(amount - fetched.getAmount(), output.getAmount());
+                    output.setAmount(output.getAmount() - additional);
+                    fetched.setAmount(fetched.getAmount() + additional);
+                }
+            }
+            return fetched;
+        } else {
+            // Card has everything we need
+            return cache.getCardInstance().withdrawItem(amount);
+        }
     }
 
     @Override
@@ -183,4 +231,8 @@ public class NetworkMemoryShell extends NetworkObject {
         return CACHES;
     }
 
+    @Override
+    protected void preBreak(@Nonnull BlockBreakEvent event) {
+        CACHES.remove(event.getBlock().getLocation());
+    }
 }

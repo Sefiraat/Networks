@@ -42,7 +42,7 @@ public class NetworkShell extends BarrelIdentity {
             return null;
         }
 
-        return NetworkMemoryShell.getItemStack(cache, itemRequest.getAmount());
+        return NetworkMemoryShell.getItemStack(cache, blockMenu, itemRequest.getAmount());
     }
 
     @Override

@@ -603,7 +603,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PAINTING),
             Theme.TOOL,
             "Network Remote",
-            "Opens a bound grid wireless.",
+            "Opens a bound grid wirelessly.",
             "The grid must be chunk loaded.",
             "",
             MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
@@ -613,8 +613,8 @@ public class NetworksSlimefunItemStacks {
             "NTW_REMOTE_EMPOWERED",
             new ItemStack(Material.ITEM_FRAME),
             Theme.TOOL,
-            "Network Empowered",
-            "Opens a bound grid wireless.",
+            "Network Remote Empowered",
+            "Opens a bound grid wirelessly.",
             "The grid must be chunk loaded.",
             "",
             MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
@@ -625,7 +625,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GLOW_ITEM_FRAME),
             Theme.TOOL,
             "Network Remote Pristine",
-            "Opens a bound grid wireless.",
+            "Opens a bound grid wirelessly.",
             "The grid must be chunk loaded.",
             "",
             MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Unlimited")
@@ -636,7 +636,7 @@ public class NetworksSlimefunItemStacks {
             getPreEnchantedItemStack(Material.GLOW_ITEM_FRAME, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
             Theme.TOOL,
             "Network Remote Ultimate",
-            "Opens a bound grid wireless.",
+            "Opens a bound grid wirelessly.",
             "The grid must be chunk loaded.",
             "",
             MessageFormat.format("{0}Range: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Cross Dimensional")

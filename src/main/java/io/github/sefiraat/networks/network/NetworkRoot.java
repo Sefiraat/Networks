@@ -448,17 +448,14 @@ public class NetworkRoot extends NetworkNode {
         for (BarrelIdentity barrelIdentity : getBarrels()) {
 
             final ItemStack itemStack = barrelIdentity.getItemStack();
-            boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
-            if (itemStack == null
-                || (infinity && itemStack.getAmount() == 1)
-                || !StackUtils.itemsMatch(request, itemStack)
-            ) {
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack)) {
                 continue;
             }
 
+            boolean infinity = barrelIdentity instanceof InfinityBarrel;
             final ItemStack fetched = barrelIdentity.requestItem(request);
-            if (fetched == null || fetched.getType() == Material.AIR) {
+            if (fetched == null || fetched.getType() == Material.AIR || (infinity && fetched.getAmount() == 1)) {
                 continue;
             }
 
