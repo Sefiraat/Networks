@@ -11,13 +11,8 @@ import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
-import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
-import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
-import io.github.sefiraat.networks.utils.datatypes.PersistentCardInstanceType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -328,7 +323,7 @@ public class NetworkRoot extends NetworkNode {
         final ItemStack itemStack = cache.getCardInstance().getItemStack();
         int storedInt = cache.getCardInstance().getAmount();
 
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output)) {
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, false)) {
             storedInt = storedInt + output.getAmount();
         }
 
@@ -379,7 +374,7 @@ public class NetworkRoot extends NetworkNode {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack == null
                     || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack)
+                    || !StackUtils.itemsMatch(request, itemStack, false)
                 ) {
                     continue;
                 }
@@ -415,7 +410,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack)) {
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, false)) {
                     continue;
                 }
 
@@ -449,7 +444,7 @@ public class NetworkRoot extends NetworkNode {
 
             final ItemStack itemStack = barrelIdentity.getItemStack();
 
-            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack)) {
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, false)) {
                 continue;
             }
 
@@ -492,7 +487,7 @@ public class NetworkRoot extends NetworkNode {
     public void addItemStack(@Nonnull ItemStack incomingStack) {
         // Run for matching barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (StackUtils.itemsMatch(barrelIdentity, incomingStack)) {
+            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, false)) {
 
                 barrelIdentity.depositItemStack(incomingStack);
 
@@ -523,7 +518,8 @@ public class NetworkRoot extends NetworkNode {
                 final int incomingStackAmount = incomingStack.getAmount();
 
                 if (itemStackAmount < itemStack.getMaxStackSize()
-                    && SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                    //&& SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                    && StackUtils.itemsMatch(incomingStack, itemStack, false)
                 ) {
                     final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
                     final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);

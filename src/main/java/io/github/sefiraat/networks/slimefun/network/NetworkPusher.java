@@ -85,7 +85,7 @@ public class NetworkPusher extends NetworkDirectional {
 
             if (itemStack != null && itemStack.getType() != Material.AIR) {
                 final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack)) {
+                if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, false)) {
                     itemRequest.setAmount(space);
                 } else {
                     continue;

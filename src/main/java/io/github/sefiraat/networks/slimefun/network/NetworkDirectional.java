@@ -128,11 +128,11 @@ public abstract class NetworkDirectional extends NetworkObject {
 
     @Nonnull
     protected BlockFace getCurrentDirection(@Nonnull BlockMenu blockMenu) {
-        BlockFace direction = SELECTED_DIRECTION_MAP.get(blockMenu.getLocation());
+        BlockFace direction = SELECTED_DIRECTION_MAP.get(blockMenu.getLocation().clone());
 
         if (direction == null) {
             direction = BlockFace.valueOf(BlockStorage.getLocationInfo(blockMenu.getLocation(), DIRECTION));
-            SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), direction);
+            SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
         }
         return direction;
     }
@@ -175,7 +175,7 @@ public abstract class NetworkDirectional extends NetworkObject {
                 } else {
                     direction = BlockFace.valueOf(string);
                 }
-                SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), direction);
+                SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
 
                 blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.NORTH));
                 blockMenu.addMenuClickHandler(getSouthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.SOUTH));
@@ -199,7 +199,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     }
 
     public boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
-        SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), blockFace);
+        SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), blockFace);
         BlockStorage.addBlockInfo(blockMenu.getBlock(), DIRECTION, blockFace.name());
         return false;
     }

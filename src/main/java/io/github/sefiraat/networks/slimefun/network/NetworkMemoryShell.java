@@ -114,7 +114,7 @@ public class NetworkMemoryShell extends NetworkObject {
             blockMenu.pushItem(fetched, OUTPUT_SLOT);
         }
 
-        CACHES.put(blockMenu.getLocation(), cache);
+        CACHES.put(blockMenu.getLocation().clone(), cache);
     }
 
     @ParametersAreNonnullByDefault
@@ -123,12 +123,11 @@ public class NetworkMemoryShell extends NetworkObject {
             return;
         }
         for (ItemStack itemStack : input) {
-            if (StackUtils.itemsMatch(cache.getCardInstance(), itemStack)) {
+            if (StackUtils.itemsMatch(cache.getCardInstance(), itemStack, false)) {
                 cache.getCardInstance().increaseAmount(itemStack.getAmount());
                 itemStack.setAmount(0);
             }
         }
-
     }
 
     @ParametersAreNonnullByDefault
@@ -169,7 +168,7 @@ public class NetworkMemoryShell extends NetworkObject {
             ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
             ItemStack fetched = cache.getCardInstance().withdrawItem(amount);
 
-            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output)) {
+            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, false)) {
                 // We have an output item we can use also
                 if (fetched == null || fetched.getType() == Material.AIR) {
                     // Card was totally empty - just use output slot
