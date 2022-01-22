@@ -133,10 +133,9 @@ public class NetworkEncoder extends NetworkObject {
         int i = 0;
         for (int recipeSlot : RECIPE_SLOTS) {
             ItemStack stackInSlot = blockMenu.getItemInSlot(recipeSlot);
-            if (stackInSlot == null) {
-                inputs[i] = null;
-            } else {
+            if (stackInSlot != null) {
                 inputs[i] = new ItemStack(stackInSlot);
+                inputs[i].setAmount(1);
             }
             i++;
         }

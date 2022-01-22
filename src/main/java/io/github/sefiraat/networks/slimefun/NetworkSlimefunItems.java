@@ -20,6 +20,7 @@ import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
@@ -85,7 +86,7 @@ public class NetworkSlimefunItems {
     public static final NetworkRemote NETWORK_REMOTE_PRISTINE;
     public static final NetworkRemote NETWORK_REMOTE_ULTIMATE;
     public static final NetworkCrayon NETWORK_CRAYON;
-
+    public static final NetworkConfigurator NETWORK_CONFIGURATOR;
 
     static {
 
@@ -642,6 +643,17 @@ public class NetworkSlimefunItems {
                 null, new ItemStack(Material.HONEYCOMB), null
             }
         );
+
+        NETWORK_CONFIGURATOR = new NetworkConfigurator(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_CONFIGURATOR,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, RADIOACTIVE_OPTIC_STAR.getItem(), null,
+                null, NETWORK_CRAYON.getItem(), null,
+                null, AI_CORE.getItem(), null
+            }
+        );
     }
 
     public static void setup() {
@@ -698,5 +710,6 @@ public class NetworkSlimefunItems {
         NETWORK_REMOTE_PRISTINE.register(plugin);
         NETWORK_REMOTE_ULTIMATE.register(plugin);
         NETWORK_CRAYON.register(plugin);
+        NETWORK_CONFIGURATOR.register(plugin);
     }
 }

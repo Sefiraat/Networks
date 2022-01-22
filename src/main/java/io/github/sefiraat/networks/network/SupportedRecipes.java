@@ -46,7 +46,7 @@ public final class SupportedRecipes {
 
     public boolean testRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
-            if (!StackUtils.itemsMatchCrafting(input[test], recipe[test])) {
+            if (!StackUtils.itemsMatch(input[test], recipe[test], true)) {
                 return false;
             }
         }

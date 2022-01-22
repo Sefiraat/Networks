@@ -43,7 +43,7 @@ public class NetworkPusher extends NetworkDirectional {
 
     public NetworkPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.PUSHER);
-        this.getSlotsToDrop().add(TEMPLATE_SLOT);
+        this.getSlotsToDrop().add(this.getItemSlot());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class NetworkPusher extends NetworkDirectional {
             return;
         }
 
-        ItemStack testItem = blockMenu.getItemInSlot(TEMPLATE_SLOT);
+        ItemStack testItem = blockMenu.getItemInSlot(this.getItemSlot());
 
         if (testItem == null || testItem.getType() == Material.AIR) {
             return;
@@ -85,7 +85,7 @@ public class NetworkPusher extends NetworkDirectional {
 
             if (itemStack != null && itemStack.getType() != Material.AIR) {
                 final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack)) {
+                if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, false)) {
                     itemRequest.setAmount(space);
                 } else {
                     continue;
@@ -122,33 +122,38 @@ public class NetworkPusher extends NetworkDirectional {
     }
 
     @Override
-    protected int getNorthSlot() {
+    public int getNorthSlot() {
         return NORTH_SLOT;
     }
 
     @Override
-    protected int getSouthSlot() {
+    public int getSouthSlot() {
         return SOUTH_SLOT;
     }
 
     @Override
-    protected int getEastSlot() {
+    public int getEastSlot() {
         return EAST_SLOT;
     }
 
     @Override
-    protected int getWestSlot() {
+    public int getWestSlot() {
         return WEST_SLOT;
     }
 
     @Override
-    protected int getUpSlot() {
+    public int getUpSlot() {
         return UP_SLOT;
     }
 
     @Override
-    protected int getDownSlot() {
+    public int getDownSlot() {
         return DOWN_SLOT;
+    }
+
+    @Override
+    public int getItemSlot() {
+        return TEMPLATE_SLOT;
     }
 
     @Override

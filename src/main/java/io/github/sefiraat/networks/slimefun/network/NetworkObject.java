@@ -54,6 +54,7 @@ public abstract class NetworkObject extends SlimefunItem {
                 @Override
                 @ParametersAreNonnullByDefault
                 public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
+                    preBreak(event);
                     onBreak(event);
                 }
             }
@@ -66,6 +67,10 @@ public abstract class NetworkObject extends SlimefunItem {
         }
     }
 
+    protected void preBreak(@Nonnull BlockBreakEvent event) {
+
+    }
+
     protected void onBreak(@Nonnull BlockBreakEvent event) {
         final Location location = event.getBlock().getLocation();
         final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
@@ -76,6 +81,11 @@ public abstract class NetworkObject extends SlimefunItem {
             }
         }
         NetworkStorage.removeNode(location);
+
+        if (this.nodeType == NodeType.CONTROLLER) {
+            NetworkController.getNetworks().remove(location);
+        }
+
         BlockStorage.clearBlockInfo(location);
     }
 }

@@ -6,19 +6,13 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
 import io.github.sefiraat.networks.network.barrel.NetworkShell;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
-import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
+import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
-import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
-import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
-import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
-import io.github.sefiraat.networks.utils.datatypes.PersistentCardInstanceType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -27,7 +21,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -67,7 +60,7 @@ public class NetworkRoot extends NetworkNode {
         this.root = this;
     }
 
-    public void addNode(@Nonnull Location location, @Nonnull NodeType type) {
+    public void registerNode(@Nonnull Location location, @Nonnull NodeType type) {
         nodeLocations.add(location);
         switch (type) {
             case CONTROLLER -> {
@@ -316,51 +309,36 @@ public class NetworkRoot extends NetworkNode {
     @Nullable
     private NetworkShell getShell(@Nonnull BlockMenu blockMenu) {
 
-        final ItemStack card = blockMenu.getItemInSlot(NetworkMemoryShell.CARD_SLOT);
-        final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
-        final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+        final NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(blockMenu.getLocation());
 
-        if (cardItem instanceof NetworkCard) {
-            final ItemMeta itemMeta = card.getItemMeta();
-            final ItemStack cachedStack = NetworkMemoryShell.getCaches().get(blockMenu.getLocation()).getItemStack();
-
-            CardInstance instance;
-
-            if (cachedStack == null) {
-                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE);
-            } else {
-                instance = DataTypeMethods.getCustom(itemMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE);
-                if (instance != null) {
-                    instance.setItemStack(cachedStack);
-                }
-            }
-
-            if (instance == null || instance.getItemStack() == null) {
-                return null;
-            }
-
-            final ItemStack itemStack = instance.getItemStack();
-            int storedInt = instance.getAmount();
-
-            if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(instance, output)) {
-                storedInt = storedInt + output.getAmount();
-            }
-
-            if (itemStack == null || itemStack.getType() == Material.AIR) {
-                return null;
-            }
-
-            final ItemStack clone = itemStack.clone();
-            clone.setAmount(1);
-
-            return new NetworkShell(
-                blockMenu.getLocation(),
-                clone,
-                storedInt
-            );
+        if (cache == null) {
+            return null;
         }
 
-        return null;
+        if (cache.getCardInstance() == null || cache.getCardInstance().getItemStack() == null) {
+            return null;
+        }
+
+        final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
+        final ItemStack itemStack = cache.getCardInstance().getItemStack();
+        int storedInt = cache.getCardInstance().getAmount();
+
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, false)) {
+            storedInt = storedInt + output.getAmount();
+        }
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return null;
+        }
+
+        final ItemStack clone = itemStack.clone();
+        clone.setAmount(1);
+
+        return new NetworkShell(
+            blockMenu.getLocation(),
+            clone,
+            storedInt
+        );
     }
 
     @Nonnull
@@ -396,7 +374,7 @@ public class NetworkRoot extends NetworkNode {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack == null
                     || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack)
+                    || !StackUtils.itemsMatch(request, itemStack, false)
                 ) {
                     continue;
                 }
@@ -432,7 +410,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack)) {
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, false)) {
                     continue;
                 }
 
@@ -463,42 +441,44 @@ public class NetworkRoot extends NetworkNode {
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (barrelIdentity.holdsMatchingItem(request.getItemStack())) {
-                final ItemStack itemStack = barrelIdentity.requestItem(request.getItemStack());
-                boolean infinity = barrelIdentity instanceof InfinityBarrel;
 
-                if (itemStack == null
-                    || (infinity && itemStack.getAmount() == 1)
-                    || !StackUtils.itemsMatch(request, itemStack)
-                ) {
-                    continue;
-                }
+            final ItemStack itemStack = barrelIdentity.getItemStack();
 
-                // Stack is null, so we can fill it here
-                if (stackToReturn == null) {
-                    stackToReturn = itemStack.clone();
-                    stackToReturn.setAmount(1);
-                    request.receiveAmount(1);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                }
-
-                // Escape if fulfilled request
-                if (request.getAmount() <= 0) {
-                    return stackToReturn;
-                }
-
-                final int preserveAmount = infinity ? itemStack.getAmount() - 1 : itemStack.getAmount();
-
-                if (request.getAmount() <= preserveAmount) {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
-                    return stackToReturn;
-                } else {
-                    stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
-                    request.receiveAmount(preserveAmount);
-                    itemStack.setAmount(itemStack.getAmount() - preserveAmount);
-                }
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, false)) {
+                continue;
             }
+
+            boolean infinity = barrelIdentity instanceof InfinityBarrel;
+            final ItemStack fetched = barrelIdentity.requestItem(request);
+            if (fetched == null || fetched.getType() == Material.AIR || (infinity && fetched.getAmount() == 1)) {
+                continue;
+            }
+
+            // Stack is null, so we can fill it here
+            if (stackToReturn == null) {
+                stackToReturn = fetched.clone();
+                stackToReturn.setAmount(1);
+                request.receiveAmount(1);
+                fetched.setAmount(fetched.getAmount() - 1);
+            }
+
+            // Escape if fulfilled request
+            if (request.getAmount() <= 0) {
+                return stackToReturn;
+            }
+
+            final int preserveAmount = infinity ? fetched.getAmount() - 1 : fetched.getAmount();
+
+            if (request.getAmount() <= preserveAmount) {
+                stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                fetched.setAmount(fetched.getAmount() - request.getAmount());
+                return stackToReturn;
+            } else {
+                stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
+                request.receiveAmount(preserveAmount);
+                fetched.setAmount(fetched.getAmount() - preserveAmount);
+            }
+
         }
 
         return stackToReturn;
@@ -507,7 +487,7 @@ public class NetworkRoot extends NetworkNode {
     public void addItemStack(@Nonnull ItemStack incomingStack) {
         // Run for matching barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (StackUtils.itemsMatch(barrelIdentity, incomingStack)) {
+            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, false)) {
 
                 barrelIdentity.depositItemStack(incomingStack);
 
@@ -538,7 +518,8 @@ public class NetworkRoot extends NetworkNode {
                 final int incomingStackAmount = incomingStack.getAmount();
 
                 if (itemStackAmount < itemStack.getMaxStackSize()
-                    && SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                    //&& SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
+                    && StackUtils.itemsMatch(incomingStack, itemStack, false)
                 ) {
                     final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
                     final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
