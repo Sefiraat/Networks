@@ -25,7 +25,6 @@ import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
@@ -36,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 @UtilityClass
 public class NetworkSlimefunItems {
 
+    public static final UnplaceableBlock SYNTHETIC_EMERALD_SHARD;
     public static final UnplaceableBlock OPTIC_GLASS;
     public static final UnplaceableBlock OPTIC_CABLE;
     public static final UnplaceableBlock OPTIC_STAR;
@@ -92,16 +92,28 @@ public class NetworkSlimefunItems {
 
         final ItemStack glass = new ItemStack(Material.GLASS);
 
+        SYNTHETIC_EMERALD_SHARD = new UnplaceableBlock(
+            NetworksItemGroups.MATERIALS,
+            NetworksSlimefunItemStacks.SYNTHETIC_EMERALD_SHARD,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.STONE_CHUNK, SlimefunItems.SYNTHETIC_EMERALD, null,
+                SlimefunItems.SYNTHETIC_EMERALD, null, null,
+                null, null, null
+            },
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.SYNTHETIC_EMERALD_SHARD, 3)
+        );
+
         OPTIC_GLASS = new UnplaceableBlock(
             NetworksItemGroups.MATERIALS,
             NetworksSlimefunItemStacks.OPTIC_GLASS,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
-                glass, SlimefunItems.SYNTHETIC_EMERALD, glass,
-                glass, SlimefunItems.SYNTHETIC_EMERALD, glass,
-                glass, SlimefunItems.SYNTHETIC_EMERALD, glass
+                glass, glass, glass,
+                glass, SYNTHETIC_EMERALD_SHARD.getItem(), glass,
+                glass, glass, glass
             },
-            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_GLASS, 6)
+            StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_GLASS, 8)
         );
 
         OPTIC_CABLE = new UnplaceableBlock(
@@ -110,7 +122,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
-                SlimefunItems.COPPER_WIRE, SlimefunItems.COPPER_WIRE, SlimefunItems.COPPER_WIRE,
+                SlimefunItems.COPPER_WIRE, SYNTHETIC_EMERALD_SHARD.getItem(), SlimefunItems.COPPER_WIRE,
                 OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem()
             },
             StackUtils.getAsQuantity(NetworksSlimefunItemStacks.OPTIC_CABLE, 16)
@@ -466,7 +478,6 @@ public class NetworkSlimefunItems {
             true
         );
 
-
         NETWORK_MEMORY_CARD_1 = new NetworkCard(
             NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_1,
@@ -485,7 +496,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(), NETWORK_MEMORY_CARD_1.getItem(),
+                NETWORK_MEMORY_CARD_1.getItem(), SlimefunItems.SYNTHETIC_SAPPHIRE, NETWORK_MEMORY_CARD_1.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[1]
@@ -497,7 +508,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(), NETWORK_MEMORY_CARD_2.getItem(),
+                NETWORK_MEMORY_CARD_2.getItem(), SlimefunItems.SYNTHETIC_DIAMOND, NETWORK_MEMORY_CARD_2.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[2]
@@ -509,7 +520,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(), NETWORK_MEMORY_CARD_3.getItem(),
+                NETWORK_MEMORY_CARD_3.getItem(), SlimefunItems.SYNTHETIC_EMERALD, NETWORK_MEMORY_CARD_3.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[3]
@@ -521,7 +532,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(), NETWORK_MEMORY_CARD_4.getItem(),
+                NETWORK_MEMORY_CARD_4.getItem(), SlimefunItems.POWER_CRYSTAL, NETWORK_MEMORY_CARD_4.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[4]
@@ -533,7 +544,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(), NETWORK_MEMORY_CARD_5.getItem(),
+                NETWORK_MEMORY_CARD_5.getItem(), SlimefunItems.CARGO_MOTOR, NETWORK_MEMORY_CARD_5.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[5]
@@ -545,7 +556,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(), NETWORK_MEMORY_CARD_6.getItem(),
+                NETWORK_MEMORY_CARD_6.getItem(), SlimefunItems.CARGO_CONNECTOR_NODE, NETWORK_MEMORY_CARD_6.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[6]
@@ -557,7 +568,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem(),
-                NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(), NETWORK_MEMORY_CARD_7.getItem(),
+                NETWORK_MEMORY_CARD_7.getItem(), SlimefunItems.CARGO_MANAGER, NETWORK_MEMORY_CARD_7.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem()
             },
             NetworkCard.getSizes()[7]
