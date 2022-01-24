@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
-import java.util.Locale;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -25,6 +24,7 @@ import java.util.Locale;
 public class NetworksSlimefunItemStacks {
 
     // Materials
+    public static final SlimefunItemStack SYNTHETIC_EMERALD_SHARD;
     public static final SlimefunItemStack OPTIC_GLASS;
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
@@ -80,6 +80,16 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CONFIGURATOR;
 
     static {
+
+        SYNTHETIC_EMERALD_SHARD = Theme.themedSlimefunItemStack(
+            "NTW_SYNTHETIC_EMERALD_SHARD",
+            new ItemStack(Material.LIME_DYE),
+            Theme.CRAFTING,
+            "Synthetic Emerald Shard",
+            "A shard of synthetic emerald that",
+            "is the backbone for information",
+            "transference."
+        );
 
         OPTIC_GLASS = Theme.themedSlimefunItemStack(
             "NTW_OPTIC_GLASS",
