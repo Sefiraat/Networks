@@ -97,7 +97,7 @@ public class NetworkMemoryWiper extends NetworkObject {
             final CardInstance cardInstance = getCardInstance(card);
 
             for (int i = 0; i < stacks; i++) {
-                final ItemStack itemStack = cardInstance.withdrawStack();
+                final ItemStack itemStack = cardInstance.withdrawItem();
 
                 if (itemStack == null) {
                     return;

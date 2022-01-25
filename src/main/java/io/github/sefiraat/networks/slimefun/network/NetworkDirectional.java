@@ -128,11 +128,11 @@ public abstract class NetworkDirectional extends NetworkObject {
 
     @Nonnull
     protected BlockFace getCurrentDirection(@Nonnull BlockMenu blockMenu) {
-        BlockFace direction = SELECTED_DIRECTION_MAP.get(blockMenu.getLocation());
+        BlockFace direction = SELECTED_DIRECTION_MAP.get(blockMenu.getLocation().clone());
 
         if (direction == null) {
             direction = BlockFace.valueOf(BlockStorage.getLocationInfo(blockMenu.getLocation(), DIRECTION));
-            SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), direction);
+            SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
         }
         return direction;
     }
@@ -175,7 +175,7 @@ public abstract class NetworkDirectional extends NetworkObject {
                 } else {
                     direction = BlockFace.valueOf(string);
                 }
-                SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), direction);
+                SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
 
                 blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.NORTH));
                 blockMenu.addMenuClickHandler(getSouthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.SOUTH));
@@ -198,8 +198,8 @@ public abstract class NetworkDirectional extends NetworkObject {
         };
     }
 
-    private boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
-        SELECTED_DIRECTION_MAP.put(blockMenu.getLocation(), blockFace);
+    public boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
+        SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), blockFace);
         BlockStorage.addBlockInfo(blockMenu.getBlock(), DIRECTION, blockFace.name());
         return false;
     }
@@ -221,28 +221,32 @@ public abstract class NetworkDirectional extends NetworkObject {
         return null;
     }
 
-    protected int getNorthSlot() {
+    public int getNorthSlot() {
         return NORTH_SLOT;
     }
 
-    protected int getSouthSlot() {
+    public int getSouthSlot() {
         return SOUTH_SLOT;
     }
 
-    protected int getEastSlot() {
+    public int getEastSlot() {
         return EAST_SLOT;
     }
 
-    protected int getWestSlot() {
+    public int getWestSlot() {
         return WEST_SLOT;
     }
 
-    protected int getUpSlot() {
+    public int getUpSlot() {
         return UP_SLOT;
     }
 
-    protected int getDownSlot() {
+    public int getDownSlot() {
         return DOWN_SLOT;
+    }
+
+    public int getItemSlot() {
+        return -1;
     }
 
     @Nonnull

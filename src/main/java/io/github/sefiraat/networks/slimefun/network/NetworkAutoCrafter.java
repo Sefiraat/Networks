@@ -145,7 +145,7 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             if (outputItem != null
                 && outputItem.getType() != Material.AIR
-                && (!StackUtils.itemsMatch(instance, outputItem) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
+                && (!StackUtils.itemsMatch(instance, outputItem, false) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
                 return;
             }
 
@@ -222,7 +222,7 @@ public class NetworkAutoCrafter extends NetworkObject {
 
     public void setCache(@Nonnull BlockMenu blockMenu, @Nonnull BlueprintInstance blueprintInstance) {
         if (!blockMenu.hasViewer()) {
-            INSTANCE_MAP.putIfAbsent(blockMenu.getLocation(), blueprintInstance);
+            INSTANCE_MAP.putIfAbsent(blockMenu.getLocation().clone(), blueprintInstance);
         }
     }
 

@@ -61,7 +61,7 @@ public class NetworkProbe extends SlimefunItem {
             final int wipers = root.getWipers().size();
             final int grabbers = root.getGrabbers().size();
             final int pushers = root.getPushers().size();
-            final int purgers = root.getPushers().size();
+            final int purgers = root.getPurgers().size();
             final int crafters = root.getCrafters().size();
             final int powerNodes = root.getPowerNodes().size();
             final int powerDisplays = root.getPowerDisplays().size();

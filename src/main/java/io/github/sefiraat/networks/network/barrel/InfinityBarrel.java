@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.network.barrel;
 
 import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -24,7 +25,7 @@ public class InfinityBarrel extends BarrelIdentity {
 
     @Nullable
     @Override
-    public ItemStack requestItem(ItemStack similarStack) {
+    public ItemStack requestItem(@Nonnull ItemRequest itemRequest) {
         BlockMenu blockMenu = BlockStorage.getInventory(this.getLocation());
         return blockMenu == null ? null : blockMenu.getItemInSlot(this.getOutputSlot());
     }

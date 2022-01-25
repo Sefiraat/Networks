@@ -109,7 +109,7 @@ public class NetworkPurger extends NetworkObject {
             retrieved.setAmount(0);
             Location location = blockMenu.getLocation().clone().add(0.5, 1.2, 0.5);
             if (definition.getNode().getRoot().isDisplayParticles()) {
-                location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 1, 0.5, 0, 0.2, 0);
+                location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 0, 0, 0.05, 0);
             }
         }
     }

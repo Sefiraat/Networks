@@ -11,43 +11,32 @@ public class ItemStackCache {
     private ItemStack itemStack;
     @Nullable
     private ItemMeta itemMeta = null;
-    @Nullable
-    private Material itemType = null;
+    private boolean metaCached = false;
 
-    protected ItemStackCache(@Nullable ItemStack itemStack) {
+    public ItemStackCache(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
-        if (itemStack != null) {
-            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
-            this.itemType = itemStack.getType();
-        }
-    }
-
-    protected ItemStackCache(@Nullable ItemStack itemStack, @Nullable ItemMeta itemMeta, @Nullable Material itemType) {
-        this.itemStack = itemStack;
-        this.itemMeta = itemMeta;
-        this.itemType = itemType;
     }
 
     @Nullable
     public ItemStack getItemStack() {
-        return itemStack;
+        return this.itemStack;
     }
 
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
-        if (itemStack != null) {
-            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
-            this.itemType = itemStack.getType();
-        }
     }
 
     @Nullable
     public ItemMeta getItemMeta() {
-        return itemMeta;
+        if (this.itemMeta == null && !this.metaCached) {
+            this.itemMeta = itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+            this.metaCached = !this.metaCached;
+        }
+        return this.itemMeta;
     }
 
     @Nullable
     public Material getItemType() {
-        return itemType;
+        return this.itemStack.getType();
     }
 }

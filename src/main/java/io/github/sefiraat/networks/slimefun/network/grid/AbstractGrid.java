@@ -151,7 +151,7 @@ public abstract class AbstractGrid extends NetworkObject {
 
         // Update Screen
         final NetworkRoot root = definition.getNode().getRoot();
-        final GridCache gridCache = getCacheMap().get(blockMenu.getLocation());
+        final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
         final List<Map.Entry<ItemStack, Integer>> entries = getEntries(root, gridCache);
         final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
 
@@ -285,7 +285,7 @@ public abstract class AbstractGrid extends NetworkObject {
         return !action.isRightClicked()
             && request.getAmount() == 1
             && cursor.getAmount() < cursor.getMaxStackSize()
-            && StackUtils.itemsMatch(request, cursor);
+            && StackUtils.itemsMatch(request, cursor, false);
     }
 
     @Override

@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
-import java.util.Locale;
 
 /**
  * Creating SlimefunItemstacks here due to some items being created in Enums so this will
@@ -25,6 +24,7 @@ import java.util.Locale;
 public class NetworksSlimefunItemStacks {
 
     // Materials
+    public static final SlimefunItemStack SYNTHETIC_EMERALD_SHARD;
     public static final SlimefunItemStack OPTIC_GLASS;
     public static final SlimefunItemStack OPTIC_CABLE;
     public static final SlimefunItemStack OPTIC_STAR;
@@ -77,8 +77,19 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_REMOTE_PRISTINE;
     public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
     public static final SlimefunItemStack NETWORK_CRAYON;
+    public static final SlimefunItemStack NETWORK_CONFIGURATOR;
 
     static {
+
+        SYNTHETIC_EMERALD_SHARD = Theme.themedSlimefunItemStack(
+            "NTW_SYNTHETIC_EMERALD_SHARD",
+            new ItemStack(Material.LIME_DYE),
+            Theme.CRAFTING,
+            "人造綠寶石碎片",
+            "一塊人造綠寶石碎片",
+            "是資訊傳輸的",
+            "骨幹."
+        );
 
         OPTIC_GLASS = Theme.themedSlimefunItemStack(
             "NTW_OPTIC_GLASS",
@@ -602,7 +613,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PAINTING),
             Theme.TOOL,
             "網路遠端遙控",
-            "遠端的方式打開一個綁定的網路格.",
+            "無線的方式打開一個綁定的網路格.",
             "該網路格必須有區塊加載.",
             "",
             MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
@@ -613,7 +624,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.ITEM_FRAME),
             Theme.TOOL,
             "網路遠端遙控 - 充能",
-            "遠端的方式打開一個綁定的網路格.",
+            "無線的方式打開一個綁定的網路格.",
             "該網路格必須有區塊加載.",
             "",
             MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
@@ -624,7 +635,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GLOW_ITEM_FRAME),
             Theme.TOOL,
             "網路遠端遙控 - 原始版",
-            "遠端的方式打開一個綁定的網路格.",
+            "無線的方式打開一個綁定的網路格.",
             "該網路格必須有區塊加載.",
             "",
             MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "無限")
@@ -635,7 +646,7 @@ public class NetworksSlimefunItemStacks {
             getPreEnchantedItemStack(Material.GLOW_ITEM_FRAME, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),
             Theme.TOOL,
             "網路遠端遙控 - 終極",
-            "遠端的方式打開一個綁定的網路格.",
+            "無線的方式打開一個綁定的網路格.",
             "該網路格必須有區塊加載.",
             "",
             MessageFormat.format("{0}範圍: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "跨維度")
@@ -649,6 +660,19 @@ public class NetworksSlimefunItemStacks {
             "當使用在控制器時,",
             "這將在正在工作的特定方塊上",
             "顯示粒子效果."
+        );
+
+        NETWORK_CONFIGURATOR = Theme.themedSlimefunItemStack(
+            "NTW_CONFIGURATOR",
+            new ItemStack(Material.BLAZE_ROD),
+            Theme.TOOL,
+            "網路設定器",
+            "用來複製貼上",
+            "方向接口的",
+            "設定.",
+            "",
+            MessageFormat.format("{0}右鍵點擊: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "添加設定"),
+            MessageFormat.format("{0}Shift + 右鍵點擊: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "儲存設定")
         );
     }
 
