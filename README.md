@@ -39,3 +39,12 @@ consumed into the network following the normal priorities.
 
 The Network Exporter accepts an item "template" in one side and every tick it will pull out matching items into the
 output slot, this slot can be accessed via cargo.
+
+
+## Thanks!
+
+As usual, a big thanks Boomer, Cai and Lucky for their help testing and refining networks
+
+A big thanks to the owners of **mct.tantrum.org** who have tested nearly everything I have made and really given me direction and drive to make these things including some monster test setups of Networks to really push it into the dirt ;)
+
+Another big shoutout to **GentlemanCheesy** of **mc.talosmp.net** for being my first (and as of writing this, only!) sponsor. A few coffee's a month to make me feel better about making these addons <3
