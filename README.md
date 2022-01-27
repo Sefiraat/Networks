@@ -41,3 +41,12 @@
 ## 網路輸出器
 
 網路輸出器 左側只接受一個物品 "模型", 每 tick 都將會輸出符合的物品到輸出欄中, 這個欄位可以通過物流進行訪問.
+
+
+## Thanks!
+
+As usual, a big thanks Boomer, Cai and Lucky for their help testing and refining networks
+
+A big thanks to the owners of **mct.tantrum.org** who have tested nearly everything I have made and really given me direction and drive to make these things including some monster test setups of Networks to really push it into the dirt ;)
+
+Another big shoutout to **GentlemanCheesy** of **mc.talosmp.net** for being my first (and as of writing this, only!) sponsor. A few coffee's a month to make me feel better about making these addons <3
