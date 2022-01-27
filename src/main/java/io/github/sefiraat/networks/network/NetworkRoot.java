@@ -323,7 +323,7 @@ public class NetworkRoot extends NetworkNode {
         final ItemStack itemStack = cache.getCardInstance().getItemStack();
         int storedInt = cache.getCardInstance().getAmount();
 
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, false)) {
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, true)) {
             storedInt = storedInt + output.getAmount();
         }
 
@@ -374,7 +374,7 @@ public class NetworkRoot extends NetworkNode {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack == null
                     || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack, false)
+                    || !StackUtils.itemsMatch(request, itemStack, true)
                 ) {
                     continue;
                 }
@@ -410,7 +410,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, false)) {
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, true)) {
                     continue;
                 }
 
@@ -444,7 +444,7 @@ public class NetworkRoot extends NetworkNode {
 
             final ItemStack itemStack = barrelIdentity.getItemStack();
 
-            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, false)) {
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, true)) {
                 continue;
             }
 
@@ -487,7 +487,7 @@ public class NetworkRoot extends NetworkNode {
     public void addItemStack(@Nonnull ItemStack incomingStack) {
         // Run for matching barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, false)) {
+            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, true)) {
 
                 barrelIdentity.depositItemStack(incomingStack);
 
@@ -519,7 +519,7 @@ public class NetworkRoot extends NetworkNode {
 
                 if (itemStackAmount < itemStack.getMaxStackSize()
                     //&& SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
-                    && StackUtils.itemsMatch(incomingStack, itemStack, false)
+                    && StackUtils.itemsMatch(incomingStack, itemStack)
                 ) {
                     final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
                     final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
