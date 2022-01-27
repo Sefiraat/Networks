@@ -20,25 +20,43 @@ slimefun items using ingredients directly from the network.
 The Network Bridge just acts as a block to help extend the network out cheaply
 
 ## Network Cells
+Network Cells are a single block that can hold a double-chests worth of items within it. These items are exposed to the network. They are designed for items that you either have few of or are non-stackable/unique.
 
-The addon adds Network Cells that are access able and posess the same numebr of lsots as a double chest. Items can be
-withdrawn directly from the cells or accessed via Grids
+## Network Shells
+The Network Shell is a single block that can hold a Memory Card within it. Memory Cards can store a massive amount of a single type of item within it. Starting at 4k items upgradable all the way up to 2 billion at it's highest. Shells should be thought as barrels for deep storage of mass-produced items.
+Cards can be wiped clean in the Network Wiper which will slowly drain items form a card back into the network. Useful when wanting to upgrade/migrate.
 
-## Network Monitor
+## Network Monitors
+A Network Monitor is used to 'expose' the inventories of connected blocks. This is required for the network to see inside of a Network Shell's card and also storage solutions from other plugins like Infinity Expansion's barrels.
 
-The Network Monitor can 'see' nearby slimefun blocks and both display and interact with their contents. Currently
-Supported:
-Infinity Barrels
+## Import/Export
+The Network Importer has a 9-slot inventory that Cargo can access and drop items into. The importer will periodically try to move these items from the import slots into the network, should there be capacity to do so.
+The Network Exporter takes a single item as a template and tries to withdraw matching items from the network into itself. It's internal inventory is accessible by cargo.
+These two blocks act as a bridge between cargo/networks when needed
 
-## Network Importer
+## Push and Pull
+The Network Grabber will try to remove items from adjacent Slimefun machines and move them directly into the network if possible. This works for any Slimefun machine that accepts cargo-out.
+The Network Pusher takes a single item as a template and tries to withdraw the item form the network and push it into an adjacent Slimefun machine's input slot(s) when possible.
 
-The Network Importer is a 9-slot inventory that accepts items IN via cargo. Every slimefun tick, these items are
-consumed into the network following the normal priorities.
+## Power
+The Network Capacitor will accept energy in from the EnergyNet and will store it. Any connected Network machine can use this power when required.
+Total network power can be seen using the Network Power Display
 
-## Network Exporter
+## Autocrafting!
+The Network Encoder will take a given recipe (Vanilla or Slimefun) and encode it into a blank blueprint.
+The Network Autocrafter will take this blueprint and try to craft it periodically using items directly within the network assuming enough items are found and enough power is provided. Items are output back into the network.
+The Withholding Autocrafter does the same thing but keeps the crafted items inside itself, up to a single stack, and exposes this stack to the network for withdrawal. This is useful to keep a stock of items without crafting too many or for items useful only as crafting materials for other auto crafters.
 
-The Network Exporter accepts an item "template" in one side and every tick it will pull out matching items into the
-output slot, this slot can be accessed via cargo.
+## Remote Control
+The Network Remote(s) are expensive crafts that allow you to access a bound-grid wirelessly. Different tiers of remotes allow different access ranges from 150 blocks, 500, unlimited and then cross-dimensionally.
+
+## Trash
+The Network Purger takes a single item as a template and will find a matching item inside the network, withdraw it then void it. Use with care.
+
+## Other/Misc
+- The Network Crayon allows you to turn on/off particles from machines showing you when and what they are doing without having to open un the GUI.
+- The Network Configurator allows you to copy the settings of an appropriate node and then paste the settings back onto another node. Costly to craft but allows for quick setups.
+- The Network Probe will show every block that's connected to a controller including a summary of their contents.
 
 
 ## Thanks!
