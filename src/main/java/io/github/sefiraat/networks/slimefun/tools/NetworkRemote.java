@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import de.jeff_media.morepersistentdatatypes.DataType;
-import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -16,14 +15,11 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
@@ -63,7 +59,7 @@ public class NetworkRemote extends SlimefunItem {
                             }
                         }
                     } else {
-                        tryOpenGrid(e.getItem(), player);
+                        tryOpenGrid(e.getItem(), player, NetworkRemote.this.range);
                     }
                     e.cancel();
                 }
@@ -71,14 +67,14 @@ public class NetworkRemote extends SlimefunItem {
         );
     }
 
-    private void setGrid(@Nonnull ItemStack itemStack, @Nonnull Block block, @Nonnull Player player) {
+    public static void setGrid(@Nonnull ItemStack itemStack, @Nonnull Block block, @Nonnull Player player) {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         DataTypeMethods.setCustom(itemMeta, KEY, DataType.LOCATION, block.getLocation());
         itemStack.setItemMeta(itemMeta);
         player.sendMessage(Theme.SUCCESS + "Grid has been bound to the remote.");
     }
 
-    private void tryOpenGrid(@Nonnull ItemStack itemStack, @Nonnull Player player) {
+    public static void tryOpenGrid(@Nonnull ItemStack itemStack, @Nonnull Player player, int range) {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         final Location location = DataTypeMethods.getCustom(itemMeta, KEY, DataType.LOCATION);
 
@@ -91,9 +87,9 @@ public class NetworkRemote extends SlimefunItem {
 
             final boolean sameDimension = location.getWorld().equals(player.getWorld());
 
-            if (this.range == -1
-                || this.range == 0 && sameDimension
-                || sameDimension && player.getLocation().distance(location) <= this.range
+            if (range == -1
+                || range == 0 && sameDimension
+                || sameDimension && player.getLocation().distance(location) <= range
             ) {
                 openGrid(location, player);
             } else {
@@ -104,7 +100,7 @@ public class NetworkRemote extends SlimefunItem {
         }
     }
 
-    private void openGrid(@Nonnull Location location, @Nonnull Player player) {
+    public static void openGrid(@Nonnull Location location, @Nonnull Player player) {
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         SlimefunItem slimefunItem = BlockStorage.check(location);
         if (Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)

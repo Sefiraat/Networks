@@ -526,6 +526,7 @@ public class NetworkRoot extends NetworkNode {
 
                     itemStack.setAmount(itemStackAmount + amountToAdd);
                     incomingStack.setAmount(incomingStackAmount - amountToAdd);
+                    blockMenu.markDirty();
 
                     // All distributed, can escape
                     if (incomingStackAmount == 0) {
