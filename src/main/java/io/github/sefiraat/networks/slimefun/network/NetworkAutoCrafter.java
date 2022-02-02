@@ -145,7 +145,7 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             if (outputItem != null
                 && outputItem.getType() != Material.AIR
-                && (!StackUtils.itemsMatch(instance, outputItem, false) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
+                && (!StackUtils.itemsMatch(instance, outputItem, true) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
                 return;
             }
 

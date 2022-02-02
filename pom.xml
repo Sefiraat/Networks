@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat</groupId>
     <artifactId>networks</artifactId>
-    <version>Efina 1.3</version>
+    <version>Efina 1.5</version>
 
     <distributionManagement>
         <repository>

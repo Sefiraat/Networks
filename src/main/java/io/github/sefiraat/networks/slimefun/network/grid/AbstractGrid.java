@@ -191,7 +191,7 @@ public abstract class AbstractGrid extends NetworkObject {
                 displayStack.setItemMeta(itemMeta);
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
                 blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
-                        retrieveItem(player, definition, item, action);
+                        retrieveItem(player, definition, item, action, blockMenu);
                         return false;
                     }
                 );
@@ -249,7 +249,7 @@ public abstract class AbstractGrid extends NetworkObject {
     }
 
     @ParametersAreNonnullByDefault
-    protected void retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action) {
+    protected void retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action, BlockMenu blockMenu) {
         final ItemStack clone = itemStack.clone();
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
@@ -278,6 +278,7 @@ public abstract class AbstractGrid extends NetworkObject {
                 requestingStack.setAmount(cursor.getAmount() + 1);
             }
             request.getPlayer().setItemOnCursor(requestingStack);
+            updateDisplay(blockMenu);
         }
     }
 
@@ -285,7 +286,7 @@ public abstract class AbstractGrid extends NetworkObject {
         return !action.isRightClicked()
             && request.getAmount() == 1
             && cursor.getAmount() < cursor.getMaxStackSize()
-            && StackUtils.itemsMatch(request, cursor, false);
+            && StackUtils.itemsMatch(request, cursor, true);
     }
 
     @Override
