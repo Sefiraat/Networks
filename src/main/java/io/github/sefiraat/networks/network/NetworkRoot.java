@@ -323,7 +323,7 @@ public class NetworkRoot extends NetworkNode {
         final ItemStack itemStack = cache.getCardInstance().getItemStack();
         int storedInt = cache.getCardInstance().getAmount();
 
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, false)) {
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, true)) {
             storedInt = storedInt + output.getAmount();
         }
 
@@ -365,6 +365,17 @@ public class NetworkRoot extends NetworkNode {
         return menus;
     }
 
+    /**
+     * Checks the Network's exposed items and removes items matching the request up
+     * to the amount requested. Items are withdrawn in this order:
+     *
+     * Cells
+     * Withholding AutoCrafters
+     * Deep Storages (Barrels)
+     *
+     * @param request The {@link ItemRequest} being requested from the Network
+     * @return The {@link ItemStack} matching the request with as many as could be found. Null if none.
+     */
     @Nullable
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
         ItemStack stackToReturn = null;
@@ -374,13 +385,16 @@ public class NetworkRoot extends NetworkNode {
             for (ItemStack itemStack : blockMenu.getContents()) {
                 if (itemStack == null
                     || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack, false)
+                    || !StackUtils.itemsMatch(request, itemStack, true)
                 ) {
                     continue;
                 }
 
+                // Mark the Cell as dirty otherwise the changes will not save on shutdown
+                blockMenu.markDirty();
+
+                // If the return stack is null, we need to set it up
                 if (stackToReturn == null) {
-                    // Return stack is null, so we can fill it here
                     stackToReturn = itemStack.clone();
                     stackToReturn.setAmount(1);
                     request.receiveAmount(1);
@@ -393,15 +407,16 @@ public class NetworkRoot extends NetworkNode {
                 }
 
                 if (request.getAmount() <= itemStack.getAmount()) {
+                    // We can't take more than this stack. Level to request amount, remove items and then return
                     stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
                     itemStack.setAmount(itemStack.getAmount() - request.getAmount());
                     return stackToReturn;
                 } else {
+                    // We can take more than what is here, consume before trying to take more
                     stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
                     request.receiveAmount(itemStack.getAmount());
                     itemStack.setAmount(0);
                 }
-
             }
         }
 
@@ -410,7 +425,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, false)) {
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, true)) {
                     continue;
                 }
 
@@ -444,7 +459,7 @@ public class NetworkRoot extends NetworkNode {
 
             final ItemStack itemStack = barrelIdentity.getItemStack();
 
-            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, false)) {
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, true)) {
                 continue;
             }
 
@@ -487,7 +502,7 @@ public class NetworkRoot extends NetworkNode {
     public void addItemStack(@Nonnull ItemStack incomingStack) {
         // Run for matching barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, false)) {
+            if (StackUtils.itemsMatch(barrelIdentity, incomingStack, true)) {
 
                 barrelIdentity.depositItemStack(incomingStack);
 
@@ -499,6 +514,7 @@ public class NetworkRoot extends NetworkNode {
         }
 
         // Then run for matching items in cells
+        // Prepare a fallback menu and slot. This way we don't have to scan more than once
         BlockMenu fallbackBlockMenu = null;
         int fallBackSlot = 0;
 
@@ -517,15 +533,14 @@ public class NetworkRoot extends NetworkNode {
                 final int itemStackAmount = itemStack.getAmount();
                 final int incomingStackAmount = incomingStack.getAmount();
 
-                if (itemStackAmount < itemStack.getMaxStackSize()
-                    //&& SlimefunUtils.isItemSimilar(incomingStack, itemStack, true, false)
-                    && StackUtils.itemsMatch(incomingStack, itemStack, false)
-                ) {
+                if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incomingStack, itemStack)) {
                     final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
                     final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
 
                     itemStack.setAmount(itemStackAmount + amountToAdd);
                     incomingStack.setAmount(incomingStackAmount - amountToAdd);
+
+                    // Mark dirty otherwise changes will not save
                     blockMenu.markDirty();
 
                     // All distributed, can escape

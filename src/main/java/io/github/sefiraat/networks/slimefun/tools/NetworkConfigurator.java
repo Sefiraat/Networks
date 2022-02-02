@@ -109,7 +109,7 @@ public class NetworkConfigurator extends SlimefunItem {
 
         if (templateStack != null && templateStack.getType() != Material.AIR) {
             for (ItemStack stack : player.getInventory()) {
-                if (StackUtils.itemsMatch(stack, templateStack, false)) {
+                if (StackUtils.itemsMatch(stack, templateStack)) {
                     final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
                     stack.setAmount(stack.getAmount() - 1);
                     blockMenu.replaceExistingItem(directional.getItemSlot(), stackClone);
