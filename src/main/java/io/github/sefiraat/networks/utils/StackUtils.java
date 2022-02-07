@@ -21,14 +21,12 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.inventory.meta.SpawnEggMeta;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -45,29 +43,6 @@ public class StackUtils {
     public static boolean itemsMatch(@Nullable ItemStack itemStack1, @Nullable ItemStack itemStack2) {
         return itemsMatch(new ItemStackCache(itemStack1), itemStack2, true);
     }
-
-//    public static boolean itemsMatch(@Nonnull ItemStackCache cache, @Nullable ItemStack itemStack, boolean allowIdCheck) {
-//        if (cache.getItemStack() == null || itemStack == null) {
-//            return itemStack == null && cache.getItemStack() == null;
-//        }
-//        if (itemStack.getType() != cache.getItemType()) {
-//            return false;
-//        }
-//        if (itemStack.hasItemMeta() && cache.getItemStack().hasItemMeta()) {
-//            final ItemMeta itemMeta = itemStack.getItemMeta();
-//            final ItemMeta cachedMeta = cache.getItemMeta();
-//            if (allowIdCheck) {
-//                final Optional<String> optionalStackId1 = Slimefun.getItemDataService().getItemData(itemMeta);
-//                final Optional<String> optionalStackId2 = Slimefun.getItemDataService().getItemData(cachedMeta);
-//                if (optionalStackId1.isPresent() && optionalStackId2.isPresent()) {
-//                    return optionalStackId1.get().equals(optionalStackId2.get());
-//                }
-//            }
-//            return itemMeta.equals(cachedMeta);
-//        } else {
-//            return itemStack.hasItemMeta() == cache.getItemStack().hasItemMeta();
-//        }
-//    }
 
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
