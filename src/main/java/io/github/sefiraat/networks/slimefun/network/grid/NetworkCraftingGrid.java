@@ -52,7 +52,9 @@ public class NetworkCraftingGrid extends AbstractGrid {
 
     private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
         Material.CRAFTING_TABLE,
-        Theme.CLICK_INFO.getColor() + "Click to craft"
+        Theme.CLICK_INFO.getColor() + "Craft",
+        Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Try to Craft",
+        Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Try to return items"
     );
 
     private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
@@ -137,7 +139,11 @@ public class NetworkCraftingGrid extends AbstractGrid {
 
                 menu.replaceExistingItem(CRAFT_BUTTON_SLOT, CRAFT_BUTTON_STACK);
                 menu.addMenuClickHandler(CRAFT_BUTTON_SLOT, (player, slot, item, action) -> {
-                    tryCraft(menu, player);
+                    if (action.isShiftClicked()) {
+                        tryReturnItems(menu);
+                    } else {
+                        tryCraft(menu, player);
+                    }
                     return false;
                 });
             }
@@ -242,6 +248,24 @@ public class NetworkCraftingGrid extends AbstractGrid {
                     }
                 }
             }
+        }
+    }
+
+    private void tryReturnItems(@Nonnull BlockMenu menu) {
+        // Get node and, if it doesn't exist - escape
+        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
+
+        if (definition.getNode() == null) {
+            return;
+        }
+
+        for (int recipeSlot : CRAFT_ITEMS) {
+            final ItemStack stack = menu.getItemInSlot(recipeSlot);
+
+            if (stack == null || stack.getType() == Material.AIR) {
+                continue;
+            }
+            definition.getNode().getRoot().addItemStack(stack);
         }
     }
 }
