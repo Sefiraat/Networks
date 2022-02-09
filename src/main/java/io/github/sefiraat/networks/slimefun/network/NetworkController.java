@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.network.NetworkNode;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -87,5 +89,11 @@ public class NetworkController extends NetworkObject {
 
     public static boolean hasCrayon(@Nonnull Location location) {
         return CRAYONS.contains(location);
+    }
+
+    public static void wipeNetwork(@Nonnull Location location) {
+        for (NetworkNode node : NETWORKS.remove(location).getChildrenNodes()) {
+            NetworkStorage.removeNode(node.getNodePosition());
+        }
     }
 }
