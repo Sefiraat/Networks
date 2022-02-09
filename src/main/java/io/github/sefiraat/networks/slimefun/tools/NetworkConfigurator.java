@@ -79,7 +79,11 @@ public class NetworkConfigurator extends SlimefunItem {
 
             int i = 0;
             for (int slot : directional.getItemSlots()) {
-                itemStacks[i] = StackUtils.getAsQuantity(blockMenu.getItemInSlot(slot), 1);
+                final ItemStack possibleStack = blockMenu.getItemInSlot(slot);
+                if (possibleStack != null) {
+                    itemStacks[i] = StackUtils.getAsQuantity(blockMenu.getItemInSlot(slot), 1);
+                }
+                i++;
             }
             DataTypeMethods.setCustom(itemMeta, ITEM, DataType.ITEM_STACK_ARRAY, itemStacks);
         } else {
@@ -97,12 +101,12 @@ public class NetworkConfigurator extends SlimefunItem {
         final String string = DataTypeMethods.getCustom(itemMeta, FACE, DataType.STRING);
 
         if (string == null) {
-            player.sendMessage(Theme.ERROR + "No direction has been copied yet.");
+            player.sendMessage(Theme.ERROR + "Direction: " + Theme.PASSIVE + "Not supplied");
             return;
         }
 
         directional.setDirection(blockMenu, BlockFace.valueOf(string));
-        player.sendMessage(Theme.SUCCESS + "Direction has been successfully applied.");
+        player.sendMessage(Theme.ERROR + "Direction: " + Theme.PASSIVE + "Successfully applied");
 
 
         if (directional.getItemSlots().length > 0) {
@@ -115,27 +119,31 @@ public class NetworkConfigurator extends SlimefunItem {
             }
         }
 
-        int i = 0;
-        for (ItemStack templateStack : templateStacks) {
-            if (templateStack != null && templateStack.getType() != Material.AIR) {
-                boolean worked = false;
-                for (ItemStack stack : player.getInventory()) {
-                    if (StackUtils.itemsMatch(stack, templateStack)) {
-                        final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
-                        stack.setAmount(stack.getAmount() - 1);
-                        blockMenu.replaceExistingItem(directional.getItemSlots()[i], stackClone);
-                        player.sendMessage(Theme.SUCCESS + "Filter item removed from inventory and placed in filter.");
-                        worked = true;
-                        break;
+        if (templateStacks != null) {
+            int i = 0;
+            for (ItemStack templateStack : templateStacks) {
+                if (templateStack != null && templateStack.getType() != Material.AIR) {
+                    boolean worked = false;
+                    for (ItemStack stack : player.getInventory()) {
+                        if (StackUtils.itemsMatch(stack, templateStack)) {
+                            final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
+                            stack.setAmount(stack.getAmount() - 1);
+                            blockMenu.replaceExistingItem(directional.getItemSlots()[i], stackClone);
+                            player.sendMessage(Theme.SUCCESS + "Item [" + i + "]: " + Theme.PASSIVE + "Item added into filter");
+                            worked = true;
+                            break;
+                        }
                     }
+                    if (!worked) {
+                        player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "Not enough items to fill filter");
+                    }
+                } else if (directional instanceof NetworkPusher) {
+                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
                 }
-                if (!worked) {
-                    player.sendMessage(Theme.WARNING + "You don't have enough matching items to put in the filter.");
-                }
-            } else if (directional instanceof NetworkPusher) {
-                player.sendMessage(Theme.WARNING + "No item has been provided.");
+                i++;
             }
-            i++;
+        } else {
+            player.sendMessage(Theme.WARNING + "Items: " + Theme.PASSIVE + "No items in stored config");
         }
     }
 }
