@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.network.GridItemRequest;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -16,6 +17,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
+import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -34,6 +36,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.MessageFormat;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -265,6 +268,29 @@ public abstract class AbstractGrid extends NetworkObject {
         }
 
         final GridItemRequest request = new GridItemRequest(clone, amount, player);
+
+        if (action.isShiftClicked()) {
+            addToInventory(player, definition, request, action);
+        } else {
+            addToCursor(player, definition, request, action);
+        }
+
+        updateDisplay(blockMenu);
+    }
+
+    @ParametersAreNonnullByDefault
+    private void addToInventory(Player player, NodeDefinition definition, GridItemRequest request, ClickAction action) {
+        ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+
+        HashMap<Integer, ItemStack> remnant = player.getInventory().addItem(requestingStack);
+        requestingStack = remnant.values().stream().findFirst().orElse(null);
+        if (requestingStack != null) {
+            definition.getNode().getRoot().addItemStack(requestingStack);
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    private void addToCursor(Player player, NodeDefinition definition, GridItemRequest request, ClickAction action) {
         final ItemStack cursor = player.getItemOnCursor();
 
         // Quickly check if the cursor has an item and if we can add more to it
@@ -272,13 +298,16 @@ public abstract class AbstractGrid extends NetworkObject {
             return;
         }
 
-        final ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+        ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
+        setCursor(player, cursor, requestingStack);
+    }
+
+    private void setCursor(Player player, ItemStack cursor, ItemStack requestingStack) {
         if (requestingStack != null) {
             if (cursor.getType() != Material.AIR) {
                 requestingStack.setAmount(cursor.getAmount() + 1);
             }
-            request.getPlayer().setItemOnCursor(requestingStack);
-            updateDisplay(blockMenu);
+            player.setItemOnCursor(requestingStack);
         }
     }
 

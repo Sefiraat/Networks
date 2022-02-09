@@ -28,8 +28,8 @@ public class NetworkPusher extends NetworkDirectional {
     private static final int[] BACKGROUND_SLOTS = new int[]{
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 24, 26, 27, 28, 30, 31, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
     };
-    private static final int[] TEMPLATE_BACKGROUND = new int[]{16, 34};
-    private static final int TEMPLATE_SLOT = 25;
+    private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
+    private static final int[] TEMPLATE_SLOTS = new int[]{25, 34};
     private static final int NORTH_SLOT = 11;
     private static final int SOUTH_SLOT = 29;
     private static final int EAST_SLOT = 21;
@@ -43,7 +43,9 @@ public class NetworkPusher extends NetworkDirectional {
 
     public NetworkPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.PUSHER);
-        this.getSlotsToDrop().add(this.getItemSlot());
+        for (int slot : TEMPLATE_SLOTS) {
+            this.getSlotsToDrop().add(slot);
+        }
     }
 
     @Override
@@ -61,45 +63,48 @@ public class NetworkPusher extends NetworkDirectional {
             return;
         }
 
-        ItemStack testItem = blockMenu.getItemInSlot(this.getItemSlot());
+        for (int itemSlot : this.getItemSlots()) {
 
-        if (testItem == null || testItem.getType() == Material.AIR) {
-            return;
-        }
+            final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
 
-        final BlockFace direction = getCurrentDirection(blockMenu);
-        final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(direction));
-
-        if (targetMenu == null) {
-            return;
-        }
-
-        final ItemStack clone = testItem.clone();
-        clone.setAmount(1);
-        final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
-
-        int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
-
-        for (int slot : slots) {
-            final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-
-            if (itemStack != null && itemStack.getType() != Material.AIR) {
-                final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
-                    itemRequest.setAmount(space);
-                } else {
-                    continue;
-                }
+            if (testItem == null || testItem.getType() == Material.AIR) {
+                return;
             }
 
-            ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
-            if (retrieved != null) {
-                targetMenu.pushItem(retrieved, slots);
-                if (definition.getNode().getRoot().isDisplayParticles()) {
-                    showParticle(blockMenu.getLocation(), direction);
-                }
+            final BlockFace direction = getCurrentDirection(blockMenu);
+            final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(direction));
+
+            if (targetMenu == null) {
+                return;
             }
-            break;
+
+            final ItemStack clone = testItem.clone();
+            clone.setAmount(1);
+            final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
+
+            int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
+
+            for (int slot : slots) {
+                final ItemStack itemStack = targetMenu.getItemInSlot(slot);
+
+                if (itemStack != null && itemStack.getType() != Material.AIR) {
+                    final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
+                    if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
+                        itemRequest.setAmount(space);
+                    } else {
+                        continue;
+                    }
+                }
+
+                ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
+                if (retrieved != null) {
+                    targetMenu.pushItem(retrieved, slots);
+                    if (definition.getNode().getRoot().isDisplayParticles()) {
+                        showParticle(blockMenu.getLocation(), direction);
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -152,8 +157,8 @@ public class NetworkPusher extends NetworkDirectional {
     }
 
     @Override
-    public int getItemSlot() {
-        return TEMPLATE_SLOT;
+    public int[] getItemSlots() {
+        return TEMPLATE_SLOTS;
     }
 
     @Override
