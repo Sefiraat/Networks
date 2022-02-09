@@ -368,7 +368,7 @@ public class NetworkRoot extends NetworkNode {
     /**
      * Checks the Network's exposed items and removes items matching the request up
      * to the amount requested. Items are withdrawn in this order:
-     *
+     * <p>
      * Cells
      * Withholding AutoCrafters
      * Deep Storages (Barrels)
@@ -497,6 +497,77 @@ public class NetworkRoot extends NetworkNode {
         }
 
         return stackToReturn;
+    }
+
+    public boolean contains(@Nonnull ItemRequest[] requests) {
+        for (ItemRequest request : requests) {
+            if (!contains(request)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean contains(@Nonnull ItemRequest request) {
+        int found = 0;
+
+        // Cells first
+        for (BlockMenu blockMenu : getCellMenus()) {
+            for (ItemStack itemStack : blockMenu.getContents()) {
+                if (itemStack == null
+                    || itemStack.getType() == Material.AIR
+                    || !StackUtils.itemsMatch(request, itemStack, true)
+                ) {
+                    continue;
+                }
+
+                found += itemStack.getAmount();
+
+                // Escape if found all we need
+                if (found >= request.getAmount()) {
+                    return true;
+                }
+            }
+        }
+
+        // Crafters
+        for (BlockMenu blockMenu : getCrafterOutputs()) {
+            int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+            for (int slot : slots) {
+                final ItemStack itemStack = blockMenu.getItemInSlot(slot);
+                if (itemStack == null
+                    || itemStack.getType() == Material.AIR
+                    || !StackUtils.itemsMatch(request, itemStack, true)
+                ) {
+                    continue;
+                }
+
+                found += itemStack.getAmount();
+
+                // Escape if found all we need
+                if (found >= request.getAmount()) {
+                    return true;
+                }
+            }
+        }
+
+        // Barrels
+        for (BarrelIdentity barrelIdentity : getBarrels()) {
+            final ItemStack itemStack = barrelIdentity.getItemStack();
+
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, true)) {
+                continue;
+            }
+
+            found += barrelIdentity.getAmount() - (barrelIdentity instanceof InfinityBarrel ? 1 : 0);
+
+            // Escape if found all we need
+            if (found >= request.getAmount()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void addItemStack(@Nonnull ItemStack incomingStack) {

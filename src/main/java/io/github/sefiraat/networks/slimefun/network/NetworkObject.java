@@ -83,7 +83,7 @@ public abstract class NetworkObject extends SlimefunItem {
         NetworkStorage.removeNode(location);
 
         if (this.nodeType == NodeType.CONTROLLER) {
-            NetworkController.getNetworks().remove(location);
+            NetworkController.wipeNetwork(location);
         }
 
         BlockStorage.clearBlockInfo(location);

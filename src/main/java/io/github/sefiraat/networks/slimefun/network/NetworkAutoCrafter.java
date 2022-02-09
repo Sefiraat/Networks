@@ -141,11 +141,11 @@ public class NetworkAutoCrafter extends NetworkObject {
                 setCache(blockMenu, instance);
             }
 
-            final ItemStack outputItem = blockMenu.getItemInSlot(OUTPUT_SLOT);
+            final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
-            if (outputItem != null
-                && outputItem.getType() != Material.AIR
-                && (!StackUtils.itemsMatch(instance, outputItem, true) || outputItem.getAmount() >= outputItem.getMaxStackSize())) {
+            if (output != null
+                && output.getType() != Material.AIR
+                && (output.getAmount() + instance.getItemStack().getAmount() >= output.getMaxStackSize() || !StackUtils.itemsMatch(instance, output, true))) {
                 return;
             }
 
@@ -159,6 +159,25 @@ public class NetworkAutoCrafter extends NetworkObject {
         // Get the recipe input
         final ItemStack[] inputs = new ItemStack[9];
 
+        /* Make sure the network has the required items
+         * Needs to be revisited as matching is happening stacks 2x when I should
+         * only need the one
+         */
+        HashMap<ItemStack, Integer> requiredItems = new HashMap<>();
+        for (int i = 0; i < 9; i++) {
+            final ItemStack requested = instance.getRecipeItems()[i];
+            if (requested != null) {
+                requiredItems.merge(requested, 1, Integer::sum);
+            }
+        }
+
+        for (Map.Entry<ItemStack, Integer> entry : requiredItems.entrySet()) {
+            if (!root.contains(new ItemRequest(entry.getKey(), entry.getValue()))) {
+                return false;
+            }
+        }
+
+        // Then fetch the actual items
         for (int i = 0; i < 9; i++) {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
