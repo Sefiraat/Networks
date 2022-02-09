@@ -14,6 +14,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -37,8 +38,10 @@ import org.bukkit.util.Vector;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -177,12 +180,18 @@ public abstract class NetworkDirectional extends NetworkObject {
                 }
                 SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
 
-                blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.NORTH));
-                blockMenu.addMenuClickHandler(getSouthSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.SOUTH));
-                blockMenu.addMenuClickHandler(getEastSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.EAST));
-                blockMenu.addMenuClickHandler(getWestSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.WEST));
-                blockMenu.addMenuClickHandler(getUpSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.UP));
-                blockMenu.addMenuClickHandler(getDownSlot(), (player, i, itemStack, clickAction) -> setDirection(blockMenu, BlockFace.DOWN));
+                blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.NORTH));
+                blockMenu.addMenuClickHandler(getSouthSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.SOUTH));
+                blockMenu.addMenuClickHandler(getEastSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.EAST));
+                blockMenu.addMenuClickHandler(getWestSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.WEST));
+                blockMenu.addMenuClickHandler(getUpSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.UP));
+                blockMenu.addMenuClickHandler(getDownSlot(), (player, i, itemStack, clickAction) ->
+                    directionClick(player, clickAction, blockMenu, BlockFace.DOWN));
             }
 
             @Override
@@ -198,10 +207,28 @@ public abstract class NetworkDirectional extends NetworkObject {
         };
     }
 
-    public boolean setDirection(@Nonnull BlockMenu blockMenu, @Nonnull BlockFace blockFace) {
+    @ParametersAreNonnullByDefault
+    public boolean directionClick(Player player, ClickAction action, BlockMenu blockMenu, BlockFace blockFace) {
+        if (action.isShiftClicked()) {
+            openDirection(player, blockMenu, blockFace);
+        } else {
+            setDirection(blockMenu, blockFace);
+        }
+        return false;
+    }
+
+    @ParametersAreNonnullByDefault
+    public void openDirection(Player player, BlockMenu blockMenu, BlockFace blockFace) {
+        final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(blockFace));
+        if (targetMenu != null) {
+            targetMenu.open(player);
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    public void setDirection(BlockMenu blockMenu, BlockFace blockFace) {
         SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), blockFace);
         BlockStorage.addBlockInfo(blockMenu.getBlock(), DIRECTION, blockFace.name());
-        return false;
     }
 
     @Nonnull
@@ -245,8 +272,8 @@ public abstract class NetworkDirectional extends NetworkObject {
         return DOWN_SLOT;
     }
 
-    public int getItemSlot() {
-        return -1;
+    public int[] getItemSlots() {
+        return new int[]{};
     }
 
     @Nonnull
@@ -254,14 +281,17 @@ public abstract class NetworkDirectional extends NetworkObject {
         if (slimefunItem != null) {
             final ItemStack displayStack = new CustomItemStack(
                 slimefunItem.getItem(),
-                Theme.PASSIVE + "Set Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
+                Theme.PASSIVE + "Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
             );
             final ItemMeta itemMeta = displayStack.getItemMeta();
             if (active) {
                 itemMeta.addEnchant(Enchantment.LUCK, 1, true);
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
-            itemMeta.setLore(null);
+            itemMeta.setLore(List.of(
+                Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
+                Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+            ));
             displayStack.setItemMeta(itemMeta);
             return displayStack;
         } else {

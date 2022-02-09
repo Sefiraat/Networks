@@ -74,23 +74,26 @@ public class NetworkConfigurator extends SlimefunItem {
 
         final ItemMeta itemMeta = itemStack.getItemMeta();
 
-        final ItemStack templateStack = directional.getItemSlot() > -1 ? blockMenu.getItemInSlot(directional.getItemSlot()) : null;
-        DataTypeMethods.setCustom(itemMeta, FACE, DataType.STRING, blockFace.name());
+        if (directional.getItemSlots().length > 0) {
+            final ItemStack[] itemStacks = new ItemStack[directional.getItemSlots().length];
 
-        if (templateStack != null && templateStack.getType() != Material.AIR) {
-            final ItemStack clone = StackUtils.getAsQuantity(templateStack, 1);
-            DataTypeMethods.setCustom(itemMeta, ITEM, DataType.ITEM_STACK, clone);
+            int i = 0;
+            for (int slot : directional.getItemSlots()) {
+                itemStacks[i] = StackUtils.getAsQuantity(blockMenu.getItemInSlot(slot), 1);
+            }
+            DataTypeMethods.setCustom(itemMeta, ITEM, DataType.ITEM_STACK_ARRAY, itemStacks);
         } else {
             PersistentDataAPI.remove(itemMeta, ITEM);
         }
 
+        DataTypeMethods.setCustom(itemMeta, FACE, DataType.STRING, blockFace.name());
         itemStack.setItemMeta(itemMeta);
         player.sendMessage(Theme.SUCCESS + "Configuration copied.");
     }
 
     private void applyConfig(@Nonnull NetworkDirectional directional, @Nonnull ItemStack itemStack, @Nonnull BlockMenu blockMenu, @Nonnull Player player) {
         final ItemMeta itemMeta = itemStack.getItemMeta();
-        final ItemStack templateStack = DataTypeMethods.getCustom(itemMeta, ITEM, DataType.ITEM_STACK);
+        final ItemStack[] templateStacks = DataTypeMethods.getCustom(itemMeta, ITEM, DataType.ITEM_STACK_ARRAY);
         final String string = DataTypeMethods.getCustom(itemMeta, FACE, DataType.STRING);
 
         if (string == null) {
@@ -101,26 +104,38 @@ public class NetworkConfigurator extends SlimefunItem {
         directional.setDirection(blockMenu, BlockFace.valueOf(string));
         player.sendMessage(Theme.SUCCESS + "Direction has been successfully applied.");
 
-        final ItemStack currentBlueprint = directional.getItemSlot() > -1 ? blockMenu.getItemInSlot(directional.getItemSlot()) : null;
-        if (currentBlueprint != null && currentBlueprint.getType() != Material.AIR) {
-            blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), currentBlueprint.clone());
-            currentBlueprint.setAmount(0);
-        }
 
-        if (templateStack != null && templateStack.getType() != Material.AIR) {
-            for (ItemStack stack : player.getInventory()) {
-                if (StackUtils.itemsMatch(stack, templateStack)) {
-                    final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
-                    stack.setAmount(stack.getAmount() - 1);
-                    blockMenu.replaceExistingItem(directional.getItemSlot(), stackClone);
-                player.sendMessage(Theme.SUCCESS + "Filter item removed from inventory and placed in filter.");
-                    return;
+        if (directional.getItemSlots().length > 0) {
+            for (int slot : directional.getItemSlots()) {
+                final ItemStack stackToDrop = blockMenu.getItemInSlot(slot);
+                if (stackToDrop != null && stackToDrop.getType() != Material.AIR) {
+                    blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), stackToDrop.clone());
+                    stackToDrop.setAmount(0);
                 }
             }
-            player.sendMessage(Theme.WARNING + "You don't have enough matching items to put in the filter.");
-        } else if (directional instanceof NetworkPusher) {
-            player.sendMessage(Theme.WARNING + "No item has been provided.");
         }
 
+        int i = 0;
+        for (ItemStack templateStack : templateStacks) {
+            if (templateStack != null && templateStack.getType() != Material.AIR) {
+                boolean worked = false;
+                for (ItemStack stack : player.getInventory()) {
+                    if (StackUtils.itemsMatch(stack, templateStack)) {
+                        final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
+                        stack.setAmount(stack.getAmount() - 1);
+                        blockMenu.replaceExistingItem(directional.getItemSlots()[i], stackClone);
+                        player.sendMessage(Theme.SUCCESS + "Filter item removed from inventory and placed in filter.");
+                        worked = true;
+                        break;
+                    }
+                }
+                if (!worked) {
+                    player.sendMessage(Theme.WARNING + "You don't have enough matching items to put in the filter.");
+                }
+            } else if (directional instanceof NetworkPusher) {
+                player.sendMessage(Theme.WARNING + "No item has been provided.");
+            }
+            i++;
+        }
     }
 }
