@@ -3,6 +3,14 @@
 Networks is a Slimefun4 addon that brings a simple yet powerful item storage and movement network that works along side
 cargo.
 
+## Download Networks
+
+[![Build Status](https://thebusybiscuit.github.io/builds/Sefiraat/Networks/master/badge.svg)](https://thebusybiscuit.github.io/builds/Sefiraat/Networks/master)
+
+## About Networks
+
+You can find a fuller guide to Networks including all items and blocks in my [Documentation Pages](https://sefiraat.gitbook.io/docs/)
+
 ![](https://github.com/Sefiraat/Networks/blob/master/images/wiki/setup.png?raw=true)
 
 ## Network Grid / Crafting Grid
