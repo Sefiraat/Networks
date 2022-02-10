@@ -2,6 +2,14 @@
 
 網路是黏液科技的附加, 它帶來了簡單又強大的物品儲存和移動網路, 也可以與物流一起運作.
 
+## Download Networks
+
+[![Build Status](https://thebusybiscuit.github.io/builds/Sefiraat/Networks/master/badge.svg)](https://thebusybiscuit.github.io/builds/Sefiraat/Networks/master)
+
+## About Networks
+
+You can find a fuller guide to Networks including all items and blocks in my [Documentation Pages](https://sefiraat.gitbook.io/docs/)
+
 ![](https://github.com/Sefiraat/Networks/blob/master/images/wiki/setup.png?raw=true)
 
 > 此為**非官方**版本, 請勿在該作者問題追蹤內回報! <br>
