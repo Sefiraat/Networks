@@ -63,19 +63,18 @@ public class NetworkPusher extends NetworkDirectional {
             return;
         }
 
-        for (int itemSlot : this.getItemSlots()) {
+        final BlockFace direction = getCurrentDirection(blockMenu);
+        final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(direction));
 
+        if (targetMenu == null) {
+            return;
+        }
+
+        for (int itemSlot : this.getItemSlots()) {
             final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
 
             if (testItem == null || testItem.getType() == Material.AIR) {
-                return;
-            }
-
-            final BlockFace direction = getCurrentDirection(blockMenu);
-            final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(direction));
-
-            if (targetMenu == null) {
-                return;
+                continue;
             }
 
             final ItemStack clone = testItem.clone();
