@@ -1,4 +1,6 @@
-![](https://github.com/Sefiraat/Networks/blob/master/images/logo/logo_large.png?raw=true)
+<p align="center">
+<img width="800" src="https://github.com/Sefiraat/Networks/blob/master/images/logo/logo.svg"><br><br>
+</p>
 
 網路是黏液科技的附加, 它帶來了簡單又強大的物品儲存和移動網路, 也可以與物流一起運作.
 
