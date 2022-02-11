@@ -282,6 +282,10 @@ public abstract class AbstractGrid extends NetworkObject {
     private void addToInventory(Player player, NodeDefinition definition, GridItemRequest request, ClickAction action) {
         ItemStack requestingStack = definition.getNode().getRoot().getItemStack(request);
 
+        if (requestingStack == null) {
+            return;
+        }
+
         HashMap<Integer, ItemStack> remnant = player.getInventory().addItem(requestingStack);
         requestingStack = remnant.values().stream().findFirst().orElse(null);
         if (requestingStack != null) {
