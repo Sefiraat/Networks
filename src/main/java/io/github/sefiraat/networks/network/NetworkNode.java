@@ -89,6 +89,11 @@ public class NetworkNode {
     }
 
     public void addAllChildren() {
+        if (this.getRoot().getNodeCount() >= root.getMaxNodes()) {
+            this.getRoot().setOverburdened(true);
+            return;
+        }
+
         // Loop through all possible locations
         for (BlockFace face : VALID_FACES) {
             final Location testLocation = this.nodePosition.clone().add(face.getDirection());

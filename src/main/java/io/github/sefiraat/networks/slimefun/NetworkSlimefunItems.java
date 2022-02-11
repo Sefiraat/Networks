@@ -23,6 +23,7 @@ import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRake;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -87,6 +88,9 @@ public class NetworkSlimefunItems {
     public static final NetworkRemote NETWORK_REMOTE_ULTIMATE;
     public static final NetworkCrayon NETWORK_CRAYON;
     public static final NetworkConfigurator NETWORK_CONFIGURATOR;
+    public static final NetworkRake NETWORK_RAKE_1;
+    public static final NetworkRake NETWORK_RAKE_2;
+    public static final NetworkRake NETWORK_RAKE_3;
 
     static {
 
@@ -665,6 +669,42 @@ public class NetworkSlimefunItems {
                 null, AI_CORE.getItem(), null
             }
         );
+
+        NETWORK_RAKE_1 = new NetworkRake(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_RAKE_1,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, RADIOACTIVE_OPTIC_STAR.getItem(), null,
+                null, new ItemStack(Material.DIAMOND_SWORD), null,
+                null, SYNTHETIC_EMERALD_SHARD.getItem(), null
+            },
+            250
+        );
+
+        NETWORK_RAKE_2 = new NetworkRake(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_RAKE_2,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, RADIOACTIVE_OPTIC_STAR.getItem(), null,
+                null, NETWORK_RAKE_1.getItem(), null,
+                null, AI_CORE.getItem(), null
+            },
+            1000
+        );
+
+        NETWORK_RAKE_3 = new NetworkRake(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_RAKE_3,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, RADIOACTIVE_OPTIC_STAR.getItem(), null,
+                null, NETWORK_RAKE_2.getItem(), null,
+                null, EMPOWERED_AI_CORE.getItem(), null
+            },
+            9999
+        );
     }
 
     public static void setup() {
@@ -723,5 +763,8 @@ public class NetworkSlimefunItems {
         NETWORK_REMOTE_ULTIMATE.register(plugin);
         NETWORK_CRAYON.register(plugin);
         NETWORK_CONFIGURATOR.register(plugin);
+        NETWORK_RAKE_1.register(plugin);
+        NETWORK_RAKE_2.register(plugin);
+        NETWORK_RAKE_3.register(plugin);
     }
 }

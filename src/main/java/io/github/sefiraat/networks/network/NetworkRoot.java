@@ -32,6 +32,8 @@ import java.util.Set;
 public class NetworkRoot extends NetworkNode {
 
     private final Set<Location> nodeLocations = new HashSet<>();
+    private final int maxNodes;
+    private boolean isOverburdened = false;
 
     private final Set<Location> bridges = new HashSet<>();
     private final Set<Location> monitors = new HashSet<>();
@@ -39,7 +41,6 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> exporters = new HashSet<>();
     private final Set<Location> grids = new HashSet<>();
     private final Set<Location> cells = new HashSet<>();
-    private final Set<Location> shells = new HashSet<>();
     private final Set<Location> wipers = new HashSet<>();
     private final Set<Location> grabbers = new HashSet<>();
     private final Set<Location> pushers = new HashSet<>();
@@ -55,8 +56,9 @@ public class NetworkRoot extends NetworkNode {
 
     private boolean displayParticles = false;
 
-    public NetworkRoot(@Nonnull Location location, @Nonnull NodeType type) {
+    public NetworkRoot(@Nonnull Location location, @Nonnull NodeType type, int maxNodes) {
         super(location, type);
+        this.maxNodes = maxNodes;
         this.root = this;
     }
 
@@ -72,7 +74,6 @@ public class NetworkRoot extends NetworkNode {
             case EXPORT -> exporters.add(location);
             case GRID -> grids.add(location);
             case CELL -> cells.add(location);
-            case SHELL -> shells.add(location);
             case WIPER -> wipers.add(location);
             case GRABBER -> grabbers.add(location);
             case PUSHER -> pushers.add(location);
@@ -86,6 +87,22 @@ public class NetworkRoot extends NetworkNode {
 
     public Set<Location> getNodeLocations() {
         return this.nodeLocations;
+    }
+
+    public int getMaxNodes() {
+        return maxNodes;
+    }
+
+    public int getNodeCount() {
+        return this.nodeLocations.size();
+    }
+
+    public boolean isOverburdened() {
+        return isOverburdened;
+    }
+
+    public void setOverburdened(boolean overburdened) {
+        isOverburdened = overburdened;
     }
 
     public Set<Location> getBridges() {
@@ -110,10 +127,6 @@ public class NetworkRoot extends NetworkNode {
 
     public Set<Location> getCells() {
         return this.cells;
-    }
-
-    public Set<Location> getShells() {
-        return this.shells;
     }
 
     public Set<Location> getWipers() {
