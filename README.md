@@ -1,4 +1,6 @@
-![](https://github.com/Sefiraat/Networks/blob/master/images/logo/logo_large.png?raw=true)
+<p align="center">
+<img width="800" src="https://github.com/Sefiraat/Networks/blob/master/images/logo/logo.svg"><br><br>
+</p>
 
 Networks is a Slimefun4 addon that brings a simple yet powerful item storage and movement network that works along side
 cargo.
