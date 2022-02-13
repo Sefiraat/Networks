@@ -19,6 +19,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
@@ -102,7 +103,17 @@ public class NetworkRoot extends NetworkNode {
     }
 
     public void setOverburdened(boolean overburdened) {
-        isOverburdened = overburdened;
+        if (overburdened && !isOverburdened) {
+            final Location loc = this.nodePosition.clone();
+            for (int x = 0; x <= 1; x++) {
+                for (int y = 0; y <= 1; y++) {
+                    for (int z = 0; z <= 1; z++) {
+                        loc.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, loc.clone().add(x, y, z), 0);
+                    }
+                }
+            }
+        }
+        this.isOverburdened = overburdened;
     }
 
     public Set<Location> getBridges() {

@@ -75,6 +75,10 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final int distinctItems = allNetworkItems.size();
             long totalItems = allNetworkItems.values().stream().mapToLong(integer -> integer).sum();
 
+            final String nodeCount = root.getNodeCount() >= root.getMaxNodes()
+                ? Theme.ERROR + "" + root.getNodeCount() + "+"
+                : String.valueOf(root.getNodeCount());
+
             final ChatColor c = Theme.CLICK_INFO.getColor();
             final ChatColor p = Theme.PASSIVE.getColor();
 
@@ -100,7 +104,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Total Items", p, totalItems}, new StringBuffer(), null).toString());
 
             player.sendMessage("------------------------------");
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Total Nodes", p, root.getNodeCount() + "/" + root.getMaxNodes()}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Total Nodes", p, nodeCount + "/" + root.getMaxNodes()}, new StringBuffer(), null).toString());
             if (root.isOverburdened()) {
                 player.sendMessage(Theme.ERROR + "Warning: " + Theme.PASSIVE +
                                        "Your network has reached or exceeded the maximum node limit. " +

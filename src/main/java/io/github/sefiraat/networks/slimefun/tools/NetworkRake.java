@@ -2,7 +2,6 @@ package io.github.sefiraat.networks.slimefun.tools;
 
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
-import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
 import io.github.sefiraat.networks.slimefun.network.NetworkGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkImport;
