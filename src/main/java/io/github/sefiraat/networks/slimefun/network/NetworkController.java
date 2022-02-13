@@ -5,8 +5,10 @@ import io.github.sefiraat.networks.network.NetworkNode;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -27,10 +29,14 @@ public class NetworkController extends NetworkObject {
     private static final Map<Location, NetworkRoot> NETWORKS = new HashMap<>();
     private static final Set<Location> CRAYONS = new HashSet<>();
 
+    private final ItemSetting<Integer> maxNodes;
     protected final Map<Location, Boolean> firstTickMap = new HashMap<>();
 
     public NetworkController(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.CONTROLLER);
+
+        maxNodes = new IntRangeSetting(this, "max_nodes", 10, 2000, 5000);
+        addItemSetting(maxNodes);
 
         addItemHandler(
             new BlockTicker() {
@@ -48,7 +54,7 @@ public class NetworkController extends NetworkObject {
                     }
 
                     addToRegistry(block);
-                    NetworkRoot networkRoot = new NetworkRoot(block.getLocation(), NodeType.CONTROLLER);
+                    NetworkRoot networkRoot = new NetworkRoot(block.getLocation(), NodeType.CONTROLLER, maxNodes.getValue());
                     networkRoot.addAllChildren();
 
                     boolean crayon = CRAYONS.contains(block.getLocation());

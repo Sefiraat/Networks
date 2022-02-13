@@ -107,6 +107,10 @@ public class NetworkNode {
 
             // Check if it's in the network already and, if not, create a child node and propagate further.
             if (testType != NodeType.CONTROLLER && !this.networkContains(testLocation)) {
+                if (this.getRoot().getNodeCount() >= root.getMaxNodes()) {
+                    this.getRoot().setOverburdened(true);
+                    return;
+                }
                 final NetworkNode networkNode = new NetworkNode(testLocation, testType);
                 addChild(networkNode);
                 networkNode.addAllChildren();
