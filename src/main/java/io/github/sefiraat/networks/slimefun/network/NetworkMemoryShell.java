@@ -1,6 +1,5 @@
 package io.github.sefiraat.networks.slimefun.network;
 
-import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -8,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
@@ -27,10 +27,12 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class NetworkMemoryShell extends NetworkObject {
+public class NetworkMemoryShell extends SlimefunItem {
 
     public static final int INPUT_SLOT = 1;
     public static final int CARD_SLOT = 4;
@@ -44,13 +46,15 @@ public class NetworkMemoryShell extends NetworkObject {
     private static final int[] CARD_SLOTS = new int[]{3, 5};
     private static final int[] OUTPUT_SLOTS = new int[]{6, 8};
 
+    private final List<Integer> slotsToDrop = new ArrayList<>();
+
     private static final Map<Location, NetworkMemoryShellCache> CACHES = new HashMap<>();
 
     public NetworkMemoryShell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.SHELL);
-        this.getSlotsToDrop().add(INPUT_SLOT);
-        this.getSlotsToDrop().add(CARD_SLOT);
-        this.getSlotsToDrop().add(OUTPUT_SLOT);
+        super(itemGroup, item, recipeType, recipe);
+        slotsToDrop.add(INPUT_SLOT);
+        slotsToDrop.add(CARD_SLOT);
+        slotsToDrop.add(OUTPUT_SLOT);
         addItemHandler(new BlockTicker() {
             @Override
             public boolean isSynchronized() {
@@ -59,10 +63,23 @@ public class NetworkMemoryShell extends NetworkObject {
 
             @Override
             public void tick(Block b, SlimefunItem item, Config data) {
-                addToRegistry(b);
                 onTick(b);
             }
         });
+    }
+
+    @Override
+    public void preRegister() {
+        addItemHandler(
+            new BlockBreakHandler(false, false) {
+                @Override
+                @ParametersAreNonnullByDefault
+                public void onPlayerBreak(BlockBreakEvent event, ItemStack item, List<ItemStack> drops) {
+                    preBreak(event);
+                    onBreak(event);
+                }
+            }
+        );
     }
 
     private void onTick(Block block) {
@@ -233,8 +250,18 @@ public class NetworkMemoryShell extends NetworkObject {
         return CACHES;
     }
 
-    @Override
     protected void preBreak(@Nonnull BlockBreakEvent event) {
         CACHES.remove(event.getBlock().getLocation());
+    }
+
+    protected void onBreak(@Nonnull BlockBreakEvent event) {
+        final Location location = event.getBlock().getLocation();
+        final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
+        if (blockMenu != null) {
+            for (int i : this.slotsToDrop) {
+                blockMenu.dropItems(location, i);
+            }
+        }
+        BlockStorage.clearBlockInfo(location);
     }
 }
