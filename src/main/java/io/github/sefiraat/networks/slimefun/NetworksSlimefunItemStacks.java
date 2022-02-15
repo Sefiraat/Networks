@@ -687,7 +687,7 @@ public class NetworksSlimefunItemStacks {
             "右鍵點擊網絡物件",
             "以立即破壞它.",
             "",
-            ChatColor.YELLOW + "250 用途 " + ChatColor.GRAY + "剩下"
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "250次"
         );
 
         NETWORK_RAKE_2 = Theme.themedSlimefunItemStack(
@@ -698,7 +698,7 @@ public class NetworksSlimefunItemStacks {
             "右鍵點擊網絡物件",
             "以立即破壞它.",
             "",
-            ChatColor.YELLOW + "1000 用途 " + ChatColor.GRAY + "剩下"
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "1000次"
         );
 
         NETWORK_RAKE_3 = Theme.themedSlimefunItemStack(
@@ -709,7 +709,7 @@ public class NetworksSlimefunItemStacks {
             "右鍵點擊網絡物件",
             "以立即破壞它.",
             "",
-            ChatColor.YELLOW + "9999 用途 " + ChatColor.GRAY + "剩下"
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "9999次"
         );
     }
 
