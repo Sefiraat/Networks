@@ -251,7 +251,8 @@ public class NetworkMemoryShell extends SlimefunItem {
     }
 
     protected void preBreak(@Nonnull BlockBreakEvent event) {
-        CACHES.remove(event.getBlock().getLocation());
+        NetworkMemoryShellCache cache = CACHES.remove(event.getBlock().getLocation());
+        cache.refreshMemoryCard();
     }
 
     protected void onBreak(@Nonnull BlockBreakEvent event) {

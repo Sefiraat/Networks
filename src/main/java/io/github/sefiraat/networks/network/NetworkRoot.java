@@ -583,7 +583,7 @@ public class NetworkRoot extends NetworkNode {
                 continue;
             }
 
-            found += barrelIdentity.getAmount() - (barrelIdentity instanceof InfinityBarrel ? 1 : 0);
+            found += barrelIdentity.getAmount() - (barrelIdentity instanceof InfinityBarrel ? 2 : 0);
 
             // Escape if found all we need
             if (found >= request.getAmount()) {
