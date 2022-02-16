@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import lombok.experimental.UtilityClass;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -78,6 +79,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_REMOTE_ULTIMATE;
     public static final SlimefunItemStack NETWORK_CRAYON;
     public static final SlimefunItemStack NETWORK_CONFIGURATOR;
+    public static final SlimefunItemStack NETWORK_RAKE_1;
+    public static final SlimefunItemStack NETWORK_RAKE_2;
+    public static final SlimefunItemStack NETWORK_RAKE_3;
 
     static {
 
@@ -673,6 +677,39 @@ public class NetworksSlimefunItemStacks {
             "",
             MessageFormat.format("{0}右鍵點擊: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "添加設定"),
             MessageFormat.format("{0}Shift + 右鍵點擊: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "儲存設定")
+        );
+
+        NETWORK_RAKE_1 = Theme.themedSlimefunItemStack(
+            "NTW_RAKE_1",
+            new ItemStack(Material.TWISTING_VINES),
+            Theme.TOOL,
+            "網絡掃射 (1)",
+            "右鍵點擊網絡物件",
+            "以立即破壞它.",
+            "",
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "250次"
+        );
+
+        NETWORK_RAKE_2 = Theme.themedSlimefunItemStack(
+            "NTW_RAKE_2",
+            new ItemStack(Material.WEEPING_VINES),
+            Theme.TOOL,
+            "網絡掃射 (2)",
+            "右鍵點擊網絡物件",
+            "以立即破壞它.",
+            "",
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "1000次"
+        );
+
+        NETWORK_RAKE_3 = Theme.themedSlimefunItemStack(
+            "NTW_RAKE_3",
+            getPreEnchantedItemStack(Material.WEEPING_VINES, true, new Pair<>(Enchantment.LUCK, 1)),
+            Theme.TOOL,
+            "網絡掃射 (3)",
+            "右鍵點擊網絡物件",
+            "以立即破壞它.",
+            "",
+            ChatColor.YELLOW + "剩餘次數 " + ChatColor.GRAY + "9999次"
         );
     }
 

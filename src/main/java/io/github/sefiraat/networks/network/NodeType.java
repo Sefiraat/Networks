@@ -8,7 +8,6 @@ public enum NodeType {
     EXPORT,
     GRID,
     CELL,
-    SHELL,
     WIPER,
     GRABBER,
     PUSHER,
