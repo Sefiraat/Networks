@@ -45,7 +45,6 @@ public class PersistentCardInstanceType implements PersistentDataType<Persistent
     public PersistentDataContainer toPrimitive(@Nonnull CardInstance complex, @Nonnull PersistentDataAdapterContext context) {
         final PersistentDataContainer container = context.newPersistentDataContainer();
 
-        container.set(ITEM, DataType.ITEM_STACK, complex.getItemStack());
         container.set(AMOUNT, DataType.INTEGER, complex.getAmount());
         container.set(LIMIT, DataType.INTEGER, complex.getLimit());
         container.set(UNSTACK, DataType.LONG, System.currentTimeMillis());

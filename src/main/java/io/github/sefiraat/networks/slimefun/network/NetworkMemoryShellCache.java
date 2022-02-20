@@ -3,6 +3,7 @@ package io.github.sefiraat.networks.slimefun.network;
 import io.github.sefiraat.networks.network.stackcaches.CardInstance;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
+import io.github.sefiraat.networks.utils.datatypes.PersistentAmountInstanceType;
 import io.github.sefiraat.networks.utils.datatypes.PersistentCardInstanceType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -48,7 +49,7 @@ public class NetworkMemoryShellCache {
     public void refreshMemoryCard() {
         if (this.cardInstance != null) {
             this.cardInstance.updateLore(this.memoryCardMeta);
-            DataTypeMethods.setCustom(this.memoryCardMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE, this.cardInstance);
+            DataTypeMethods.setCustom(this.memoryCardMeta, Keys.CARD_INSTANCE, PersistentAmountInstanceType.TYPE, this.cardInstance);
             this.memoryCard.setItemMeta(this.memoryCardMeta);
         }
     }
