@@ -98,7 +98,7 @@ public class NetworkMemoryShell extends SlimefunItem {
             return;
         }
 
-        final NetworkMemoryShellCache cache = CACHES.getOrDefault(blockMenu.getLocation(), new NetworkMemoryShellCache(card));
+        final NetworkMemoryShellCache cache = CACHES.getOrDefault(blockMenu.getLocation(), new NetworkMemoryShellCache(card, blockMenu.getLocation()));
 
         // Move items from the input slot into the card
         final ItemStack input = blockMenu.getItemInSlot(INPUT_SLOT);
