@@ -22,6 +22,7 @@ public class PersistentAmountInstanceType implements PersistentDataType<Persiste
 
     public static final PersistentDataType<PersistentDataContainer, CardInstance> TYPE = new PersistentAmountInstanceType();
 
+    public static final NamespacedKey ITEM = Keys.newKey("item");
     public static final NamespacedKey AMOUNT = Keys.newKey("amount");
     public static final NamespacedKey LIMIT = Keys.newKey("limit");
     public static final NamespacedKey UNSTACK = Keys.newKey("time");
@@ -43,6 +44,7 @@ public class PersistentAmountInstanceType implements PersistentDataType<Persiste
     public PersistentDataContainer toPrimitive(@Nonnull CardInstance complex, @Nonnull PersistentDataAdapterContext context) {
         final PersistentDataContainer container = context.newPersistentDataContainer();
 
+        container.set(ITEM, DataType.ITEM_STACK, complex.getItemStack());
         container.set(AMOUNT, DataType.INTEGER, complex.getAmount());
         container.set(LIMIT, DataType.INTEGER, complex.getLimit());
         container.set(UNSTACK, DataType.LONG, System.currentTimeMillis());

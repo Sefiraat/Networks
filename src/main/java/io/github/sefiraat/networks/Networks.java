@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks;
 
+import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
@@ -52,6 +53,8 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         this.listenerManager = new ListenerManager();
         this.supportedPluginManager = new SupportedPluginManager();
+
+        this.getCommand("networks").setExecutor(new NetworksMain());
 
         setupMetrics();
     }
