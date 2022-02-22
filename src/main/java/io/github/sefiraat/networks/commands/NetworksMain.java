@@ -59,7 +59,7 @@ public class NetworksMain implements CommandExecutor {
         );
 
         if (cardInstance == null || cardInstance.getItemStack() == null) {
-            player.sendMessage(Theme.ERROR + "這個卡射未設定物品或已經損壞.");
+            player.sendMessage(Theme.ERROR + "這個卡未設定物品或已經損壞.");
             return;
         }
 
