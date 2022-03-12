@@ -227,11 +227,11 @@ public class NetworkMemoryShell extends SlimefunItem {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (flow == ItemTransportFlow.INSERT) {
-                    return new int[]{INPUT_SLOT};
-                } else if (flow == ItemTransportFlow.WITHDRAW) {
-                    return new int[]{OUTPUT_SLOT};
-                }
+//                if (flow == ItemTransportFlow.INSERT) {
+//                    return new int[]{INPUT_SLOT};
+//                } else if (flow == ItemTransportFlow.WITHDRAW) {
+//                    return new int[]{OUTPUT_SLOT};
+//                }
                 return new int[0];
             }
         };
