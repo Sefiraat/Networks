@@ -16,6 +16,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
@@ -61,6 +62,14 @@ public class NetworkSlimefunItems {
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
     public static final NetworkCell NETWORK_CELL;
     public static final NetworkMemoryShell NETWORK_MEMORY_SHELL;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_1;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_2;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_3;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_4;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_5;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_6;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_7;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_8;
     public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_1;
     public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_2;
     public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_3;
@@ -362,13 +371,109 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_QUANTUM_STORAGE_1 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_1,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), SlimefunItems.CARGO_MOTOR, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[0]
+        );
+
+        NETWORK_QUANTUM_STORAGE_2 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_2,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.SYNTHETIC_SAPPHIRE, NETWORK_QUANTUM_STORAGE_1.getItem(), SlimefunItems.SYNTHETIC_SAPPHIRE,
+                OPTIC_GLASS.getItem(), SlimefunItems.ALUMINUM_BRASS_INGOT, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[1]
+        );
+
+        NETWORK_QUANTUM_STORAGE_3 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_3,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.SYNTHETIC_DIAMOND, NETWORK_QUANTUM_STORAGE_2.getItem(), SlimefunItems.SYNTHETIC_DIAMOND,
+                OPTIC_GLASS.getItem(), SlimefunItems.CORINTHIAN_BRONZE_INGOT, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[2]
+        );
+
+        NETWORK_QUANTUM_STORAGE_4 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_4,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.SYNTHETIC_EMERALD, NETWORK_QUANTUM_STORAGE_3.getItem(), SlimefunItems.SYNTHETIC_EMERALD,
+                OPTIC_GLASS.getItem(), SlimefunItems.HARDENED_METAL_INGOT, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[3]
+        );
+
+        NETWORK_QUANTUM_STORAGE_5 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_5,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.POWER_CRYSTAL, NETWORK_QUANTUM_STORAGE_4.getItem(), SlimefunItems.POWER_CRYSTAL,
+                OPTIC_GLASS.getItem(), SlimefunItems.REINFORCED_ALLOY_INGOT, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[4]
+        );
+
+        NETWORK_QUANTUM_STORAGE_6 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_6,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.CARGO_MOTOR, NETWORK_QUANTUM_STORAGE_5.getItem(), SlimefunItems.CARGO_MOTOR,
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[5]
+        );
+
+        NETWORK_QUANTUM_STORAGE_7 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_7,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem(),
+                SlimefunItems.CARGO_CONNECTOR_NODE, NETWORK_QUANTUM_STORAGE_6.getItem(), SlimefunItems.CARGO_CONNECTOR_NODE,
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[6]
+        );
+
+        NETWORK_QUANTUM_STORAGE_8 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_8,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem(),
+                SlimefunItems.CARGO_MANAGER, NETWORK_QUANTUM_STORAGE_7.getItem(), SlimefunItems.CARGO_MANAGER,
+                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_3, OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[7]
+        );
+
         NETWORK_MEMORY_WIPER_1 = new NetworkMemoryWiper(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_1,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_BRIDGE.getItem(), OPTIC_STAR.getItem(), NETWORK_BRIDGE.getItem(),
-                OPTIC_CABLE.getItem(), NETWORK_MEMORY_SHELL.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(),
                 NETWORK_BRIDGE.getItem(), OPTIC_STAR.getItem(), NETWORK_BRIDGE.getItem(),
             },
             0
@@ -735,6 +840,14 @@ public class NetworkSlimefunItems {
         NETWORK_CRAFTING_GRID.register(plugin);
         NETWORK_CELL.register(plugin);
         NETWORK_MEMORY_SHELL.register(plugin);
+        NETWORK_QUANTUM_STORAGE_1.register(plugin);
+        NETWORK_QUANTUM_STORAGE_2.register(plugin);
+        NETWORK_QUANTUM_STORAGE_3.register(plugin);
+        NETWORK_QUANTUM_STORAGE_4.register(plugin);
+        NETWORK_QUANTUM_STORAGE_5.register(plugin);
+        NETWORK_QUANTUM_STORAGE_6.register(plugin);
+        NETWORK_QUANTUM_STORAGE_7.register(plugin);
+        NETWORK_QUANTUM_STORAGE_8.register(plugin);
         NETWORK_MEMORY_WIPER_1.register(plugin);
         NETWORK_MEMORY_WIPER_2.register(plugin);
         NETWORK_MEMORY_WIPER_3.register(plugin);
