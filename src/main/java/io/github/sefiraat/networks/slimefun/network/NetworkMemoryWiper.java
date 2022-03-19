@@ -97,15 +97,15 @@ public class NetworkMemoryWiper extends NetworkObject {
             final CardInstance cardInstance = getCardInstance(card);
 
             for (int i = 0; i < stacks; i++) {
-                final ItemStack itemStack = cardInstance.withdrawItem();
-
-                if (itemStack == null) {
-                    return;
-                }
-
                 final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
                 if (definition.getNode() == null) {
+                    return;
+                }
+
+                final ItemStack itemStack = cardInstance.withdrawItem();
+
+                if (itemStack == null) {
                     return;
                 }
 
@@ -113,11 +113,9 @@ public class NetworkMemoryWiper extends NetworkObject {
 
                 if (itemStack.getType() != Material.AIR && itemStack.getAmount() > 0) {
                     cardInstance.increaseAmount(itemStack.getAmount());
-                    return;
                 }
+                setCardInstance(card, cardInstance);
             }
-
-            setCardInstance(card, cardInstance);
         }
     }
 
