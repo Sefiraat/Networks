@@ -51,6 +51,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
+    public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_2;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_3;
@@ -332,11 +333,19 @@ public class NetworksSlimefunItemStacks {
             "to the memory cards inside of it."
         );
 
+        NETWORK_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_WORKBENCH",
+            new ItemStack(Material.BRAIN_CORAL_BLOCK),
+            Theme.MACHINE,
+            "Network Quantum Workbench",
+            "Allows the crafting of Quantum Storages."
+        );
+
 
         NETWORK_QUANTUM_STORAGE_1 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_1",
             new ItemStack(Material.WHITE_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (4K)",
             "Stores " + NetworkCard.getSizes()[0] + " items",
             "",
@@ -347,7 +356,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_2 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_2",
             new ItemStack(Material.LIGHT_GRAY_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (32K)",
             "Stores " + NetworkCard.getSizes()[1] + " items",
             "",
@@ -358,7 +367,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_3 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_3",
             new ItemStack(Material.GRAY_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (262K)",
             "Stores " + NetworkCard.getSizes()[2] + " items",
             "",
@@ -369,7 +378,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_4 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_4",
             new ItemStack(Material.BROWN_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (2M)",
             "Stores " + NetworkCard.getSizes()[3] + " items",
             "",
@@ -380,7 +389,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_5 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_5",
             new ItemStack(Material.BLACK_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (16M)",
             "Stores " + NetworkCard.getSizes()[4] + " items",
             "",
@@ -391,7 +400,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_6 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_6",
             new ItemStack(Material.PURPLE_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (134M)",
             "Stores " + NetworkCard.getSizes()[5] + " items",
             "",
@@ -402,7 +411,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_7 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_7",
             new ItemStack(Material.MAGENTA_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (1B)",
             "Stores " + NetworkCard.getSizes()[6] + " items",
             "",
@@ -413,7 +422,7 @@ public class NetworksSlimefunItemStacks {
         NETWORK_QUANTUM_STORAGE_8 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_8",
             new ItemStack(Material.RED_TERRACOTTA),
-            Theme.TOOL,
+            Theme.MACHINE,
             "Network Quantum Storage (∞)",
             "Stores ∞ items... almost",
             "",

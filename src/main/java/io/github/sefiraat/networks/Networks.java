@@ -59,13 +59,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         setupMetrics();
     }
 
-    @Override
-    public void onDisable() {
-        for (NetworkMemoryShellCache cache : NetworkMemoryShell.getCaches().values()) {
-            cache.refreshMemoryCard();
-        }
-    }
-
     public void tryUpdate() {
         if (getConfig().getBoolean("auto-update")
             && getDescription().getVersion().startsWith("DEV")

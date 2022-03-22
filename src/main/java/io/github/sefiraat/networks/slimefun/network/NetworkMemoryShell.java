@@ -55,17 +55,17 @@ public class NetworkMemoryShell extends SlimefunItem {
         slotsToDrop.add(INPUT_SLOT);
         slotsToDrop.add(CARD_SLOT);
         slotsToDrop.add(OUTPUT_SLOT);
-        addItemHandler(new BlockTicker() {
-            @Override
-            public boolean isSynchronized() {
-                return false;
-            }
-
-            @Override
-            public void tick(Block b, SlimefunItem item, Config data) {
-                onTick(b);
-            }
-        });
+//        addItemHandler(new BlockTicker() {
+//            @Override
+//            public boolean isSynchronized() {
+//                return false;
+//            }
+//
+//            @Override
+//            public void tick(Block b, SlimefunItem item, Config data) {
+//                onTick(b);
+//            }
+//        });
     }
 
     @Override

@@ -1,13 +1,14 @@
-package io.github.sefiraat.networks.slimefun.network;
+package io.github.sefiraat.networks.network.stackcaches;
 
-import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
+import io.github.sefiraat.networks.utils.Theme;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nullable;
-import java.util.Timer;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NetworkQuantumStorageCache extends ItemStackCache {
+public class QuantumCache extends ItemStackCache {
 
     @Nullable
     private final ItemMeta storedItemMeta;
@@ -15,7 +16,7 @@ public class NetworkQuantumStorageCache extends ItemStackCache {
     private int amount;
     private boolean voidExcess;
 
-    public NetworkQuantumStorageCache(@Nullable ItemStack storedItem, int amount, int limit, boolean voidExcess) {
+    public QuantumCache(@Nullable ItemStack storedItem, int amount, int limit, boolean voidExcess) {
         super(storedItem);
         this.storedItemMeta = storedItem == null ? null : storedItem.getItemMeta();
         this.amount = amount;
@@ -30,6 +31,10 @@ public class NetworkQuantumStorageCache extends ItemStackCache {
 
     public int getAmount() {
         return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int increaseAmount(int amount) {
@@ -78,5 +83,15 @@ public class NetworkQuantumStorageCache extends ItemStackCache {
             return null;
         }
         return withdrawItem(this.getItemStack().getMaxStackSize());
+    }
+
+    public void updateMetaLore(ItemMeta itemMeta) {
+        final List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+        lore.add("");
+        lore.add(Theme.CLICK_INFO + "Holding: " +
+                     (this.getItemMeta() != null && this.getItemMeta().hasDisplayName() ? this.getItemMeta().getDisplayName() : this.getItemStack().getType().name())
+        );
+        lore.add(Theme.CLICK_INFO + "Amount: " + this.getAmount());
+        itemMeta.setLore(lore);
     }
 }
