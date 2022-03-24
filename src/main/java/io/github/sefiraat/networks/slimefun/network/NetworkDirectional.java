@@ -221,7 +221,13 @@ public abstract class NetworkDirectional extends NetworkObject {
     public void openDirection(Player player, BlockMenu blockMenu, BlockFace blockFace) {
         final BlockMenu targetMenu = BlockStorage.getInventory(blockMenu.getBlock().getRelative(blockFace));
         if (targetMenu != null) {
-            targetMenu.open(player);
+            final Location location = targetMenu.getLocation();
+            final SlimefunItem item = BlockStorage.check(location);
+            if (item.canUse(player, true)
+                && Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)
+            ) {
+                targetMenu.open(player);
+            }
         }
     }
 
