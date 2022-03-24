@@ -335,7 +335,7 @@ public class NetworksSlimefunItemStacks {
 
         NETWORK_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_WORKBENCH",
-            new ItemStack(Material.BRAIN_CORAL_BLOCK),
+            new ItemStack(Material.DRIED_KELP_BLOCK),
             Theme.MACHINE,
             "Network Quantum Workbench",
             "Allows the crafting of Quantum Storages."

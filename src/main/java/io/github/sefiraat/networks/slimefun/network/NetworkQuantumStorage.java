@@ -83,7 +83,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
     private static final ItemStack SET_ITEM = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Click while holding an item to register it.",
+        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
         Theme.PASSIVE + "Shift Click to change voiding");
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
@@ -310,7 +310,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
         final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
 
         if (blockMenu != null) {
-            final QuantumCache cache = CACHES.get(blockMenu.getLocation());
+            final QuantumCache cache = CACHES.remove(blockMenu.getLocation());
 
             if (cache != null && cache.getAmount() > 0 && cache.getItemStack() != null) {
                 final ItemStack itemToDrop = this.getItem().clone();
@@ -326,7 +326,6 @@ public class NetworkQuantumStorage extends SlimefunItem {
             for (int i : this.slotsToDrop) {
                 blockMenu.dropItems(location, i);
             }
-            BlockStorage.clearBlockInfo(location);
         }
     }
 

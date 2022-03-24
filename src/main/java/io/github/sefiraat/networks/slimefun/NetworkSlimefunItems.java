@@ -445,9 +445,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_6,
             NetworkQuantumWorkbench.TYPE,
             new ItemStack[]{
-                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem(),
+                SlimefunItems.STEEL_PLATE, SlimefunItems.BLISTERING_INGOT, SlimefunItems.STEEL_PLATE,
                 SlimefunItems.CARGO_MOTOR, NETWORK_QUANTUM_STORAGE_5.getItem(), SlimefunItems.CARGO_MOTOR,
-                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT, OPTIC_GLASS.getItem()
+                SlimefunItems.STEEL_PLATE, SlimefunItems.BLISTERING_INGOT, SlimefunItems.STEEL_PLATE
             },
             NetworkQuantumStorage.getSizes()[5]
         );
@@ -457,9 +457,9 @@ public class NetworkSlimefunItems {
             NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_7,
             NetworkQuantumWorkbench.TYPE,
             new ItemStack[]{
-                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem(),
+                SlimefunItems.REINFORCED_PLATE, SlimefunItems.BLISTERING_INGOT_2, SlimefunItems.REINFORCED_PLATE,
                 SlimefunItems.CARGO_CONNECTOR_NODE, NETWORK_QUANTUM_STORAGE_6.getItem(), SlimefunItems.CARGO_CONNECTOR_NODE,
-                OPTIC_GLASS.getItem(), SlimefunItems.BLISTERING_INGOT_2, OPTIC_GLASS.getItem()
+                SlimefunItems.REINFORCED_PLATE, SlimefunItems.BLISTERING_INGOT_2, SlimefunItems.REINFORCED_PLATE
             },
             NetworkQuantumStorage.getSizes()[6]
         );
