@@ -84,7 +84,8 @@ public class NetworkQuantumStorage extends SlimefunItem {
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
         Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding");
+        Theme.PASSIVE + "Shift Click to change voiding"
+    );
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
         Material.ORANGE_STAINED_GLASS_PANE,
@@ -291,7 +292,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
             for (int i = 0; i < 3; i++) {
                 lore.remove(lore.size() - 1);
             }
-            itemMeta.setLore(lore.size() == 0 ? null : lore);
+            itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);
 
             final QuantumCache cache = new QuantumCache(clone, amount, this.maxAmount, voidExcess);
