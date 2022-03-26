@@ -41,6 +41,11 @@ public class NetworksMain implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
         if (sender instanceof Player player) {
+
+            if (args.length == 0) {
+                return false;
+            }
+
             if (args[0].equalsIgnoreCase("fillquantum")) {
                 if ((player.isOp() || player.hasPermission("networks.admin")) && args.length >= 2) {
                     try {
@@ -106,6 +111,11 @@ public class NetworksMain implements CommandExecutor {
             return;
         }
 
+        if (oldCard.getAmount() > 1) {
+            player.sendMessage(Theme.ERROR + "One card at a time only, please.");
+            return;
+        }
+
         final ItemMeta oldCardItemMeta = oldCard.getItemMeta();
         final CardInstance cardInstance = DataTypeMethods.getCustom(
             oldCardItemMeta,
@@ -115,7 +125,7 @@ public class NetworksMain implements CommandExecutor {
         final NetworkQuantumStorage quantum = QUANTUM_REPLACEMENT_MAP.get(card.getSize());
         final ItemStack replacement = quantum.getItem().clone();
 
-        if (cardInstance.getAmount() == 0) {
+        if (cardInstance == null || cardInstance.getAmount() == 0) {
             player.getInventory().setItemInMainHand(replacement);
             player.sendMessage(Theme.SUCCESS + "Memory card was empty and has been replaced with a blank equivalent Quantum Storage");
         } else {
