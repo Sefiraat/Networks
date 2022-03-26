@@ -141,6 +141,8 @@ public class NetworksMain implements CommandExecutor {
     }
 
     private QuantumCache createReplacementCache(NetworkQuantumStorage storage, CardInstance cardInstance) {
-        return new QuantumCache(cardInstance.getItemStack(), cardInstance.getAmount(), storage.getMaxAmount(), true);
+        final ItemStack heldStack = cardInstance.getItemStack().clone();
+        heldStack.setAmount(1);
+        return new QuantumCache(heldStack, cardInstance.getAmount(), storage.getMaxAmount(), true);
     }
 }

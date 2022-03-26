@@ -427,6 +427,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
             lore.add(Theme.CLICK_INFO + "Amount: " + Theme.PASSIVE + cache.getAmount());
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
+            itemStack.setAmount(1);
             menu.replaceExistingItem(ITEM_SLOT, itemStack);
         }
     }
