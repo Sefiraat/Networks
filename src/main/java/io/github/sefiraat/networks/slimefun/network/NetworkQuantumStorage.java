@@ -263,14 +263,16 @@ public class NetworkQuantumStorage extends SlimefunItem {
                 });
 
                 // Cache may exist if placed with items held inside.
-                if (!CACHES.containsKey(block.getLocation())) {
-                    addCache(menu);
+                QuantumCache cache = CACHES.get(block.getLocation());
+                if (cache == null) {
+                    cache = addCache(menu);
                 }
+                updateDisplayItem(menu, cache);
             }
         };
     }
 
-    private void addCache(@Nonnull BlockMenu blockMenu) {
+    private QuantumCache addCache(@Nonnull BlockMenu blockMenu) {
         final Location location = blockMenu.getLocation();
         final String amountString = BlockStorage.getLocationInfo(location, BS_AMOUNT);
         final String voidString = BlockStorage.getLocationInfo(location, BS_VOID);
@@ -278,11 +280,14 @@ public class NetworkQuantumStorage extends SlimefunItem {
         final boolean voidExcess = voidString == null || Boolean.parseBoolean(voidString);
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
-        CACHES.put(location, createCache(itemStack, blockMenu, amount, voidExcess));
+        QuantumCache cache = createCache(itemStack, blockMenu, amount, voidExcess);
+
+        CACHES.put(location, cache);
+        return cache;
     }
 
     private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, boolean voidExcess) {
-        if (itemStack == null || isDisplayItem(itemStack)) {
+        if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
             return new QuantumCache(null, 0, this.maxAmount, true);
         } else {
