@@ -3,12 +3,17 @@ package io.github.sefiraat.networks.slimefun;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
 
 @UtilityClass
 public final class NetworksItemGroups {
@@ -35,7 +40,7 @@ public final class NetworksItemGroups {
         MAIN,
         new CustomItemStack(
             new ItemStack(Material.PAINTING),
-            Theme.MAIN.getColor() + "Memory Cards and Tools"
+            Theme.MAIN.getColor() + "Network Management Tools"
         )
     );
 
@@ -48,6 +53,23 @@ public final class NetworksItemGroups {
         )
     );
 
+    public static final SubItemGroup NETWORK_QUANTUMS = new SubItemGroup(
+        Keys.newKey("network_quantums"),
+        MAIN,
+        new CustomItemStack(
+            new ItemStack(Material.WHITE_TERRACOTTA),
+            Theme.MAIN.getColor() + "Network Quantum Storage Devices"
+        )
+    );
+
+    public static final ItemGroup DISABLED_ITEMS = new HiddenItemGroup(
+        Keys.newKey("disabled_items"),
+        new CustomItemStack(
+            new ItemStack(Material.BARRIER),
+            Theme.MAIN.getColor() + "Disabled/Removed Items"
+        )
+    );
+
     static {
         final Networks plugin = Networks.getInstance();
 
@@ -56,5 +78,19 @@ public final class NetworksItemGroups {
         NetworksItemGroups.MATERIALS.register(plugin);
         NetworksItemGroups.TOOLS.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS.register(plugin);
+        NetworksItemGroups.NETWORK_QUANTUMS.register(plugin);
+        NetworksItemGroups.DISABLED_ITEMS.register(plugin);
+    }
+
+    public static class HiddenItemGroup extends ItemGroup {
+
+        public HiddenItemGroup(NamespacedKey key, ItemStack item) {
+            super(key, item);
+        }
+
+        @Override
+        public boolean isHidden(@Nonnull Player p) {
+            return true;
+        }
     }
 }

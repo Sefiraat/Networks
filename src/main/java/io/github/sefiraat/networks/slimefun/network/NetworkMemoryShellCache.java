@@ -11,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.ListSelectionModel;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -67,10 +66,11 @@ public class NetworkMemoryShellCache {
                         }
                     }
                     Networks.getInstance().getLogger().warning(
-                        MessageFormat.format("The card in the shell located at: x:{0} y:{1} z:{2} has a faulty itemstack data and will need to be deleted and remade.",
-                                             this.cacheLocation.getBlockX(),
-                                             this.cacheLocation.getBlockY(),
-                                             this.cacheLocation.getBlockZ()
+                        MessageFormat.format(
+                            "The card in the shell located at: x:{0} y:{1} z:{2} has a faulty itemstack data and will need to be deleted and remade.",
+                            this.cacheLocation.getBlockX(),
+                            this.cacheLocation.getBlockY(),
+                            this.cacheLocation.getBlockZ()
                         )
                     );
                     Networks.getInstance().getLogger().warning(MessageFormat.format("This card shows the items as being: {0}", loreItem));

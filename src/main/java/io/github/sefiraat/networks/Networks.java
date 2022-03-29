@@ -5,8 +5,6 @@ import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
@@ -57,13 +55,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         this.getCommand("networks").setExecutor(new NetworksMain());
 
         setupMetrics();
-    }
-
-    @Override
-    public void onDisable() {
-        for (NetworkMemoryShellCache cache : NetworkMemoryShell.getCaches().values()) {
-            cache.refreshMemoryCard();
-        }
     }
 
     public void tryUpdate() {

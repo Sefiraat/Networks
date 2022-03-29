@@ -5,7 +5,6 @@ import io.github.sefiraat.networks.network.GridItemRequest;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
-import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -17,7 +16,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -194,9 +192,9 @@ public abstract class AbstractGrid extends NetworkObject {
                 displayStack.setItemMeta(itemMeta);
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
                 blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
-                        retrieveItem(player, definition, item, action, blockMenu);
-                        return false;
-                    }
+                                                  retrieveItem(player, definition, item, action, blockMenu);
+                                                  return false;
+                                              }
                 );
             } else {
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
@@ -373,7 +371,7 @@ public abstract class AbstractGrid extends NetworkObject {
         final MessageFormat format = new MessageFormat("{0}Amount: {1}{2}", Locale.ROOT);
         return List.of(
             "",
-            format.format(new Object[] { Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount }, new StringBuffer(), null).toString()
+            format.format(new Object[]{Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount}, new StringBuffer(), null).toString()
         );
     }
 }

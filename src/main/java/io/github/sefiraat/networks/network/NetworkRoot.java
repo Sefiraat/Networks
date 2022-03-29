@@ -1,16 +1,16 @@
 package io.github.sefiraat.networks.network;
 
-import io.github.mooy1.infinityexpansion.items.storage.StorageCache;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
-import io.github.sefiraat.networks.network.barrel.NetworkShell;
+import io.github.sefiraat.networks.network.barrel.NetworkStorage;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
+import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShellCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -272,22 +272,20 @@ public class NetworkRoot extends NetworkNode {
 
             final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
-            if (Networks.getSupportedPluginManager().isInfinityExpansion()
-                && slimefunItem instanceof StorageUnit unit
-            ) {
-                BlockMenu menu = BlockStorage.getInventory(testLocation);
-                InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
+            if (Networks.getSupportedPluginManager().isInfinityExpansion() && slimefunItem instanceof StorageUnit unit) {
+                final BlockMenu menu = BlockStorage.getInventory(testLocation);
+                final InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
                 if (infinityBarrel != null) {
                     barrelSet.add(infinityBarrel);
                 }
                 continue;
             }
 
-            if (slimefunItem instanceof NetworkMemoryShell) {
-                BlockMenu menu = BlockStorage.getInventory(testLocation);
-                NetworkShell shell = getShell(menu);
-                if (shell != null) {
-                    barrelSet.add(shell);
+            if (slimefunItem instanceof NetworkQuantumStorage) {
+                final BlockMenu menu = BlockStorage.getInventory(testLocation);
+                final NetworkStorage storage = getShell(menu);
+                if (storage != null) {
+                    barrelSet.add(storage);
                 }
             }
 
@@ -313,7 +311,7 @@ public class NetworkRoot extends NetworkNode {
             return null;
         }
 
-        final StorageCache cache = storageUnit.getCache(blockMenu.getLocation());
+        final io.github.mooy1.infinityexpansion.items.storage.StorageCache cache = storageUnit.getCache(blockMenu.getLocation());
 
         if (cache == null) {
             return null;
@@ -331,23 +329,19 @@ public class NetworkRoot extends NetworkNode {
     }
 
     @Nullable
-    private NetworkShell getShell(@Nonnull BlockMenu blockMenu) {
+    private NetworkStorage getShell(@Nonnull BlockMenu blockMenu) {
 
-        final NetworkMemoryShellCache cache = NetworkMemoryShell.getCaches().get(blockMenu.getLocation());
+        final QuantumCache cache = NetworkQuantumStorage.getCaches().get(blockMenu.getLocation());
 
-        if (cache == null) {
-            return null;
-        }
-
-        if (cache.getCardInstance() == null || cache.getCardInstance().getItemStack() == null) {
+        if (cache == null || cache.getItemStack() == null) {
             return null;
         }
 
         final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
-        final ItemStack itemStack = cache.getCardInstance().getItemStack();
-        int storedInt = cache.getCardInstance().getAmount();
+        final ItemStack itemStack = cache.getItemStack();
+        int storedInt = cache.getAmount();
 
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache.getCardInstance(), output, true)) {
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
             storedInt = storedInt + output.getAmount();
         }
 
@@ -358,7 +352,7 @@ public class NetworkRoot extends NetworkNode {
         final ItemStack clone = itemStack.clone();
         clone.setAmount(1);
 
-        return new NetworkShell(
+        return new NetworkStorage(
             blockMenu.getLocation(),
             clone,
             storedInt
