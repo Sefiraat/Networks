@@ -11,8 +11,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
@@ -55,17 +53,17 @@ public class NetworkMemoryShell extends SlimefunItem {
         slotsToDrop.add(INPUT_SLOT);
         slotsToDrop.add(CARD_SLOT);
         slotsToDrop.add(OUTPUT_SLOT);
-        addItemHandler(new BlockTicker() {
-            @Override
-            public boolean isSynchronized() {
-                return false;
-            }
-
-            @Override
-            public void tick(Block b, SlimefunItem item, Config data) {
-                onTick(b);
-            }
-        });
+//        addItemHandler(new BlockTicker() {
+//            @Override
+//            public boolean isSynchronized() {
+//                return false;
+//            }
+//
+//            @Override
+//            public void tick(Block b, SlimefunItem item, Config data) {
+//                onTick(b);
+//            }
+//        });
     }
 
     @Override

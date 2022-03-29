@@ -103,8 +103,8 @@ public class NetworkRemote extends SlimefunItem {
     public static void openGrid(@Nonnull Location location, @Nonnull Player player) {
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         SlimefunItem slimefunItem = BlockStorage.check(location);
-        if (Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)
-            && slimefunItem instanceof NetworkGrid
+        if (slimefunItem instanceof NetworkGrid
+            && Slimefun.getProtectionManager().hasPermission(player, location, Interaction.INTERACT_BLOCK)
         ) {
             blockMenu.open(player);
         } else {

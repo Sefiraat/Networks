@@ -12,6 +12,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -80,7 +81,8 @@ public class NetworkCard extends SlimefunItem {
 
     private boolean isBlacklisted(@Nonnull ItemStack itemStack) {
         return itemStack.getType() == Material.AIR
-            || itemStack.getType().getMaxDurability() < 0;
+            || itemStack.getType().getMaxDurability() < 0
+            || Tag.SHULKER_BOXES.isTagged(itemStack.getType());
     }
 
     public int getSize() {

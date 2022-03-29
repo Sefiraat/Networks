@@ -2,11 +2,9 @@ package io.github.sefiraat.networks.network.stackcaches;
 
 import io.github.sefiraat.networks.network.barrel.BarrelCore;
 import io.github.sefiraat.networks.network.barrel.BarrelType;
-import io.github.sefiraat.networks.utils.StackUtils;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public abstract class BarrelIdentity extends ItemStackCache implements BarrelCore {

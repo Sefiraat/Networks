@@ -46,7 +46,8 @@ public class StackUtils {
 
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
-     * @param cache The cached {@link ItemStack} to compare against
+     *
+     * @param cache     The cached {@link ItemStack} to compare against
      * @param itemStack The {@link ItemStack} being evaluated
      * @return True if items match
      */
@@ -153,23 +154,23 @@ public class StackUtils {
 
         // Banner
         if (metaOne instanceof BannerMeta instanceOne && metaTwo instanceof BannerMeta instanceTwo) {
-            if(!instanceOne.getPatterns().equals(instanceTwo.getPatterns())) {
+            if (!instanceOne.getPatterns().equals(instanceTwo.getPatterns())) {
                 return true;
             }
         }
 
         // Books
         if (metaOne instanceof BookMeta instanceOne && metaTwo instanceof BookMeta instanceTwo) {
-            if (instanceOne.getPageCount() != instanceTwo.getPageCount())  {
+            if (instanceOne.getPageCount() != instanceTwo.getPageCount()) {
                 return true;
             }
-            if (!Objects.equals(instanceOne.getAuthor(), instanceTwo.getAuthor()))  {
+            if (!Objects.equals(instanceOne.getAuthor(), instanceTwo.getAuthor())) {
                 return true;
             }
-            if (!Objects.equals(instanceOne.getTitle(), instanceTwo.getTitle()))  {
+            if (!Objects.equals(instanceOne.getTitle(), instanceTwo.getTitle())) {
                 return true;
             }
-            if (!Objects.equals(instanceOne.getGeneration(), instanceTwo.getGeneration()))  {
+            if (!Objects.equals(instanceOne.getGeneration(), instanceTwo.getGeneration())) {
                 return true;
             }
         }

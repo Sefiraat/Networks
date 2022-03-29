@@ -51,6 +51,15 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
+    public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_2;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_3;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_4;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_5;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_6;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_7;
+    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_8;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_1;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
@@ -322,6 +331,103 @@ public class NetworksSlimefunItemStacks {
             "網路外殼是一個方塊,",
             "提供網路訪問",
             "記憶卡內的東西."
+        );
+
+        NETWORK_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_WORKBENCH",
+            new ItemStack(Material.DRIED_KELP_BLOCK),
+            Theme.MACHINE,
+            "網路量子工作台",
+            "可以讓你製作量子儲物箱."
+        );
+
+
+        NETWORK_QUANTUM_STORAGE_1 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_1",
+            new ItemStack(Material.WHITE_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (4K)",
+            "儲存 " + NetworkCard.getSizes()[0] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_2 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_2",
+            new ItemStack(Material.LIGHT_GRAY_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (32K)",
+            "儲存 " + NetworkCard.getSizes()[1] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_3 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_3",
+            new ItemStack(Material.GRAY_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (262K)",
+            "儲存 " + NetworkCard.getSizes()[2] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_4 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_4",
+            new ItemStack(Material.BROWN_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (2M)",
+            "儲存 " + NetworkCard.getSizes()[3] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_5 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_5",
+            new ItemStack(Material.BLACK_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (16M)",
+            "儲存 " + NetworkCard.getSizes()[4] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_6 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_6",
+            new ItemStack(Material.PURPLE_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (134M)",
+            "儲存 " + NetworkCard.getSizes()[5] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_7 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_7",
+            new ItemStack(Material.MAGENTA_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (1B)",
+            "儲存 " + NetworkCard.getSizes()[6] + " 個物品",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
+        );
+
+        NETWORK_QUANTUM_STORAGE_8 = Theme.themedSlimefunItemStack(
+            "NTW_QUANTUM_STORAGE_8",
+            new ItemStack(Material.RED_TERRACOTTA),
+            Theme.MACHINE,
+            "網路量子儲物箱 (∞)",
+            "儲存 ∞ 個物品... 幾乎",
+            "",
+            "在一個量子奇點內儲存",
+            "大量的物品."
         );
 
         NETWORK_MEMORY_WIPER_1 = Theme.themedSlimefunItemStack(
