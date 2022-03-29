@@ -149,7 +149,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
                         oldCache.isVoidExcess()
                     );
                     DataTypeMethods.setCustom(newMeta, Keys.QUANTUM_STORAGE_INSTANCE, PersistentQuantumStorageType.TYPE, newCache);
-                    newCache.updateMetaLore(newMeta);
+                    newCache.addMetaLore(newMeta);
                     crafted.setItemMeta(newMeta);
                 }
             }

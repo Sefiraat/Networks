@@ -91,7 +91,7 @@ public class NetworksMain implements CommandExecutor {
         }
 
         quantumCache.setAmount(amount);
-        DataTypeMethods.setCustom(meta, Keys.CARD_INSTANCE, PersistentQuantumStorageType.TYPE, quantumCache);
+        DataTypeMethods.setCustom(meta, Keys.QUANTUM_STORAGE_INSTANCE, PersistentQuantumStorageType.TYPE, quantumCache);
         quantumCache.updateMetaLore(meta);
         itemStack.setItemMeta(meta);
         player.sendMessage(Theme.SUCCESS + "Item updated");
@@ -132,7 +132,7 @@ public class NetworksMain implements CommandExecutor {
             final ItemMeta quantumItemMeta = replacement.getItemMeta();
             final QuantumCache cache = createReplacementCache(quantum, cardInstance);
             DataTypeMethods.setCustom(quantumItemMeta, Keys.QUANTUM_STORAGE_INSTANCE, PersistentQuantumStorageType.TYPE, cache);
-            cache.updateMetaLore(quantumItemMeta);
+            cache.addMetaLore(quantumItemMeta);
             replacement.setItemMeta(quantumItemMeta);
 
             player.getInventory().setItemInMainHand(replacement);

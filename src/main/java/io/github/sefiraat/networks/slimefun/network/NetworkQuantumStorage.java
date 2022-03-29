@@ -323,7 +323,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
                 final ItemMeta itemMeta = itemToDrop.getItemMeta();
 
                 DataTypeMethods.setCustom(itemMeta, Keys.QUANTUM_STORAGE_INSTANCE, PersistentQuantumStorageType.TYPE, cache);
-                cache.updateMetaLore(itemMeta);
+                cache.addMetaLore(itemMeta);
                 itemToDrop.setItemMeta(itemMeta);
                 location.getWorld().dropItem(location.clone().add(0.5, 0.5, 0.5), itemToDrop);
                 event.setDropItems(false);
