@@ -175,7 +175,7 @@ public class NetworkQuantumStorage extends SlimefunItem {
         if (output == null || output.getType() == Material.AIR) {
             // No item in output, try output
             fetched = cache.withdrawItem();
-        } else if (output.getAmount() < output.getMaxStackSize()) {
+        } else if (StackUtils.itemsMatch(cache, output, true) && output.getAmount() < output.getMaxStackSize()) {
             // There is an item, but it's not filled so lets top it up if we can
             final int requestAmount = output.getMaxStackSize() - output.getAmount();
             fetched = cache.withdrawItem(requestAmount);
