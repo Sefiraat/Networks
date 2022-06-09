@@ -24,6 +24,10 @@ public class ItemStackCache {
 
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
+
+        // refresh meta here
+        this.metaCached = false;
+        this.itemMeta = null;
     }
 
     @Nullable
