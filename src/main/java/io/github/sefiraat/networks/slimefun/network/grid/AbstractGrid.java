@@ -243,7 +243,7 @@ public abstract class AbstractGrid extends NetworkObject {
                     return;
                 }
                 gridCache.setFilter(s.toLowerCase(Locale.ROOT));
-                player.sendMessage(Theme.SUCCESS + "Filter applied");
+                player.sendMessage(Theme.SUCCESS + "已應用過濾器");
             });
         }
         return false;
