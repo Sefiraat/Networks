@@ -1,6 +1,8 @@
 package io.github.sefiraat.networks.slimefun;
 
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.groups.DummyItemGroup;
+import io.github.sefiraat.networks.slimefun.groups.MainFlexGroup;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -18,7 +20,7 @@ import javax.annotation.Nonnull;
 @UtilityClass
 public final class NetworksItemGroups {
 
-    public static final NestedItemGroup MAIN = new NestedItemGroup(
+    public static final MainFlexGroup MAIN = new MainFlexGroup(
         Keys.newKey("main"),
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
@@ -26,36 +28,32 @@ public final class NetworksItemGroups {
         )
     );
 
-    public static final SubItemGroup MATERIALS = new SubItemGroup(
+    public static final DummyItemGroup MATERIALS = new DummyItemGroup(
         Keys.newKey("materials"),
-        MAIN,
         new CustomItemStack(
             new ItemStack(Material.WHITE_STAINED_GLASS),
             Theme.MAIN.getColor() + "Crafting Materials"
         )
     );
 
-    public static final SubItemGroup TOOLS = new SubItemGroup(
+    public static final DummyItemGroup TOOLS = new DummyItemGroup(
         Keys.newKey("tools"),
-        MAIN,
         new CustomItemStack(
             new ItemStack(Material.PAINTING),
             Theme.MAIN.getColor() + "Network Management Tools"
         )
     );
 
-    public static final SubItemGroup NETWORK_ITEMS = new SubItemGroup(
+    public static final DummyItemGroup NETWORK_ITEMS = new DummyItemGroup(
         Keys.newKey("network_items"),
-        MAIN,
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
             Theme.MAIN.getColor() + "Network Items"
         )
     );
 
-    public static final SubItemGroup NETWORK_QUANTUMS = new SubItemGroup(
+    public static final DummyItemGroup NETWORK_QUANTUMS = new DummyItemGroup(
         Keys.newKey("network_quantums"),
-        MAIN,
         new CustomItemStack(
             new ItemStack(Material.WHITE_TERRACOTTA),
             Theme.MAIN.getColor() + "Network Quantum Storage Devices"
