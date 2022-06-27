@@ -18,6 +18,8 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
@@ -58,6 +60,8 @@ public class NetworkSlimefunItems {
     public static final NetworkExport NETWORK_EXPORT;
     public static final NetworkGrabber NETWORK_GRABBER;
     public static final NetworkPusher NETWORK_PUSHER;
+    public static final NetworkVanillaGrabber NETWORK_VANILLA_GRABBER;
+    public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
     public static final NetworkPurger NETWORK_TRASH;
     public static final NetworkGrid NETWORK_GRID;
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
@@ -315,6 +319,28 @@ public class NetworkSlimefunItems {
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
                 OPTIC_CABLE.getItem(), NETWORK_EXPORT.getItem(), OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_VANILLA_GRABBER = new NetworkVanillaGrabber(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_VANILLA_GRABBER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+                new ItemStack(Material.HOPPER), NETWORK_GRABBER.getItem(), new ItemStack(Material.HOPPER),
+                OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_VANILLA_PUSHER = new NetworkVanillaPusher(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_VANILLA_PUSHER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), new ItemStack(Material.HOPPER), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_PUSHER.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), new ItemStack(Material.HOPPER), OPTIC_GLASS.getItem(),
             }
         );
 
@@ -796,6 +822,8 @@ public class NetworkSlimefunItems {
         NETWORK_EXPORT.register(plugin);
         NETWORK_GRABBER.register(plugin);
         NETWORK_PUSHER.register(plugin);
+        NETWORK_VANILLA_GRABBER.register(plugin);
+        NETWORK_VANILLA_PUSHER.register(plugin);
         NETWORK_TRASH.register(plugin);
         NETWORK_GRID.register(plugin);
         NETWORK_CRAFTING_GRID.register(plugin);
