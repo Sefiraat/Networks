@@ -6,9 +6,13 @@ import io.github.sefiraat.networks.network.NodeType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -20,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class NetworkVanillaGrabber extends NetworkDirectional {
 
@@ -66,16 +71,23 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
         }
 
         final BlockFace direction = getCurrentDirection(blockMenu);
-        final BlockState blockState = blockMenu.getBlock().getRelative(direction).getState();
+        final Block block = blockMenu.getBlock();
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(java.util.UUID.fromString(UUID));
+
+        if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block, Interaction.INTERACT_BLOCK)) {
+            return;
+        }
+
+        final BlockState blockState = block.getRelative(direction).getState();
 
         if (!(blockState instanceof InventoryHolder holder)) {
             return;
         }
 
-        Inventory inventory = holder.getInventory();
+        final Inventory inventory = holder.getInventory();
 
         if (inventory instanceof FurnaceInventory furnaceInventory) {
-            ItemStack stack = furnaceInventory.getResult();
+            final ItemStack stack = furnaceInventory.getResult();
             grabItem(blockMenu, stack);
         } else {
             for (ItemStack stack : inventory.getContents()) {

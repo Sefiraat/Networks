@@ -3,19 +3,23 @@ package io.github.sefiraat.networks.slimefun.network;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
-import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.inventory.FurnaceInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,7 +39,11 @@ public class NetworkVanillaPusher extends NetworkDirectional {
     private static final int UP_SLOT = 14;
     private static final int DOWN_SLOT = 32;
 
-    public NetworkVanillaPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkVanillaPusher(ItemGroup itemGroup,
+                                SlimefunItemStack item,
+                                RecipeType recipeType,
+                                ItemStack[] recipe
+    ) {
         super(itemGroup, item, recipeType, recipe, NodeType.PUSHER);
         this.getSlotsToDrop().add(INPUT_SLOT);
     }
@@ -57,19 +65,40 @@ public class NetworkVanillaPusher extends NetworkDirectional {
 
         final BlockFace direction = getCurrentDirection(blockMenu);
         final BlockState blockState = blockMenu.getBlock().getRelative(direction).getState();
+        final Block block = blockMenu.getBlock();
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(java.util.UUID.fromString(UUID));
+
+        if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block, Interaction.INTERACT_BLOCK)) {
+            return;
+        }
 
         if (!(blockState instanceof InventoryHolder holder)) {
             return;
         }
 
+        final Inventory inventory = holder.getInventory();
         final ItemStack stack = blockMenu.getItemInSlot(INPUT_SLOT);
 
-        if (stack == null || stack.getType() == Material.AIR || !InvUtils.fits(holder.getInventory(), stack)) {
+        if (stack == null || stack.getType() == Material.AIR) {
             return;
         }
 
-        holder.getInventory().addItem(stack);
-        stack.setAmount(0);
+        if (inventory instanceof FurnaceInventory furnaceInventory) {
+            if (stack.getType().isFuel()
+                && (furnaceInventory.getFuel() == null || furnaceInventory.getFuel().getType() == Material.AIR)
+            ) {
+                furnaceInventory.setFuel(stack.clone());
+                stack.setAmount(0);
+            } else if (!stack.getType().isFuel()
+                && (furnaceInventory.getSmelting() == null || furnaceInventory.getSmelting().getType() == Material.AIR)
+            ) {
+                furnaceInventory.setSmelting(stack.clone());
+                stack.setAmount(0);
+            }
+        } else if (!InvUtils.fits(holder.getInventory(), stack)) {
+            holder.getInventory().addItem(stack);
+            stack.setAmount(0);
+        }
     }
 
     @Nonnull
@@ -115,7 +144,7 @@ public class NetworkVanillaPusher extends NetworkDirectional {
 
     @Override
     public int[] getInputSlots() {
-        return new int[] {INPUT_SLOT};
+        return new int[]{INPUT_SLOT};
     }
 
     @Override
