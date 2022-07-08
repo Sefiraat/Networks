@@ -13,6 +13,8 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.inventory.FurnaceInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
@@ -70,14 +72,28 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
             return;
         }
 
-        for (ItemStack stack : holder.getInventory().getContents()) {
-            if (stack != null && stack.getType() != Material.AIR) {
-                blockMenu.replaceExistingItem(OUTPUT_SLOT, stack.clone());
-                stack.setAmount(0);
-                return;
+        Inventory inventory = holder.getInventory();
+
+        if (inventory instanceof FurnaceInventory furnaceInventory) {
+            ItemStack stack = furnaceInventory.getResult();
+            grabItem(blockMenu, stack);
+        } else {
+            for (ItemStack stack : inventory.getContents()) {
+                if (grabItem(blockMenu, stack)) {
+                    return;
+                }
             }
         }
+    }
 
+    private boolean grabItem(BlockMenu blockMenu, ItemStack stack) {
+        if (stack != null && stack.getType() != Material.AIR) {
+            blockMenu.replaceExistingItem(OUTPUT_SLOT, stack.clone());
+            stack.setAmount(0);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Nonnull
