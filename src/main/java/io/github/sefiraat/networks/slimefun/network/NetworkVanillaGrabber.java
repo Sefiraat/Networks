@@ -86,7 +86,7 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
         }
     }
 
-    private boolean grabItem(BlockMenu blockMenu, ItemStack stack) {
+    private boolean grabItem(@Nonnull BlockMenu blockMenu, @Nullable ItemStack stack) {
         if (stack != null && stack.getType() != Material.AIR) {
             blockMenu.replaceExistingItem(OUTPUT_SLOT, stack.clone());
             stack.setAmount(0);
