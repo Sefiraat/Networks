@@ -15,5 +15,6 @@ public enum NodeType {
     CRAFTER,
     POWER_NODE,
     POWER_DISPLAY,
-    ENCODER
+    ENCODER,
+    GREEDY_BLOCK
 }

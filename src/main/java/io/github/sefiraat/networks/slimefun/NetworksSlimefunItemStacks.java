@@ -52,6 +52,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
+    public static final SlimefunItemStack NETWORK_GREEDY_BLOCK;
     public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
     public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
@@ -347,6 +348,19 @@ public class NetworksSlimefunItemStacks {
             "(double chest) inventory that can",
             "be accessed both from the network",
             "and in the world."
+        );
+
+        NETWORK_GREEDY_BLOCK = Theme.themedSlimefunItemStack(
+            "NTW_GREEDY_BLOCK",
+            new ItemStack(Material.SHROOMLIGHT),
+            Theme.MACHINE,
+            "Network Greedy Block",
+            "The Network Greedy Block can",
+            "be set to one item which it will",
+            "then greedily hold on to a single",
+            "stack of. If more incoming items",
+            "do not fit, they will not enter",
+            "the network."
         );
 
         NETWORK_MEMORY_SHELL = Theme.themedSlimefunItemStack(
