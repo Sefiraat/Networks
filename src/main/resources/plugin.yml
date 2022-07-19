@@ -9,6 +9,7 @@ depend:
   - Slimefun
 softdepend:
   - InfinityExpansion
+  - Netheopoiesis
 commands:
   networks:
     description: /networks
