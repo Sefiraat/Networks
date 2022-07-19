@@ -42,7 +42,7 @@ public abstract class NetworkObject extends SlimefunItem {
 
                 @Override
                 public boolean isSynchronized() {
-                    return false;
+                    return runSync();
                 }
 
                 @Override
@@ -87,5 +87,9 @@ public abstract class NetworkObject extends SlimefunItem {
         }
 
         BlockStorage.clearBlockInfo(location);
+    }
+
+    public boolean runSync() {
+        return false;
     }
 }

@@ -46,6 +46,8 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_VANILLA_GRABBER;
+    public static final SlimefunItemStack NETWORK_VANILLA_PUSHER;
     public static final SlimefunItemStack NETWORK_PURGER;
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
@@ -277,6 +279,30 @@ public class NetworksSlimefunItemStacks {
             "The Network Pusher will try",
             "to push a matching item from a",
             "given item into the chosen machine."
+        );
+
+        NETWORK_VANILLA_GRABBER = Theme.themedSlimefunItemStack(
+            "NTW_VANILLA_GRABBER",
+            new ItemStack(Material.ORANGE_STAINED_GLASS),
+            Theme.MACHINE,
+            "Network Vanilla Grabber",
+            "The Network Vanilla Pusher will try",
+            "to grab the first possible item from",
+            "the chosen vanilla inventory.",
+            "You need to grab items from this",
+            "node using a Grabber."
+        );
+
+        NETWORK_VANILLA_PUSHER = Theme.themedSlimefunItemStack(
+            "NTW_VANILLA_PUSHER",
+            new ItemStack(Material.LIME_STAINED_GLASS),
+            Theme.MACHINE,
+            "Network Vanilla Pusher",
+            "The Network Vanilla Pusher will try",
+            "to push any item inside itself into",
+            "the chosen vanilla inventory.",
+            "You need to push items into this",
+            "node from a Pusher."
         );
 
         NETWORK_PURGER = Theme.themedSlimefunItemStack(
