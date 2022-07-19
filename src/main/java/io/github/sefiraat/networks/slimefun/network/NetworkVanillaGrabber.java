@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -17,10 +18,13 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,7 +76,8 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
 
         final BlockFace direction = getCurrentDirection(blockMenu);
         final Block block = blockMenu.getBlock();
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(java.util.UUID.fromString(UUID));
+        final UUID uuid = UUID.fromString(BlockStorage.getLocationInfo(block.getLocation(), OWNER_KEY));
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
         if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block, Interaction.INTERACT_BLOCK)) {
             return;
@@ -89,6 +94,17 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
         if (inventory instanceof FurnaceInventory furnaceInventory) {
             final ItemStack stack = furnaceInventory.getResult();
             grabItem(blockMenu, stack);
+        } else if (inventory instanceof BrewerInventory brewerInventory) {
+            for (int i = 0; i < 3; i++) {
+                final ItemStack stack = brewerInventory.getContents()[i];
+                if (stack != null && stack.getType() == Material.POTION) {
+                    final PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
+                    if (potionMeta.getBasePotionData().getType() != PotionType.WATER) {
+                        grabItem(blockMenu, stack);
+                        return;
+                    }
+                }
+            }
         } else {
             for (ItemStack stack : inventory.getContents()) {
                 if (grabItem(blockMenu, stack)) {

@@ -55,7 +55,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     private static final int DOWN_SLOT = 33;
 
     protected static final String DIRECTION = "direction";
-    protected static final String UUID = "uuid";
+    protected static final String OWNER_KEY = "uuid";
 
     private static final Set<BlockFace> VALID_FACES = EnumSet.of(
         BlockFace.UP,
@@ -79,7 +79,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             new BlockPlaceHandler(false) {
                 @Override
                 public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
-                    BlockStorage.addBlockInfo(event.getBlock(), UUID, event.getPlayer().getUniqueId().toString());
+                    BlockStorage.addBlockInfo(event.getBlock(), OWNER_KEY, event.getPlayer().getUniqueId().toString());
                     BlockStorage.addBlockInfo(event.getBlock(), DIRECTION, BlockFace.SELF.name());
                 }
             },

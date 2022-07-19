@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -18,6 +19,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -25,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class NetworkVanillaPusher extends NetworkDirectional {
 
@@ -66,7 +69,8 @@ public class NetworkVanillaPusher extends NetworkDirectional {
         final BlockFace direction = getCurrentDirection(blockMenu);
         final BlockState blockState = blockMenu.getBlock().getRelative(direction).getState();
         final Block block = blockMenu.getBlock();
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(java.util.UUID.fromString(UUID));
+        final UUID uuid = UUID.fromString(BlockStorage.getLocationInfo(block.getLocation(), OWNER_KEY));
+        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
         if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block, Interaction.INTERACT_BLOCK)) {
             return;
@@ -83,20 +87,49 @@ public class NetworkVanillaPusher extends NetworkDirectional {
             return;
         }
 
-        if (inventory instanceof FurnaceInventory furnaceInventory) {
-            if (stack.getType().isFuel()
-                && (furnaceInventory.getFuel() == null || furnaceInventory.getFuel().getType() == Material.AIR)
-            ) {
-                furnaceInventory.setFuel(stack.clone());
-                stack.setAmount(0);
-            } else if (!stack.getType().isFuel()
-                && (furnaceInventory.getSmelting() == null || furnaceInventory.getSmelting().getType() == Material.AIR)
-            ) {
-                furnaceInventory.setSmelting(stack.clone());
+        if (inventory instanceof FurnaceInventory furnace) {
+            handleFurnace(stack, furnace);
+        } else if (inventory instanceof BrewerInventory brewer) {
+            handleBrewingStand(stack, brewer);
+        } else if (InvUtils.fits(holder.getInventory(), stack)) {
+            holder.getInventory().addItem(stack);
+            stack.setAmount(0);
+        }
+    }
+
+    private void handleFurnace(@Nonnull ItemStack stack, @Nonnull FurnaceInventory furnace) {
+        if (stack.getType().isFuel()
+            && (furnace.getFuel() == null || furnace.getFuel().getType() == Material.AIR)
+        ) {
+            furnace.setFuel(stack.clone());
+            stack.setAmount(0);
+        } else if (!stack.getType().isFuel()
+            && (furnace.getSmelting() == null || furnace.getSmelting().getType() == Material.AIR)
+        ) {
+            furnace.setSmelting(stack.clone());
+            stack.setAmount(0);
+        }
+    }
+
+    private void handleBrewingStand(@Nonnull ItemStack stack, @Nonnull BrewerInventory brewer) {
+        if (stack.getType() == Material.BLAZE_POWDER) {
+            if (brewer.getFuel() == null || brewer.getFuel().getType() == Material.AIR) {
+                brewer.setFuel(stack.clone());
                 stack.setAmount(0);
             }
-        } else if (!InvUtils.fits(holder.getInventory(), stack)) {
-            holder.getInventory().addItem(stack);
+        } else if (stack.getType() == Material.POTION) {
+            for (int i = 0; i < 3; i++) {
+                final ItemStack stackInSlot = brewer.getContents()[i];
+                if (stackInSlot == null || stackInSlot.getType() == Material.AIR) {
+                    final ItemStack[] contents = brewer.getContents();
+                    contents[i] = stack.clone();
+                    brewer.setContents(contents);
+                    stack.setAmount(0);
+                    return;
+                }
+            }
+        } else if (brewer.getIngredient() == null || brewer.getIngredient().getType() == Material.AIR) {
+            brewer.setIngredient(stack.clone());
             stack.setAmount(0);
         }
     }
