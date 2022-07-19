@@ -6,10 +6,12 @@ import org.bukkit.Bukkit;
 @Getter
 public class SupportedPluginManager {
 
-    private final boolean isInfinityExpansion;
+    private final boolean infinityExpansion;
+    private final boolean netheopoiesis;
 
     public SupportedPluginManager() {
-        isInfinityExpansion = Bukkit.getPluginManager().isPluginEnabled("InfinityExpansion");
+        this.infinityExpansion = Bukkit.getPluginManager().isPluginEnabled("InfinityExpansion");
+        this.netheopoiesis = Bukkit.getPluginManager().isPluginEnabled("Netheopoiesis");
     }
 
 }

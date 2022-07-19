@@ -108,6 +108,12 @@
       <version>90e11bc</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.Sefiraat</groupId>
+      <artifactId>Netheopoiesis</artifactId>
+      <version>8d1af6c570</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <distributionManagement>
     <repository>
