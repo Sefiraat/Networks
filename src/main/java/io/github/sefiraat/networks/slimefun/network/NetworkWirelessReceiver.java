@@ -18,26 +18,23 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 public class NetworkWirelessReceiver extends NetworkObject {
 
     public static final int RECEIVED_SLOT = 13;
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-        0,1,2,6,7,8,9,10,11,15,16,17,18,19,20,21,22,23,24,25,26
+        0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
     };
 
     private static final int[] RECEIVED_SLOTS_TEMPLATE = new int[]{
-        3,4,5,12,14,21,22,23
+        3, 4, 5, 12, 14, 21, 22, 23
     };
 
     private static final CustomItemStack RECEIVED_BACKGROUND_STACK = new CustomItemStack(
@@ -45,7 +42,11 @@ public class NetworkWirelessReceiver extends NetworkObject {
         Theme.SUCCESS + "Received items"
     );
 
-    public NetworkWirelessReceiver(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkWirelessReceiver(ItemGroup itemGroup,
+                                   SlimefunItemStack item,
+                                   RecipeType recipeType,
+                                   ItemStack[] recipe
+    ) {
         super(itemGroup, item, recipeType, recipe, NodeType.WIRELESS_RECEIVER);
         this.getSlotsToDrop().add(RECEIVED_SLOT);
 

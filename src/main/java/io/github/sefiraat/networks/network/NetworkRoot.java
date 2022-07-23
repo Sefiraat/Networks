@@ -275,7 +275,8 @@ public class NetworkRoot extends NetworkNode {
 
             final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
 
-            if (Networks.getSupportedPluginManager().isInfinityExpansion() && slimefunItem instanceof StorageUnit unit) {
+            if (Networks.getSupportedPluginManager()
+                .isInfinityExpansion() && slimefunItem instanceof StorageUnit unit) {
                 final BlockMenu menu = BlockStorage.getInventory(testLocation);
                 final InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
                 if (infinityBarrel != null) {
@@ -458,7 +459,11 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(request, itemStack, true)) {
+                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(
+                    request,
+                    itemStack,
+                    true
+                )) {
                     continue;
                 }
 
@@ -489,43 +494,43 @@ public class NetworkRoot extends NetworkNode {
 
         // Greedy Blocks
         for (BlockMenu blockMenu : getGreedyBlocks()) {
-            for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack == null
-                    || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack, true)
-                ) {
-                    continue;
-                }
+            final ItemStack itemStack = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
+            if (itemStack == null
+                || itemStack.getType() == Material.AIR
+                || !StackUtils.itemsMatch(request, itemStack, true)
+            ) {
+                continue;
+            }
 
-                // Mark the Cell as dirty otherwise the changes will not save on shutdown
-                blockMenu.markDirty();
+            // Mark the Cell as dirty otherwise the changes will not save on shutdown
+            blockMenu.markDirty();
 
-                // If the return stack is null, we need to set it up
-                if (stackToReturn == null) {
-                    stackToReturn = itemStack.clone();
-                    stackToReturn.setAmount(1);
-                    request.receiveAmount(1);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                }
+            // If the return stack is null, we need to set it up
+            if (stackToReturn == null) {
+                stackToReturn = itemStack.clone();
+                stackToReturn.setAmount(1);
+                request.receiveAmount(1);
+                itemStack.setAmount(itemStack.getAmount() - 1);
+            }
 
-                // Escape if fulfilled request
-                if (request.getAmount() <= 0) {
-                    return stackToReturn;
-                }
+            // Escape if fulfilled request
+            if (request.getAmount() <= 0) {
+                return stackToReturn;
+            }
 
-                if (request.getAmount() <= itemStack.getAmount()) {
-                    // We can't take more than this stack. Level to request amount, remove items and then return
-                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
-                    return stackToReturn;
-                } else {
-                    // We can take more than what is here, consume before trying to take more
-                    stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
-                    request.receiveAmount(itemStack.getAmount());
-                    itemStack.setAmount(0);
-                }
+            if (request.getAmount() <= itemStack.getAmount()) {
+                // We can't take more than this stack. Level to request amount, remove items and then return
+                stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                return stackToReturn;
+            } else {
+                // We can take more than what is here, consume before trying to take more
+                stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
+                request.receiveAmount(itemStack.getAmount());
+                itemStack.setAmount(0);
             }
         }
+
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {

@@ -1,6 +1,5 @@
 package io.github.sefiraat.networks.slimefun.network;
 
-import com.google.common.graph.Network;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -12,7 +11,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -38,11 +36,11 @@ public class NetworkWirelessTransmitter extends NetworkObject {
     public static final int TEMPLATE_SLOT = 13;
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-        0,1,2,6,7,8,9,10,11,15,16,17,18,19,20,21,22,23,24,25,26
+        0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
     };
 
     private static final int[] BACKGROUND_SLOTS_TEMPLATE = new int[]{
-        3,4,5,12,14,21,22,23
+        3, 4, 5, 12, 14, 21, 22, 23
     };
 
     private static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
@@ -53,11 +51,17 @@ public class NetworkWirelessTransmitter extends NetworkObject {
     private static final String LINKED_LOCATION_KEY_X = "linked-location-x";
     private static final String LINKED_LOCATION_KEY_Y = "linked-location-y";
     private static final String LINKED_LOCATION_KEY_Z = "linked-location-z";
-    private static final int REQUIRED_POWER = 15000;
+
+    private static final int REQUIRED_POWER = 7500;
+    private static final int TICKS_PER = 5;
 
     private final Map<Location, Location> linkedLocations = new HashMap<>();
 
-    public NetworkWirelessTransmitter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkWirelessTransmitter(ItemGroup itemGroup,
+                                      SlimefunItemStack item,
+                                      RecipeType recipeType,
+                                      ItemStack[] recipe
+    ) {
         super(itemGroup, item, recipeType, recipe, NodeType.WIRELESS_TRANSMITTER);
         this.getSlotsToDrop().add(TEMPLATE_SLOT);
 
@@ -104,7 +108,7 @@ public class NetworkWirelessTransmitter extends NetworkObject {
                         }
 
                         int tick = tickMap.getOrDefault(block.getLocation(), 0);
-                        if (tick >= 10) {
+                        if (tick >= TICKS_PER) {
                             onTick(blockMenu);
                             tickMap.remove(block.getLocation());
                             tick = 0;

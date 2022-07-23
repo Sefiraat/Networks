@@ -71,6 +71,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_3;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_1;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_2;
     public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
@@ -322,7 +323,7 @@ public class NetworksSlimefunItemStacks {
             "located within the same world.",
             "Use the Wireless Configurator to",
             "setup the Wireless Transmitter.",
-            "Requires 15,000 Network Power per transfer."
+            "Requires 7,500 Network Power per transfer."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(
@@ -576,6 +577,18 @@ public class NetworksSlimefunItemStacks {
             "within the network.",
             "",
             MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+        );
+
+        NETWORK_CAPACITOR_3 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_3",
+            new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Capacitor (3)",
+            "The Network Capacitor can take",
+            "power in and store it for use",
+            "within the network.",
+            "",
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
         );
 
         NETWORK_POWER_OUTLET_1 = Theme.themedSlimefunItemStack(

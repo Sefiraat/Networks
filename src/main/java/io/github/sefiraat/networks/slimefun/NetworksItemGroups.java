@@ -6,8 +6,6 @@ import io.github.sefiraat.networks.slimefun.groups.MainFlexGroup;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
