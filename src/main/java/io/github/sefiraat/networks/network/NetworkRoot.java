@@ -195,6 +195,27 @@ public class NetworkRoot extends NetworkNode {
             itemStacks.put(barrelIdentity.getItemStack(), newAmount);
         }
 
+        for (BlockMenu blockMenu : getGreedyBlocks()) {
+            final ItemStack itemStack = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
+            if (itemStack == null || itemStack.getType() == Material.AIR) {
+                continue;
+            }
+            final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
+            final Integer currentAmount = itemStacks.get(clone);
+            final int newAmount;
+            if (currentAmount == null) {
+                newAmount = itemStack.getAmount();
+            } else {
+                long newLong = (long) currentAmount + (long) itemStack.getAmount();
+                if (newLong > Integer.MAX_VALUE) {
+                    newAmount = Integer.MAX_VALUE;
+                } else {
+                    newAmount = currentAmount + itemStack.getAmount();
+                }
+            }
+            itemStacks.put(clone, newAmount);
+        }
+
         for (BlockMenu blockMenu : getCrafterOutputs()) {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
