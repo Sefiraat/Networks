@@ -35,12 +35,11 @@ The Network Bridge just acts as a block to help extend the network out cheaply
 Network Cells are a single block that can hold a double-chests worth of items within it. These items are exposed to the
 network. They are designed for items that you either have few of or are non-stackable/unique.
 
-## Network Shells
+## Network Quantum Storages
 
-The Network Shell is a single block that can hold a Memory Card within it. Memory Cards can store a massive amount of a
-single type of item within it. Starting at 4k items upgradable all the way up to 2 billion at it's highest. Shells
-should be thought as barrels for deep storage of mass-produced items. Cards can be wiped clean in the Network Wiper
-which will slowly drain items form a card back into the network. Useful when wanting to upgrade/migrate.
+A Network Quantum Storage is a single block that can hold a massive amount of a single type of item within it. Starting
+at 4k items upgradable all the way up to 2 billion at it's highest. Quantums should be thought as barrels for deep
+storage of mass-produced items.
 
 ## Network Monitors
 
@@ -64,7 +63,14 @@ when possible.
 ## Power
 
 The Network Capacitor will accept energy in from the EnergyNet and will store it. Any connected Network machine can use
-this power when required. Total network power can be seen using the Network Power Display
+this power when required. Total network power can be seen using the Network Power Display.
+
+A Network Power Outlet can take power from within the network and output it to an adjacent EnergyNet machine.
+
+## Wireless Item Transfer
+
+The Network Transmitter will take matching items from the network and will send it to a linked Network Receiver. The
+receiver will accept the item and will try to send it into its own Network.
 
 ## Autocrafting!
 

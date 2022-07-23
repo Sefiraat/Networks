@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun;
 
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
-import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -55,7 +54,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_GREEDY_BLOCK;
-    public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
     public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_2;
@@ -65,10 +63,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_6;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_7;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_8;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_1;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
     public static final SlimefunItemStack NETWORK_CAPACITOR_3;
@@ -80,14 +74,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
     // Tools
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_2;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_3;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_4;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_5;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
     public static final SlimefunItemStack CRAFTING_BLUEPRINT;
     public static final SlimefunItemStack NETWORK_PROBE;
     public static final SlimefunItemStack NETWORK_REMOTE;
@@ -396,16 +382,6 @@ public class NetworksSlimefunItemStacks {
             "the network."
         );
 
-        NETWORK_MEMORY_SHELL = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_SHELL",
-            new ItemStack(Material.DEEPSLATE_TILES),
-            Theme.MACHINE,
-            "Network Memory Shell",
-            "The Network Shell is a block",
-            "that provides the network access",
-            "to the memory cards inside of it."
-        );
-
         NETWORK_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_WORKBENCH",
             new ItemStack(Material.DRIED_KELP_BLOCK),
@@ -420,7 +396,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.WHITE_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (4K)",
-            "Stores " + NetworkCard.getSizes()[0] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[0] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -431,7 +407,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_GRAY_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (32K)",
-            "Stores " + NetworkCard.getSizes()[1] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[1] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -442,7 +418,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (262K)",
-            "Stores " + NetworkCard.getSizes()[2] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[2] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -453,7 +429,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BROWN_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (2M)",
-            "Stores " + NetworkCard.getSizes()[3] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[3] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -464,7 +440,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLACK_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (16M)",
-            "Stores " + NetworkCard.getSizes()[4] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[4] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -475,7 +451,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PURPLE_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (134M)",
-            "Stores " + NetworkCard.getSizes()[5] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[5] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -486,7 +462,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.MAGENTA_TERRACOTTA),
             Theme.MACHINE,
             "Network Quantum Storage (1B)",
-            "Stores " + NetworkCard.getSizes()[6] + " items",
+            "Stores " + NetworkQuantumStorage.getSizes()[6] + " items",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
@@ -501,58 +477,6 @@ public class NetworksSlimefunItemStacks {
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
-        );
-
-        NETWORK_MEMORY_WIPER_1 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_1",
-            new ItemStack(Material.BASALT),
-            Theme.MACHINE,
-            "Network Memory Wiper α",
-            "The Network Wiper is a block",
-            "that will slowly try to empty a",
-            "memory card's content back into",
-            "the network.",
-            "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[0])
-        );
-
-        NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_2",
-            new ItemStack(Material.POLISHED_BASALT),
-            Theme.MACHINE,
-            "Network Memory Wiper β",
-            "The Network Wiper is a block",
-            "that will slowly try to empty a",
-            "memory card's content back into",
-            "the network.",
-            "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[1])
-        );
-
-        NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_3",
-            new ItemStack(Material.SMOOTH_BASALT),
-            Theme.MACHINE,
-            "Network Memory Wiper γ",
-            "The Network Wiper is a block",
-            "that will slowly try to empty a",
-            "memory card's content back into",
-            "the network.",
-            "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[2])
-        );
-
-        NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_4",
-            new ItemStack(Material.POLISHED_BLACKSTONE),
-            Theme.MACHINE,
-            "Network Memory Wiper δ",
-            "The Network Wiper is a block",
-            "that will slowly try to empty a",
-            "memory card's content back into",
-            "the network.",
-            "",
-            MessageFormat.format("{0}Speed: {1}{2} Stack(s)/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[3])
         );
 
         NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
@@ -676,142 +600,6 @@ public class NetworksSlimefunItemStacks {
             "cargo.",
             "",
             MessageFormat.format("{0}Network Drain: {1}{2}/craft", Theme.CLICK_INFO, Theme.PASSIVE, 128)
-        );
-
-        NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_1",
-            new ItemStack(Material.LIGHT_GRAY_DYE),
-            Theme.TOOL,
-            "Network Memory Card (4K)",
-            "Stores " + NetworkCard.getSizes()[0] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_2 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_2",
-            new ItemStack(Material.GRAY_DYE),
-            Theme.TOOL,
-            "Network Memory Card (32K)",
-            "Stores " + NetworkCard.getSizes()[1] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_3 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_3",
-            new ItemStack(Material.LIME_DYE),
-            Theme.TOOL,
-            "Network Memory Card (262K)",
-            "Stores " + NetworkCard.getSizes()[2] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_4 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_4",
-            new ItemStack(Material.GREEN_DYE),
-            Theme.TOOL,
-            "Network Memory Card (2M)",
-            "Stores " + NetworkCard.getSizes()[3] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_5 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_5",
-            new ItemStack(Material.LIGHT_BLUE_DYE),
-            Theme.TOOL,
-            "Network Memory Card (16M)",
-            "Stores " + NetworkCard.getSizes()[4] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_6 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_6",
-            new ItemStack(Material.BLUE_DYE),
-            Theme.TOOL,
-            "Network Memory Card (134M)",
-            "Stores " + NetworkCard.getSizes()[5] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_7 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_7",
-            new ItemStack(Material.PINK_DYE),
-            Theme.TOOL,
-            "Network Memory Card (1B)",
-            "Stores " + NetworkCard.getSizes()[6] + " items",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
-        );
-
-        NETWORK_MEMORY_CARD_8 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_8",
-            new ItemStack(Material.RED_DYE),
-            Theme.TOOL,
-            "Network Memory Card (∞)",
-            "Stores ∞ items... almost",
-            "",
-            "Right click with an item in your",
-            "offhand to set the card's item.",
-            "Card must be empty to set item.",
-            "",
-            Theme.WARNING + "Voids extra incoming items.",
-            Theme.WARNING + "Upgrading will wipe memory.",
-            "",
-            Theme.WARNING + "Empty"
         );
 
         CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(

@@ -9,7 +9,6 @@ import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -287,7 +286,7 @@ public class NetworkRoot extends NetworkNode {
 
             if (slimefunItem instanceof NetworkQuantumStorage) {
                 final BlockMenu menu = BlockStorage.getInventory(testLocation);
-                final NetworkStorage storage = getShell(menu);
+                final NetworkStorage storage = getNetworkStorage(menu);
                 if (storage != null) {
                     barrelSet.add(storage);
                 }
@@ -333,7 +332,7 @@ public class NetworkRoot extends NetworkNode {
     }
 
     @Nullable
-    private NetworkStorage getShell(@Nonnull BlockMenu blockMenu) {
+    private NetworkStorage getNetworkStorage(@Nonnull BlockMenu blockMenu) {
 
         final QuantumCache cache = NetworkQuantumStorage.getCaches().get(blockMenu.getLocation());
 
@@ -341,7 +340,7 @@ public class NetworkRoot extends NetworkNode {
             return null;
         }
 
-        final ItemStack output = blockMenu.getItemInSlot(NetworkMemoryShell.OUTPUT_SLOT);
+        final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
         final ItemStack itemStack = cache.getItemStack();
         int storedInt = cache.getAmount();
 
@@ -530,7 +529,6 @@ public class NetworkRoot extends NetworkNode {
                 itemStack.setAmount(0);
             }
         }
-
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {

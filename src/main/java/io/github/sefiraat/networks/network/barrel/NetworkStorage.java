@@ -3,7 +3,6 @@ package io.github.sefiraat.networks.network.barrel;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -56,6 +55,6 @@ public class NetworkStorage extends BarrelIdentity {
 
     @Override
     public int getOutputSlot() {
-        return NetworkMemoryShell.OUTPUT_SLOT;
+        return NetworkQuantumStorage.OUTPUT_SLOT;
     }
 }
