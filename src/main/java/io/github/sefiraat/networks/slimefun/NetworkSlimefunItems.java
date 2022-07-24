@@ -347,7 +347,7 @@ public class NetworkSlimefunItems {
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_GLASS.getItem(),
                 OPTIC_CABLE.getItem(), NETWORK_PUSHER.getItem(), OPTIC_CABLE.getItem(),
-                OPTIC_GLASS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
             }
         );
 
