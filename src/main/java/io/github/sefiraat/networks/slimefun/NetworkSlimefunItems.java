@@ -8,27 +8,29 @@ import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
 import io.github.sefiraat.networks.slimefun.network.NetworkGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
 import io.github.sefiraat.networks.slimefun.network.NetworkImport;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryShell;
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
 import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
-import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRake;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
+import io.github.sefiraat.networks.slimefun.tools.NetworkWirelessConfigurator;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -62,11 +64,13 @@ public class NetworkSlimefunItems {
     public static final NetworkPusher NETWORK_PUSHER;
     public static final NetworkVanillaGrabber NETWORK_VANILLA_GRABBER;
     public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
+    public static final NetworkWirelessTransmitter NETWORK_WIRELESS_TRANSMITTER;
+    public static final NetworkWirelessReceiver NETWORK_WIRELESS_RECEIVER;
     public static final NetworkPurger NETWORK_TRASH;
     public static final NetworkGrid NETWORK_GRID;
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
     public static final NetworkCell NETWORK_CELL;
-    public static final NetworkMemoryShell NETWORK_MEMORY_SHELL;
+    public static final NetworkGreedyBlock NETWORK_GREEDY_BLOCK;
     public static final NetworkQuantumWorkbench NETWORK_QUANTUM_WORKBENCH;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_1;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_2;
@@ -76,25 +80,16 @@ public class NetworkSlimefunItems {
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_6;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_7;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_8;
-    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_1;
-    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_2;
-    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_3;
-    public static final NetworkMemoryWiper NETWORK_MEMORY_WIPER_4;
     public static final NetworkPowerNode NETWORK_CAPACITOR_1;
     public static final NetworkPowerNode NETWORK_CAPACITOR_2;
+    public static final NetworkPowerNode NETWORK_CAPACITOR_3;
+    public static final NetworkPowerOutlet NETWORK_POWER_OUTLET_1;
+    public static final NetworkPowerOutlet NETWORK_POWER_OUTLET_2;
     public static final NetworkPowerDisplay NETWORK_POWER_DISPLAY;
     public static final NetworkEncoder NETWORK_RECIPE_ENCODER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER;
     public static final NetworkAutoCrafter NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
-    public static final NetworkCard NETWORK_MEMORY_CARD_1;
-    public static final NetworkCard NETWORK_MEMORY_CARD_2;
-    public static final NetworkCard NETWORK_MEMORY_CARD_3;
-    public static final NetworkCard NETWORK_MEMORY_CARD_4;
-    public static final NetworkCard NETWORK_MEMORY_CARD_5;
-    public static final NetworkCard NETWORK_MEMORY_CARD_6;
-    public static final NetworkCard NETWORK_MEMORY_CARD_7;
-    public static final NetworkCard NETWORK_MEMORY_CARD_8;
     public static final CraftingBlueprint CRAFTING_BLUEPRINT;
     public static final NetworkProbe NETWORK_PROBE;
     public static final NetworkRemote NETWORK_REMOTE;
@@ -103,6 +98,7 @@ public class NetworkSlimefunItems {
     public static final NetworkRemote NETWORK_REMOTE_ULTIMATE;
     public static final NetworkCrayon NETWORK_CRAYON;
     public static final NetworkConfigurator NETWORK_CONFIGURATOR;
+    public static final NetworkWirelessConfigurator NETWORK_WIRELESS_CONFIGURATOR;
     public static final NetworkRake NETWORK_RAKE_1;
     public static final NetworkRake NETWORK_RAKE_2;
     public static final NetworkRake NETWORK_RAKE_3;
@@ -344,6 +340,28 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_WIRELESS_TRANSMITTER = new NetworkWirelessTransmitter(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_WIRELESS_TRANSMITTER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_PUSHER.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_WIRELESS_RECEIVER = new NetworkWirelessReceiver(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_WIRELESS_RECEIVER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), SIMPLE_NANOBOTS.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_GRABBER.getItem(), OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), AI_CORE.getItem(), OPTIC_GLASS.getItem(),
+            }
+        );
+
         NETWORK_TRASH = new NetworkPurger(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_PURGER,
@@ -388,11 +406,15 @@ public class NetworkSlimefunItems {
             }
         );
 
-        NETWORK_MEMORY_SHELL = new NetworkMemoryShell(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_SHELL,
-            RecipeType.NULL,
-            new ItemStack[8]
+        NETWORK_GREEDY_BLOCK = new NetworkGreedyBlock(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_GREEDY_BLOCK,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_CELL.getItem(), OPTIC_CABLE.getItem(),
+                NETWORK_BRIDGE.getItem(), SIMPLE_NANOBOTS.getItem(), NETWORK_BRIDGE.getItem(),
+            }
         );
 
         NETWORK_QUANTUM_WORKBENCH = new NetworkQuantumWorkbench(
@@ -502,38 +524,6 @@ public class NetworkSlimefunItems {
             NetworkQuantumStorage.getSizes()[7]
         );
 
-        NETWORK_MEMORY_WIPER_1 = new NetworkMemoryWiper(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_1,
-            RecipeType.NULL,
-            new ItemStack[8],
-            0
-        );
-
-        NETWORK_MEMORY_WIPER_2 = new NetworkMemoryWiper(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_2,
-            RecipeType.NULL,
-            new ItemStack[8],
-            1
-        );
-
-        NETWORK_MEMORY_WIPER_3 = new NetworkMemoryWiper(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_3,
-            RecipeType.NULL,
-            new ItemStack[8],
-            2
-        );
-
-        NETWORK_MEMORY_WIPER_4 = new NetworkMemoryWiper(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_WIPER_4,
-            RecipeType.NULL,
-            new ItemStack[8],
-            3
-        );
-
         NETWORK_CAPACITOR_1 = new NetworkPowerNode(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_CAPACITOR_1,
@@ -556,6 +546,42 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
             10000
+        );
+
+        NETWORK_CAPACITOR_3 = new NetworkPowerNode(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CAPACITOR_3,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
+                NETWORK_CAPACITOR_2.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
+                NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
+            },
+            1000000
+        );
+
+        NETWORK_POWER_OUTLET_1 = new NetworkPowerOutlet(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_CONNECTOR, OPTIC_GLASS.getItem(),
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
+            },
+            500
+        );
+
+        NETWORK_POWER_OUTLET_2 = new NetworkPowerOutlet(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_2,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_POWER_OUTLET_1.getItem(), OPTIC_GLASS.getItem(), NETWORK_POWER_OUTLET_1.getItem(),
+                OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_CONNECTOR, OPTIC_GLASS.getItem(),
+                NETWORK_POWER_OUTLET_1.getItem(), OPTIC_GLASS.getItem(), NETWORK_POWER_OUTLET_1.getItem(),
+            },
+            2000
         );
 
         NETWORK_POWER_DISPLAY = new NetworkPowerDisplay(
@@ -604,70 +630,6 @@ public class NetworkSlimefunItems {
             },
             128,
             true
-        );
-
-        NETWORK_MEMORY_CARD_1 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_1,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[0]
-        );
-
-        NETWORK_MEMORY_CARD_2 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_2,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[1]
-        );
-
-        NETWORK_MEMORY_CARD_3 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_3,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[2]
-        );
-
-        NETWORK_MEMORY_CARD_4 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_4,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[3]
-        );
-
-        NETWORK_MEMORY_CARD_5 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_5,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[4]
-        );
-
-        NETWORK_MEMORY_CARD_6 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_6,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[5]
-        );
-
-        NETWORK_MEMORY_CARD_7 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_7,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[6]
-        );
-
-        NETWORK_MEMORY_CARD_8 = new NetworkCard(
-            NetworksItemGroups.DISABLED_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_MEMORY_CARD_8,
-            RecipeType.NULL,
-            new ItemStack[8],
-            NetworkCard.getSizes()[7]
         );
 
         CRAFTING_BLUEPRINT = new CraftingBlueprint(
@@ -762,6 +724,17 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_WIRELESS_CONFIGURATOR = new NetworkWirelessConfigurator(
+            NetworksItemGroups.TOOLS,
+            NetworksSlimefunItemStacks.NETWORK_WIRELESS_CONFIGURATOR,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                null, RADIOACTIVE_OPTIC_STAR.getItem(), null,
+                null, NETWORK_CONFIGURATOR.getItem(), null,
+                null, INTERDIMENSIONAL_PRESENCE.getItem(), null
+            }
+        );
+
         NETWORK_RAKE_1 = new NetworkRake(
             NetworksItemGroups.TOOLS,
             NetworksSlimefunItemStacks.NETWORK_RAKE_1,
@@ -824,11 +797,13 @@ public class NetworkSlimefunItems {
         NETWORK_PUSHER.register(plugin);
         NETWORK_VANILLA_GRABBER.register(plugin);
         NETWORK_VANILLA_PUSHER.register(plugin);
+        NETWORK_WIRELESS_TRANSMITTER.register(plugin);
+        NETWORK_WIRELESS_RECEIVER.register(plugin);
         NETWORK_TRASH.register(plugin);
         NETWORK_GRID.register(plugin);
         NETWORK_CRAFTING_GRID.register(plugin);
         NETWORK_CELL.register(plugin);
-        NETWORK_MEMORY_SHELL.register(plugin);
+        NETWORK_GREEDY_BLOCK.register(plugin);
         NETWORK_QUANTUM_WORKBENCH.register(plugin);
         NETWORK_QUANTUM_STORAGE_1.register(plugin);
         NETWORK_QUANTUM_STORAGE_2.register(plugin);
@@ -838,25 +813,15 @@ public class NetworkSlimefunItems {
         NETWORK_QUANTUM_STORAGE_6.register(plugin);
         NETWORK_QUANTUM_STORAGE_7.register(plugin);
         NETWORK_QUANTUM_STORAGE_8.register(plugin);
-        NETWORK_MEMORY_WIPER_1.register(plugin);
-        NETWORK_MEMORY_WIPER_2.register(plugin);
-        NETWORK_MEMORY_WIPER_3.register(plugin);
-        NETWORK_MEMORY_WIPER_4.register(plugin);
         NETWORK_CAPACITOR_1.register(plugin);
         NETWORK_CAPACITOR_2.register(plugin);
+        NETWORK_CAPACITOR_3.register(plugin);
+        NETWORK_POWER_OUTLET_1.register(plugin);
+        NETWORK_POWER_OUTLET_2.register(plugin);
         NETWORK_POWER_DISPLAY.register(plugin);
         NETWORK_RECIPE_ENCODER.register(plugin);
         NETWORK_AUTO_CRAFTER.register(plugin);
         NETWORK_AUTO_CRAFTER_WITHHOLDING.register(plugin);
-
-        NETWORK_MEMORY_CARD_1.register(plugin);
-        NETWORK_MEMORY_CARD_2.register(plugin);
-        NETWORK_MEMORY_CARD_3.register(plugin);
-        NETWORK_MEMORY_CARD_4.register(plugin);
-        NETWORK_MEMORY_CARD_5.register(plugin);
-        NETWORK_MEMORY_CARD_6.register(plugin);
-        NETWORK_MEMORY_CARD_7.register(plugin);
-        NETWORK_MEMORY_CARD_8.register(plugin);
 
         CRAFTING_BLUEPRINT.register(plugin);
         NETWORK_PROBE.register(plugin);
@@ -866,6 +831,7 @@ public class NetworkSlimefunItems {
         NETWORK_REMOTE_ULTIMATE.register(plugin);
         NETWORK_CRAYON.register(plugin);
         NETWORK_CONFIGURATOR.register(plugin);
+        NETWORK_WIRELESS_CONFIGURATOR.register(plugin);
         NETWORK_RAKE_1.register(plugin);
         NETWORK_RAKE_2.register(plugin);
         NETWORK_RAKE_3.register(plugin);
