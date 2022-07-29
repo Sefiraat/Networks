@@ -4,7 +4,7 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.groups.DummyItemGroup;
 import io.github.sefiraat.networks.slimefun.groups.MainFlexGroup;
 import io.github.sefiraat.networks.utils.Keys;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.experimental.UtilityClass;
@@ -22,7 +22,7 @@ public final class NetworksItemGroups {
         Keys.newKey("main"),
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Networks"
+            Themes.MAIN.getColor() + "Networks"
         )
     );
 
@@ -30,7 +30,7 @@ public final class NetworksItemGroups {
         Keys.newKey("materials"),
         new CustomItemStack(
             new ItemStack(Material.WHITE_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Crafting Materials"
+            Networks.getLanguageManager().getCategoryName("materials")
         )
     );
 
@@ -38,7 +38,7 @@ public final class NetworksItemGroups {
         Keys.newKey("tools"),
         new CustomItemStack(
             new ItemStack(Material.PAINTING),
-            Theme.MAIN.getColor() + "Network Management Tools"
+            Networks.getLanguageManager().getCategoryName("tools")
         )
     );
 
@@ -46,7 +46,7 @@ public final class NetworksItemGroups {
         Keys.newKey("network_items"),
         new CustomItemStack(
             new ItemStack(Material.BLACK_STAINED_GLASS),
-            Theme.MAIN.getColor() + "Network Items"
+            Networks.getLanguageManager().getCategoryName("network-items")
         )
     );
 
@@ -54,7 +54,7 @@ public final class NetworksItemGroups {
         Keys.newKey("network_quantums"),
         new CustomItemStack(
             new ItemStack(Material.WHITE_TERRACOTTA),
-            Theme.MAIN.getColor() + "Network Quantum Storage Devices"
+            Networks.getLanguageManager().getCategoryName("network-quantums")
         )
     );
 
@@ -62,7 +62,7 @@ public final class NetworksItemGroups {
         Keys.newKey("disabled_items"),
         new CustomItemStack(
             new ItemStack(Material.BARRIER),
-            Theme.MAIN.getColor() + "Disabled/Removed Items"
+            Networks.getLanguageManager().getCategoryName("disabled-items")
         )
     );
 

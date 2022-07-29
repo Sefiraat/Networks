@@ -1,10 +1,12 @@
 package io.github.sefiraat.networks.commands;
 
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.Keys;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -61,14 +63,18 @@ public class NetworksMain implements CommandExecutor {
     public void fillQuantum(Player player, int amount) {
         final ItemStack itemStack = player.getInventory().getItemInMainHand();
         if (itemStack == null || itemStack.getType() == Material.AIR) {
-            player.sendMessage(Theme.ERROR + "Item in hand must be a Quantum Storage.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("must-be-quantum", Theme.ERROR)
+            );
             return;
         }
 
         SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
 
         if (!(slimefunItem instanceof NetworkQuantumStorage)) {
-            player.sendMessage(Theme.ERROR + "Item in hand must be a Quantum Storage.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("must-be-quantum", Theme.ERROR)
+            );
             return;
         }
 
@@ -80,7 +86,9 @@ public class NetworksMain implements CommandExecutor {
         );
 
         if (quantumCache == null || quantumCache.getItemStack() == null) {
-            player.sendMessage(Theme.ERROR + "This card has either not been set to an item yet or is a corrupted Quantum Storage.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("issue-converting", Theme.ERROR)
+            );
             return;
         }
 

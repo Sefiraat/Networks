@@ -1,8 +1,12 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import dev.sefiraat.sefilib.localization.LanguageManager;
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.managers.NetworksLanguageManager;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -80,35 +84,42 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final ChatColor c = Theme.CLICK_INFO.getColor();
             final ChatColor p = Theme.PASSIVE.getColor();
 
-            player.sendMessage("------------------------------");
-            player.sendMessage("       Network Summary        ");
-            player.sendMessage("------------------------------");
-
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Bridges", p, bridges}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Monitors", p, monitors}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Importers", p, importers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Exporters", p, exporters}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Grids", p, grids}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Cells", p, cells}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Wipers", p, wipers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Grabbers", p, grabbers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Pushers", p, pushers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Purgers", p, purgers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Crafters", p, crafters}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Power Nodes", p, powerNodes}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Power Displays", p, powerDisplays}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Encoders", p, encoders}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Distinct Items", p, distinctItems}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Total Items", p, totalItems}, new StringBuffer(), null).toString());
+            final NetworksLanguageManager lm = Networks.getLanguageManager();
 
             player.sendMessage("------------------------------");
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "Total Nodes", p, nodeCount + "/" + root.getMaxNodes()}, new StringBuffer(), null).toString());
+            player.sendMessage(lm.getPlayerMessage("probe.summary"));
+            player.sendMessage("------------------------------");
+
+            player.sendMessage(lm.getStringArray(
+                "messages.player.probe.message",
+                c,
+                p,
+                bridges,
+                monitors,
+                importers,
+                exporters,
+                grids,
+                cells,
+                wipers,
+                grabbers,
+                pushers,
+                purgers,
+                crafters,
+                powerNodes,
+                powerDisplays,
+                encoders,
+                distinctItems,
+                totalItems,
+                nodeCount,
+                root.getMaxNodes()
+            ));
+
             if (root.isOverburdened()) {
-                player.sendMessage(Theme.ERROR + "Warning: " + Theme.PASSIVE +
-                                       "Your network has reached or exceeded the maximum node limit. " +
-                                       "Nodes beyond the limit will not function, which nodes these are " +
-                                       "may not always be the same. Reduce your total nodes."
-                );
+                player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                    "probe.warning",
+                    Theme.WARNING,
+                    Theme.PASSIVE
+                ));
             }
         }
     }

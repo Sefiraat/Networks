@@ -1,6 +1,8 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.string.Theme;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -11,7 +13,7 @@ import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentCraftingBlueprintType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -53,11 +55,13 @@ public class NetworkAutoCrafter extends NetworkObject {
     private static final int OUTPUT_SLOT = 16;
 
     public static final CustomItemStack BLUEPRINT_BACKGROUND_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Crafting Blueprint"
+        Material.BLUE_STAINED_GLASS_PANE,
+        Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("blueprint")
     );
 
     public static final CustomItemStack OUTPUT_BACKGROUND_STACK = new CustomItemStack(
-        Material.GREEN_STAINED_GLASS_PANE, Theme.PASSIVE + "Output"
+        Material.GREEN_STAINED_GLASS_PANE,
+        Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("output")
     );
 
     private final int chargePerCraft;

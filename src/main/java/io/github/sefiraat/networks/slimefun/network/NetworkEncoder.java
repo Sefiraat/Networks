@@ -1,6 +1,10 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.itemstacks.Cooldowns;
+import dev.sefiraat.sefilib.itemstacks.GeneralItemStackUtils;
+import dev.sefiraat.sefilib.string.Theme;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -8,7 +12,7 @@ import io.github.sefiraat.networks.network.SupportedRecipes;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -49,11 +53,11 @@ public class NetworkEncoder extends NetworkObject {
     private static final int CHARGE_COST = 20000;
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Blank Blueprint"
+        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("blueprint_blank")
     );
 
     public static final CustomItemStack ENCODE_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Click to encode when valid"
+        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("encoder-craft")
     );
 
     public NetworkEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -110,21 +114,27 @@ public class NetworkEncoder extends NetworkObject {
         final long networkCharge = root.getRootPower();
 
         if (networkCharge < CHARGE_COST) {
-            player.sendMessage(Theme.WARNING + "Not enough Network power to fulfill this task.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("no-power", Theme.ERROR)
+            );
             return;
         }
 
         final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
         if (outputStack != null && outputStack.getType() != Material.AIR) {
-            player.sendMessage(Theme.WARNING + "The output slot must be empty.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("output-must-be-empty", Theme.WARNING)
+            );
             return;
         }
 
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
         if (!(SlimefunItem.getByItem(blueprint) instanceof CraftingBlueprint)) {
-            player.sendMessage(Theme.WARNING + "You need to provide a blank blueprint");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("no-blueprint", Theme.WARNING)
+            );
             return;
         }
 
@@ -157,11 +167,13 @@ public class NetworkEncoder extends NetworkObject {
 
         // If no item crafted OR result doesn't fit, escape
         if (crafted.getType() == Material.AIR) {
-            player.sendMessage(Theme.WARNING + "Doesn't look like this is a valid recipe.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("no-valid-recipe", Theme.WARNING)
+            );
             return;
         }
 
-        final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
+        final ItemStack blueprintClone = GeneralItemStackUtils.getAsQuantity(blueprint, 1);
 
         blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);

@@ -1,11 +1,13 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.string.Theme;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -35,8 +37,8 @@ public class NetworkPowerDisplay extends NetworkObject {
 
     private static final CustomItemStack EMPTY = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO + "Status",
-        Theme.PASSIVE + "Disconnected"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getString("gui.strings.status"),
+        Theme.PASSIVE + Networks.getLanguageManager().getString("gui.strings.disconnected")
     );
 
     public NetworkPowerDisplay(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -101,8 +103,8 @@ public class NetworkPowerDisplay extends NetworkObject {
     private static CustomItemStack getChargeStack(long charge) {
         return new CustomItemStack(
             Material.GREEN_STAINED_GLASS_PANE,
-            Theme.CLICK_INFO + "Status",
-            Theme.PASSIVE + "Current Network Charge: " + charge + "j"
+            Theme.CLICK_INFO + Networks.getLanguageManager().getString("gui.strings.status"),
+            Networks.getLanguageManager().getString("gui.strings.current-charge", Theme.PASSIVE, charge)
         );
     }
 }

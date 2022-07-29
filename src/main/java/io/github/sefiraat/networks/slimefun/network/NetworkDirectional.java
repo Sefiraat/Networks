@@ -1,8 +1,10 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -308,16 +310,22 @@ public abstract class NetworkDirectional extends NetworkObject {
     public static ItemStack getDirectionalSlotPane(@Nonnull BlockFace blockFace, @Nonnull SlimefunItem slimefunItem, boolean active) {
         final ItemStack displayStack = new CustomItemStack(
             slimefunItem.getItem(),
-            Theme.PASSIVE + "Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
+            Networks.getLanguageManager().getGuiIconName(
+                "directional-pane",
+                Theme.PASSIVE,
+                blockFace.name(),
+                ChatColor.stripColor(slimefunItem.getItemName())
+            )
         );
         final ItemMeta itemMeta = displayStack.getItemMeta();
         if (active) {
             itemMeta.addEnchant(Enchantment.LUCK, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
-        itemMeta.setLore(List.of(
-            Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-            Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+        itemMeta.setLore(Networks.getLanguageManager().getGuiIconLore(
+            "directional-pane",
+            Theme.CLICK_INFO,
+            Theme.PASSIVE
         ));
         displayStack.setItemMeta(itemMeta);
         return displayStack;
@@ -328,16 +336,22 @@ public abstract class NetworkDirectional extends NetworkObject {
         if (blockMaterial.isItem() && !blockMaterial.isAir()) {
             final ItemStack displayStack = new CustomItemStack(
                 blockMaterial,
-                Theme.PASSIVE + "Direction " + blockFace.name() + " (" + blockMaterial.name() + ")"
+                Networks.getLanguageManager().getGuiIconName(
+                    "directional-pane",
+                    Theme.PASSIVE,
+                    blockFace.name(),
+                    blockMaterial.name()
+                )
             );
             final ItemMeta itemMeta = displayStack.getItemMeta();
             if (active) {
                 itemMeta.addEnchant(Enchantment.LUCK, 1, true);
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
-            itemMeta.setLore(List.of(
-                Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-                Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+            itemMeta.setLore(Networks.getLanguageManager().getGuiIconLore(
+                "directional-pane",
+                Theme.CLICK_INFO,
+                Theme.PASSIVE
             ));
             displayStack.setItemMeta(itemMeta);
             return displayStack;
@@ -345,7 +359,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             Material material = active ? Material.GREEN_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
             return new CustomItemStack(
                 material,
-                ChatColor.GRAY + "Set direction: " + blockFace.name()
+                Networks.getLanguageManager().getGuiIconName("set-direction")
             );
         }
     }

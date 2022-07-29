@@ -8,8 +8,8 @@ import dev.sefiraat.netheopoiesis.api.plant.Placements;
 import dev.sefiraat.netheopoiesis.implementation.Stacks;
 import dev.sefiraat.netheopoiesis.utils.Skulls;
 import dev.sefiraat.netheopoiesis.utils.Theme;
+import dev.sefiraat.sefilib.itemstacks.GeneralItemStackUtils;
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.experimental.UtilityClass;
@@ -22,45 +22,45 @@ public class NetheoPlants {
         "NTW_STONE_CHUNK_SEED",
         Skulls.SEED_PURPLE.getPlayerHead(),
         Theme.SEED,
-        "Stone Chunk Seed",
-        new String[]{"This seed, when fully grown, will", "provide Stone Chunks when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Nether Grass (or better)")
+        Networks.getLanguageManager().getItemName("stone-chunk-seed"),
+        Networks.getLanguageManager().getStringArray("items.stone-chunk-seed.lore"),
+        Stacks.getCanBePlacedOnLore(Networks.getLanguageManager().getString("items.stone-chunk-seed.placed-on"))
     );
 
     public static final SlimefunItemStack SYNTHETIC_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_SEED",
         Skulls.SEED_ORANGE.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Seed",
-        new String[]{"This seed does nothing."},
-        Stacks.getCanBePlacedOnLore("Nether Grass (or better)")
+        Networks.getLanguageManager().getItemName("synthetic-seed"),
+        Networks.getLanguageManager().getStringArray("items.synthetic-seed.lore"),
+        Stacks.getCanBePlacedOnLore(Networks.getLanguageManager().getString("items.synthetic-seed.placed-on"))
     );
 
     public static final SlimefunItemStack SYNTHETIC_EMERALD_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_EMERALD_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Emerald Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Emeralds when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        Networks.getLanguageManager().getItemName("synthetic-emerald-seed"),
+        Networks.getLanguageManager().getStringArray("items.synthetic-emerald-seed.lore"),
+        Stacks.getCanBePlacedOnLore(Networks.getLanguageManager().getString("items.synthetic-emerald-seed.placed-on"))
     );
 
     public static final SlimefunItemStack SYNTHETIC_DIAMOND_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_DIAMOND_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Diamond Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Diamonds when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        Networks.getLanguageManager().getItemName("synthetic-diamond-seed"),
+        Networks.getLanguageManager().getStringArray("items.synthetic-diamond-seed.lore"),
+        Stacks.getCanBePlacedOnLore(Networks.getLanguageManager().getString("items.synthetic-diamond-seed.placed-on"))
     );
 
     public static final SlimefunItemStack FRAGMENTED_SEED = Theme.themedSeed(
         "NTW_FRAGMENTED_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Fragmented Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Emerald Shards when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        Networks.getLanguageManager().getItemName("fragmented-seed"),
+        Networks.getLanguageManager().getStringArray("items.fragmented-seed.lore"),
+        Stacks.getCanBePlacedOnLore(Networks.getLanguageManager().getString("items.fragmented-seed.placed-on"))
     );
 
     public static void setup() {
@@ -95,7 +95,7 @@ public class NetheoPlants {
             .tryRegister(plugin);
 
         new HarvestableSeed(FRAGMENTED_SEED)
-            .setHarvestingResult(StackUtils.getAsQuantity(NetworksSlimefunItemStacks.SYNTHETIC_EMERALD_SHARD, 9))
+            .setHarvestingResult(GeneralItemStackUtils.getAsQuantity(NetworksSlimefunItemStacks.SYNTHETIC_EMERALD_SHARD, 9))
             .setGrowth(new Growth(GrowthStages.VINEY_GREEN, Placements.VORACIOUS_AND_UP, 10, 0.005))
             .addBreedingPair(SYNTHETIC_SEED.getItemId(), Stacks.PERFECTION_SEED.getItemId(), 0.01, 0.001)
             .addFlavourProfile(10, 0, 0, 0, 0)

@@ -1,10 +1,12 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.string.TextUtils;
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.StringUtils;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -65,31 +67,29 @@ public class NetworkQuantumStorage extends SlimefunItem {
 
     private static final ItemStack BACK_INPUT = new CustomItemStack(
         Material.GREEN_STAINED_GLASS_PANE,
-        Theme.PASSIVE + "Input"
+        Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("input-items")
     );
 
     private static final ItemStack BACK_ITEM = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE,
-        Theme.PASSIVE + "Item Stored"
+        Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("stored-item")
     );
 
     private static final ItemStack NO_ITEM = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.ERROR + "No Registered Item",
-        Theme.PASSIVE + "Click the icon below while",
-        Theme.PASSIVE + "holding an item to register it."
+        Networks.getLanguageManager().getGuiIconName("no-item-registered", Theme.ERROR),
+        Networks.getLanguageManager().getGuiIconLore("no-item-registered", Theme.PASSIVE)
     );
 
     private static final ItemStack SET_ITEM = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
-        Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding"
+        Networks.getLanguageManager().getGuiIconName("set-item", Theme.SUCCESS),
+        Networks.getLanguageManager().getGuiIconLore("set-item", Theme.PASSIVE)
     );
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
         Material.ORANGE_STAINED_GLASS_PANE,
-        Theme.PASSIVE + "Output"
+        Theme.PASSIVE + Networks.getLanguageManager().getGuiIconName("output-items")
     );
 
     private static final int[] INPUT_SLOTS = new int[]{0, 2};
@@ -206,7 +206,9 @@ public class NetworkQuantumStorage extends SlimefunItem {
 
         final QuantumCache cache = CACHES.get(blockMenu.getLocation());
         if (cache == null || cache.getAmount() > 0) {
-            player.sendMessage(Theme.WARNING + "Quantum Storage must be empty before changing the set item.");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("quantum-must-be-empty", Theme.ERROR)
+            );
             return;
         }
         itemStack.setAmount(1);
@@ -427,9 +429,13 @@ public class NetworkQuantumStorage extends SlimefunItem {
             final ItemStack itemStack = cache.getItemStack().clone();
             final ItemMeta itemMeta = itemStack.getItemMeta();
             final List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+
+            final String langVoiding = Networks.getLanguageManager().getString("gui.strings.voiding");
+            final String langAmouunt = Networks.getLanguageManager().getString("gui.strings.amount");
+
             lore.add("");
-            lore.add(Theme.CLICK_INFO + "Voiding: " + Theme.PASSIVE + StringUtils.toTitleCase(String.valueOf(cache.isVoidExcess())));
-            lore.add(Theme.CLICK_INFO + "Amount: " + Theme.PASSIVE + cache.getAmount());
+            lore.add(Theme.CLICK_INFO + langVoiding + ": " + Theme.PASSIVE + TextUtils.toTitleCase(String.valueOf(cache.isVoidExcess())));
+            lore.add(Theme.CLICK_INFO + langAmouunt + ": " + Theme.PASSIVE + cache.getAmount());
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             itemStack.setAmount(1);

@@ -1,9 +1,11 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import de.jeff_media.morepersistentdatatypes.DataType;
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.utils.Keys;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -55,7 +57,10 @@ public class NetworkRemote extends SlimefunItem {
                             ) {
                                 setGrid(e.getItem(), block, player);
                             } else {
-                                player.sendMessage(Theme.ERROR + "Must be set to a Network Grid (not crafting grid).");
+                                player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                                    "remote.grid-not-set",
+                                    Theme.ERROR
+                                ));
                             }
                         }
                     } else {
@@ -71,7 +76,10 @@ public class NetworkRemote extends SlimefunItem {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         DataTypeMethods.setCustom(itemMeta, KEY, DataType.LOCATION, block.getLocation());
         itemStack.setItemMeta(itemMeta);
-        player.sendMessage(Theme.SUCCESS + "Grid has been bound to the remote.");
+        player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+            "remote.grid-set",
+            Theme.SUCCESS
+        ));
     }
 
     public static void tryOpenGrid(@Nonnull ItemStack itemStack, @Nonnull Player player, int range) {
@@ -81,7 +89,10 @@ public class NetworkRemote extends SlimefunItem {
         if (location != null) {
 
             if (!location.getWorld().isChunkLoaded(location.getBlockX() / 16, location.getBlockZ() / 16)) {
-                player.sendMessage(Theme.ERROR + "The bound grid is not loaded.");
+                player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                    "remote.grid-not-loaded",
+                    Theme.ERROR
+                ));
                 return;
             }
 
@@ -93,10 +104,16 @@ public class NetworkRemote extends SlimefunItem {
             ) {
                 openGrid(location, player);
             } else {
-                player.sendMessage(Theme.ERROR + "The bound grid is not within reach.");
+                player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                    "remote.grid-out-of-range",
+                    Theme.ERROR
+                ));
             }
         } else {
-            player.sendMessage(Theme.ERROR + "Remote is not bound to a grid.");
+            player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                "remote.grid-not-bound",
+                Theme.ERROR
+            ));
         }
     }
 
@@ -108,7 +125,10 @@ public class NetworkRemote extends SlimefunItem {
         ) {
             blockMenu.open(player);
         } else {
-            player.sendMessage(Theme.ERROR + "The bound grid can no longer be found.");
+            player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                "remote.grid-bound-grid-not-found",
+                Theme.ERROR
+            ));
         }
     }
 

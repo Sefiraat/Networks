@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import dev.sefiraat.sefilib.itemstacks.GeneralItemStackUtils;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
@@ -200,7 +201,7 @@ public class NetworkRoot extends NetworkNode {
             if (itemStack == null || itemStack.getType() == Material.AIR) {
                 continue;
             }
-            final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
+            final ItemStack clone = GeneralItemStackUtils.getAsQuantity(itemStack, 1);
             final Integer currentAmount = itemStacks.get(clone);
             final int newAmount;
             if (currentAmount == null) {
@@ -223,7 +224,7 @@ public class NetworkRoot extends NetworkNode {
                 if (itemStack == null || itemStack.getType() == Material.AIR) {
                     continue;
                 }
-                final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
+                final ItemStack clone = GeneralItemStackUtils.getAsQuantity(itemStack, 1);
                 final Integer currentAmount = itemStacks.get(clone);
                 final int newAmount;
                 if (currentAmount == null) {

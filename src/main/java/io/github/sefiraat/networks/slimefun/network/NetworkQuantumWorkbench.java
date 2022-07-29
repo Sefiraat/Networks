@@ -1,8 +1,10 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.utils.Keys;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -27,6 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +47,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
     private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
         Material.CRAFTING_TABLE,
-        Theme.CLICK_INFO + "Click to entangle"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getGuiIconName("quantum-workbench-craft")
     );
 
     private static final Map<ItemStack[], ItemStack> RECIPES = new HashMap<>();
@@ -53,9 +56,9 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
         Keys.newKey("quantum-workbench"),
         Theme.themedItemStack(
             Material.BRAIN_CORAL_BLOCK,
-            Theme.MACHINE,
-            "Quantum Workbench",
-            "Crafted using the Quantum Workbench."
+            Themes.MACHINE,
+            Networks.getLanguageManager().getRecipeTypeName("quantum-workbench"),
+            Networks.getLanguageManager().getRecipeTypeLore("quantum-workbench")
         ),
         NetworkQuantumWorkbench::addRecipe
     );

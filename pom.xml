@@ -168,6 +168,12 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>dev.sefiraat</groupId>
+            <artifactId>SefiLib</artifactId>
+            <version>0.1.4.4</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Supported Plugins -->
         <dependency>

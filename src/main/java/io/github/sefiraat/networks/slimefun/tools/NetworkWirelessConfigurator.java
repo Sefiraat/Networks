@@ -1,10 +1,12 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import de.jeff_media.morepersistentdatatypes.DataType;
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
 import io.github.sefiraat.networks.utils.Keys;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -54,7 +56,10 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
                                 setReceiver(heldItem, blockMenu, player);
                             }
                         } else {
-                            player.sendMessage(Theme.ERROR + "Must target a Network Wireless block.");
+                            player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                                "wireless-configurator.wrong-block",
+                                Theme.ERROR
+                            ));
                         }
                     }
                     e.cancel();
@@ -72,17 +77,26 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
         final Location location = PersistentDataAPI.get(itemMeta, TARGET_LOCATION, DataType.LOCATION);
 
         if (location == null) {
-            player.sendMessage(Theme.ERROR + "No Wireless Receiver has been set.");
+            player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                    "wireless-configurator.not-set",
+                    Theme.ERROR
+            ));
             return;
         }
 
         if (location.getWorld() != blockMenu.getLocation().getWorld()) {
-            player.sendMessage(Theme.ERROR + "The Wireless Receiver is in a different world.");
+            player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+                "wireless-configurator.wrong-world",
+                Theme.ERROR
+            ));
             return;
         }
 
         transmitter.addLinkedLocation(blockMenu.getBlock(), location);
-        player.sendMessage(Theme.SUCCESS + "Set Transmitter's receiver location.");
+        player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+            "wireless-configurator.transmitter-set",
+            Theme.SUCCESS
+        ));
     }
 
     private void setReceiver(@Nonnull ItemStack itemStack, @Nonnull BlockMenu blockMenu, @Nonnull Player player) {
@@ -90,6 +104,9 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataAPI.set(itemMeta, TARGET_LOCATION, DataType.LOCATION, location);
         itemStack.setItemMeta(itemMeta);
-        player.sendMessage(Theme.SUCCESS + "Wireless Receiver set.");
+        player.sendMessage(Networks.getLanguageManager().getPlayerMessage(
+            "wireless-configurator.receiver-set",
+            Theme.SUCCESS
+        ));
     }
 }

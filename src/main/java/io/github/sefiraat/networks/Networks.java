@@ -1,7 +1,9 @@
 package io.github.sefiraat.networks;
 
+import dev.sefiraat.sefilib.localization.LanguageManager;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
+import io.github.sefiraat.networks.managers.NetworksLanguageManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
@@ -30,6 +32,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     private ListenerManager listenerManager;
     private SupportedPluginManager supportedPluginManager;
+    private NetworksLanguageManager languageManager;
 
     public Networks() {
         this.username = "Sefiraat";
@@ -47,6 +50,9 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         saveDefaultConfig();
         tryUpdate();
+
+        final String chosenLanguage = getConfig().getString("language", "en-GB");
+        this.languageManager = new NetworksLanguageManager(this, "lang", chosenLanguage, "en-GB.yml");
 
         this.supportedPluginManager = new SupportedPluginManager();
 
@@ -74,7 +80,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
             try {
                 NetheoPlants.setup();
             } catch (NoClassDefFoundError e) {
-                getLogger().severe("Netheopoiesis must be updated to meet Networks' requirements.");
+                getLogger().severe(getLanguageManager().getLoggingMessage("netheopoiesis_update"));
             }
         }
     }
@@ -118,5 +124,9 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public static ListenerManager getListenerManager() {
         return Networks.getInstance().listenerManager;
+    }
+
+    public static NetworksLanguageManager getLanguageManager() {
+        return Networks.getInstance().languageManager;
     }
 }

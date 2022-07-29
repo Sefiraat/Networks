@@ -1,7 +1,11 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import dev.sefiraat.sefilib.itemstacks.Cooldowns;
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,9 +28,9 @@ public interface CanCooldown {
 
     @ParametersAreNonnullByDefault
     default boolean canBeUsed(@Nullable Player player, ItemStack itemStack) {
-        if (StackUtils.isOnCooldown(itemStack)) {
+        if (Cooldowns.isOnCooldown(Keys.ON_COOLDOWN, itemStack)) {
             if (player != null) {
-                player.sendMessage(Theme.WARNING + "This is still on cooldown");
+                player.sendMessage(Networks.getLanguageManager().getPlayerMessage("on-cooldown", Theme.ERROR));
             }
             return false;
         } else {
@@ -36,6 +40,6 @@ public interface CanCooldown {
 
     @ParametersAreNonnullByDefault
     default void putOnCooldown(ItemStack itemStack) {
-        StackUtils.putOnCooldown(itemStack, this.cooldownDuration());
+        Cooldowns.addCooldown(Keys.ON_COOLDOWN, itemStack, this.cooldownDuration());
     }
 }

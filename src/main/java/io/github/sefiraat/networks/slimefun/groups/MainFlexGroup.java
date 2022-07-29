@@ -1,7 +1,9 @@
 package io.github.sefiraat.networks.slimefun.groups;
 
+import dev.sefiraat.sefilib.string.Theme;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
@@ -19,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 /**
  * @noinspection deprecation
@@ -27,11 +30,9 @@ public class MainFlexGroup extends FlexItemGroup {
 
     private static final ItemStack DOCS_ITEM_STACK = Theme.themedItemStack(
         Material.BOOK,
-        Theme.GUIDE,
-        "Documentation Wiki",
-        "Click to get the link to the",
-        "documentation Wiki for Networks",
-        "and other Sefiraat addons."
+        Themes.GUIDE,
+        Networks.getLanguageManager().getGuiIconName("documentation"),
+        Networks.getLanguageManager().getGuiIconLore("documentation")
     );
 
     private static final int GUIDE_BACK = 1;
@@ -61,7 +62,7 @@ public class MainFlexGroup extends FlexItemGroup {
     @Override
     @ParametersAreNonnullByDefault
     public void open(Player p, PlayerProfile profile, SlimefunGuideMode mode) {
-        final ChestMenu chestMenu = new ChestMenu(Theme.MAIN.getColor() + "Networks");
+        final ChestMenu chestMenu = new ChestMenu(Themes.MAIN.getColor() + "Networks");
 
         for (int slot : HEADER) {
             chestMenu.addItem(slot, ChestMenuUtils.getBackground(), (player1, i1, itemStack, clickAction) -> false);
@@ -99,7 +100,9 @@ public class MainFlexGroup extends FlexItemGroup {
         // Docs
         menu.replaceExistingItem(DOCS, DOCS_ITEM_STACK);
         menu.addMenuClickHandler(DOCS, (player1, i1, itemStack1, clickAction) -> {
-            final TextComponent link = new TextComponent("To access the documentation Wiki, please click here");
+            final TextComponent link = new TextComponent(
+                Networks.getLanguageManager().getPlayerMessage("documentation")
+            );
             link.setColor(ChatColor.YELLOW);
             link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sefiraat.dev/"));
             player.spigot().sendMessage(link);

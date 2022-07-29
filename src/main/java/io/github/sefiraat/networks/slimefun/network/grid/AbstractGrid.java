@@ -1,13 +1,15 @@
 package io.github.sefiraat.networks.slimefun.network.grid;
 
+import dev.sefiraat.sefilib.string.Theme;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.GridItemRequest;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.Theme;
+import io.github.sefiraat.networks.utils.Themes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -49,22 +51,22 @@ public abstract class AbstractGrid extends NetworkObject {
 
     private static final CustomItemStack PAGE_PREVIOUS_STACK = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Previous Page"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getGuiIconName("previous-page")
     );
 
     private static final CustomItemStack PAGE_NEXT_STACK = new CustomItemStack(
         Material.RED_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Next Page"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getGuiIconName("next-page")
     );
 
     private static final CustomItemStack CHANGE_SORT_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE,
-        Theme.CLICK_INFO.getColor() + "Change Sort Order"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getGuiIconName("sort-order")
     );
 
     private static final CustomItemStack FILTER_STACK = new CustomItemStack(
         Material.NAME_TAG,
-        Theme.CLICK_INFO.getColor() + "Set Filter (Right Click to Clear)"
+        Theme.CLICK_INFO + Networks.getLanguageManager().getGuiIconName("set-filter")
     );
 
     private static final Comparator<Map.Entry<ItemStack, Integer>> ALPHABETICAL_SORT = Comparator.comparing(
@@ -237,13 +239,17 @@ public abstract class AbstractGrid extends NetworkObject {
             gridCache.setFilter(null);
         } else {
             player.closeInventory();
-            player.sendMessage(Theme.WARNING + "Type what you would like to filter this grid to");
+            player.sendMessage(
+                Networks.getLanguageManager().getPlayerMessage("grid-filter-set", Theme.WARNING)
+            );
             ChatUtils.awaitInput(player, s -> {
                 if (s.isBlank()) {
                     return;
                 }
                 gridCache.setFilter(s.toLowerCase(Locale.ROOT));
-                player.sendMessage(Theme.SUCCESS + "Filter applied");
+                player.sendMessage(
+                    Networks.getLanguageManager().getPlayerMessage("grid-filter-applied", Theme.SUCCESS)
+                );
             });
         }
         return false;
@@ -373,10 +379,11 @@ public abstract class AbstractGrid extends NetworkObject {
 
     @Nonnull
     private static List<String> getLoreAddition(int amount) {
-        final MessageFormat format = new MessageFormat("{0}Amount: {1}{2}", Locale.ROOT);
+        final String langAmount = Networks.getLanguageManager().getString("gui.strings.amount");
+        final MessageFormat format = new MessageFormat("{0}{1}: {2}{3}", Locale.ROOT);
         return List.of(
             "",
-            format.format(new Object[]{Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount}, new StringBuffer(), null).toString()
+            format.format(new Object[]{Theme.CLICK_INFO.getColor(), langAmount, Theme.PASSIVE.getColor(), amount}, new StringBuffer(), null).toString()
         );
     }
 }
