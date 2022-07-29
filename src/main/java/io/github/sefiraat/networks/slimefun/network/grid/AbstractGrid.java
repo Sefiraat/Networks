@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.MessageFormat;
 import java.util.Comparator;
@@ -192,10 +193,9 @@ public abstract class AbstractGrid extends NetworkObject {
                 displayStack.setItemMeta(itemMeta);
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
                 blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
-                                                  retrieveItem(player, definition, item, action, blockMenu);
-                                                  return false;
-                                              }
-                );
+                    retrieveItem(player, definition, item, action, blockMenu);
+                    return false;
+                });
             } else {
                 blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
                 blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
@@ -250,7 +250,12 @@ public abstract class AbstractGrid extends NetworkObject {
     }
 
     @ParametersAreNonnullByDefault
-    protected void retrieveItem(Player player, NodeDefinition definition, ItemStack itemStack, ClickAction action, BlockMenu blockMenu) {
+    protected void retrieveItem(Player player, NodeDefinition definition, @Nullable ItemStack itemStack, ClickAction action, BlockMenu blockMenu) {
+        // Todo Item can be null here. No idea how - investigate later
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return;
+        }
+
         final ItemStack clone = itemStack.clone();
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
