@@ -83,6 +83,7 @@ public class NetworkSlimefunItems {
     public static final NetworkPowerNode NETWORK_CAPACITOR_1;
     public static final NetworkPowerNode NETWORK_CAPACITOR_2;
     public static final NetworkPowerNode NETWORK_CAPACITOR_3;
+    public static final NetworkPowerNode NETWORK_CAPACITOR_4;
     public static final NetworkPowerOutlet NETWORK_POWER_OUTLET_1;
     public static final NetworkPowerOutlet NETWORK_POWER_OUTLET_2;
     public static final NetworkPowerDisplay NETWORK_POWER_DISPLAY;
@@ -557,7 +558,19 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_2.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
             },
-            1000000
+            100000
+        );
+
+        NETWORK_CAPACITOR_4 = new NetworkPowerNode(
+                NetworksItemGroups.NETWORK_ITEMS,
+                NetworksSlimefunItemStacks.NETWORK_CAPACITOR_4,
+                RecipeType.ENHANCED_CRAFTING_TABLE,
+                new ItemStack[]{
+                        NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
+                        NETWORK_CAPACITOR_3.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
+                        NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
+                },
+                1000000
         );
 
         NETWORK_POWER_OUTLET_1 = new NetworkPowerOutlet(
@@ -816,6 +829,7 @@ public class NetworkSlimefunItems {
         NETWORK_CAPACITOR_1.register(plugin);
         NETWORK_CAPACITOR_2.register(plugin);
         NETWORK_CAPACITOR_3.register(plugin);
+        NETWORK_CAPACITOR_4.register(plugin);
         NETWORK_POWER_OUTLET_1.register(plugin);
         NETWORK_POWER_OUTLET_2.register(plugin);
         NETWORK_POWER_DISPLAY.register(plugin);
