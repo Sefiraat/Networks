@@ -2,7 +2,6 @@ items:
   synthetic-emerald-shard:
     name: "Synthetic Emerald Shard"
     lore:
-      - "Synthetic Emerald Shard"
       - "A shard of synthetic emerald that"
       - "is the backbone for information"
       - "transference."
@@ -600,6 +599,7 @@ messages:
       issue-converting: "{0}This block has either not been set to an item yet or is a corrupted Quantum Storage."
   logging:
     netheopoiesis_update: "Netheopoiesis must be updated to meet Networks' requirements."
-assigned-recipe: "{0}Assigned Recipe"
-nothing: "{0}Nothing"
-outputting: "{0}Outputting"
+misc:
+  assigned-recipe: "{0}Assigned Recipe"
+  nothing: "{0}Nothing"
+  outputting: "{0}Outputting"

@@ -37,11 +37,11 @@ public class CraftingBlueprint extends UnplaceableBlock {
         );
         List<String> lore = new ArrayList<>();
 
-        lore.add(Networks.getLanguageManager().getString("assigned-recipe", Theme.CLICK_INFO));
+        lore.add(Networks.getLanguageManager().getString("misc.assigned-recipe", Theme.CLICK_INFO));
 
         for (ItemStack item : recipe) {
             if (item == null) {
-                lore.add(Networks.getLanguageManager().getString("nothing", Theme.PASSIVE));
+                lore.add(Networks.getLanguageManager().getString("misc.nothing", Theme.PASSIVE));
                 continue;
             }
             ItemMeta recipeItemMeta = item.getItemMeta();
@@ -53,7 +53,7 @@ public class CraftingBlueprint extends UnplaceableBlock {
         }
 
         lore.add("");
-        lore.add(Networks.getLanguageManager().getString("outputting", Theme.CLICK_INFO));
+        lore.add(Networks.getLanguageManager().getString("misc.outputting", Theme.CLICK_INFO));
 
         if (outputMeta.hasDisplayName()) {
             lore.add(Theme.PASSIVE + ChatColor.stripColor(outputMeta.getDisplayName()));
