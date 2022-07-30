@@ -66,6 +66,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
     public static final SlimefunItemStack NETWORK_CAPACITOR_3;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_4;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_1;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_2;
     public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
@@ -512,7 +513,19 @@ public class NetworksSlimefunItemStacks {
             "power in and store it for use",
             "within the network.",
             "",
-            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
+            MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 100000)
+        );
+
+        NETWORK_CAPACITOR_4 = Theme.themedSlimefunItemStack(
+                "NTW_CAPACITOR_4",
+                new ItemStack(Material.GRAY_GLAZED_TERRACOTTA),
+                Theme.MACHINE,
+                "Network Capacitor (4)",
+                "The Network Capacitor can take",
+                "power in and store it for use",
+                "within the network.",
+                "",
+                MessageFormat.format("{0}Capacity: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
         );
 
         NETWORK_POWER_OUTLET_1 = Theme.themedSlimefunItemStack(
