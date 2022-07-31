@@ -1,27 +1,27 @@
 items:
   synthetic-emerald-shard:
-    name: "Synthetic Emerald Shard"
+    name: "人造绿宝石碎片"
     lore:
-      - "A shard of synthetic emerald that"
-      - "is the backbone for information"
-      - "transference."
+      - "一块人造绿宝石的碎片"
+      - "是信息传输的支柱。"
+      - " "
   optic-glass:
-    name: "Optic Glass"
+    name: "光学玻璃"
     lore:
-      - "A simple glass that is able to"
-      - "transfer small bits of information."
+      - "一块能够传输少量"
+      - "信息的简易玻璃。"
   optic-cable:
-    name: "Optic Cable"
+    name: "光缆"
     lore:
-      - "A simple wire that is able to"
-      - "transfer large bits of information."
+      - "一根能够传输大量"
+      - "信息的简易线缆。"
   optic-star:
-    name: "Optic Star"
+    name: "光学之星"
     lore:
-      - "A crystalline star structure that"
-      - "can transfer large bits of information."
+      - "一种能够传输大量"
+      - "信息的晶状星形结构。"
   radioactive-optic-star:
-    name: "Radioactive Optic Star"
+    name: "放射性光学之星"
     lore:
       - "A crystalline star structure that"
       - "can store insane amounts of information."
