@@ -57,40 +57,40 @@ items:
       - "在完整的外壳中"
       - "的完美人工智能。"
   interdimensional-presence:
-    name: "Interdimensional Presence"
+    name: "跨跃维度的存在"
     lore:
-      - "An artificial intelligence that has"
-      - "grown too powerful for just a"
-      - "single dimension."
+      - "这种完美级的人工智能"
+      - "甚至还掌握了"
+      - "跨越维度的能力。"
   network-controller:
-    name: "Network Controller"
+    name: "网络控制器"
     lore:
-      - "The Network controller is the brain"
-      - "for the whole network. Max 1 per network."
+      - "网络控制器是网络的核心部分。"
+      - "每个网络最多有1个控制器。"
   network-bridge:
-    name: "Network Bridge"
+    name: "网桥"
     lore:
-      - "The bridge allows you to cheaply"
-      - "connect network objects together."
+      - "网桥用于连接不同的网络物品，"
+      - "更方便地组成一个完整的网络。"
   network-monitor:
-    name: "Network Monitor"
+    name: "网络监视器"
     lore:
-      - "The Network Monitor allows simple"
-      - "import/export interaction with adjacent"
-      - "objects."
+      - "网络监视器集成了输入/输出功能，"
+      - "可以与附近的方块交互。"
+      - " "
       - ""
-      - "Currently Supports:"
-      - "Infinity Barrels"
-      - "Network Shells"
+      - "目前支持："
+      - "无尽贪婪 - 存储单元"
+      - "网络 - 量子存储"
   network-importer:
-    name: "Network Importer"
+    name: "网络入口"
     lore:
-      - "The Network Importer brings any"
-      - "item inside it into the network, up"
-      - "to 9 stacks per SF tick."
-      - "Accepts items in from cargo."
+      - "网络入口会将其中的"
+      - "任何物品送入网络，"
+      - "每粘液刻最多可传输9组物品。"
+      - "可接收来自货运网络的物品。"
   network-exporter:
-    name: "Network Exporter"
+    name: "网络出口"
     lore:
       - "The Network Exporter can be set to"
       - "constantly export 1 stack of any"
