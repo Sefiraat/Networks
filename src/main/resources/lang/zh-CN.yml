@@ -23,39 +23,39 @@ items:
   radioactive-optic-star:
     name: "放射性光学之星"
     lore:
-      - "A crystalline star structure that"
-      - "can store insane amounts of information."
+      - "一种能够传输巨量"
+      - "信息的晶状星形结构。"
   shrinking-base:
-    name: "Shrinking Base"
+    name: "缩小底座"
     lore:
-      - "An advanced construct able to make"
-      - "big things go small."
+      - "一种可以让大型物品"
+      - "变小的高级结构。"
   simple-nanobots:
-    name: "Simple Nanobots"
+    name: "简易纳米机器人"
     lore:
-      - "Teeny Tiny little bots that can"
-      - "help you with precise tasks."
+      - "这些微型机器人可以"
+      - "帮你完成精密的任务。"
   advanced-nanobots:
-    name: "Advanced Nanobots"
+    name: "高级纳米机器人"
     lore:
-      - "Teeny Tiny little bots that can"
-      - "help you with precise tasks."
-      - "This version is smarter and faster."
+      - "这些微型机器人可以"
+      - "帮你完成精密的任务。"
+      - "这个版本更加智能且高效。"
   ai-core:
-    name: "A.I. Core"
+    name: "人工智能核心"
     lore:
-      - "A burgeoning artificial intelligence"
-      - "resides within this weak shell."
+      - "在脆弱外壳的保护下"
+      - "不断成长的人工智能。"
   empowered-ai-core:
-    name: "Empowered A.I. Core"
+    name: "充能人工智能核心"
     lore:
-      - "A flourishing artificial intelligence"
-      - "resides within this shell."
+      - "在外壳中的"
+      - "高级人工智能。"
   pristine-ai-core:
-    name: "Pristine A.I. Core"
+    name: "古代人工智能核心"
     lore:
-      - "A perfected artificial intelligence"
-      - "resides within this defined shell."
+      - "在完整的外壳中"
+      - "的完美人工智能。"
   interdimensional-presence:
     name: "Interdimensional Presence"
     lore:
