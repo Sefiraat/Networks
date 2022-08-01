@@ -1,0 +1,604 @@
+items:
+  synthetic-emerald-shard:
+    name: "Synthetic Emerald Shard"
+    lore:
+      - "A shard of synthetic emerald that"
+      - "is the backbone for information"
+      - "transference."
+  optic-glass:
+    name: "Optic Glass"
+    lore:
+      - "A simple glass that is able to"
+      - "transfer small bits of information."
+  optic-cable:
+    name: "Optic Cable"
+    lore:
+      - "A simple wire that is able to"
+      - "transfer large bits of information."
+  optic-star:
+    name: "Optic Star"
+    lore:
+      - "A crystalline star structure that"
+      - "can transfer large bits of information."
+  radioactive-optic-star:
+    name: "Radioactive Optic Star"
+    lore:
+      - "A crystalline star structure that"
+      - "can store insane amounts of information."
+  shrinking-base:
+    name: "Shrinking Base"
+    lore:
+      - "An advanced construct able to make"
+      - "big things go small."
+  simple-nanobots:
+    name: "Simple Nanobots"
+    lore:
+      - "Teeny Tiny little bots that can"
+      - "help you with precise tasks."
+  advanced-nanobots:
+    name: "Advanced Nanobots"
+    lore:
+      - "Teeny Tiny little bots that can"
+      - "help you with precise tasks."
+      - "This version is smarter and faster."
+  ai-core:
+    name: "A.I. Core"
+    lore:
+      - "A burgeoning artificial intelligence"
+      - "resides within this weak shell."
+  empowered-ai-core:
+    name: "Empowered A.I. Core"
+    lore:
+      - "A flourishing artificial intelligence"
+      - "resides within this shell."
+  pristine-ai-core:
+    name: "Pristine A.I. Core"
+    lore:
+      - "A perfected artificial intelligence"
+      - "resides within this defined shell."
+  interdimensional-presence:
+    name: "Interdimensional Presence"
+    lore:
+      - "An artificial intelligence that has"
+      - "grown too powerful for just a"
+      - "single dimension."
+  network-controller:
+    name: "Network Controller"
+    lore:
+      - "The Network controller is the brain"
+      - "for the whole network. Max 1 per network."
+  network-bridge:
+    name: "Network Bridge"
+    lore:
+      - "The bridge allows you to cheaply"
+      - "connect network objects together."
+  network-monitor:
+    name: "Network Monitor"
+    lore:
+      - "The Network Monitor allows simple"
+      - "import/export interaction with adjacent"
+      - "objects."
+      - ""
+      - "Currently Supports:"
+      - "Infinity Barrels"
+      - "Network Quantum Storages"
+  network-importer:
+    name: "Network Importer"
+    lore:
+      - "The Network Importer brings any"
+      - "item inside it into the network, up"
+      - "to 9 stacks per SF tick."
+      - "Accepts items in from cargo."
+  network-exporter:
+    name: "Network Exporter"
+    lore:
+      - "The Network Exporter can be set to"
+      - "constantly export 1 stack of any"
+      - "given item."
+      - "Accepts item withdrawal from cargo."
+  network-grabber:
+    name: "Network Grabber"
+    lore:
+      - "The Network Grabber will try"
+      - "to grab the first item it finds"
+      - "from within the selected machine."
+  network-pusher:
+    name: "Network Pusher"
+    lore:
+      - "The Network Pusher will try"
+      - "to push a matching item from a"
+      - "given item into the chosen machine."
+  network-vanilla-grabber:
+    name: "Network Vanilla Grabber"
+    lore:
+      - "The Network Vanilla Grabber will try"
+      - "to grab the first possible item from"
+      - "the chosen vanilla inventory."
+      - "You need to grab items from this"
+      - "node using a Grabber."
+  network-vanilla-pusher:
+    name: "Network Vanilla Pusher"
+    lore:
+      - "The Network Vanilla Pusher will try"
+      - "to push any item inside itself into"
+      - "the chosen vanilla inventory."
+      - "You need to push items into this"
+      - "node from a Pusher."
+  network-wireless-transmitter:
+    name: "Network Wireless Transmitter"
+    lore:
+      - "The Network Wireless Transmitter will"
+      - "try to transmit any item inside itself"
+      - "to a linked Network Wireless Receiver"
+      - "located within the same world."
+      - "Use the Wireless Configurator to"
+      - "setup the Wireless Transmitter."
+      - "Requires 7,500 Network Power per transfer."
+  network-wireless-receiver:
+    name: "Network Wireless Receiver"
+    lore:
+      - "The Network Wireless Receiver is"
+      - "able to receive items from a linked"
+      - "wireless transmitter located within"
+      - "the same world."
+      - "It will try to push received items"
+      - "into the Network each tick."
+  network-purger:
+    name: "Network Purger"
+    lore:
+      - "The Network Purger will pull"
+      - "matching items from the network"
+      - "and instantly void them."
+      - "Use with great care!"
+  network-grid:
+    name: "Network Grid"
+    lore:
+      - "The Network Grid shows you all"
+      - "the items you have in the network"
+      - "and lets you insert or withdraw"
+      - "directly."
+  network-crafting-grid:
+    name: "Network Crafting Grid"
+    lore:
+      - "The Network Crafting Grid acts"
+      - "like a normal grid but displays less"
+      - "items but allows crafting using items"
+      - "directly from the network."
+  network-cell:
+    name: "Network Cell"
+    lore:
+      - "The Network Cell is a large"
+      - "(double chest) inventory that can"
+      - "be accessed both from the network"
+      - "and in the world."
+  network-greedy-block:
+    name: "Network Greedy Block"
+    lore:
+      - "The Network Greedy Block can"
+      - "be set to one item which it will"
+      - "then greedily hold on to a single"
+      - "stack of. If more incoming items"
+      - "do not fit, they will not enter"
+      - "the network."
+  network-quantum-workbench:
+    name: "Network Quantum Workbench"
+    lore:
+      - "Allows the crafting of Quantum Storages."
+  network-quantum-storage-1:
+    name: "Network Quantum Storage (4K)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-2:
+    name: "Network Quantum Storage (32K)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-3:
+    name: "Network Quantum Storage (262K)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-4:
+    name: "Network Quantum Storage (2M)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-5:
+    name: "Network Quantum Storage (16M)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-6:
+    name: "Network Quantum Storage (134M)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-7:
+    name: "Network Quantum Storage (1B)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-quantum-storage-8:
+    name: "Network Quantum Storage (∞)"
+    lore:
+      - "Stores {0} items"
+      - ""
+      - "Stores items in mass quantities within"
+      - "a quantum singularity."
+  network-capacitor-1:
+    name: "Network Capacitor (1)"
+    lore:
+      - "The Network Capacitor can take"
+      - "power in and store it for use"
+      - "within the network."
+      - ""
+      - "{0}Capacity: {1}{2}"
+  network-capacitor-2:
+    name: "Network Capacitor (2)"
+    lore:
+      - "The Network Capacitor can take"
+      - "power in and store it for use"
+      - "within the network."
+      - ""
+      - "{0}Capacity: {1}{2}"
+  network-capacitor-3:
+    name: "Network Capacitor (3)"
+    lore:
+      - "The Network Capacitor can take"
+      - "power in and store it for use"
+      - "within the network."
+      - ""
+      - "{0}Capacity: {1}{2}"
+  network-power-outlet-1:
+    name: "Network Power Outlet (1)"
+    lore:
+      - "The Network Outlet can take"
+      - "power from the Network to power"
+      - "machines or feed back into an"
+      - "EnergyNet network."
+      - ""
+      - "Operates at a 20% loss rate."
+      - ""
+      - "{0}Max Transfer: {1}{2}"
+  network-power-outlet-2:
+    name: "Network Power Outlet (2)"
+    lore:
+      - "The Network Outlet can take"
+      - "power from the Network to power"
+      - "machines or feed back into an"
+      - "EnergyNet network."
+      - ""
+      - "Operates at a 20% loss rate."
+      - ""
+      - "{0}Max Transfer: {1}{2}"
+  network-power-display:
+    name: "Network Power Display"
+    lore:
+      - "The Network Power Display will"
+      - "display the power in the network."
+      - "Simple, right?"
+  network-recipe-encoder:
+    name: "Network Recipe Encoder"
+    lore:
+      - "Used to form a Crafting Blueprint"
+      - "from input items."
+      - ""
+      - "{0}Network Drain: {1}{2}/encode"
+  network-auto-crafter:
+    name: "Network Auto Crafter"
+    lore:
+      - "The Network Auto Crafter accepts"
+      - "a crafting blueprint. When the"
+      - "blueprint output item is requested"
+      - "while there is none in the network"
+      - "it will be crafted if you have"
+      - "materials."
+      - ""
+      - "{0}Network Drain: {1}{2}/craft"
+  network-auto-crafter-withholding:
+    name: "Network Auto Crafter (Withholding)"
+    lore:
+      - "The Network Auto Crafter accepts"
+      - "a crafting blueprint. When the"
+      - "blueprint output item is requested"
+      - "while there is none in the network"
+      - "it will be crafted if you have"
+      - "materials."
+      - ""
+      - "A Withholding Crafter will keep"
+      - "a stack in the output and stop"
+      - "crafting. The stack can been seen"
+      - "in the Network and also allows for"
+      - "cargo."
+      - ""
+      - "{0}Network Drain: {1}{2}/craft"
+  crafting-blueprint:
+    name: "Crafting Blueprint"
+    lore:
+      - "A blank blueprint that can"
+      - "be used to store a crafting"
+      - "recipe."
+  network-probe:
+    name: "Network Probe"
+    lore:
+      - "When used on a controller, this will"
+      - "show the nodes on the network."
+  network-remote:
+    name: "Network Remote"
+    lore:
+      - "Opens a bound grid wirelessly."
+      - "The grid must be chunk loaded."
+      - ""
+      - "{0}Range: {1}{2}"
+  network-remote-empowered:
+    name: "Network Remote Empowered"
+    lore:
+      - "Opens a bound grid wirelessly."
+      - "The grid must be chunk loaded."
+      - ""
+      - "{0}Range: {1}{2}"
+  network-remote-pristine:
+    name: "Network Remote Pristine"
+    lore:
+      - "Opens a bound grid wirelessly."
+      - "The grid must be chunk loaded."
+      - ""
+      - "{0}Range: {1}Unlimited"
+  network-remote-ultimate:
+    name: "Network Remote Ultimate"
+    lore:
+      - "Opens a bound grid wirelessly."
+      - "The grid must be chunk loaded."
+      - ""
+      - "{0}Range: {1}Cross Dimensional"
+  network-crayon:
+    name: "Network Crayon"
+    lore:
+      - "When used on a controller, this will"
+      - "enable particle display from specific"
+      - "blocks when working."
+  network-configurator:
+    name: "Network Configurator"
+    lore:
+      - "Used to copy and paste the"
+      - "configurations of directional"
+      - "interfaces."
+      - ""
+      - "{0}Right Click: {1}Apply Config"
+      - "{0}Shift Right Click: {1}Store Config"
+  network-wireless-configurator:
+    name: "Network Wireless Configurator"
+    lore:
+      - "Used to store a Receiver location"
+      - "and then to apply to a Transmitter"
+      - ""
+      - "{0}Right Click: {1}Store Receiver Location"
+      - "{0}Shift Right Click: {1}Set Location to Transmitter"
+  network-rake-1:
+    name: "Network Rake (1)"
+    lore:
+      - "Right click a Network Object to"
+      - "break it instantly."
+      - ""
+      - "{0}"
+  network-rake-2:
+    name: "Network Rake (2)"
+    lore:
+      - "Right click a Network Object to"
+      - "break it instantly."
+      - ""
+      - "{0}"
+  network-rake-3:
+    name: "Network Rake (3)"
+    lore:
+      - "Right click a Network Object to"
+      - "break it instantly."
+      - ""
+      - "{0}"
+  stone-chunk-seed:
+    name: "Stone Chunk Seed"
+    lore:
+      - "This seed, when fully grown, will"
+      - "provide Stone Chunks when"
+      - "harvested."
+    placed-on:
+      - "Nether Grass (or better)"
+  synthetic-seed:
+    name: "Synthetic Seed"
+    lore:
+      - "This seed does nothing."
+    placed-on:
+      - "Nether Grass (or better)"
+  synthetic-emerald-seed:
+    name: "Synthetic Emerald Seed"
+    lore:
+      - "This seed, when fully grown, will"
+      - "provide Synthetic Emeralds when"
+      - "harvested."
+    placed-on:
+      - "Voracious Dirt (or better)"
+  synthetic-diamond-seed:
+    name: "Synthetic Diamond Seed"
+    lore:
+      - "This seed, when fully grown, will"
+      - "provide Synthetic Diamonds when"
+      - "harvested."
+    placed-on:
+      - "Voracious Dirt (or better)"
+  fragmented-seed:
+    name: "Fragmented Seed"
+    lore:
+      - "This seed, when fully grown, will"
+      - "provide Synthetic Emerald shards when"
+      - "harvested."
+    placed-on:
+      - "Voracious Dirt (or better)"
+themes:
+  lore:
+    research: "Research"
+    crafting: "Crafting Material"
+    machine: "Machine"
+    tool: "Tool"
+    guide: "Guide"
+categories:
+  name:
+    materials: "Crafting Materials"
+    tools: "Network Management Tools"
+    network-items: "Network Items"
+    network-quantums: "Network Quantums"
+    disabled-items: "Disabled/Removed Items"
+recipe-types:
+  quantum-workbench:
+    name: "Quantum Workbench"
+    lore:
+      - "Crafted using the Quantum Workbench."
+gui:
+  strings:
+    voiding: "Voiding"
+    amount: "Amount"
+    status: "Status"
+    disconnected: "Disconnected"
+    current-charge: "{0}Current Charge: {1}j"
+  items:
+    documentation:
+      name: "Documentation Wiki"
+      lore:
+        - "Click to get the link to the"
+        - "documentation Wiki for Networks"
+        - "and other Sefiraat addons."
+    previous-page:
+      name: "Previous Page"
+    next-page:
+      name: "Next Page"
+    sort-order:
+      name: "Change Sort Order"
+    set-filter:
+      name: "Set Filter (Right Click to Clear)"
+    crafting-grid-craft:
+      name: "{0}Craft"
+      lore:
+        - "{0}Left Click: {1}Try to Craft"
+        - "{0}Shift Left Click: {1}Try to return items"
+    transmit-items:
+      name: "Transmit items matching"
+    received-items:
+      name: "Received items"
+    quantum-workbench-craft:
+      name: "Click to Entangle"
+    encoder-craft:
+      name: "Click to Encode"
+    blueprint_blank:
+      name: "Blank Blueprint"
+    blueprint:
+      name: "Blueprint"
+    input-items:
+      name: "Input"
+    output-items:
+      name: "Output"
+    export-items:
+      name: "Export items matching template"
+    push-items:
+      name: "Push items matching template"
+    purge-items:
+      name: "Purge items matching template"
+    stored-item:
+      name: "Stored Item"
+    directional-pane:
+      name: "{0}Direction {1} ({2})"
+      lore:
+        - "{0}Left Click: {1}Set Direction"
+        - "{0}Shift Left Click: {1}Open Target Block"
+    set-direction:
+      name: "{0}Set Direction: {1}"
+    no-item-registered:
+      name: "{0}No Item Registered"
+      lore:
+        - "{0}Click the icon below while"
+        - "{0}holding an item to register it."
+    set-item:
+      name: "{0}Set Item"
+      lore:
+        - "{0}Drag an item on top of this pane to register it."
+        - "{0}Shift Click to change voiding."
+messages:
+  player:
+    on-cooldown: "{0}This is still on cooldown."
+    crayon:
+      removed: "{0}Crayon removed from network."
+      added: "{0}Crayon added to network."
+    probe:
+      summary: "Network Summary"
+      message:
+        - "{0}Bridges: {1}{2}"
+        - "{0}Monitors: {1}{3}"
+        - "{0}Importers: {1}{4}"
+        - "{0}Exporters: {1}{5}"
+        - "{0}Grids: {1}{6}"
+        - "{0}Cells: {1}{7}"
+        - "{0}Wipers: {1}{8}"
+        - "{0}Grabbers: {1}{9}"
+        - "{0}Pushers: {1}{10}"
+        - "{0}Purgers: {1}{11}"
+        - "{0}Crafters: {1}{12}"
+        - "{0}Power Nodes: {1}{13}"
+        - "{0}Power Displays: {1}{14}"
+        - "{0}Encoders: {1}{15}"
+        - "{0}Distinct Items: {1}{16}"
+        - "{0}Total Items: {1}{17}"
+        - "---------------------------"
+        - "{0}Total Nodes: {1}{18}/{19}"
+      warning: "{0}Warning! {1}Your network has reached or exceeded the maximum node limit. Nodes beyond the limit will not function, which nodes these are may not always be the same. Reduce your total nodes."
+    documentation: "To access the documentation Wiki, please click here"
+    grid-filter-set: "{0}Type what you would like to filter this grid to"
+    grid-filter-applied: "{0}Filter Set"
+    quantum-must-be-empty: "{0}Quantum Storage must be empty before changing the set item."
+    no-power: "{0}Not enough Network power."
+    output-must-be-empty: "{0}Output must be empty."
+    no-blueprint: "{0}You need to provide a blank blueprint."
+    no-valid-recipe: "{0}No valid recipe found."
+    remote:
+      not-set: "{0}Must be set to a Network Grid (not crafting grid)."
+      grid-set: "{0}Grid has been bound to the remote."
+      grid-not-loaded: "{0}The bound grid is not loaded."
+      grid-out-of-range: "{0}The bound grid is not within reach."
+      grid-not-bound: "{0}Remote is not bound to a grid."
+      grid-bound-grid-not-found: "{0}The bound grid can no longer be found."
+    configurator:
+      wrong-block: "{0}Must target a Network Directional block"
+      no-direction: "{0}This directional does not yet have a direction set"
+      copied: "{0}Copied configuration"
+      direction-not-supplied: "{0}Direction: {1}Not supplied"
+      direction-applied: "{0}Direction: {1}Applied"
+      item-added: "{0}Item [{1}]: {2} Added to filter"
+      not-enough-items: "{0}Item [{1}]: {2} Not enough items to fill filter"
+      no-item: "{0}Item [{1}]: {2} No item in configurator"
+    wireless-configurator:
+      wrong-block: "{0}Must target a Network Wireless block."
+      not-set: "{0}No Wireless Receiver has been set."
+      wrong-world: "{0}The Wireless Receiver is in a different world."
+      transmitter-set: "{0}Set Transmitter's receiver location."
+      receiver-set: "{0}Wireless Receiver set."
+    commands:
+      must-be-quantum: "{0}You must be holding a Quantum Storage to use this command."
+      issue-converting: "{0}This block has either not been set to an item yet or is a corrupted Quantum Storage."
+  logging:
+    netheopoiesis_update: "Netheopoiesis must be updated to meet Networks' requirements."
+misc:
+  assigned-recipe: "{0}Assigned Recipe"
+  nothing: "{0}Nothing"
+  outputting: "{0}Outputting"

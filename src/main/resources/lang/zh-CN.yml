@@ -1,0 +1,604 @@
+items:
+  synthetic-emerald-shard:
+    name: "人造绿宝石碎片"
+    lore:
+      - "一块人造绿宝石的碎片"
+      - "是信息传输的支柱。"
+      - " "
+  optic-glass:
+    name: "光学玻璃"
+    lore:
+      - "一块能够传输少量"
+      - "信息的简易玻璃。"
+  optic-cable:
+    name: "光缆"
+    lore:
+      - "一根能够传输大量"
+      - "信息的简易线缆。"
+  optic-star:
+    name: "光学之星"
+    lore:
+      - "一种能够传输大量"
+      - "信息的晶状星形结构。"
+  radioactive-optic-star:
+    name: "放射性光学之星"
+    lore:
+      - "一种能够传输巨量"
+      - "信息的晶状星形结构。"
+  shrinking-base:
+    name: "缩小底座"
+    lore:
+      - "一种可以让大型物品"
+      - "缩小的高级结构。"
+  simple-nanobots:
+    name: "简易纳米机器人"
+    lore:
+      - "这些微型机器人可以"
+      - "帮你完成精密的任务。"
+  advanced-nanobots:
+    name: "高级纳米机器人"
+    lore:
+      - "这些微型机器人可以"
+      - "帮你完成精密的任务。"
+      - "这个版本更加智能且高效。"
+  ai-core:
+    name: "人工智能核心"
+    lore:
+      - "在脆弱外壳的保护下"
+      - "不断成长的人工智能。"
+  empowered-ai-core:
+    name: "充能人工智能核心"
+    lore:
+      - "在外壳中的"
+      - "高级人工智能。"
+  pristine-ai-core:
+    name: "古代人工智能核心"
+    lore:
+      - "在完整的外壳中"
+      - "的完美人工智能。"
+  interdimensional-presence:
+    name: "跨跃维度的存在"
+    lore:
+      - "这种完美级的人工智能"
+      - "甚至还掌握了"
+      - "跨越维度的能力。"
+  network-controller:
+    name: "网络控制器"
+    lore:
+      - "网络控制器是网络的核心部分。"
+      - "每个网络最多有1个控制器。"
+  network-bridge:
+    name: "网桥"
+    lore:
+      - "网桥用于连接不同的网络物品，"
+      - "更方便地组成一个完整的网络。"
+  network-monitor:
+    name: "网络监视器"
+    lore:
+      - "网络监视器集成了输入/输出功能，"
+      - "可以与附近的方块"
+      - "交互。"
+      - ""
+      - "目前支持："
+      - "无尽贪婪 - 存储单元"
+      - "网络 - 量子存储"
+  network-importer:
+    name: "网络入口"
+    lore:
+      - "网络入口会将其中的"
+      - "任何物品送入网络，"
+      - "每粘液刻最多可传输9组物品。"
+      - "可接收来自货运网络的物品。"
+  network-exporter:
+    name: "网络出口"
+    lore:
+      - "网络出口可以通过设置，"
+      - "每粘液刻将指定的物品"
+      - "从网络中导出。"
+      - "可使用货运网络提取其中的物品。"
+  network-grabber:
+    name: "网络抓取器"
+    lore:
+      - "网络抓取器会尝试"
+      - "从指定机器中抓取"
+      - "第一个物品。"
+  network-pusher:
+    name: "网络推送器"
+    lore:
+      - "网络推送器会尝试"
+      - "将网络中指定的物品"
+      - "送入指定的机器中。"
+  network-vanilla-grabber:
+    name: "网络原版抓取器"
+    lore:
+      - "网络原版抓取器会尝试"
+      - "从指定原版容器中抓取"
+      - "第一个物品。"
+      - "你仍需要使用抓取器"
+      - "来抓取该节点中的物品。"
+  network-vanilla-pusher:
+    name: "网络原版推送器"
+    lore:
+      - "网络原版推送器会尝试"
+      - "推送其中的物品"
+      - "到指定的原版容器中。"
+      - "你仍需要使用推送器"
+      - "将网络中的物品推送到节点中。"
+  network-wireless-transmitter:
+    name: "网络无线发射器"
+    lore:
+      - "网络无线发射器会"
+      - "将其中的物品传输到"
+      - "同一世界中绑定的"
+      - "网络无线接收器中。"
+      - "使用无线配置器"
+      - "来进行绑定。"
+      - "每次传输需要 7,500 J 网络电力。"
+  network-wireless-receiver:
+    name: "网络无线接收器"
+    lore:
+      - "网络无线接收器会"
+      - "接收来自同一世界中"
+      - "绑定的无线发射器"
+      - "送来的物品，"
+      - "每粘液刻会将接收到的物品"
+      - "送入网络中。"
+  network-purger:
+    name: "网络清除器"
+    lore:
+      - "网络清除器会"
+      - "从网络中不断移除任何"
+      - "指定的物品。"
+      - "小心使用！"
+  network-grid:
+    name: "网格"
+    lore:
+      - "网格让你可以查看"
+      - "网络中的所有物品，"
+      - "你可以直接存入或"
+      - "取出物品。"
+  network-crafting-grid:
+    name: "网格（带合成）"
+    lore:
+      - "这种网格与普通网格类似"
+      - "但会显示更少的物品"
+      - "不过你可以直接使用网络中的物品"
+      - "进行合成"
+  network-cell:
+    name: "网络单元"
+    lore:
+      - "网络单元是一个巨大的存储方块"
+      - "(大箱子) 并且能够"
+      - "通过网络访问其中的物品"
+      - "也可以直接打开"
+  network-greedy-block:
+    name: "网络阻断器"
+    lore:
+      - "网络阻断器可以"
+      - "设置一个物品，"
+      - "然后会从网络各处输入"
+      - "收集指定的物品，最多1组。"
+      - "收集满后，会阻断物品进入网络。"
+      - "任何其他网络方块都不会收到该物品。"
+  network-quantum-workbench:
+    name: "网络量子工作台"
+    lore:
+      - "可以合成量子存储。"
+  network-quantum-storage-1:
+    name: "网络量子存储 (4K)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-2:
+    name: "网络量子存储 (32K)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-3:
+    name: "网络量子存储 (262K)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-4:
+    name: "网络量子存储 (2M)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-5:
+    name: "网络量子存储 (16M)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-6:
+    name: "网络量子存储 (134M)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-7:
+    name: "网络量子存储 (1B)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-quantum-storage-8:
+    name: "网络量子存储 (∞)"
+    lore:
+      - "可存储 {0} 个物品"
+      - ""
+      - "在量子奇点中"
+      - "存储大量物品。"
+  network-capacitor-1:
+    name: "网络电容 (1)"
+    lore:
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
+      - ""
+      - "{0}容量: {1}{2}"
+  network-capacitor-2:
+    name: "网络电容 (2)"
+    lore:
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
+      - ""
+      - "{0}容量: {1}{2}"
+  network-capacitor-3:
+    name: "网络电容 (3)"
+    lore:
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
+      - ""
+      - "{0}容量: {1}{2}"
+  network-power-outlet-1:
+    name: "网络插口 (1)"
+    lore:
+      - "网络插口可以将"
+      - "网络中存储的电力取出"
+      - "并送还到"
+      - "能源网络中"
+      - ""
+      - "会有20%的电力损耗"
+      - ""
+      - "{0}最大存电量： {1}{2}"
+  network-power-outlet-2:
+    name: "网络插口 (2)"
+    lore:
+      - "网络插口可以将"
+      - "网络中存储的电力取出"
+      - "并送还到"
+      - "能源网络中"
+      - ""
+      - "会有20%的电力损耗"
+      - ""
+      - "{0}最大存电量： {1}{2}"
+  network-power-display:
+    name: "网络电表"
+    lore:
+      - "网络电表将会"
+      - "显示网络中的电力情况"
+      - "很简单，对吗？"
+  network-recipe-encoder:
+    name: "网络合成配方编码器"
+    lore:
+      - "可以根据输入的物品"
+      - "来制作合成蓝图"
+      - ""
+      - "{0}网络电力消耗: {1}{2}/每次编码"
+  network-auto-crafter:
+    name: "网络自动合成机"
+    lore:
+      - "网络自动合成机需要合成蓝图才能工作。"
+      - "当网络中没有蓝图的目标物品时，"
+      - "机器会自动从网络中选取材料进行合成"
+      - "(需要网络中有足够的原材料)"
+      - " "
+      - " "
+      - ""
+      - "{0}网络电力消耗: {1}{2}/每次合成"
+  network-auto-crafter-withholding:
+    name: "网络自动合成机 (预留版)"
+    lore:
+      - "网络自动合成机需要合成蓝图才能工作。"
+      - "当网络中没有蓝图的目标物品时，"
+      - "机器会自动从网络中选取材料进行合成"
+      - "(需要网络中有足够的原材料)"
+      - " "
+      - " "
+      - ""
+      - "预留版的自动合成机会不断进行合成"
+      - "直到输出栏拥有1组物品"
+      - "这一组物品可以在网络中访问"
+      - "也可以通过货运系统取出"
+      - " "
+      - ""
+      - "{0}网络电力消耗: {1}{2}/每次合成"
+  crafting-blueprint:
+    name: "合成蓝图"
+    lore:
+      - "一张空白的蓝图能够"
+      - "用来存储一个合成配方"
+      - " "
+  network-probe:
+    name: "网络探测器"
+    lore:
+      - "当右键点击网络控制器时，"
+      - "这将会显示网络中的节点数量"
+  network-remote:
+    name: "便携网络远程访问装置"
+    lore:
+      - "远程打开绑定的网格"
+      - "需要加载网格所在区块"
+      - ""
+      - "{0}范围: {1}{2}"
+  network-remote-empowered:
+    name: "充能网络远程访问装置"
+    lore:
+      - "远程打开绑定的网格"
+      - "需要加载网格所在区块"
+      - ""
+      - "{0}范围: {1}{2}"
+  network-remote-pristine:
+    name: "古代网络远程访问装置"
+    lore:
+      - "远程打开绑定的网格"
+      - "需要加载网格所在区块"
+      - ""
+      - "{0}范围: {1}无限制"
+  network-remote-ultimate:
+    name: "终极网络远程访问装置"
+    lore:
+      - "远程打开绑定的网格"
+      - "需要加载网格所在区块"
+      - ""
+      - "{0}距离所绑定的网格范围：{1}跨维度"
+  network-crayon:
+    name: "网络绘制器"
+    lore:
+      - "当对着网络控制器使用时"
+      - "可以让该网络中的方块"
+      - "展示出粒子效果"
+  network-configurator:
+    name: "网络配置器"
+    lore:
+      - "用于复制网络部件的设置"
+      - "可复制带方向选择的网络方块的设置"
+      - " "
+      - ""
+      - "{0}右键点击: {1}应用设置"
+      - "{0}Shift+右键点击: {1}存储设置"
+  network-wireless-configurator:
+    name: "网络无线配置器"
+    lore:
+      - "用于储存一个接收器的位置"
+      - "并设置到发射器中."
+      - ""
+      - "{0}右键点击: {1}储存接收器的位置"
+      - "{0}Shift+右键点击: {1}将位置设置到发射器中"
+  network-rake-1:
+    name: "网络扳手 (1)"
+    lore:
+      - "右键点击一个网络节点"
+      - "可以立即破坏该节点"
+      - ""
+      - "{0}"
+  network-rake-2:
+    name: "网络扳手 (2)"
+    lore:
+      - "右键点击一个网络节点"
+      - "可以立即破坏该节点"
+      - ""
+      - "{0}"
+  network-rake-3:
+    name: "网络扳手 (3)"
+    lore:
+      - "右键点击一个网络节点"
+      - "可以立即破坏该节点"
+      - ""
+      - "{0}"
+  stone-chunk-seed:
+    name: "石块之种"
+    lore:
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "石块。"
+    placed-on:
+      - "下界草方块 (或净化等级更高的)"
+  synthetic-seed:
+    name: "人造之种"
+    lore:
+      - "这个种子没有任何效果。"
+    placed-on:
+      - "下界草方块 (或净化等级更高的)"
+  synthetic-emerald-seed:
+    name: "人造绿宝石之种"
+    lore:
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造绿宝石。"
+    placed-on:
+      - "贪婪泥土 (或净化等级更高的)"
+  synthetic-diamond-seed:
+    name: "人造钻石之种"
+    lore:
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造钻石。"
+    placed-on:
+      - "贪婪泥土 (或净化等级更高的)"
+  fragmented-seed:
+    name: "碎片之种"
+    lore:
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造绿宝石碎片。"
+    placed-on:
+      - "贪婪泥土 (或净化等级更高的)"
+themes:
+  lore:
+    research: "研究"
+    crafting: "合成材料"
+    machine: "机器"
+    tool: "工具"
+    guide: "指南"
+categories:
+  name:
+    materials: "合成材料"
+    tools: "网络管理工具"
+    network-items: "网络物品"
+    network-quantums: "网络量子存储"
+    disabled-items: "已禁用或移除的物品"
+recipe-types:
+  quantum-workbench:
+    name: "量子工作台"
+    lore:
+      - "使用量子工作台制作。"
+gui:
+  strings:
+    voiding: "满载清空输入"
+    amount: "数量"
+    status: "状态"
+    disconnected: "已断开连接"
+    current-charge: "{0}当前电量: {1} J"
+  items:
+    documentation:
+      name: "Wiki文档"
+      lore:
+        - "点击获取"
+        - "网络以及Sefiraat其他附属"
+        - "的Wiki链接。"
+    previous-page:
+      name: "上一页"
+    next-page:
+      name: "下一页"
+    sort-order:
+      name: "更改排序顺序"
+    set-filter:
+      name: "设置过滤器 (右键点击清除)"
+    crafting-grid-craft:
+      name: "{0}合成"
+      lore:
+        - "{0}左键点击: {1}合成"
+        - "{0}Shift Left Click: {1}Try to return items"
+    transmit-items:
+      name: "Transmit items matching"
+    received-items:
+      name: "Received items"
+    quantum-workbench-craft:
+      name: "Click to Entangle"
+    encoder-craft:
+      name: "Click to Encode"
+    blueprint_blank:
+      name: "Blank Blueprint"
+    blueprint:
+      name: "Blueprint"
+    input-items:
+      name: "Input"
+    output-items:
+      name: "Output"
+    export-items:
+      name: "Export items matching template"
+    push-items:
+      name: "Push items matching template"
+    purge-items:
+      name: "Purge items matching template"
+    stored-item:
+      name: "Stored Item"
+    directional-pane:
+      name: "{0}Direction {1} ({2})"
+      lore:
+        - "{0}Left Click: {1}Set Direction"
+        - "{0}Shift Left Click: {1}Open Target Block"
+    set-direction:
+      name: "{0}Set Direction: {1}"
+    no-item-registered:
+      name: "{0}No Item Registered"
+      lore:
+        - "{0}Click the icon below while"
+        - "{0}holding an item to register it."
+    set-item:
+      name: "{0}Set Item"
+      lore:
+        - "{0}Drag an item on top of this pane to register it."
+        - "{0}Shift Click to change voiding."
+messages:
+  player:
+    on-cooldown: "{0}This is still on cooldown."
+    crayon:
+      removed: "{0}Crayon removed from network."
+      added: "{0}Crayon added to network."
+    probe:
+      summary: "Network Summary"
+      message:
+        - "{0}Bridges: {1}{2}"
+        - "{0}Monitors: {1}{3}"
+        - "{0}Importers: {1}{4}"
+        - "{0}Exporters: {1}{5}"
+        - "{0}Grids: {1}{6}"
+        - "{0}Cells: {1}{7}"
+        - "{0}Wipers: {1}{8}"
+        - "{0}Grabbers: {1}{9}"
+        - "{0}Pushers: {1}{10}"
+        - "{0}Purgers: {1}{11}"
+        - "{0}Crafters: {1}{12}"
+        - "{0}Power Nodes: {1}{13}"
+        - "{0}Power Displays: {1}{14}"
+        - "{0}Encoders: {1}{15}"
+        - "{0}Distinct Items: {1}{16}"
+        - "{0}Total Items: {1}{17}"
+        - "---------------------------"
+        - "{0}Total Nodes: {1}{18}/{19}"
+      warning: "{0}警告！ {1}您的网络已经达到或超过了最大节点限制。 超出限制的节点不会起作用，这些问题节点可能并非总是同一位置的同一方块。减少节点总数量。"
+    documentation: "要访问文档 Wiki, 请点击这里"
+    grid-filter-set: "{0}Type what you would like to filter this grid to"
+    grid-filter-applied: "{0}Filter Set"
+    quantum-must-be-empty: "{0}Quantum Storage must be empty before changing the set item."
+    no-power: "{0}Not enough Network power."
+    output-must-be-empty: "{0}Output must be empty."
+    no-blueprint: "{0}你需要提供一个空白蓝图。"
+    no-valid-recipe: "{0}找不到该物品有效的配方。"
+    remote:
+      not-set: "{0}必须绑定在普通网格上(不是带合成的网格)。"
+      grid-set: "{0}已成功绑定到该网格上"
+      grid-not-loaded: "{0}绑定的网格未在加载区块内。"
+      grid-out-of-range: "{0}绑定的网格不在范围内。"
+      grid-not-bound: "{0}未绑定到任何一个网格中。"
+      grid-bound-grid-not-found: "{0}无法再找到绑定的网格。"
+    configurator:
+      wrong-block: "{0}必须看向一个有方向设定的网络方块。"
+      no-direction: "{0}该方块未指定朝向。"
+      copied: "{0}已复制配置。"
+      direction-not-supplied: "{0}方向： {1}未提供方向设置"
+      direction-applied: "{0}方向： {1}已应用设置"
+      item-added: "{0}物品 [{1}]: {2} 已添加到过滤器"
+      not-enough-items: "{0}物品 [{1}]: {2} 没有足够的物品添加到过滤器"
+      no-item: "{0}物品 [{1}]: {2} 配置器保存的设置中没有物品"
+    wireless-configurator:
+      wrong-block: "{0}必须看向一个网络无线方块。"
+      not-set: "{0}未设置无线接收器。"
+      wrong-world: "{0}无线接收器处于不同的世界。"
+      transmitter-set: "{0}Set Transmitter's receiver location."
+      receiver-set: "{0}Wireless Receiver set."
+    commands:
+      must-be-quantum: "{0}你必须手持量子存储才能使用该指令。"
+      issue-converting: "{0}This block has either not been set to an item yet or is a corrupted Quantum Storage."
+  logging:
+    netheopoiesis_update: "Netheopoiesis must be updated to meet Networks' requirements."
+misc:
+  assigned-recipe: "{0}Assigned Recipe"
+  nothing: "{0}Nothing"
+  outputting: "{0}Outputting"
