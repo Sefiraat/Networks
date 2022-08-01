@@ -81,7 +81,7 @@ items:
       - ""
       - "目前支持："
       - "无尽贪婪 - 存储单元"
-      - "网络 - 量子存储"
+      - "Network Quantum Storages"
   network-importer:
     name: "网络入口"
     lore:
@@ -111,7 +111,6 @@ items:
   network-vanilla-grabber:
     name: "网络原版抓取器"
     lore:
-      - "网络原版抓取器"
       - "网络原版抓取器会尝试"
       - "从指定原版容器中抓取"
       - "第一个物品。"
