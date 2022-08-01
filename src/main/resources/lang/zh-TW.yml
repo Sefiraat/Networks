@@ -81,7 +81,7 @@ items:
       - ""
       - "Currently Supports:"
       - "Infinity Barrels"
-      - "Network Shells"
+      - "Network Quantum Storages"
   network-importer:
     name: "Network Importer"
     lore:
@@ -111,7 +111,6 @@ items:
   network-vanilla-grabber:
     name: "Network Vanilla Grabber"
     lore:
-      - "Network Vanilla Grabber"
       - "The Network Vanilla Grabber will try"
       - "to grab the first possible item from"
       - "the chosen vanilla inventory."
