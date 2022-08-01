@@ -139,25 +139,25 @@ items:
     name: "网络无线接收器"
     lore:
       - "网络无线接收器会"
-      - "able to receive items from a linked"
-      - "wireless transmitter located within"
-      - "the same world."
-      - "It will try to push received items"
-      - "into the Network each tick."
+      - "接收来自同一世界中"
+      - "绑定的无线发射器"
+      - "送来的物品，"
+      - "每粘液刻会将接收到的物品"
+      - "送入网络中。"
   network-purger:
-    name: "Network Purger"
+    name: "网络清除器"
     lore:
-      - "The Network Purger will pull"
-      - "matching items from the network"
-      - "and instantly void them."
-      - "Use with great care!"
+      - "网络清除器会"
+      - "从网络中不断移除任何"
+      - "指定的物品。"
+      - "小心使用！"
   network-grid:
-    name: "Network Grid"
+    name: "网格"
     lore:
-      - "The Network Grid shows you all"
-      - "the items you have in the network"
-      - "and lets you insert or withdraw"
-      - "directly."
+      - "网格让你可以查看"
+      - "网络中的所有物品，"
+      - "你可以直接存入或"
+      - "取出物品。"
   network-crafting-grid:
     name: "Network Crafting Grid"
     lore:
