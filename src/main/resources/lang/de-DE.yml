@@ -2,9 +2,9 @@ items:
   synthetic-emerald-shard:
     name: "Synthetischer Smaragdsplitter"
     lore:
-      - "Ein Smaragdsplitter, der"
-      - "Grundlage zum Übertragen"
-      - "ist."
+      - "Ein Smaragdsplitter"
+      - "ist die Grundlage zum Übertragen von Informationen"
+      - "."
   optic-glass:
     name: "Fiberglas"
     lore:
@@ -26,40 +26,40 @@ items:
       - "Eine kristalline sternförmige Struktur, die"
       - "eine wahnsinnige Menge an Informationen speichern kann."
   shrinking-base:
-    name: "Shrinking Base"
+    name: "Komprimierungsbasis"
     lore:
-      - "An advanced construct able to make"
-      - "big things go small."
+      - "Eine fortschrittliche Konstruktion, die in der Lage ist"
+      - "große Dinge zu verkleinern."
   simple-nanobots:
-    name: "Simple Nanobots"
+    name: "Einfache Nanobots"
     lore:
-      - "Teeny Tiny little bots that can"
-      - "help you with precise tasks."
+      - "Winzig kleine Bots die"
+      - "dir bei präzisen Aufgaben helfen."
   advanced-nanobots:
-    name: "Advanced Nanobots"
+    name: "Fortgeschrittene Nanobots"
     lore:
-      - "Teeny Tiny little bots that can"
-      - "help you with precise tasks."
-      - "This version is smarter and faster."
+      - "Winzig kleine Bots"
+      - "dir bei präzisen Aufgaben helfen."
+      - "Diese Version ist intelligenter und schneller."
   ai-core:
-    name: "A.I. Core"
+    name: "K.I. Kern"
     lore:
-      - "A burgeoning artificial intelligence"
-      - "resides within this weak shell."
+      - "Eine schnell wachsende künstliche Intelligenz"
+      - "befindet sich in dieser empfindlichen Hülle."
   empowered-ai-core:
-    name: "Empowered A.I. Core"
+    name: "Leistungsstarker K.I. Kern"
     lore:
-      - "A flourishing artificial intelligence"
-      - "resides within this shell."
+      - "Eine schnell wachsende künstliche Intelligenz"
+      - "befindet sich in dieser empfindlichen Hülle."
   pristine-ai-core:
-    name: "Pristine A.I. Core"
+    name: "Makelloser K.I. Kern"
     lore:
-      - "A perfected artificial intelligence"
-      - "resides within this defined shell."
+      - "Eine perfektionierte künstliche Intelligenz"
+      - "befindet sich in dieser empfindlichen Hülle."
   interdimensional-presence:
-    name: "Interdimensional Presence"
+    name: "Interdimensionale Präsenz"
     lore:
-      - "An artificial intelligence that has"
+      - "Eine künstliche Intelligenz, die"
       - "grown too powerful for just a"
       - "single dimension."
   network-controller:
