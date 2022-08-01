@@ -26,7 +26,7 @@ items:
       - "İnanılmaz büyüklükte bilgi taşıyabilen"
       - "kristal bir yıldız yapısı."
   shrinking-base:
-    name: "Shrinking Base"
+    name: "Küçülen Temel"
     lore:
       - "Büyük şeyleri küçültebilen"
       - "gelişmiş bir yapı."
@@ -81,11 +81,11 @@ items:
       - ""
       - "Şu anda destekledikleri:"
       - "Sonsuzluk Varilleri"
-      - "Network Quantum Storages"
+      - "Kuantum Ağ Deposu"
   network-importer:
     name: "Ağ Alıcısı"
     lore:
-      - "The Network Importer brings any"
+      - "Ağ alıcısı herhangi bir eşyayı"
       - "item inside it into the network, up"
       - "to 9 stacks per SF tick."
       - "Accepts items in from cargo."
