@@ -81,7 +81,7 @@ items:
       - ""
       - "Şu anda destekledikleri:"
       - "Sonsuzluk Varilleri"
-      - "Ağ Kabuğu"
+      - "Network Quantum Storages"
   network-importer:
     name: "Ağ Alıcısı"
     lore:
@@ -111,7 +111,6 @@ items:
   network-vanilla-grabber:
     name: "Network Vanilla Grabber"
     lore:
-      - "Network Vanilla Grabber"
       - "The Network Vanilla Grabber will try"
       - "to grab the first possible item from"
       - "the chosen vanilla inventory."
