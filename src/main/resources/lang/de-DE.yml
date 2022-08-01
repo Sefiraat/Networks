@@ -147,7 +147,7 @@ items:
     name: "Netzwerk Reiniger"
     lore:
       - "Der Netzwerk Reiniger vernichtet"
-      - "übereinstimmende Items aus dem Netzwerk"
+      - "vordefinierte Items aus dem Netzwerk"
       - "sofort."
       - "Mit äußerster Sorgfalt benutzen!"
   network-grid:
@@ -162,7 +162,7 @@ items:
     lore:
       - "Das Netzwerk Herstellungsraster funktioniert"
       - "wie das normale Netzwerk Raster, zeigt aber weniger Items an"
-      - "aber erlaubt das Herstellen von Items"
+      - "und erlaubt das Herstellen von Items"
       - "mit Items direkt aus dem Netzwerk."
   network-cell:
     name: "Netzwerk Zelle"
@@ -243,60 +243,60 @@ items:
   network-capacitor-1:
     name: "Netzwerk-Kondensator (1)"
     lore:
-      - "Der Netzwerk kondensator kann"
-      - "power in and store it for use"
-      - "within the network."
+      - "Der Netzwerk Kondensator kann"
+      - "Energie speichern zur Benutzung"
+      - "im Netzwerk."
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}Kapazität: {1}{2}"
   network-capacitor-2:
-    name: "Network Capacitor (2)"
+    name: "Netzwerk-Kondensator (2)"
     lore:
-      - "The Network Capacitor can take"
-      - "power in and store it for use"
-      - "within the network."
+      - "Der Netzwerk Kondensator kann"
+      - "Energie speichern zur Benutzung"
+      - "im Netzwerk."
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}Kapazität: {1}{2}"
   network-capacitor-3:
-    name: "Network Capacitor (3)"
+    name: "Netzwerk-Kondensator (3)"
     lore:
-      - "The Network Capacitor can take"
-      - "power in and store it for use"
-      - "within the network."
+      - "Der Netzwerk Kondensator kann"
+      - "Energie speichern zur Benutzung"
+      - "im Netzwerk."
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}Kapazität: {1}{2}"
   network-power-outlet-1:
-    name: "Network Power Outlet (1)"
+    name: "Netzwerk Stromausgang (1)"
     lore:
-      - "The Network Outlet can take"
-      - "power from the Network to power"
-      - "machines or feed back into an"
-      - "EnergyNet network."
+      - "Der Netzwerk Stromausgang kann"
+      - "mit Energie aus dem Netzwerk"
+      - "Maschinen versorgen oder ein"
+      - "Energienetzwerk versorgen."
       - ""
-      - "Operates at a 20% loss rate."
+      - "Arbeitet mit einer Verlustrate von 20%."
       - ""
-      - "{0}Max Transfer: {1}{2}"
+      - "{0}Max. Transfer: {1}{2}"
   network-power-outlet-2:
-    name: "Network Power Outlet (2)"
+    name: "Netzwerk Stromausgang (2)"
     lore:
-      - "The Network Outlet can take"
-      - "power from the Network to power"
-      - "machines or feed back into an"
-      - "EnergyNet network."
+      - "Der Netzwerk Stromausgang kann"
+      - "mit Energie aus dem Netzwerk"
+      - "Maschinen versorgen oder ein"
+      - "Energienetzwerk versorgen."
       - ""
-      - "Operates at a 20% loss rate."
+      - "Arbeitet mit einer Verlustrate von 20%."
       - ""
-      - "{0}Max Transfer: {1}{2}"
+      - "{0}Max. Transfer: {1}{2}"
   network-power-display:
-    name: "Network Power Display"
+    name: "Netzwerk Energieanzeige"
     lore:
-      - "The Network Power Display will"
-      - "display the power in the network."
-      - "Simple, right?"
+      - "Die Netzwerk Energieanzeige"
+      - "zeigt die verfügbare Energie im Netzwerk an."
+      - "Einfach, oder?"
   network-recipe-encoder:
-    name: "Network Recipe Encoder"
+    name: "Netzwerk Rezept-Encoder"
     lore:
-      - "Used to form a Crafting Blueprint"
-      - "from input items."
+      - "Wird benutzt um mittels Items ein Rezept auf einem Crafting Blueprint"
+      - "zu speichern."
       - ""
       - "{0}Network Drain: {1}{2}/encode"
   network-auto-crafter:
