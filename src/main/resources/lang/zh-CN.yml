@@ -29,7 +29,7 @@ items:
     name: "缩小底座"
     lore:
       - "一种可以让大型物品"
-      - "变小的高级结构。"
+      - "缩小的高级结构。"
   simple-nanobots:
     name: "简易纳米机器人"
     lore:
