@@ -411,88 +411,88 @@ items:
       - ""
       - "{0}"
   stone-chunk-seed:
-    name: "Stone Chunk Seed"
+    name: "石块之种"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Stone Chunks when"
-      - "harvested."
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "石块。"
     placed-on:
-      - "Nether Grass (or better)"
+      - "下界草方块 (或净化等级更高的)"
   synthetic-seed:
-    name: "Synthetic Seed"
+    name: "人造之种"
     lore:
-      - "This seed does nothing."
+      - "这个种子没有任何效果。"
     placed-on:
-      - "Nether Grass (or better)"
+      - "下界草方块 (或净化等级更高的)"
   synthetic-emerald-seed:
-    name: "Synthetic Emerald Seed"
+    name: "人造绿宝石之种"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Emeralds when"
-      - "harvested."
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造绿宝石。"
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "贪婪泥土 (或净化等级更高的)"
   synthetic-diamond-seed:
-    name: "Synthetic Diamond Seed"
+    name: "人造钻石之种"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Diamonds when"
-      - "harvested."
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造钻石。"
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "贪婪泥土 (或净化等级更高的)"
   fragmented-seed:
-    name: "Fragmented Seed"
+    name: "碎片之种"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Emerald shards when"
-      - "harvested."
+      - "这种植物成熟后，"
+      - "收获时将获得"
+      - "人造绿宝石碎片。"
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "贪婪泥土 (或净化等级更高的)"
 themes:
   lore:
-    research: "Research"
-    crafting: "Crafting Material"
-    machine: "Machine"
-    tool: "Tool"
-    guide: "Guide"
+    research: "研究"
+    crafting: "合成材料"
+    machine: "机器"
+    tool: "工具"
+    guide: "指南"
 categories:
   name:
-    materials: "Crafting Materials"
-    tools: "Network Management Tools"
-    network-items: "Network Items"
-    network-quantums: "Network Quantums"
-    disabled-items: "Disabled/Removed Items"
+    materials: "合成材料"
+    tools: "网络管理工具"
+    network-items: "网络物品"
+    network-quantums: "网络量子存储"
+    disabled-items: "已禁用或移除的物品"
 recipe-types:
   quantum-workbench:
-    name: "Quantum Workbench"
+    name: "量子工作台"
     lore:
-      - "Crafted using the Quantum Workbench."
+      - "使用量子工作台制作。"
 gui:
   strings:
-    voiding: "Voiding"
-    amount: "Amount"
-    status: "Status"
-    disconnected: "Disconnected"
-    current-charge: "{0}Current Charge: {1}j"
+    voiding: "满载清空输入"
+    amount: "数量"
+    status: "状态"
+    disconnected: "已断开连接"
+    current-charge: "{0}当前电量: {1} J"
   items:
     documentation:
-      name: "Documentation Wiki"
+      name: "Wiki文档"
       lore:
-        - "Click to get the link to the"
-        - "documentation Wiki for Networks"
-        - "and other Sefiraat addons."
+        - "点击获取"
+        - "网络以及Sefiraat其他附属"
+        - "的Wiki链接。"
     previous-page:
-      name: "Previous Page"
+      name: "上一页"
     next-page:
-      name: "Next Page"
+      name: "下一页"
     sort-order:
-      name: "Change Sort Order"
+      name: "更改排序顺序"
     set-filter:
-      name: "Set Filter (Right Click to Clear)"
+      name: "设置过滤器 (右键点击清除)"
     crafting-grid-craft:
-      name: "{0}Craft"
+      name: "{0}合成"
       lore:
-        - "{0}Left Click: {1}Try to Craft"
+        - "{0}左键点击: {1}合成"
         - "{0}Shift Left Click: {1}Try to return items"
     transmit-items:
       name: "Transmit items matching"
@@ -579,8 +579,8 @@ messages:
       grid-not-bound: "{0}未绑定到任何一个网格中。"
       grid-bound-grid-not-found: "{0}无法再找到绑定的网格。"
     configurator:
-      wrong-block: "{0}Must target a Network Directional block"
-      no-direction: "{0}This directional does not yet have a direction set"
+      wrong-block: "{0}必须看向一个有方向设定的网络方块。"
+      no-direction: "{0}该方块未指定朝向。"
       copied: "{0}Copied configuration"
       direction-not-supplied: "{0}Direction: {1}Not supplied"
       direction-applied: "{0}Direction: {1}Applied"
