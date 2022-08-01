@@ -161,19 +161,19 @@ items:
   network-crafting-grid:
     name: "网格（带合成）"
     lore:
-      - "The Network Crafting Grid acts"
-      - "like a normal grid but displays less"
-      - "items but allows crafting using items"
-      - "directly from the network."
+      - "这种网格与普通网格类似"
+      - "但会显示更少的物品"
+      - "不过你可以直接使用网络中的物品"
+      - "进行合成"
   network-cell:
-    name: "Network Cell"
+    name: "网络单元"
     lore:
-      - "The Network Cell is a large"
-      - "(double chest) inventory that can"
-      - "be accessed both from the network"
-      - "and in the world."
+      - "网络单元是一个巨大的存储方块"
+      - "(大箱子) 并且能够"
+      - "通过网络访问其中的物品"
+      - "也可以直接打开"
   network-greedy-block:
-    name: "Network Greedy Block"
+    name: "网络阻断器"
     lore:
       - "The Network Greedy Block can"
       - "be set to one item which it will"
@@ -182,60 +182,60 @@ items:
       - "do not fit, they will not enter"
       - "the network."
   network-quantum-workbench:
-    name: "Network Quantum Workbench"
+    name: "网络量子工作台"
     lore:
       - "Allows the crafting of Quantum Storages."
   network-quantum-storage-1:
-    name: "Network Quantum Storage (4K)"
+    name: "网络量子存储 (4K)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-2:
-    name: "Network Quantum Storage (32K)"
+    name: "网络量子存储 (32K)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-3:
-    name: "Network Quantum Storage (262K)"
+    name: "网络量子存储 (262K)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-4:
-    name: "Network Quantum Storage (2M)"
+    name: "网络量子存储 (2M)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-5:
-    name: "Network Quantum Storage (16M)"
+    name: "网络量子存储 (16M)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-6:
-    name: "Network Quantum Storage (134M)"
+    name: "网络量子存储 (134M)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-7:
-    name: "Network Quantum Storage (1B)"
+    name: "网络量子存储 (1B)"
     lore:
       - "Stores {0} items"
       - ""
       - "Stores items in mass quantities within"
       - "a quantum singularity."
   network-quantum-storage-8:
-    name: "Network Quantum Storage (∞)"
+    name: "网络量子存储 (∞)"
     lore:
       - "Stores {0} items"
       - ""
