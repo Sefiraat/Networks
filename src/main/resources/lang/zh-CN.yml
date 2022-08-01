@@ -577,7 +577,7 @@ messages:
       grid-not-loaded: "{0}绑定的网格未在加载区块内。"
       grid-out-of-range: "{0}绑定的网格不在范围内。"
       grid-not-bound: "{0}未绑定到任何一个网格中。"
-      grid-bound-grid-not-found: "{0}The bound grid can no longer be found."
+      grid-bound-grid-not-found: "{0}无法再找到绑定的网格。"
     configurator:
       wrong-block: "{0}Must target a Network Directional block"
       no-direction: "{0}This directional does not yet have a direction set"
