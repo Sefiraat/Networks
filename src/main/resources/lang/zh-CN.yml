@@ -76,12 +76,12 @@ items:
     name: "网络监视器"
     lore:
       - "网络监视器集成了输入/输出功能，"
-      - "可以与附近的方块交互。"
-      - " "
+      - "可以与附近的方块"
+      - "交互。"
       - ""
       - "目前支持："
       - "无尽贪婪 - 存储单元"
-      - "Network Quantum Storages"
+      - "网络 - 量子存储"
   network-importer:
     name: "网络入口"
     lore:
@@ -174,98 +174,98 @@ items:
   network-greedy-block:
     name: "网络阻断器"
     lore:
-      - "The Network Greedy Block can"
-      - "be set to one item which it will"
-      - "then greedily hold on to a single"
-      - "stack of. If more incoming items"
-      - "do not fit, they will not enter"
-      - "the network."
+      - "网络阻断器可以"
+      - "设置一个物品，"
+      - "然后会从网络各处输入"
+      - "收集指定的物品，最多1组。"
+      - "收集满后，会阻断物品进入网络。"
+      - "任何其他网络方块都不会收到该物品。"
   network-quantum-workbench:
     name: "网络量子工作台"
     lore:
-      - "Allows the crafting of Quantum Storages."
+      - "可以合成量子存储。"
   network-quantum-storage-1:
     name: "网络量子存储 (4K)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-2:
     name: "网络量子存储 (32K)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-3:
     name: "网络量子存储 (262K)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-4:
     name: "网络量子存储 (2M)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-5:
     name: "网络量子存储 (16M)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-6:
     name: "网络量子存储 (134M)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-7:
     name: "网络量子存储 (1B)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-quantum-storage-8:
     name: "网络量子存储 (∞)"
     lore:
-      - "Stores {0} items"
+      - "可存储 {0} 个物品"
       - ""
-      - "Stores items in mass quantities within"
-      - "a quantum singularity."
+      - "在量子奇点中"
+      - "存储大量物品。"
   network-capacitor-1:
-    name: "Network Capacitor (1)"
+    name: "网络电容 (1)"
     lore:
-      - "The Network Capacitor can take"
-      - "power in and store it for use"
-      - "within the network."
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}容量: {1}{2}"
   network-capacitor-2:
-    name: "Network Capacitor (2)"
+    name: "网络电容 (2)"
     lore:
-      - "The Network Capacitor can take"
-      - "power in and store it for use"
-      - "within the network."
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}容量: {1}{2}"
   network-capacitor-3:
-    name: "Network Capacitor (3)"
+    name: "网络电容 (3)"
     lore:
-      - "The Network Capacitor can take"
-      - "power in and store it for use"
-      - "within the network."
+      - "网络电容可以接收来自"
+      - "能源网络的电力并存储起来"
+      - "以供其他网络设备使用。"
       - ""
-      - "{0}Capacity: {1}{2}"
+      - "{0}容量: {1}{2}"
   network-power-outlet-1:
-    name: "Network Power Outlet (1)"
+    name: "网络插口 (1)"
     lore:
       - "The Network Outlet can take"
       - "power from the Network to power"
