@@ -1,30 +1,30 @@
 items:
   synthetic-emerald-shard:
-    name: "Synthetic Emerald Shard"
+    name: "Synthetischer Smaragdsplitter"
     lore:
-      - "A shard of synthetic emerald that"
-      - "is the backbone for information"
-      - "transference."
+      - "Ein Smaragdsplitter, der"
+      - "Grundlage zum Übertragen"
+      - "ist."
   optic-glass:
-    name: "Optic Glass"
+    name: "Fiberglas"
     lore:
-      - "A simple glass that is able to"
-      - "transfer small bits of information."
+      - "Glas, das in der Lage ist"
+      - "kleine Informationsteile zu übertragen."
   optic-cable:
-    name: "Optic Cable"
+    name: "Glasfaserkabel"
     lore:
-      - "A simple wire that is able to"
-      - "transfer large bits of information."
+      - "Ein Kabel, das in der Lage ist"
+      - "große Informationsteile zu übertragen."
   optic-star:
-    name: "Optic Star"
+    name: "Glasfaserstern"
     lore:
-      - "A crystalline star structure that"
-      - "can transfer large bits of information."
+      - "Eine kristalline sternförmige Struktur, die"
+      - "sehr große Informationsteile übertragen kann."
   radioactive-optic-star:
-    name: "Radioactive Optic Star"
+    name: "Radioaktiver Fiberglasstern"
     lore:
-      - "A crystalline star structure that"
-      - "can store insane amounts of information."
+      - "Eine kristalline sternförmige Struktur, die"
+      - "eine wahnsinnige Menge an Informationen speichern kann."
   shrinking-base:
     name: "Shrinking Base"
     lore:
