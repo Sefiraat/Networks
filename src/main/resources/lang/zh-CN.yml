@@ -3,7 +3,7 @@ items:
     name: "人造绿宝石碎片"
     lore:
       - "一块人造绿宝石的碎片"
-      - "是信息传输的支柱。"
+      - "is the backbone for information"
       - " "
   optic-glass:
     name: "光学玻璃"
