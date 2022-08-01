@@ -267,8 +267,8 @@ items:
   network-power-outlet-1:
     name: "网络插口 (1)"
     lore:
-      - "The Network Outlet can take"
-      - "power from the Network to power"
+      - "网络电容可以接收"
+      - "能源网络的电力并存储起来"
       - "machines or feed back into an"
       - "EnergyNet network."
       - ""
