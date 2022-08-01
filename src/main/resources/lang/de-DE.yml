@@ -60,48 +60,48 @@ items:
     name: "Interdimensionale Präsenz"
     lore:
       - "Eine künstliche Intelligenz, die"
-      - "grown too powerful for just a"
-      - "single dimension."
+      - "zu mächtig geworden ist für eine"
+      - "einzelne Dimension."
   network-controller:
-    name: "Network Controller"
+    name: "Netzwerk Controller"
     lore:
-      - "The Network controller is the brain"
-      - "for the whole network. Max 1 per network."
+      - "Der Netzwerkcontroller ist das Gehirn"
+      - "für das gesamte Netzwerk. Max. 1 pro Netzwerk."
   network-bridge:
-    name: "Network Bridge"
+    name: "Netzwerkbrücke"
     lore:
-      - "The bridge allows you to cheaply"
-      - "connect network objects together."
+      - "Die Brücke ermöglicht es kostengünstig"
+      - "Netzwerkobjekte zu verbinden."
   network-monitor:
-    name: "Network Monitor"
+    name: "Netzwerk-Monitor"
     lore:
-      - "The Network Monitor allows simple"
-      - "import/export interaction with adjacent"
-      - "objects."
+      - "Der Netzwerk-Monitor erlaubt einfache"
+      - "Import/Export Interaktionen mit angrenzenden"
+      - "Objekten."
       - ""
-      - "Currently Supports:"
-      - "Infinity Barrels"
-      - "Network Quantum Storages"
+      - "Aktuell unterstützt:"
+      - "Infinity-Fässer"
+      - "Netzwerk Quantenspeicher"
   network-importer:
-    name: "Network Importer"
+    name: "Netzwerk Importer"
     lore:
-      - "The Network Importer brings any"
-      - "item inside it into the network, up"
-      - "to 9 stacks per SF tick."
-      - "Accepts items in from cargo."
+      - "Der Netzwerk-Importer bringt alle"
+      - "in ihm befindlichen Items in das Netzwerk, bis zu"
+      - "9 Stacks pro SF Tick."
+      - "Akzeptiert Items von Cargo."
   network-exporter:
-    name: "Network Exporter"
+    name: "Netzwerk Exporter"
     lore:
-      - "The Network Exporter can be set to"
-      - "constantly export 1 stack of any"
-      - "given item."
-      - "Accepts item withdrawal from cargo."
+      - "Der Netzwerk-Exporter kann"
+      - "konstant 1 Stack eines beliebigen vordefinierten Items"
+      - "exportieren."
+      - "Akzeptiert die Item Entnahme von Cargo."
   network-grabber:
-    name: "Network Grabber"
+    name: "Netzwerk Greifer"
     lore:
-      - "The Network Grabber will try"
-      - "to grab the first item it finds"
-      - "from within the selected machine."
+      - "Der Netzwerkgreifer versucht"
+      - "das erste Item zu greifen, das er "
+      - "in der angeschlossenen Maschine findet."
   network-pusher:
     name: "Network Pusher"
     lore:
