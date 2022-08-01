@@ -1,91 +1,91 @@
 items:
   synthetic-emerald-shard:
-    name: "Sentetik Zümrüt Parçası"
+    name: "Synthetic Emerald Shard"
     lore:
-      - "Tüm bilgi aktarımının"
-      - "temeli olan sentetik"
-      - "zümrüt parçası."
+      - "A shard of synthetic emerald that"
+      - "is the backbone for information"
+      - "transference."
   optic-glass:
-    name: "Optik Cam"
+    name: "Optic Glass"
     lore:
-      - "Küçük bilgi paketleri"
-      - "taşıyabilen basit bir cam."
+      - "A simple glass that is able to"
+      - "transfer small bits of information."
   optic-cable:
-    name: "Optik Kablo"
+    name: "Optic Cable"
     lore:
-      - "Büyük bilgi paketleri"
-      - "taşıyabilen basit bir kablo."
+      - "A simple wire that is able to"
+      - "transfer large bits of information."
   optic-star:
-    name: "Optik Yıldız"
+    name: "Optic Star"
     lore:
-      - "Büyük bilgi paketleri taşıyabilen"
-      - "kristal bir yıldız yapısı."
+      - "A crystalline star structure that"
+      - "can transfer large bits of information."
   radioactive-optic-star:
-    name: "Radyoaktif Optik Yıldız"
+    name: "Radioactive Optic Star"
     lore:
-      - "İnanılmaz büyüklükte bilgi taşıyabilen"
-      - "kristal bir yıldız yapısı."
+      - "A crystalline star structure that"
+      - "can store insane amounts of information."
   shrinking-base:
-    name: "Küçülen Temel"
+    name: "Shrinking Base"
     lore:
-      - "Büyük şeyleri küçültebilen"
-      - "gelişmiş bir yapı."
+      - "An advanced construct able to make"
+      - "big things go small."
   simple-nanobots:
-    name: "Basit Nanorobotlar"
+    name: "Simple Nanobots"
     lore:
-      - "Sana hassas görevlerde yardımcı"
-      - "olabilecek minnacık robotlar."
+      - "Teeny Tiny little bots that can"
+      - "help you with precise tasks."
   advanced-nanobots:
-    name: "Gelişmiş Nanorobotlar"
+    name: "Advanced Nanobots"
     lore:
-      - "Sana hassas görevlerde yardımcı"
-      - "olabilecek minnacık robotlar."
-      - "Bu model daha akıllı ve hızlı."
+      - "Teeny Tiny little bots that can"
+      - "help you with precise tasks."
+      - "This version is smarter and faster."
   ai-core:
-    name: "Yapay Zeka Çekirdeği"
+    name: "A.I. Core"
     lore:
-      - "Bu zayıf kabukta filizlenen"
-      - "bir yapay zeka yaşıyor."
+      - "A burgeoning artificial intelligence"
+      - "resides within this weak shell."
   empowered-ai-core:
-    name: "Güçlendirilmiş Yapay Zeka Çekirdeği"
+    name: "Empowered A.I. Core"
     lore:
-      - "Bu kabukta gelişmekte olan"
-      - "bir yapay zeka yaşıyor."
+      - "A flourishing artificial intelligence"
+      - "resides within this shell."
   pristine-ai-core:
-    name: "Mükemmel Yapay Zeka Çekirdeği"
+    name: "Pristine A.I. Core"
     lore:
-      - "Bu zayıf kabukta mükemmelleştirilmiş"
-      - "bir yapay zeka yaşıyor."
+      - "A perfected artificial intelligence"
+      - "resides within this defined shell."
   interdimensional-presence:
-    name: "Evrenlerarası Varlık"
+    name: "Interdimensional Presence"
     lore:
-      - "Tek bir evren için"
-      - "fazla güçlü hale gelmiş"
-      - "bir yapay zeka."
+      - "An artificial intelligence that has"
+      - "grown too powerful for just a"
+      - "single dimension."
   network-controller:
-    name: "Ağ Yöneticisi"
+    name: "Network Controller"
     lore:
-      - "Ağ yöneticisi bir ağın beynidir."
-      - "Bir ağda en fazla bir tane bulunabilir."
+      - "The Network controller is the brain"
+      - "for the whole network. Max 1 per network."
   network-bridge:
-    name: "Ağ Köprüsü"
+    name: "Network Bridge"
     lore:
-      - "Ağ objelerini ucuzca bağlamanı"
-      - "sağlayan bir ağ köprüsü."
+      - "The bridge allows you to cheaply"
+      - "connect network objects together."
   network-monitor:
-    name: "Ağ Monitörü"
+    name: "Network Monitor"
     lore:
-      - "Ağ monitörü, bitişik objelerle"
-      - "basit alışveriş etkileşimi"
-      - "sağlar."
+      - "The Network Monitor allows simple"
+      - "import/export interaction with adjacent"
+      - "objects."
       - ""
-      - "Şu anda destekledikleri:"
-      - "Sonsuzluk Varilleri"
-      - "Kuantum Ağ Deposu"
+      - "Currently Supports:"
+      - "Infinity Barrels"
+      - "Network Quantum Storages"
   network-importer:
-    name: "Ağ Alıcısı"
+    name: "Network Importer"
     lore:
-      - "Ağ alıcısı herhangi bir eşyayı"
+      - "The Network Importer brings any"
       - "item inside it into the network, up"
       - "to 9 stacks per SF tick."
       - "Accepts items in from cargo."
