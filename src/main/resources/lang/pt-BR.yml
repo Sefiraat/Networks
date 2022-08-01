@@ -384,221 +384,221 @@ items:
   network-wireless-configurator:
     name: "Configurador de Rede Sem Fio"
     lore:
-      - "Used to store a Receiver location"
-      - "and then to apply to a Transmitter"
+      - "Usado para armazenar o local de um Recebedor"
+      - "e aplicar a um Transmissor"
       - ""
-      - "{0}Right Click: {1}Store Receiver Location"
-      - "{0}Shift Right Click: {1}Set Location to Transmitter"
+      - "{0}Clique Direito: {1}Guardar Localização do Recebedor"
+      - "{0}Shift Clique Direito: {1}Definir local para Transmissor"
   network-rake-1:
-    name: "Network Rake (1)"
+    name: "Destruídor de Rede (1)"
     lore:
-      - "Right click a Network Object to"
-      - "break it instantly."
+      - "Clique com o botão direito em um objeto de rede para"
+      - "quebrá-lo instantaneamente."
       - ""
       - "{0}"
   network-rake-2:
-    name: "Network Rake (2)"
+    name: "Destruídor de Rede (2)"
     lore:
-      - "Right click a Network Object to"
-      - "break it instantly."
+      - "Clique com o botão direito em um objeto de rede para"
+      - "quebrá-lo instantaneamente."
       - ""
       - "{0}"
   network-rake-3:
-    name: "Network Rake (3)"
+    name: "Destruídor de Rede (3)"
     lore:
-      - "Right click a Network Object to"
-      - "break it instantly."
+      - "Clique com o botão direito em um objeto de rede para"
+      - "quebrá-lo instantaneamente."
       - ""
       - "{0}"
   stone-chunk-seed:
-    name: "Stone Chunk Seed"
+    name: "Semente de Pedaço de Pedra"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Stone Chunks when"
-      - "harvested."
+      - "Esta semente, quando crescer completamente, vai"
+      - "fornecer Pedaços de Pedra quando"
+      - "colhida."
     placed-on:
-      - "Nether Grass (or better)"
+      - "Grama do Nether (ou melhor)"
   synthetic-seed:
-    name: "Synthetic Seed"
+    name: "Semente Sintética"
     lore:
-      - "This seed does nothing."
+      - "Essa semente não faz nada."
     placed-on:
-      - "Nether Grass (or better)"
+      - "Grama do Nether (ou melhor)"
   synthetic-emerald-seed:
-    name: "Synthetic Emerald Seed"
+    name: "Semente de Esmeralda Sintética"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Emeralds when"
-      - "harvested."
+      - "Esta semente, quando crescer completamente, vai"
+      - "fornecer Esmeraldas Sintéticas quando"
+      - "colhida."
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "Terra Voraz (ou melhor)"
   synthetic-diamond-seed:
-    name: "Synthetic Diamond Seed"
+    name: "Semente de Diamante Sintético"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Diamonds when"
-      - "harvested."
+      - "Esta semente, quando crescer completamente, vai"
+      - "fornecer Diamantes Sintéticos quando"
+      - "colhida."
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "Terra Voraz (ou melhor)"
   fragmented-seed:
-    name: "Fragmented Seed"
+    name: "Semente fragmentada"
     lore:
-      - "This seed, when fully grown, will"
-      - "provide Synthetic Emerald shards when"
-      - "harvested."
+      - "Esta semente, quando crescer completamente, vai"
+      - "fornecer Fragmentos de Esmeralda Sintética quando"
+      - "colhida."
     placed-on:
-      - "Voracious Dirt (or better)"
+      - "Terra Voraz (ou melhor)"
 themes:
   lore:
-    research: "Research"
-    crafting: "Crafting Material"
-    machine: "Machine"
-    tool: "Tool"
-    guide: "Guide"
+    research: "Pesquisa"
+    crafting: "Material de Criação"
+    machine: "Máquina"
+    tool: "Ferramenta"
+    guide: "Guia"
 categories:
   name:
-    materials: "Crafting Materials"
-    tools: "Network Management Tools"
-    network-items: "Network Items"
-    network-quantums: "Network Quantums"
-    disabled-items: "Disabled/Removed Items"
+    materials: "Materiais de Criação"
+    tools: "Ferramentas de Gerenciamento de Rede"
+    network-items: "Itens de Rede"
+    network-quantums: "Itens Quânticos de Rede"
+    disabled-items: "Itens Desativados/Removidos"
 recipe-types:
   quantum-workbench:
-    name: "Quantum Workbench"
+    name: "Bancada Quântica"
     lore:
-      - "Crafted using the Quantum Workbench."
+      - "Criado usando a Bancada Quântica."
 gui:
   strings:
-    voiding: "Voiding"
-    amount: "Amount"
-    status: "Status"
-    disconnected: "Disconnected"
-    current-charge: "{0}Current Charge: {1}j"
+    voiding: "Destruindo"
+    amount: "Quantidade"
+    status: "Situação"
+    disconnected: "Desconectado"
+    current-charge: "{0}Carga Atual: {1}j"
   items:
     documentation:
-      name: "Documentation Wiki"
+      name: "Wiki de Documentação"
       lore:
-        - "Click to get the link to the"
-        - "documentation Wiki for Networks"
-        - "and other Sefiraat addons."
+        - "Clique para obter o link para a"
+        - "Wiki de documentação de Redes"
+        - "e outros addons de Sefiraat."
     previous-page:
-      name: "Previous Page"
+      name: "Página anterior"
     next-page:
-      name: "Next Page"
+      name: "Página seguinte"
     sort-order:
-      name: "Change Sort Order"
+      name: "Alterar Ordem de Classificação"
     set-filter:
-      name: "Set Filter (Right Click to Clear)"
+      name: "Definir Filtro (Clique direito para limpar)"
     crafting-grid-craft:
-      name: "{0}Craft"
+      name: "{0}Fabricar"
       lore:
-        - "{0}Left Click: {1}Try to Craft"
-        - "{0}Shift Left Click: {1}Try to return items"
+        - "{0}Clique Esquerdo: {1}Tentar Fabricar"
+        - "{0}Shift Clique Esquerdo: {1}Tentar retornar itens"
     transmit-items:
-      name: "Transmit items matching"
+      name: "Transmitir itens correspondentes"
     received-items:
-      name: "Received items"
+      name: "Itens recebidos"
     quantum-workbench-craft:
-      name: "Click to Entangle"
+      name: "Clique para Embaralhar"
     encoder-craft:
-      name: "Click to Encode"
+      name: "Clique para Codificar"
     blueprint_blank:
-      name: "Blank Blueprint"
+      name: "Diagrama em Branco"
     blueprint:
-      name: "Blueprint"
+      name: "Diagrama"
     input-items:
-      name: "Input"
+      name: "Entrada"
     output-items:
-      name: "Output"
+      name: "Saída"
     export-items:
-      name: "Export items matching template"
+      name: "Exportar itens correspondentes ao indicado"
     push-items:
-      name: "Push items matching template"
+      name: "Depositar itens correspondentes ao indicado"
     purge-items:
-      name: "Purge items matching template"
+      name: "Destruir itens correspondentes ao indicado"
     stored-item:
-      name: "Stored Item"
+      name: "Item armazenado"
     directional-pane:
-      name: "{0}Direction {1} ({2})"
+      name: "{0}Direção {1} ({2})"
       lore:
-        - "{0}Left Click: {1}Set Direction"
-        - "{0}Shift Left Click: {1}Open Target Block"
+        - "{0}Clique Esquerdo: {1}Definir Direção"
+        - "{0}Shift Clique Esquerdo: {1}Abrir Bloco Indicado"
     set-direction:
-      name: "{0}Set Direction: {1}"
+      name: "{0}Definir Direção: {1}"
     no-item-registered:
-      name: "{0}No Item Registered"
+      name: "{0}Nenhum item registrado"
       lore:
-        - "{0}Click the icon below while"
-        - "{0}holding an item to register it."
+        - "{0}Clique no ícone abaixo enquanto"
+        - "{0}segurando um item para registrá-lo."
     set-item:
-      name: "{0}Set Item"
+      name: "{0}Definir item"
       lore:
-        - "{0}Drag an item on top of this pane to register it."
-        - "{0}Shift Click to change voiding."
+        - "{0}Arraste um item até o topo deste painel para registrá-lo."
+        - "{0}Shift Clique para mudar entre destruindo ou não."
 messages:
   player:
-    on-cooldown: "{0}This is still on cooldown."
+    on-cooldown: "{0}Isso ainda está em espera."
     crayon:
-      removed: "{0}Crayon removed from network."
-      added: "{0}Crayon added to network."
+      removed: "{0}Giz removido da rede."
+      added: "{0}Giz adicionado à rede."
     probe:
-      summary: "Network Summary"
+      summary: "Resumo da rede"
       message:
-        - "{0}Bridges: {1}{2}"
-        - "{0}Monitors: {1}{3}"
-        - "{0}Importers: {1}{4}"
-        - "{0}Exporters: {1}{5}"
-        - "{0}Grids: {1}{6}"
-        - "{0}Cells: {1}{7}"
-        - "{0}Wipers: {1}{8}"
-        - "{0}Grabbers: {1}{9}"
-        - "{0}Pushers: {1}{10}"
-        - "{0}Purgers: {1}{11}"
-        - "{0}Crafters: {1}{12}"
-        - "{0}Power Nodes: {1}{13}"
-        - "{0}Power Displays: {1}{14}"
-        - "{0}Encoders: {1}{15}"
-        - "{0}Distinct Items: {1}{16}"
-        - "{0}Total Items: {1}{17}"
+        - "{0}Cabos: {1}{2}"
+        - "{0}Monitores: {1}{3}"
+        - "{0}Importadores: {1}{4}"
+        - "{0}Exportadores: {1}{5}"
+        - "{0}Grades: {1}{6}"
+        - "{0}Células: {1}{7}"
+        - "{0}Limpadores: {1}{8}"
+        - "{0}Coletadores: {1}{9}"
+        - "{0}Depositadores: {1}{10}"
+        - "{0}Exterminadores: {1}{11}"
+        - "{0}Fabricadores: {1}{12}"
+        - "{0}Nódulos de Energia: {1}{13}"
+        - "{0}Mostruários de Energia: {1}{14}"
+        - "{0}Codificadores: {1}{15}"
+        - "{0}Itens distintos: {1}{16}"
+        - "{0}Total de Itens: {1}{17}"
         - "---------------------------"
-        - "{0}Total Nodes: {1}{18}/{19}"
-      warning: "{0}Warning! {1}Your network has reached or exceeded the maximum node limit. Nodes beyond the limit will not function, which nodes these are may not always be the same. Reduce your total nodes."
-    documentation: "To access the documentation Wiki, please click here"
-    grid-filter-set: "{0}Type what you would like to filter this grid to"
-    grid-filter-applied: "{0}Filter Set"
-    quantum-must-be-empty: "{0}Quantum Storage must be empty before changing the set item."
-    no-power: "{0}Not enough Network power."
-    output-must-be-empty: "{0}Output must be empty."
-    no-blueprint: "{0}You need to provide a blank blueprint."
-    no-valid-recipe: "{0}No valid recipe found."
+        - "{0}Nódulos Totais: {1}{18}/{19}"
+      warning: "{0}Aviso! {1}Sua rede atingiu ou excedeu o limite máximo de Nódulos. Nódulos além do limite não funcionarão, os quais podem ou não ser sempre os mesmos. Reduza seus nódulos totais."
+    documentation: "Para acessar a Wiki de documentação, por favor clique aqui"
+    grid-filter-set: "{0}Digite qual item você procura"
+    grid-filter-applied: "{0}Filtro definido"
+    quantum-must-be-empty: "{0}O armazenamento quântico deve estar vazio antes de alterar o item definido."
+    no-power: "{0}Energia de Rede Insuficiente."
+    output-must-be-empty: "{0}Saída deve estar vazia."
+    no-blueprint: "{0}Você precisa fornecer um diagrama em branco."
+    no-valid-recipe: "{0}Nenhuma receita válida encontrada."
     remote:
-      not-set: "{0}Must be set to a Network Grid (not crafting grid)."
-      grid-set: "{0}Grid has been bound to the remote."
-      grid-not-loaded: "{0}The bound grid is not loaded."
-      grid-out-of-range: "{0}The bound grid is not within reach."
-      grid-not-bound: "{0}Remote is not bound to a grid."
-      grid-bound-grid-not-found: "{0}The bound grid can no longer be found."
+      not-set: "{0}É necessário definir uma Grade de Rede (não Grade de Criação)."
+      grid-set: "{0}Grade foi vinculada ao controle remoto."
+      grid-not-loaded: "{0}A grade vinculada não está carregada."
+      grid-out-of-range: "{0}A grade vinculada não está ao alcance."
+      grid-not-bound: "{0}O Controle não está vinculado a uma grade."
+      grid-bound-grid-not-found: "{0}A grade vinculada não pode mais ser encontrada."
     configurator:
-      wrong-block: "{0}Must target a Network Directional block"
-      no-direction: "{0}This directional does not yet have a direction set"
-      copied: "{0}Copied configuration"
-      direction-not-supplied: "{0}Direction: {1}Not supplied"
-      direction-applied: "{0}Direction: {1}Applied"
-      item-added: "{0}Item [{1}]: {2} Added to filter"
-      not-enough-items: "{0}Item [{1}]: {2} Not enough items to fill filter"
-      no-item: "{0}Item [{1}]: {2} No item in configurator"
+      wrong-block: "{0}Deve selecionar um bloco direcional de rede"
+      no-direction: "{0}Este direcional ainda não tem uma direção definida"
+      copied: "{0}Configuração copiada"
+      direction-not-supplied: "{0}Direção: {1}Não suportada"
+      direction-applied: "{0}Direção: {1}Aplicada"
+      item-added: "{0}Item [{1}]: {2} Adicionado ao filtro"
+      not-enough-items: "{0}item [{1}]: {2} itens insuficientes para preencher o filtro"
+      no-item: "{0}item [{1}]: {2} Nenhum item no configurador"
     wireless-configurator:
-      wrong-block: "{0}Must target a Network Wireless block."
-      not-set: "{0}No Wireless Receiver has been set."
-      wrong-world: "{0}The Wireless Receiver is in a different world."
-      transmitter-set: "{0}Set Transmitter's receiver location."
-      receiver-set: "{0}Wireless Receiver set."
+      wrong-block: "{0}Deve selecionar um bloco de Rede Sem Fio."
+      not-set: "{0}Nenhum Recebedor Sem Fio foi definido."
+      wrong-world: "{0}O Recebedor Sem Fio está em um mundo diferente."
+      transmitter-set: "{0}Localização do recebedor do Transmissor definida."
+      receiver-set: "{0}Recebedor Sem Fio definido."
     commands:
-      must-be-quantum: "{0}You must be holding a Quantum Storage to use this command."
-      issue-converting: "{0}This block has either not been set to an item yet or is a corrupted Quantum Storage."
+      must-be-quantum: "{0}Você deve estar segurando um Armazenamento Quântico para usar este comando."
+      issue-converting: "{0}Este bloco não possui item definido ou é um armazenamento quântico corrompido."
   logging:
-    netheopoiesis_update: "Netheopoiesis must be updated to meet Networks' requirements."
+    netheopoiesis_update: "Netheopoiesis precisa ser atualizado para cumprir os requisitos da Rede."
 misc:
-  assigned-recipe: "{0}Assigned Recipe"
-  nothing: "{0}Nothing"
-  outputting: "{0}Outputting"
+  assigned-recipe: "{0}Receita atribuída"
+  nothing: "{0}Nada"
+  outputting: "{0}Saindo"
