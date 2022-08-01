@@ -159,7 +159,7 @@ items:
       - "你可以直接存入或"
       - "取出物品。"
   network-crafting-grid:
-    name: "Network Crafting Grid"
+    name: "网格（带合成）"
     lore:
       - "The Network Crafting Grid acts"
       - "like a normal grid but displays less"
