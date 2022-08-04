@@ -58,14 +58,6 @@ public final class NetworksItemGroups {
         )
     );
 
-    public static final ItemGroup DISABLED_ITEMS = new HiddenItemGroup(
-        Keys.newKey("disabled_items"),
-        new CustomItemStack(
-            new ItemStack(Material.BARRIER),
-            Theme.MAIN.getColor() + "Disabled/Removed Items"
-        )
-    );
-
     static {
         final Networks plugin = Networks.getInstance();
 
@@ -75,7 +67,6 @@ public final class NetworksItemGroups {
         NetworksItemGroups.TOOLS.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS.register(plugin);
         NetworksItemGroups.NETWORK_QUANTUMS.register(plugin);
-        NetworksItemGroups.DISABLED_ITEMS.register(plugin);
     }
 
     public static class HiddenItemGroup extends ItemGroup {
