@@ -146,7 +146,7 @@ public abstract class AbstractGrid extends NetworkObject {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         // No node located, weird
-        if (definition.getNode() == null) {
+        if (definition == null || definition.getNode() == null) {
             clearDisplay(blockMenu);
             return;
         }
