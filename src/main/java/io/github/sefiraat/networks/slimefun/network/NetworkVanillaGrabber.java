@@ -101,7 +101,7 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
                 grabItem(blockMenu, furnaceInventoryFuel);
             }
 
-            } else if (inventory instanceof BrewerInventory brewerInventory) {
+        } else if (inventory instanceof BrewerInventory brewerInventory) {
             for (int i = 0; i < 3; i++) {
                 final ItemStack stack = brewerInventory.getContents()[i];
                 if (stack != null && stack.getType() == Material.POTION) {
