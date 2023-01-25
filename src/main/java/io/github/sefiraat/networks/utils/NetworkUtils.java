@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 public class NetworkUtils {
 
     public static void applyConfig(@Nonnull NetworkDirectional directional, @Nonnull BlockMenu blockMenu, @Nonnull Player player) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemStack itemStack = player.getInventory().getItemInOffHand();
 
         if (SlimefunItem.getByItem(itemStack) instanceof NetworkConfigurator) {
             applyConfig(directional, itemStack, blockMenu, player);
