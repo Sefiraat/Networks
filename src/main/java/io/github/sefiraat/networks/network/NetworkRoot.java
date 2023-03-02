@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkRoot extends NetworkNode {
 
@@ -36,21 +37,21 @@ public class NetworkRoot extends NetworkNode {
     private final int maxNodes;
     private boolean isOverburdened = false;
 
-    private final Set<Location> bridges = new HashSet<>();
-    private final Set<Location> monitors = new HashSet<>();
-    private final Set<Location> importers = new HashSet<>();
-    private final Set<Location> exporters = new HashSet<>();
-    private final Set<Location> grids = new HashSet<>();
-    private final Set<Location> cells = new HashSet<>();
-    private final Set<Location> wipers = new HashSet<>();
-    private final Set<Location> grabbers = new HashSet<>();
-    private final Set<Location> pushers = new HashSet<>();
-    private final Set<Location> purgers = new HashSet<>();
-    private final Set<Location> crafters = new HashSet<>();
-    private final Set<Location> powerNodes = new HashSet<>();
-    private final Set<Location> powerDisplays = new HashSet<>();
-    private final Set<Location> encoders = new HashSet<>();
-    private final Set<Location> greedyBlocks = new HashSet<>();
+    private final Set<Location> bridges = ConcurrentHashMap.newKeySet();
+    private final Set<Location> monitors = ConcurrentHashMap.newKeySet();
+    private final Set<Location> importers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> exporters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> grids = ConcurrentHashMap.newKeySet();
+    private final Set<Location> cells = ConcurrentHashMap.newKeySet();
+    private final Set<Location> wipers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> grabbers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> pushers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> purgers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> crafters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> powerNodes = ConcurrentHashMap.newKeySet();
+    private final Set<Location> powerDisplays = ConcurrentHashMap.newKeySet();
+    private final Set<Location> encoders = ConcurrentHashMap.newKeySet();
+    private final Set<Location> greedyBlocks = ConcurrentHashMap.newKeySet();
 
     private Set<BarrelIdentity> barrels = null;
 
@@ -275,8 +276,8 @@ public class NetworkRoot extends NetworkNode {
             return this.barrels;
         }
 
-        final Set<Location> addedLocations = new HashSet<>();
-        final Set<BarrelIdentity> barrelSet = new HashSet<>();
+        final Set<Location> addedLocations = ConcurrentHashMap.newKeySet();
+        final Set<BarrelIdentity> barrelSet = ConcurrentHashMap.newKeySet();
 
         for (Location cellLocation : this.monitors) {
             final BlockFace face = NetworkDirectional.getSelectedFace(cellLocation);
