@@ -11,6 +11,8 @@ public enum NodeType {
     WIPER,
     GRABBER,
     PUSHER,
+    CUTTER,
+    PASTER,
     PURGER,
     CRAFTER,
     POWER_NODE,

@@ -4,6 +4,8 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlV;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlX;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
@@ -62,6 +64,8 @@ public class NetworkSlimefunItems {
     public static final NetworkExport NETWORK_EXPORT;
     public static final NetworkGrabber NETWORK_GRABBER;
     public static final NetworkPusher NETWORK_PUSHER;
+    public static final NetworkControlX NETWORK_CONTROL_X;
+    public static final NetworkControlV NETWORK_CONTROL_V;
     public static final NetworkVanillaGrabber NETWORK_VANILLA_GRABBER;
     public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
     public static final NetworkWirelessTransmitter NETWORK_WIRELESS_TRANSMITTER;
@@ -316,6 +320,28 @@ public class NetworkSlimefunItems {
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
                 OPTIC_CABLE.getItem(), NETWORK_EXPORT.getItem(), OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_CONTROL_X = new NetworkControlX(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CONTROL_X,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_GRABBER, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_CONTROL_V = new NetworkControlV(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CONTROL_V,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_PUSHER, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
             }
         );
 
@@ -808,6 +834,8 @@ public class NetworkSlimefunItems {
         NETWORK_EXPORT.register(plugin);
         NETWORK_GRABBER.register(plugin);
         NETWORK_PUSHER.register(plugin);
+        NETWORK_CONTROL_X.register(plugin);
+        NETWORK_CONTROL_V.register(plugin);
         NETWORK_VANILLA_GRABBER.register(plugin);
         NETWORK_VANILLA_PUSHER.register(plugin);
         NETWORK_WIRELESS_TRANSMITTER.register(plugin);

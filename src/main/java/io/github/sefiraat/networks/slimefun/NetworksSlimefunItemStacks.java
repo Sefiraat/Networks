@@ -45,6 +45,8 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_CONTROL_X;
+    public static final SlimefunItemStack NETWORK_CONTROL_V;
     public static final SlimefunItemStack NETWORK_VANILLA_GRABBER;
     public static final SlimefunItemStack NETWORK_VANILLA_PUSHER;
     public static final SlimefunItemStack NETWORK_WIRELESS_TRANSMITTER;
@@ -273,6 +275,29 @@ public class NetworksSlimefunItemStacks {
             "The Network Pusher will try",
             "to push a matching item from a",
             "given item into the chosen machine."
+        );
+
+        NETWORK_CONTROL_X = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_X",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Control: X",
+            "The Network Control: X will try",
+            "to 'cut' a block out of the world",
+            "and put it into the Network.",
+            "Only works on Vanilla blocks without",
+            "inventories."
+        );
+
+        NETWORK_CONTROL_V = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_V",
+            new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Control: V",
+            "The Network Control: V will try",
+            "to 'paste' a block from the Network",
+            "into the world.",
+            "Only works with Vanilla blocks."
         );
 
         NETWORK_VANILLA_GRABBER = Theme.themedSlimefunItemStack(
