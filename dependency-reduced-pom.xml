@@ -62,6 +62,10 @@
       <id>jeff-media-public</id>
       <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
     </repository>
+    <repository>
+      <id>bg-repo</id>
+      <url>https://repo.bg-software.com/repository/api/</url>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -112,6 +116,12 @@
       <groupId>com.github.Sefiraat</groupId>
       <artifactId>Netheopoiesis</artifactId>
       <version>8d1af6c570</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.bgsoftware</groupId>
+      <artifactId>WildChestsAPI</artifactId>
+      <version>2022.7</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

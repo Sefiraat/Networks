@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.bgsoftware.wildchests.api.WildChestsAPI;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -93,6 +94,8 @@ public class NetworkVanillaPusher extends NetworkDirectional {
             handleFurnace(stack, furnace);
         } else if (inventory instanceof BrewerInventory brewer) {
             handleBrewingStand(stack, brewer);
+        } else if (WildChestsAPI.getChest(targetBlock.getLocation()) != null) {
+            return;
         } else if (InvUtils.fits(holder.getInventory(), stack)) {
             holder.getInventory().addItem(stack);
             stack.setAmount(0);
