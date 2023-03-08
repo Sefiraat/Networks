@@ -1,9 +1,11 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.gmail.nossr50.mcMMO;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
 import dev.sefiraat.sefilib.world.LocationUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
@@ -114,6 +116,9 @@ public class NetworkControlV extends NetworkDirectional {
 
         Bukkit.getScheduler().runTask(Networks.getInstance(), bukkitTask -> {
             targetBlock.setType(fetchedStack.getType(), true);
+            if (SupportedPluginManager.getInstance().isMcMMO()) {
+                mcMMO.getPlaceStore().setTrue(targetBlock);
+            }
             ParticleUtils.displayParticleRandomly(
                 LocationUtils.centre(targetBlock.getLocation()),
                 Particle.ELECTRIC_SPARK,
