@@ -41,11 +41,13 @@ public class NetworkVacuum extends NetworkObject {
     private static final int[] INPUT_SLOTS = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
 
     private final ItemSetting<Integer> tickRate;
+    private final ItemSetting<Integer> vacuumRange;
 
     public NetworkVacuum(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.IMPORT);
 
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
+        this.vacuumRange = new IntRangeSetting(this, "vacuum_range", 1, 2, 5);
         addItemSetting(this.tickRate);
 
         for (int inputSlot : INPUT_SLOTS) {
@@ -85,8 +87,9 @@ public class NetworkVacuum extends NetworkObject {
             final ItemStack inSlot = blockMenu.getItemInSlot(inputSlot);
             if (inSlot == null || inSlot.getType().isAir()) {
                 final Location location = blockMenu.getLocation().clone().add(0.5, 0.5, 0.5);
+                final int range = this.vacuumRange.getValue();
                 Collection<Entity> items = location.getWorld()
-                    .getNearbyEntities(location, 4, 4, 4, Item.class::isInstance);
+                    .getNearbyEntities(location, range, range, range, Item.class::isInstance);
                 Optional<Entity> optionalEntity = items.stream().findFirst();
                 if (!optionalEntity.isPresent() || !(optionalEntity.get() instanceof Item item)) {
                     return;
