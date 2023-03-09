@@ -20,6 +20,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
+import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
@@ -66,6 +67,7 @@ public class NetworkSlimefunItems {
     public static final NetworkPusher NETWORK_PUSHER;
     public static final NetworkControlX NETWORK_CONTROL_X;
     public static final NetworkControlV NETWORK_CONTROL_V;
+    public static final NetworkVacuum NETWORK_VACUUM;
     public static final NetworkVanillaGrabber NETWORK_VANILLA_GRABBER;
     public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
     public static final NetworkWirelessTransmitter NETWORK_WIRELESS_TRANSMITTER;
@@ -341,6 +343,17 @@ public class NetworkSlimefunItems {
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
                 OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_PUSHER, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_VACUUM = new NetworkVacuum(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_VACUUM,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_IMPORT, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
             }
         );
@@ -836,6 +849,7 @@ public class NetworkSlimefunItems {
         NETWORK_PUSHER.register(plugin);
         NETWORK_CONTROL_X.register(plugin);
         NETWORK_CONTROL_V.register(plugin);
+        NETWORK_VACUUM.register(plugin);
         NETWORK_VANILLA_GRABBER.register(plugin);
         NETWORK_VANILLA_PUSHER.register(plugin);
         NETWORK_WIRELESS_TRANSMITTER.register(plugin);
