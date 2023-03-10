@@ -48,7 +48,7 @@ public class NetworkVacuum extends NetworkObject {
 
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         this.vacuumRange = new IntRangeSetting(this, "vacuum_range", 1, 2, 5);
-        addItemSetting(this.tickRate);
+        addItemSetting(this.tickRate, this.vacuumRange);
 
         for (int inputSlot : INPUT_SLOTS) {
             this.getSlotsToDrop().add(inputSlot);
@@ -91,7 +91,7 @@ public class NetworkVacuum extends NetworkObject {
                 Collection<Entity> items = location.getWorld()
                     .getNearbyEntities(location, range, range, range, Item.class::isInstance);
                 Optional<Entity> optionalEntity = items.stream().findFirst();
-                if (!optionalEntity.isPresent() || !(optionalEntity.get() instanceof Item item)) {
+                if (optionalEntity.isEmpty() || !(optionalEntity.get() instanceof Item item)) {
                     return;
                 }
                 if (item.getPickupDelay() <= 0 && !SlimefunUtils.hasNoPickupFlag(item)) {

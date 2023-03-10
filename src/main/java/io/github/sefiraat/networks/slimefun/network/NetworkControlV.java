@@ -17,6 +17,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
@@ -90,7 +91,13 @@ public class NetworkControlV extends NetworkDirectional {
 
         final ItemStack templateStack = blockMenu.getItemInSlot(TEMPLATE_SLOT);
 
-        if (templateStack == null || !templateStack.getType().isBlock()) {
+        if (templateStack == null) {
+            return;
+        }
+
+        final Material templateMaterial = templateStack.getType();
+
+        if (!templateMaterial.isBlock() || SlimefunTag.SENSITIVE_MATERIALS.isTagged(templateMaterial)) {
             return;
         }
 

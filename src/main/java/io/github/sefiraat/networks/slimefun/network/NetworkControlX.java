@@ -6,11 +6,13 @@ import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
+import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.features.blockstatesnapshot.BlockStateSnapshotResult;
@@ -32,8 +34,24 @@ import java.util.UUID;
 
 public class NetworkControlX extends NetworkDirectional {
 
+    private static final int[] BACKGROUND_SLOTS = new int[]{
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 24, 26, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+    };
     private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
+    private static final int TEMPLATE_SLOT = 25;
+    private static final int NORTH_SLOT = 11;
+    private static final int SOUTH_SLOT = 29;
+    private static final int EAST_SLOT = 21;
+    private static final int WEST_SLOT = 19;
+    private static final int UP_SLOT = 14;
+    private static final int DOWN_SLOT = 32;
     private static final int REQUIRED_POWER = 100;
+
+    public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
+        Material.BLUE_STAINED_GLASS_PANE,
+        Theme.PASSIVE + "Cut items matching template.",
+        Theme.PASSIVE + "Leaving blank will cut anything"
+    );
     private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.GRAY, 1);
 
     public NetworkControlX(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -78,6 +96,15 @@ public class NetworkControlX extends NetworkDirectional {
             return;
         }
 
+        final ItemStack templateStack = blockMenu.getItemInSlot(TEMPLATE_SLOT);
+        boolean mustMatch = templateStack != null && !templateStack.getType().isAir();
+
+        if ((mustMatch && (targetBlock.getType() != templateStack.getType()))
+            || (SlimefunItem.getByItem(templateStack) != null)
+        ) {
+            return;
+        }
+
         final BlockStateSnapshotResult blockState = PaperLib.getBlockState(targetBlock, true);
 
         if (blockState.getState() instanceof InventoryHolder) {
@@ -109,10 +136,57 @@ public class NetworkControlX extends NetworkDirectional {
         }
     }
 
+    @Nonnull
+    @Override
+    protected int[] getBackgroundSlots() {
+        return BACKGROUND_SLOTS;
+    }
+
     @Nullable
     @Override
     protected int[] getOtherBackgroundSlots() {
         return TEMPLATE_BACKGROUND;
+    }
+
+    @Nullable
+    @Override
+    protected CustomItemStack getOtherBackgroundStack() {
+        return TEMPLATE_BACKGROUND_STACK;
+    }
+
+    @Override
+    public int getNorthSlot() {
+        return NORTH_SLOT;
+    }
+
+    @Override
+    public int getSouthSlot() {
+        return SOUTH_SLOT;
+    }
+
+    @Override
+    public int getEastSlot() {
+        return EAST_SLOT;
+    }
+
+    @Override
+    public int getWestSlot() {
+        return WEST_SLOT;
+    }
+
+    @Override
+    public int getUpSlot() {
+        return UP_SLOT;
+    }
+
+    @Override
+    public int getDownSlot() {
+        return DOWN_SLOT;
+    }
+
+    @Override
+    public int[] getItemSlots() {
+        return new int[]{TEMPLATE_SLOT};
     }
 
     @Override
