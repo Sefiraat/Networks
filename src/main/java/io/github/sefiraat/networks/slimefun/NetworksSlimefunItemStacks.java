@@ -354,7 +354,7 @@ public class NetworksSlimefunItemStacks {
             "located within the same world.",
             "Use the Wireless Configurator to",
             "setup the Wireless Transmitter.",
-            "Requires 7,500 Network Power per transfer."
+            "Requires 500 Network Power per transfer."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(
