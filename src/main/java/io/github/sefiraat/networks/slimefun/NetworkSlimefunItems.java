@@ -570,7 +570,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, OPTIC_CABLE.getItem(),
+                OPTIC_CABLE.getItem(), SlimefunItems.MEDIUM_CAPACITOR, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
             1000
@@ -582,7 +582,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
-                NETWORK_CAPACITOR_1.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
+                NETWORK_CAPACITOR_1.getItem(), SlimefunItems.BIG_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
             10000
@@ -594,7 +594,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
-                NETWORK_CAPACITOR_2.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
+                NETWORK_CAPACITOR_2.getItem(), SlimefunItems.LARGE_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
             },
             100000
@@ -606,7 +606,7 @@ public class NetworkSlimefunItems {
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
-                        NETWORK_CAPACITOR_3.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
+                        NETWORK_CAPACITOR_3.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
                 },
                 1000000
