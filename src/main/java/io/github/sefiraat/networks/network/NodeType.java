@@ -13,6 +13,7 @@ public enum NodeType {
     PUSHER,
     CUTTER,
     PASTER,
+    VACUUM,
     PURGER,
     CRAFTER,
     POWER_NODE,

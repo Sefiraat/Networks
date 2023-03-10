@@ -44,7 +44,7 @@ public class NetworkVacuum extends NetworkObject {
     private final ItemSetting<Integer> vacuumRange;
 
     public NetworkVacuum(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.IMPORT);
+        super(itemGroup, item, recipeType, recipe, NodeType.VACUUM);
 
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         this.vacuumRange = new IntRangeSetting(this, "vacuum_range", 1, 2, 5);
