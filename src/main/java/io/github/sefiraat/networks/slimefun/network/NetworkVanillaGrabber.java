@@ -92,6 +92,12 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
             return;
         }
 
+        if (Networks.getSupportedPluginManager().isWildChests()
+            && WildChestsAPI.getChest(targetBlock.getLocation()) != null
+        ) {
+            return;
+        }
+
         final Inventory inventory = holder.getInventory();
 
         if (inventory instanceof FurnaceInventory furnaceInventory) {
@@ -114,10 +120,6 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
                     }
                 }
             }
-
-        } else if (Networks.getSupportedPluginManager().isWildChests()
-                && WildChestsAPI.getChest(targetBlock.getLocation()) != null) {
-            return;
         } else {
             for (ItemStack stack : inventory.getContents()) {
                 if (grabItem(blockMenu, stack)) {
