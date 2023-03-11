@@ -1,10 +1,8 @@
 package io.github.sefiraat.networks.managers;
 
 import com.google.common.base.Preconditions;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 
-@Getter
 public class SupportedPluginManager {
 
     private static SupportedPluginManager instance;
@@ -35,7 +33,7 @@ public class SupportedPluginManager {
         return mcMMO;
     }
 
-    public boolean isWildChets() {
+    public boolean isWildChests() {
         return wildChests;
     }
 
