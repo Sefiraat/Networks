@@ -63,12 +63,12 @@
       <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
     </repository>
     <repository>
-      <id>bg-repo</id>
-      <url>https://repo.bg-software.com/repository/api/</url>
-    </repository>
-    <repository>
       <id>mcmmo-repo</id>
       <url>https://nexus.neetgames.com/repository/maven-public</url>
+    </repository>
+    <repository>
+      <id>bg-repo</id>
+      <url>https://repo.bg-software.com/repository/api/</url>
     </repository>
   </repositories>
   <pluginRepositories>
