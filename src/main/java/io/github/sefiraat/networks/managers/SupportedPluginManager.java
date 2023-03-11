@@ -8,10 +8,12 @@ public class SupportedPluginManager {
 
     private final boolean infinityExpansion;
     private final boolean netheopoiesis;
+    private final boolean wildChests;
 
     public SupportedPluginManager() {
         this.infinityExpansion = Bukkit.getPluginManager().isPluginEnabled("InfinityExpansion");
         this.netheopoiesis = Bukkit.getPluginManager().isPluginEnabled("Netheopoiesis");
+        this.wildChests = Bukkit.getPluginManager().isPluginEnabled("WildChests");
     }
 
 }

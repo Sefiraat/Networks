@@ -1,6 +1,8 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.bgsoftware.wildchests.api.WildChestsAPI;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -112,6 +114,10 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
                     }
                 }
             }
+
+        } else if (Networks.getSupportedPluginManager().isWildChests()
+                && WildChestsAPI.getChest(targetBlock.getLocation()) != null) {
+            return;
         } else {
             for (ItemStack stack : inventory.getContents()) {
                 if (grabItem(blockMenu, stack)) {
