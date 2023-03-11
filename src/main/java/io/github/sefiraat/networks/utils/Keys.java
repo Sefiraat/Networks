@@ -15,6 +15,8 @@ public class Keys {
     public static final NamespacedKey CARD_INSTANCE = newKey("ntw_card");
     public static final NamespacedKey QUANTUM_STORAGE_INSTANCE = newKey("quantum_storage");
     public static final NamespacedKey BLUEPRINT_INSTANCE = newKey("ntw_blueprint");
+    public static final NamespacedKey FACE = newKey("face");
+    public static final NamespacedKey ITEM = newKey("item");
 
     @Nonnull
     public static NamespacedKey newKey(@Nonnull String value) {
