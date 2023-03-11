@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import io.github.sefiraat.networks.network.NodeType;
-import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;

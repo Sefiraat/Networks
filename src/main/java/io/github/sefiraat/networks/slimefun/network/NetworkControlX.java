@@ -105,12 +105,6 @@ public class NetworkControlX extends NetworkDirectional {
             return;
         }
 
-        final BlockStateSnapshotResult blockState = PaperLib.getBlockState(targetBlock, true);
-
-        if (blockState.getState() instanceof InventoryHolder) {
-            return;
-        }
-
         final UUID uuid = UUID.fromString(BlockStorage.getLocationInfo(blockMenu.getLocation(), OWNER_KEY));
         final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
@@ -123,8 +117,13 @@ public class NetworkControlX extends NetworkDirectional {
         definition.getNode().getRoot().addItemStack(resultStack);
 
         if (resultStack.getAmount() == 0) {
-            definition.getNode().getRoot().removeRootPower(REQUIRED_POWER);
             Bukkit.getScheduler().runTask(Networks.getInstance(), bukkitTask -> {
+                final BlockStateSnapshotResult blockState = PaperLib.getBlockState(targetBlock, true);
+
+                if (blockState.getState() instanceof InventoryHolder) {
+                    return;
+                }
+
                 targetBlock.setType(Material.AIR, true);
                 ParticleUtils.displayParticleRandomly(
                     LocationUtils.centre(targetBlock.getLocation()),
@@ -132,6 +131,7 @@ public class NetworkControlX extends NetworkDirectional {
                     5,
                     DUST_OPTIONS
                 );
+                definition.getNode().getRoot().removeRootPower(REQUIRED_POWER);
             });
         }
     }
