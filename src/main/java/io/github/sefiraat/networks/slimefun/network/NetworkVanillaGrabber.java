@@ -93,8 +93,14 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
         final Inventory inventory = holder.getInventory();
 
         if (inventory instanceof FurnaceInventory furnaceInventory) {
-            final ItemStack stack = furnaceInventory.getResult();
-            grabItem(blockMenu, stack);
+            final ItemStack furnaceInventoryResult = furnaceInventory.getResult();
+            final ItemStack furnaceInventoryFuel = furnaceInventory.getFuel();
+            grabItem(blockMenu, furnaceInventoryResult);
+
+            if (furnaceInventoryFuel != null && furnaceInventoryFuel.getType() == Material.BUCKET) {
+                grabItem(blockMenu, furnaceInventoryFuel);
+            }
+
         } else if (inventory instanceof BrewerInventory brewerInventory) {
             for (int i = 0; i < 3; i++) {
                 final ItemStack stack = brewerInventory.getContents()[i];
