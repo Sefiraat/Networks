@@ -1,6 +1,5 @@
 package io.github.sefiraat.networks.slimefun.network;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.AureliumAPI;
 import com.gmail.nossr50.mcMMO;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
