@@ -52,8 +52,8 @@ public class NetworkWirelessTransmitter extends NetworkObject {
     private static final String LINKED_LOCATION_KEY_Y = "linked-location-y";
     private static final String LINKED_LOCATION_KEY_Z = "linked-location-z";
 
-    private static final int REQUIRED_POWER = 7500;
-    private static final int TICKS_PER = 5;
+    private static final int REQUIRED_POWER = 500;
+    private static final int TICKS_PER = 2;
 
     private final Map<Location, Location> linkedLocations = new HashMap<>();
 

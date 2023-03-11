@@ -63,7 +63,8 @@ public abstract class NetworkObject extends SlimefunItem {
 
     protected void addToRegistry(@Nonnull Block block) {
         if (!NetworkStorage.getAllNetworkObjects().containsKey(block.getLocation())) {
-            NetworkStorage.getAllNetworkObjects().put(block.getLocation(), new NodeDefinition(nodeType));
+            final NodeDefinition nodeDefinition = new NodeDefinition(nodeType);
+            NetworkStorage.getAllNetworkObjects().put(block.getLocation(), nodeDefinition);
         }
     }
 

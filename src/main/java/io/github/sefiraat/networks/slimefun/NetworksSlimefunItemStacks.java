@@ -45,6 +45,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_CONTROL_X;
+    public static final SlimefunItemStack NETWORK_CONTROL_V;
+    public static final SlimefunItemStack NETWORK_VACUUM;
     public static final SlimefunItemStack NETWORK_VANILLA_GRABBER;
     public static final SlimefunItemStack NETWORK_VANILLA_PUSHER;
     public static final SlimefunItemStack NETWORK_WIRELESS_TRANSMITTER;
@@ -275,6 +278,47 @@ public class NetworksSlimefunItemStacks {
             "given item into the chosen machine."
         );
 
+        NETWORK_CONTROL_X = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_X",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Control: X",
+            "The Network Control: X will try",
+            "to 'cut' a block out of the world",
+            "and put it into the Network.",
+            "Only works on Vanilla blocks without",
+            "inventories.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/cut", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
+        NETWORK_CONTROL_V = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_V",
+            new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Control: V",
+            "The Network Control: V will try",
+            "to 'paste' a block from the Network",
+            "into the world.",
+            "Only works with Vanilla blocks.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/paste", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
+        NETWORK_VACUUM = Theme.themedSlimefunItemStack(
+            "NTW_VACUUM",
+            new ItemStack(Material.ORANGE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "Network Vacuum",
+            "The Network Vacuum will suck",
+            "items into itself within a",
+            "4 x 4 range centered on itself.",
+            "Vacuumed items will try to push",
+            "into the Network.",
+            "",
+            MessageFormat.format("{0}Network Drain: {1}{2}/tick", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
         NETWORK_VANILLA_GRABBER = Theme.themedSlimefunItemStack(
             "NTW_VANILLA_GRABBER",
             new ItemStack(Material.ORANGE_STAINED_GLASS),
@@ -310,7 +354,7 @@ public class NetworksSlimefunItemStacks {
             "located within the same world.",
             "Use the Wireless Configurator to",
             "setup the Wireless Transmitter.",
-            "Requires 7,500 Network Power per transfer."
+            "Requires 500 Network Power per transfer."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(

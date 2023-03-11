@@ -63,6 +63,10 @@
       <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
     </repository>
     <repository>
+      <id>mcmmo-repo</id>
+      <url>https://nexus.neetgames.com/repository/maven-public</url>
+    </repository>
+    <repository>
       <id>bg-repo</id>
       <url>https://repo.bg-software.com/repository/api/</url>
     </repository>
@@ -122,6 +126,12 @@
       <groupId>com.bgsoftware</groupId>
       <artifactId>WildChestsAPI</artifactId>
       <version>2022.7</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.gmail.nossr50.mcMMO</groupId>
+      <artifactId>mcMMO</artifactId>
+      <version>2.1.218</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

@@ -4,6 +4,8 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlV;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlX;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
@@ -18,6 +20,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
+import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
@@ -62,6 +65,9 @@ public class NetworkSlimefunItems {
     public static final NetworkExport NETWORK_EXPORT;
     public static final NetworkGrabber NETWORK_GRABBER;
     public static final NetworkPusher NETWORK_PUSHER;
+    public static final NetworkControlX NETWORK_CONTROL_X;
+    public static final NetworkControlV NETWORK_CONTROL_V;
+    public static final NetworkVacuum NETWORK_VACUUM;
     public static final NetworkVanillaGrabber NETWORK_VANILLA_GRABBER;
     public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
     public static final NetworkWirelessTransmitter NETWORK_WIRELESS_TRANSMITTER;
@@ -319,6 +325,39 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_CONTROL_X = new NetworkControlX(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CONTROL_X,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_GRABBER, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_CONTROL_V = new NetworkControlV(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CONTROL_V,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_PUSHER, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
+            }
+        );
+
+        NETWORK_VACUUM = new NetworkVacuum(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_VACUUM,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_DISPLAY, OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), NetworksSlimefunItemStacks.NETWORK_IMPORT, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), NetworksSlimefunItemStacks.NETWORK_POWER_OUTLET_1, OPTIC_GLASS.getItem(),
+            }
+        );
+
         NETWORK_VANILLA_GRABBER = new NetworkVanillaGrabber(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_VANILLA_GRABBER,
@@ -531,7 +570,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-                OPTIC_CABLE.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, OPTIC_CABLE.getItem(),
+                OPTIC_CABLE.getItem(), SlimefunItems.MEDIUM_CAPACITOR, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
             1000
@@ -543,7 +582,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
-                NETWORK_CAPACITOR_1.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
+                NETWORK_CAPACITOR_1.getItem(), SlimefunItems.BIG_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
             10000
@@ -555,7 +594,7 @@ public class NetworkSlimefunItems {
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[]{
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
-                NETWORK_CAPACITOR_2.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
+                NETWORK_CAPACITOR_2.getItem(), SlimefunItems.LARGE_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
             },
             100000
@@ -567,7 +606,7 @@ public class NetworkSlimefunItems {
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
-                        NETWORK_CAPACITOR_3.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
+                        NETWORK_CAPACITOR_3.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
                 },
                 1000000
@@ -808,6 +847,9 @@ public class NetworkSlimefunItems {
         NETWORK_EXPORT.register(plugin);
         NETWORK_GRABBER.register(plugin);
         NETWORK_PUSHER.register(plugin);
+        NETWORK_CONTROL_X.register(plugin);
+        NETWORK_CONTROL_V.register(plugin);
+        NETWORK_VACUUM.register(plugin);
         NETWORK_VANILLA_GRABBER.register(plugin);
         NETWORK_VANILLA_PUSHER.register(plugin);
         NETWORK_WIRELESS_TRANSMITTER.register(plugin);

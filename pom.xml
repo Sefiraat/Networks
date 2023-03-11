@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat</groupId>
     <artifactId>networks</artifactId>
-    <version>MODIFIED_1.1.0</version>
+    <version>MODIFIED_1.2.0</version>
 
     <distributionManagement>
         <repository>
@@ -127,8 +127,10 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
-
-        <!-- Supported WildChestsAPI -->
+        <repository>
+            <id>mcmmo-repo</id>
+            <url>https://nexus.neetgames.com/repository/maven-public</url>
+        </repository>
         <repository>
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
@@ -148,6 +150,12 @@
             <artifactId>Slimefun4</artifactId>
             <version>2c4f886</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.sefiraat</groupId>
+            <artifactId>SefiLib</artifactId>
+            <version>0.1.5.4</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Tools etc. -->
@@ -188,15 +196,18 @@
             <version>8d1af6c570</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Supported WildChestsAPI -->
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>WildChestsAPI</artifactId>
             <version>2022.7</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.gmail.nossr50.mcMMO</groupId>
+            <artifactId>mcMMO</artifactId>
+            <version>2.1.218</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 
