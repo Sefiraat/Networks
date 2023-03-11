@@ -80,6 +80,7 @@ public abstract class NetworkDirectional extends NetworkObject {
                 public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
                     BlockStorage.addBlockInfo(event.getBlock(), OWNER_KEY, event.getPlayer().getUniqueId().toString());
                     BlockStorage.addBlockInfo(event.getBlock(), DIRECTION, BlockFace.SELF.name());
+                    NetworkUtils.applyConfig(NetworkDirectional.this, BlockStorage.getInventory(event.getBlock()), event.getPlayer());
                 }
             },
             new BlockTicker() {

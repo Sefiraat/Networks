@@ -133,6 +133,7 @@ public class StackUtils {
         return true;
     }
 
+
     public boolean canQuickEscapeMetaVariant(@Nonnull ItemMeta metaOne, @Nonnull ItemMeta metaTwo) {
 
         // Damageable (first as everything can be damageable apparently)
@@ -147,6 +148,10 @@ public class StackUtils {
             if (instanceOne.hasVariant() != instanceTwo.hasVariant()) {
                 return true;
             }
+
+            if(!instanceOne.hasVariant() || !instanceTwo.hasVariant())
+                return true;
+
             if (instanceOne.getVariant() != instanceTwo.getVariant()) {
                 return true;
             }
