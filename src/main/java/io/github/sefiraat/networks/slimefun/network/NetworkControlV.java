@@ -126,7 +126,8 @@ public class NetworkControlV extends NetworkDirectional {
             targetBlock.setType(fetchedStack.getType(), true);
             if (SupportedPluginManager.getInstance().isMcMMO()) {
                 mcMMO.getPlaceStore().setTrue(targetBlock);
-            } else if (SupportedPluginManager.getInstance().isAureliumSkills()) {
+            }
+            if (SupportedPluginManager.getInstance().isAureliumSkills()) {
                 AureliumAPI.getPlugin().getRegionManager().addPlacedBlock(targetBlock);
             }
             ParticleUtils.displayParticleRandomly(
