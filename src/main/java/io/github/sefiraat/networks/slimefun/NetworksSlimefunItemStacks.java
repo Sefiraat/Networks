@@ -90,6 +90,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_RAKE_1;
     public static final SlimefunItemStack NETWORK_RAKE_2;
     public static final SlimefunItemStack NETWORK_RAKE_3;
+    public static final SlimefunItemStack NETWORK_DEBUG_STICK;
 
     static {
 
@@ -788,6 +789,15 @@ public class NetworksSlimefunItemStacks {
             "break it instantly.",
             "",
             ChatColor.YELLOW + "9999 Uses " + ChatColor.GRAY + "left"
+        );
+
+        NETWORK_DEBUG_STICK = Theme.themedSlimefunItemStack(
+            "NTW_DEBUG_STICK",
+            getPreEnchantedItemStack(Material.STICK, true, new Pair<>(Enchantment.LUCK, 1)),
+            Theme.TOOL,
+            "Network Debug Stick",
+            "Right click a Network Object to",
+            "turn on debugging."
         );
     }
 

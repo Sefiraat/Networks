@@ -10,6 +10,7 @@ depend:
 softdepend:
   - InfinityExpansion
   - Netheopoiesis
+  - WildChests
 commands:
   networks:
     description: /networks
