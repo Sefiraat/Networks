@@ -12,7 +12,7 @@ cargo.
 ## About Networks
 
 You can find a fuller guide to Networks including all items and blocks in
-my [Documentation Pages](https://sefiraat.gitbook.io/docs/)
+my [Documentation Pages](https://sefiraat.dev)
 
 ![](https://github.com/Sefiraat/Networks/blob/master/images/wiki/setup.png?raw=true)
 
