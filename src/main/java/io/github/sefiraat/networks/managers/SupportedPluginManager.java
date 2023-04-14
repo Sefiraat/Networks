@@ -11,14 +11,16 @@ public class SupportedPluginManager {
     private final boolean netheopoiesis;
     private final boolean mcMMO;
     private final boolean wildChests;
+    private final boolean aureliumSkills;
 
     public SupportedPluginManager() {
         Preconditions.checkArgument(instance == null, "Cannot instantiate class");
         instance = this;
         this.infinityExpansion = Bukkit.getPluginManager().isPluginEnabled("InfinityExpansion");
         this.netheopoiesis = Bukkit.getPluginManager().isPluginEnabled("Netheopoiesis");
-        this.wildChests = Bukkit.getPluginManager().isPluginEnabled("WildChests");
         this.mcMMO = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
+        this.wildChests = Bukkit.getPluginManager().isPluginEnabled("WildChests");
+        this.aureliumSkills = Bukkit.getPluginManager().isPluginEnabled("aureliumSkills");
     }
 
     public boolean isInfinityExpansion() {
@@ -35,6 +37,10 @@ public class SupportedPluginManager {
 
     public boolean isWildChests() {
         return wildChests;
+    }
+
+    public boolean isAureliumSkills() {
+        return aureliumSkills;
     }
 
     public static SupportedPluginManager getInstance() {
