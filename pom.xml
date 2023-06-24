@@ -199,7 +199,7 @@
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>WildChestsAPI</artifactId>
-            <version>2022.7</version>
+            <version>2023.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
