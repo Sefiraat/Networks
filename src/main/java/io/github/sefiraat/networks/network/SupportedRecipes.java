@@ -53,8 +53,8 @@ public final class SupportedRecipes {
         return true;
     }
 
-    public static boolean allowedRecipe(@Nonnull SlimefunItem i) {
-        return !(i instanceof SlimefunBackpack);
+    public static boolean allowedRecipe(@Nonnull SlimefunItem item) {
+        return !(item instanceof SlimefunBackpack);
     }
 
 }
