@@ -92,12 +92,18 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
             return;
         }
 
-        if (Networks.getSupportedPluginManager().isWildChests()
-            && WildChestsAPI.getChest(targetBlock.getLocation()) != null
-        ) {
+        boolean wildChests = Networks.getSupportedPluginManager().isWildChests();
+        boolean isChest = wildChests && WildChestsAPI.getChest(targetBlock.getLocation()) != null;
+
+        sendDebugMessage(block.getLocation(), "WildChests detected: " + wildChests);
+        sendDebugMessage(block.getLocation(), "Block detected as chest: " + isChest);
+
+        if (wildChests && isChest) {
+            sendDebugMessage(block.getLocation(), "WildChest test failed, escaping");
             return;
         }
 
+        sendDebugMessage(block.getLocation(), "WildChest test passed.");
         final Inventory inventory = holder.getInventory();
 
         if (inventory instanceof FurnaceInventory furnaceInventory) {

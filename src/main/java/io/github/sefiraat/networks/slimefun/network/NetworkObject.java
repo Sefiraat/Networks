@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NetworkObject extends SlimefunItem {
+public abstract class NetworkObject extends SlimefunItem implements AdminDebuggable {
 
     @Getter
     private final NodeType nodeType;

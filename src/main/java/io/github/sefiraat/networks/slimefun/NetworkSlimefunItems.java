@@ -28,6 +28,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
+import io.github.sefiraat.networks.slimefun.tools.NetworkAdminDebugger;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
 import io.github.sefiraat.networks.slimefun.tools.NetworkCrayon;
 import io.github.sefiraat.networks.slimefun.tools.NetworkProbe;
@@ -109,6 +110,7 @@ public class NetworkSlimefunItems {
     public static final NetworkRake NETWORK_RAKE_1;
     public static final NetworkRake NETWORK_RAKE_2;
     public static final NetworkRake NETWORK_RAKE_3;
+    public static final NetworkAdminDebugger NETWORK_ADMIN_DEBUGGER;
 
     static {
 
@@ -822,6 +824,13 @@ public class NetworkSlimefunItems {
             },
             9999
         );
+
+        NETWORK_ADMIN_DEBUGGER = new NetworkAdminDebugger(
+            NetworksItemGroups.DISABLED_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_DEBUG_STICK,
+            RecipeType.NULL,
+            new ItemStack[]{}
+        );
     }
 
     public static void setup() {
@@ -891,5 +900,7 @@ public class NetworkSlimefunItems {
         NETWORK_RAKE_1.register(plugin);
         NETWORK_RAKE_2.register(plugin);
         NETWORK_RAKE_3.register(plugin);
+
+        NETWORK_ADMIN_DEBUGGER.register(plugin);
     }
 }
