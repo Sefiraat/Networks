@@ -2,9 +2,9 @@ package io.github.sefiraat.networks.network;
 
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.implementation.items.backpacks.SlimefunBackpack;
 import lombok.experimental.UtilityClass;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,20 +53,8 @@ public final class SupportedRecipes {
         return true;
     }
 
-    public static boolean allowedRecipe(@Nonnull SlimefunItemStack i) {
-        return allowedRecipe(i.getItemId());
-    }
-
-    public static boolean allowedRecipe(@Nonnull String s) {
-        return !isBackpack(s);
-    }
-
-    public static boolean isBackpack(@Nonnull String s) {
-        return s.matches("(.*)BACKPACK(.*)");
-    }
-
-    public static boolean allowedRecipe(@Nonnull SlimefunItem i) {
-        return allowedRecipe(i.getId());
+    public static boolean allowedRecipe(@Nonnull SlimefunItem item) {
+        return !(item instanceof SlimefunBackpack);
     }
 
 }
