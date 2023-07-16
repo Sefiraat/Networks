@@ -165,7 +165,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
     private boolean testRecipe(ItemStack[] input, ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
-            if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false)) {
+            if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false, false)) {
                 return false;
             }
         }
