@@ -146,9 +146,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Slimefun</groupId>
+            <groupId>com.github.ybw0014</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-35</version>
+            <version>ede8d29ef6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
