@@ -133,7 +133,7 @@ public class NetworkControlX extends NetworkDirectional {
         definition.getNode().getRoot().addItemStack(resultStack);
 
         if (resultStack.getAmount() == 0) {
-            this.blockCache.add(new BlockPosition(targetBlock));
+            this.blockCache.add(targetPosition);
             Bukkit.getScheduler().runTask(Networks.getInstance(), bukkitTask -> {
                 final BlockStateSnapshotResult blockState = PaperLib.getBlockState(targetBlock, true);
 

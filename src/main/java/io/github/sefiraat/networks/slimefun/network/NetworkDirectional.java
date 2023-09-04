@@ -103,10 +103,10 @@ public abstract class NetworkDirectional extends NetworkObject {
 
                 @Override
                 public void uniqueTick() {
+                    tick = tick <= 1 ? tickRate.getValue() : tick - 1;
                     if (tick <= 1) {
                         onUniqueTick();
                     }
-                    tick = tick <= 1 ? tickRate.getValue() : tick - 1;
                 }
             }
         );
