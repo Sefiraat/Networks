@@ -3,6 +3,7 @@ package io.github.sefiraat.networks.slimefun.network;
 import com.gmail.nossr50.mcMMO;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
 import dev.sefiraat.sefilib.world.LocationUtils;
+import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
@@ -31,6 +32,8 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class NetworkControlV extends NetworkDirectional {
@@ -48,6 +51,8 @@ public class NetworkControlV extends NetworkDirectional {
     private static final int DOWN_SLOT = 32;
     private static final int REQUIRED_POWER = 100;
 
+    private final Set<BlockPosition> blockCache = new HashSet<>();
+
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Paste items matching template"
     );
@@ -63,6 +68,11 @@ public class NetworkControlV extends NetworkDirectional {
         if (blockMenu != null) {
             tryPasteBlock(blockMenu);
         }
+    }
+
+    @Override
+    protected void onUniqueTick() {
+        blockCache.clear();
     }
 
     private void tryPasteBlock(@Nonnull BlockMenu blockMenu) {
@@ -83,6 +93,12 @@ public class NetworkControlV extends NetworkDirectional {
         }
 
         final Block targetBlock = blockMenu.getBlock().getRelative(direction);
+        final BlockPosition targetPosition = new BlockPosition(targetBlock);
+
+        if (this.blockCache.contains(targetPosition)) {
+            return;
+        }
+
         final Material material = targetBlock.getType();
 
         if (!material.isAir()) {
@@ -121,6 +137,7 @@ public class NetworkControlV extends NetworkDirectional {
             return;
         }
 
+        this.blockCache.add(targetPosition);
         Bukkit.getScheduler().runTask(Networks.getInstance(), bukkitTask -> {
             targetBlock.setType(fetchedStack.getType(), true);
             if (SupportedPluginManager.getInstance().isMcMMO()) {
