@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import dev.sefiraat.sefilib.misc.ParticleUtils;
 import dev.sefiraat.sefilib.world.LocationUtils;
+import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -30,6 +31,8 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class NetworkControlX extends NetworkDirectional {
@@ -46,6 +49,8 @@ public class NetworkControlX extends NetworkDirectional {
     private static final int UP_SLOT = 14;
     private static final int DOWN_SLOT = 32;
     private static final int REQUIRED_POWER = 100;
+
+    private final Set<BlockPosition> blockCache = new HashSet<>();
 
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE,
@@ -66,6 +71,11 @@ public class NetworkControlX extends NetworkDirectional {
         }
     }
 
+    @Override
+    protected void onUniqueTick() {
+        this.blockCache.clear();
+    }
+
     private void tryBreakBlock(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
@@ -84,6 +94,12 @@ public class NetworkControlX extends NetworkDirectional {
         }
 
         final Block targetBlock = blockMenu.getBlock().getRelative(direction);
+        final BlockPosition targetPosition = new BlockPosition(targetBlock);
+
+        if (this.blockCache.contains(targetPosition)) {
+            return;
+        }
+
         final Material material = targetBlock.getType();
 
         if (material.getHardness() < 0 || material.isAir()) {
@@ -117,6 +133,7 @@ public class NetworkControlX extends NetworkDirectional {
         definition.getNode().getRoot().addItemStack(resultStack);
 
         if (resultStack.getAmount() == 0) {
+            this.blockCache.add(new BlockPosition(targetBlock));
             Bukkit.getScheduler().runTask(Networks.getInstance(), bukkitTask -> {
                 final BlockStateSnapshotResult blockState = PaperLib.getBlockState(targetBlock, true);
 
