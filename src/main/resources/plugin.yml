@@ -11,6 +11,7 @@ softdepend:
   - InfinityExpansion
   - Netheopoiesis
   - WildChests
+  - SlimeFrame
 commands:
   networks:
     description: /networks

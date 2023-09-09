@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat</groupId>
     <artifactId>networks</artifactId>
-    <version>MODIFIED_1.2.0</version>
+    <version>MODIFIED_1.3.0</version>
 
     <distributionManagement>
         <repository>
@@ -194,6 +194,12 @@
             <groupId>com.github.Sefiraat</groupId>
             <artifactId>Netheopoiesis</artifactId>
             <version>8d1af6c570</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.voper</groupId>
+            <artifactId>SlimeFrame</artifactId>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

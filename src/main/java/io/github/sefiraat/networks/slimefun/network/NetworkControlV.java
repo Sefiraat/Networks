@@ -21,6 +21,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.voper.slimeframe.SlimeFrame;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -142,6 +143,9 @@ public class NetworkControlV extends NetworkDirectional {
             targetBlock.setType(fetchedStack.getType(), true);
             if (SupportedPluginManager.getInstance().isMcMMO()) {
                 mcMMO.getPlaceStore().setTrue(targetBlock);
+            }
+            if (SupportedPluginManager.getInstance().isSlimeFrame()) {
+                SlimeFrame.getPlacedBlocks().add(targetBlock);
             }
             ParticleUtils.displayParticleRandomly(
                 LocationUtils.centre(targetBlock.getLocation()),
