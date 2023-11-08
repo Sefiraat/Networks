@@ -79,6 +79,7 @@ public class NetworkSlimefunItems {
     public static final NetworkCell NETWORK_CELL;
     public static final NetworkGreedyBlock NETWORK_GREEDY_BLOCK;
     public static final NetworkQuantumWorkbench NETWORK_QUANTUM_WORKBENCH;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_0;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_1;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_2;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_3;
@@ -468,6 +469,18 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), SlimefunItems.ADVANCED_CIRCUIT_BOARD, OPTIC_GLASS.getItem()
             }
+        );
+
+        NETWORK_QUANTUM_STORAGE_0 = new NetworkQuantumStorage(
+            NetworksItemGroups.NETWORK_QUANTUMS,
+            NetworksSlimefunItemStacks.NETWORK_QUANTUM_STORAGE_0,
+            NetworkQuantumWorkbench.TYPE,
+            new ItemStack[]{
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
+                OPTIC_CABLE.getItem(), SlimefunItems.ELECTRIC_MOTOR, OPTIC_CABLE.getItem(),
+                OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem()
+            },
+            NetworkQuantumStorage.getSizes()[0]
         );
 
         NETWORK_QUANTUM_STORAGE_1 = new NetworkQuantumStorage(
@@ -869,6 +882,7 @@ public class NetworkSlimefunItems {
         NETWORK_CELL.register(plugin);
         NETWORK_GREEDY_BLOCK.register(plugin);
         NETWORK_QUANTUM_WORKBENCH.register(plugin);
+        NETWORK_QUANTUM_STORAGE_0.register(plugin);
         NETWORK_QUANTUM_STORAGE_1.register(plugin);
         NETWORK_QUANTUM_STORAGE_2.register(plugin);
         NETWORK_QUANTUM_STORAGE_3.register(plugin);

@@ -25,6 +25,7 @@ public class NetworksMain implements CommandExecutor {
     private static final Map<Integer, NetworkQuantumStorage> QUANTUM_REPLACEMENT_MAP = new HashMap<>();
 
     static {
+        QUANTUM_REPLACEMENT_MAP.put(512, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_0);
         QUANTUM_REPLACEMENT_MAP.put(4096, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_1);
         QUANTUM_REPLACEMENT_MAP.put(32768, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_2);
         QUANTUM_REPLACEMENT_MAP.put(262144, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_3);

@@ -46,6 +46,7 @@ import java.util.Map;
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
 
     private static final int[] SIZES = new int[]{
+        512,
         4096,
         32768,
         262144,
