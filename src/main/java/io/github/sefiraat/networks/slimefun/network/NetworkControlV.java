@@ -21,11 +21,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -113,7 +109,7 @@ public class NetworkControlV extends NetworkDirectional {
 
         final Material templateMaterial = templateStack.getType();
 
-        if (!templateMaterial.isBlock() || SlimefunTag.SENSITIVE_MATERIALS.isTagged(templateMaterial)) {
+        if (!templateMaterial.isBlock()) {
             return;
         }
 
@@ -121,6 +117,10 @@ public class NetworkControlV extends NetworkDirectional {
 
         if (slimefunItem != null) {
             return;
+        }
+
+        if (SlimefunTag.SENSITIVE_MATERIALS.isTagged(templateMaterial)) {
+            if (!templateMaterial.createBlockData().isSupported(targetBlock)) return;
         }
 
         final UUID uuid = UUID.fromString(BlockStorage.getLocationInfo(blockMenu.getLocation(), OWNER_KEY));
