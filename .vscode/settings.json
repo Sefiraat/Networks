@@ -1,5 +1,3 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.compile.nullAnalysis.mode": "disabled",
-  "editor.showDeprecated": false
+  "java.compile.nullAnalysis.mode": "disabled"
 }
