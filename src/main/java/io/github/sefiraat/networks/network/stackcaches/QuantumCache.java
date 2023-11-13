@@ -35,7 +35,7 @@ public class QuantumCache extends ItemStackCache {
         return amount;
     }
 
-    public boolean getSupportsCustomMaxAmount() {
+    public boolean supportsCustomMaxAmount() {
         return supportsCustomMaxAmount;
     }
 

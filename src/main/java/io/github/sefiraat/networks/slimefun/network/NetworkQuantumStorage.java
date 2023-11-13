@@ -232,7 +232,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private void setCustomMaxAmount(@Nonnull BlockMenu blockMenu, @Nonnull Player player, @Nonnull int newMaxAmount) {
         final QuantumCache cache = CACHES.get(blockMenu.getLocation());
-        if (cache == null || !cache.getSupportsCustomMaxAmount()) {
+        if (cache == null || !cache.supportsCustomMaxAmount()) {
             player.sendMessage(Theme.ERROR + "This Quantum Storage does not support custom maximum storage amounts.");
             return;
         }
@@ -287,11 +287,11 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                         toggleVoid(menu);
                     } else if (
                         cache != null &&
-                        cache.getSupportsCustomMaxAmount() &&
+                        cache.supportsCustomMaxAmount() &&
                         p.getItemOnCursor().getType() == Material.AIR
                     ) {
                         p.closeInventory();
-                        p.sendMessage(Theme.WARNING + "Type the new maximum storage size for this Quantum Storage.");
+                        p.sendMessage(Theme.WARNING + "Type the new maximum storage size for this Quantum Storage - it must be more than 0!");
                         ChatUtils.awaitInput(p, s -> {
                             // Catching the error is cleaner than directly validating the string
                             try {
@@ -327,25 +327,25 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         final int amount = amountString == null ? 0 : Integer.parseInt(amountString);
         final boolean voidExcess = voidString == null || Boolean.parseBoolean(voidString);
         // We use either the maximum amount if custom is not set, or the custom amount if it is set and is supported for this quantum
-        int customMaxAmount = this.maxAmount;
+        int maxAmount = this.maxAmount;
         if (this.supportsCustomMaxAmount) {
             final String customMaxAmountString = BlockStorage.getLocationInfo(blockMenu.getLocation(), BS_CUSTOM_MAX_AMOUNT);
             if (customMaxAmountString != null) {
-                customMaxAmount = Integer.parseInt(customMaxAmountString);
+                maxAmount = Integer.parseInt(customMaxAmountString);
             }
         }
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
-        QuantumCache cache = createCache(itemStack, blockMenu, amount, voidExcess, customMaxAmount);
+        QuantumCache cache = createCache(itemStack, blockMenu, amount, maxAmount, voidExcess);
 
         CACHES.put(location, cache);
         return cache;
     }
 
-    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, boolean voidExcess, int customMaxAmount) {
+    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, int maxAmount, boolean voidExcess) {
         if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
-            return new QuantumCache(null, 0, customMaxAmount, true, this.supportsCustomMaxAmount);
+            return new QuantumCache(null, 0, maxAmount, true, this.supportsCustomMaxAmount);
         } else {
             final ItemStack clone = itemStack.clone();
             final ItemMeta itemMeta = clone.getItemMeta();
@@ -356,7 +356,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);
 
-            final QuantumCache cache = new QuantumCache(clone, amount, customMaxAmount, voidExcess, this.supportsCustomMaxAmount);
+            final QuantumCache cache = new QuantumCache(clone, amount, maxAmount, voidExcess, this.supportsCustomMaxAmount);
 
             updateDisplayItem(menu, cache);
             return cache;
@@ -408,7 +408,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         return maxAmount;
     }
 
-    public boolean getSupportsCustomMaxAmount() {
+    public boolean supportsCustomMaxAmount() {
         return supportsCustomMaxAmount;
     }
 
@@ -490,7 +490,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             lore.add("");
             lore.add(Theme.CLICK_INFO + "Voiding: " + Theme.PASSIVE + StringUtils.toTitleCase(String.valueOf(cache.isVoidExcess())));
             lore.add(Theme.CLICK_INFO + "Amount: " + Theme.PASSIVE + cache.getAmount());
-            if (cache.getSupportsCustomMaxAmount()) {
+            if (cache.supportsCustomMaxAmount()) {
                 // Cache limit is set at the potentially custom max amount set
                 // The player could set the custom maximum amount to be the actual maximum amount 
                 lore.add(Theme.CLICK_INFO + "Max Amount: " + Theme.PASSIVE + cache.getLimit());
@@ -506,7 +506,9 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static void syncBlock(@Nonnull Location location, @Nonnull QuantumCache cache) {
         BlockStorage.addBlockInfo(location, BS_AMOUNT, String.valueOf(cache.getAmount()));
         BlockStorage.addBlockInfo(location, BS_VOID, String.valueOf(cache.isVoidExcess()));
-        BlockStorage.addBlockInfo(location, BS_CUSTOM_MAX_AMOUNT, String.valueOf(cache.getLimit()));
+        if (cache.supportsCustomMaxAmount()) {
+            BlockStorage.addBlockInfo(location, BS_CUSTOM_MAX_AMOUNT, String.valueOf(cache.getLimit()));
+        }
     }
 
     public static Map<Location, QuantumCache> getCaches() {
