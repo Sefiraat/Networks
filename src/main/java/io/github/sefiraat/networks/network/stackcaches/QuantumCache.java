@@ -36,7 +36,7 @@ public class QuantumCache extends ItemStackCache {
     }
 
     public boolean supportsCustomMaxAmount() {
-        return supportsCustomMaxAmount;
+        return this.supportsCustomMaxAmount;
     }
 
     public void setAmount(int amount) {
@@ -102,7 +102,7 @@ public class QuantumCache extends ItemStackCache {
                      (this.getItemMeta() != null && this.getItemMeta().hasDisplayName() ? this.getItemMeta().getDisplayName() : this.getItemStack().getType().name())
         );
         lore.add(Theme.CLICK_INFO + "Amount: " + this.getAmount());
-        if (supportsCustomMaxAmount) {
+        if (this.supportsCustomMaxAmount) {
             lore.add(Theme.CLICK_INFO + "Max Amount: " + this.getLimit());
         }
 

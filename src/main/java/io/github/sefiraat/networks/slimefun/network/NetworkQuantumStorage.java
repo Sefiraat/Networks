@@ -409,7 +409,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     }
 
     public boolean supportsCustomMaxAmount() {
-        return supportsCustomMaxAmount;
+        return this.supportsCustomMaxAmount;
     }
 
     @ParametersAreNonnullByDefault
