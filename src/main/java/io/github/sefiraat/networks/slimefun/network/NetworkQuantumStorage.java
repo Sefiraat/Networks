@@ -18,6 +18,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -41,6 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
@@ -58,6 +60,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     public static final String BS_AMOUNT = "stored_amount";
     public static final String BS_VOID = "void_excess";
+    public static final String BS_CUSTOM_MAX_AMOUNT = "custom_max_amount";
 
     public static final int INPUT_SLOT = 1;
     public static final int ITEM_SLOT = 4;
@@ -88,6 +91,14 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         Theme.PASSIVE + "Shift Click to change voiding"
     );
 
+    private static final ItemStack SET_ITEM_SUPPORTING_CUSTOM_MAX = new CustomItemStack(
+        Material.LIME_STAINED_GLASS_PANE,
+        Theme.SUCCESS + "Set Item",
+        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
+        Theme.PASSIVE + "Shift Click to change voiding",
+        Theme.PASSIVE + "Click with no item to set maximum storage size"
+    );
+
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
         Material.ORANGE_STAINED_GLASS_PANE,
         Theme.PASSIVE + "Output"
@@ -108,10 +119,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private final List<Integer> slotsToDrop = new ArrayList<>();
     private final int maxAmount;
+    private final boolean supportsCustomMaxAmount;
 
-    public NetworkQuantumStorage(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int maxAmount) {
+    public NetworkQuantumStorage(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int maxAmount, boolean supportsCustomMaxAmount) {
         super(itemGroup, item, recipeType, recipe);
         this.maxAmount = maxAmount;
+        this.supportsCustomMaxAmount = supportsCustomMaxAmount;
         slotsToDrop.add(INPUT_SLOT);
         slotsToDrop.add(OUTPUT_SLOT);
     }
@@ -217,6 +230,19 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         CACHES.put(blockMenu.getLocation(), cache);
     }
 
+    private void setCustomMaxAmount(@Nonnull BlockMenu blockMenu, @Nonnull Player player, @Nonnull int newMaxAmount) {
+        final QuantumCache cache = CACHES.get(blockMenu.getLocation());
+        if (cache == null || !cache.getSupportsCustomMaxAmount()) {
+            player.sendMessage(Theme.ERROR + "This Quantum Storage does not support custom maximum storage amounts.");
+            return;
+        }
+        cache.setLimit(newMaxAmount);
+        updateDisplayItem(blockMenu, cache);
+        syncBlock(blockMenu.getLocation(), cache);
+        CACHES.put(blockMenu.getLocation(), cache);
+        player.sendMessage(Theme.SUCCESS + "Maximum Storage Size applied");
+    }
+
     @Override
     public void postRegister() {
         new BlockMenuPreset(this.getId(), this.getItemName()) {
@@ -232,7 +258,8 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                 for (int i : OUTPUT_SLOTS) {
                     addItem(i, BACK_OUTPUT, (p, slot, item, action) -> false);
                 }
-                addItem(ITEM_SET_SLOT, SET_ITEM, (p, slot, item, action) -> false);
+                ItemStack setItemItemstack = supportsCustomMaxAmount ? SET_ITEM_SUPPORTING_CUSTOM_MAX : SET_ITEM;
+                addItem(ITEM_SET_SLOT, setItemItemstack, (p, slot, item, action) -> false);
                 addMenuClickHandler(ITEM_SLOT, ChestMenuUtils.getEmptyClickHandler());
                 drawBackground(BACKGROUND_SLOTS);
             }
@@ -255,8 +282,28 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block block) {
                 menu.addMenuClickHandler(ITEM_SET_SLOT, (p, slot, item, action) -> {
+                    final QuantumCache cache = CACHES.get(menu.getLocation());
                     if (action.isShiftClicked()) {
                         toggleVoid(menu);
+                    } else if (
+                        cache != null &&
+                        cache.getSupportsCustomMaxAmount() &&
+                        p.getItemOnCursor().getType() == Material.AIR
+                    ) {
+                        p.closeInventory();
+                        p.sendMessage(Theme.WARNING + "Type the new maximum storage size for this Quantum Storage.");
+                        ChatUtils.awaitInput(p, s -> {
+                            // Catching the error is cleaner than directly validating the string
+                            try {
+                                if (s.isBlank()) {
+                                    return;
+                                }
+                                int newMax = Math.max(1, Math.min(Integer.parseInt(s), maxAmount));
+                                setCustomMaxAmount(menu, p, newMax);
+                            } catch (NumberFormatException e) {
+                                p.sendMessage(Theme.ERROR + "That's not a number.");
+                            }
+                        });
                     } else {
                         setItem(menu, p);
                     }
@@ -279,18 +326,26 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         final String voidString = BlockStorage.getLocationInfo(location, BS_VOID);
         final int amount = amountString == null ? 0 : Integer.parseInt(amountString);
         final boolean voidExcess = voidString == null || Boolean.parseBoolean(voidString);
+        // We use either the maximum amount if custom is not set, or the custom amount if it is set and is supported for this quantum
+        int customMaxAmount = this.maxAmount;
+        if (this.supportsCustomMaxAmount) {
+            final String customMaxAmountString = BlockStorage.getLocationInfo(blockMenu.getLocation(), BS_CUSTOM_MAX_AMOUNT);
+            if (customMaxAmountString != null) {
+                customMaxAmount = Integer.parseInt(customMaxAmountString);
+            }
+        }
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
-        QuantumCache cache = createCache(itemStack, blockMenu, amount, voidExcess);
+        QuantumCache cache = createCache(itemStack, blockMenu, amount, voidExcess, customMaxAmount);
 
         CACHES.put(location, cache);
         return cache;
     }
 
-    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, boolean voidExcess) {
+    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, boolean voidExcess, int customMaxAmount) {
         if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
-            return new QuantumCache(null, 0, this.maxAmount, true);
+            return new QuantumCache(null, 0, customMaxAmount, true, this.supportsCustomMaxAmount);
         } else {
             final ItemStack clone = itemStack.clone();
             final ItemMeta itemMeta = clone.getItemMeta();
@@ -301,7 +356,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);
 
-            final QuantumCache cache = new QuantumCache(clone, amount, this.maxAmount, voidExcess);
+            final QuantumCache cache = new QuantumCache(clone, amount, customMaxAmount, voidExcess, this.supportsCustomMaxAmount);
 
             updateDisplayItem(menu, cache);
             return cache;
@@ -351,6 +406,10 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     public int getMaxAmount() {
         return maxAmount;
+    }
+
+    public boolean getSupportsCustomMaxAmount() {
+        return supportsCustomMaxAmount;
     }
 
     @ParametersAreNonnullByDefault
@@ -431,6 +490,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             lore.add("");
             lore.add(Theme.CLICK_INFO + "Voiding: " + Theme.PASSIVE + StringUtils.toTitleCase(String.valueOf(cache.isVoidExcess())));
             lore.add(Theme.CLICK_INFO + "Amount: " + Theme.PASSIVE + cache.getAmount());
+            if (cache.getSupportsCustomMaxAmount()) {
+                // Cache limit is set at the potentially custom max amount set
+                // The player could set the custom maximum amount to be the actual maximum amount 
+                lore.add(Theme.CLICK_INFO + "Max Amount: " + Theme.PASSIVE + cache.getLimit());
+            }
+            
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             itemStack.setAmount(1);
@@ -441,6 +506,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static void syncBlock(@Nonnull Location location, @Nonnull QuantumCache cache) {
         BlockStorage.addBlockInfo(location, BS_AMOUNT, String.valueOf(cache.getAmount()));
         BlockStorage.addBlockInfo(location, BS_VOID, String.valueOf(cache.isVoidExcess()));
+        BlockStorage.addBlockInfo(location, BS_CUSTOM_MAX_AMOUNT, String.valueOf(cache.getLimit()));
     }
 
     public static Map<Location, QuantumCache> getCaches() {
