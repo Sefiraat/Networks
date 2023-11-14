@@ -42,7 +42,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
@@ -87,16 +86,16 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static final ItemStack SET_ITEM = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding"
+        Theme.PASSIVE + "Click with an item to set the Quantum's Stored Item.",
+        Theme.PASSIVE + "Shift Click to toggle voiding items over the maximum storage size."
     );
 
     private static final ItemStack SET_ITEM_SUPPORTING_CUSTOM_MAX = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding",
-        Theme.PASSIVE + "Click with no item to set maximum storage size"
+        Theme.PASSIVE + "Click with an item to set the Quantum's Stored Item.",
+        Theme.PASSIVE + "Click without an item to set the Quantum's maximum storage size.",
+        Theme.PASSIVE + "Shift Click to toggle voiding items over the maximum storage size."
     );
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
@@ -119,12 +118,11 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private final List<Integer> slotsToDrop = new ArrayList<>();
     private final int maxAmount;
-    private final boolean supportsCustomMaxAmount;
+    private boolean supportsCustomMaxAmount = false;
 
-    public NetworkQuantumStorage(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int maxAmount, boolean supportsCustomMaxAmount) {
+    public NetworkQuantumStorage(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int maxAmount) {
         super(itemGroup, item, recipeType, recipe);
         this.maxAmount = maxAmount;
-        this.supportsCustomMaxAmount = supportsCustomMaxAmount;
         slotsToDrop.add(INPUT_SLOT);
         slotsToDrop.add(OUTPUT_SLOT);
     }
@@ -243,6 +241,10 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         player.sendMessage(Theme.SUCCESS + "Maximum Storage Size applied");
     }
 
+    public void setSupportsCustomMaxAmount(boolean supportsCustomMaxAmount) {
+        this.supportsCustomMaxAmount = supportsCustomMaxAmount;
+    }
+
     @Override
     public void postRegister() {
         new BlockMenuPreset(this.getId(), this.getItemName()) {
@@ -291,7 +293,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                         p.getItemOnCursor().getType() == Material.AIR
                     ) {
                         p.closeInventory();
-                        p.sendMessage(Theme.WARNING + "Type the new maximum storage size for this Quantum Storage - it must be more than 0!");
+                        p.sendMessage(Theme.WARNING + "Type the new maximum storage size for this Quantum Storage - it must be between 1 and " + Integer.MAX_VALUE + "!");
                         ChatUtils.awaitInput(p, s -> {
                             // Catching the error is cleaner than directly validating the string
                             try {
