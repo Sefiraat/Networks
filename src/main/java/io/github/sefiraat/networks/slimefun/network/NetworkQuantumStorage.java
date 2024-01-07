@@ -45,6 +45,7 @@ import java.util.Map;
 
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
 
+    private static final String WIKI_PAGE = "network-nodes/network-memory-shell";
     private static final int[] SIZES = new int[]{
         4096,
         32768,
@@ -219,6 +220,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     @Override
     public void postRegister() {
+        addWikiPage(WIKI_PAGE);
         new BlockMenuPreset(this.getId(), this.getItemName()) {
 
             @Override

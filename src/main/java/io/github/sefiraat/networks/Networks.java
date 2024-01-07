@@ -8,6 +8,7 @@ import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
+import io.github.thebusybiscuit.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.plugin.PluginManager;
@@ -70,6 +71,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
+        WikiUtils.setupWiki(this);
         if (supportedPluginManager.isNetheopoiesis()){
             try {
                 NetheoPlants.setup();
@@ -101,6 +103,12 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     @Override
     public String getBugTrackerURL() {
         return MessageFormat.format("https://github.com/{0}/{1}/issues/", this.username, this.repo);
+    }
+
+    @Nonnull
+    @Override
+    public String getWikiURL() {
+        return "https://docs.sefiraat.dev/networks/%item%";
     }
 
     @Nonnull
