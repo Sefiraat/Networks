@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks;
 
+import io.github.bakedlibs.dough.updater.BlobBuildUpdater;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
@@ -7,7 +8,6 @@ import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.plugin.PluginManager;
@@ -60,10 +60,9 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void tryUpdate() {
         if (getConfig().getBoolean("auto-update")
-            && getDescription().getVersion().startsWith("DEV")
+            && getDescription().getVersion().startsWith("DEV -")
         ) {
-            String updateLocation = MessageFormat.format("{0}/{1}/{2}", this.username, this.repo, this.branch);
-            GitHubBuildsUpdater updater = new GitHubBuildsUpdater(this, getFile(), updateLocation);
+            BlobBuildUpdater updater = new BlobBuildUpdater(this, getFile(), "DEV");
             updater.start();
         }
     }
