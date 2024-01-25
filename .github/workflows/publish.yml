@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+
+    name: Upload Release
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[ci skip]') == false
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 16
+        uses: actions/setup-java@v1
+        with:
+          java-version: 16
+
+      - name: Build with Maven
+        run: mvn -B package
+
+      - name: Upload to Blob Builds
+        uses: WalshyDev/blob-builds/gh-action@main
+        with:
+          project: Networks
+          apiToken: ${{ secrets.BLOB_BUILDS_API_TOKEN }}
+          file: ./target/Networks.jar
+          releaseNotes: ${{ github.event.head_commit.message }}

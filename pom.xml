@@ -78,6 +78,10 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>io.github.sefiraat.networks.bstats</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.github.baked-libs.dough</pattern>
+                            <shadedPattern>dev.sefiraat.cultivation.dough</shadedPattern>
+                        </relocation>
                     </relocations>
                     <filters>
                         <filter>
@@ -148,8 +152,14 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-35</version>
+            <version>cd3672c3f2</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.baked-libs.dough</groupId>
+            <artifactId>dough-api</artifactId>
+            <version>1108163a49</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>dev.sefiraat</groupId>
