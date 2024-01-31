@@ -85,8 +85,13 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static final ItemStack SET_ITEM = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding"
+        Theme.PASSIVE + "Drag an item on top of this pane to register it."
+    );
+
+    private static final ItemStack SET_VOIDING = new CustomItemStack(
+        Material.BLACK_STAINED_GLASS_PANE,
+        Theme.SUCCESS + "Toggle Voiding",
+        Theme.PASSIVE + "Click to toggle voiding."
     );
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
@@ -234,6 +239,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                     addItem(i, BACK_OUTPUT, (p, slot, item, action) -> false);
                 }
                 addItem(ITEM_SET_SLOT, SET_ITEM, (p, slot, item, action) -> false);
+                addItem(VOIDING_SET_SLOT, SET_VOIDING, (p, slot, item, action) -> false);
                 addMenuClickHandler(ITEM_SLOT, ChestMenuUtils.getEmptyClickHandler());
                 drawBackground(BACKGROUND_SLOTS);
             }
