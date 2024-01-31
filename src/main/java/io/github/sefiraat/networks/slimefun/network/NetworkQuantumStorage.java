@@ -61,7 +61,8 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     public static final int INPUT_SLOT = 1;
     public static final int ITEM_SLOT = 4;
-    public static final int ITEM_SET_SLOT = 13;
+    public static final int ITEM_SET_SLOT = 12;
+    public static final int VOIDING_SET_SLOT = 14;
     public static final int OUTPUT_SLOT = 7;
 
     private static final ItemStack BACK_INPUT = new CustomItemStack(
@@ -255,11 +256,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block block) {
                 menu.addMenuClickHandler(ITEM_SET_SLOT, (p, slot, item, action) -> {
-                    if (action.isShiftClicked()) {
-                        toggleVoid(menu);
-                    } else {
-                        setItem(menu, p);
-                    }
+                    setItem(menu, p);
+                    return false;
+                });
+
+                menu.addMenuClickHandler(VOIDING_SET_SLOT, (p, slot, item, action) -> {
+                    toggleVoid(menu);
                     return false;
                 });
 
