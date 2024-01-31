@@ -61,7 +61,8 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     public static final int INPUT_SLOT = 1;
     public static final int ITEM_SLOT = 4;
-    public static final int ITEM_SET_SLOT = 13;
+    public static final int ITEM_SET_SLOT = 12;
+    public static final int VOIDING_SET_SLOT = 14;
     public static final int OUTPUT_SLOT = 7;
 
     private static final ItemStack BACK_INPUT = new CustomItemStack(
@@ -84,8 +85,13 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static final ItemStack SET_ITEM = new CustomItemStack(
         Material.LIME_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Set Item",
-        Theme.PASSIVE + "Drag an item on top of this pane to register it.",
-        Theme.PASSIVE + "Shift Click to change voiding"
+        Theme.PASSIVE + "Drag an item on top of this pane to register it."
+    );
+
+    private static final ItemStack SET_VOIDING = new CustomItemStack(
+        Material.BLACK_STAINED_GLASS_PANE,
+        Theme.SUCCESS + "Toggle Voiding",
+        Theme.PASSIVE + "Click to toggle voiding."
     );
 
     private static final ItemStack BACK_OUTPUT = new CustomItemStack(
@@ -96,7 +102,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     private static final int[] INPUT_SLOTS = new int[]{0, 2};
     private static final int[] ITEM_SLOTS = new int[]{3, 5};
     private static final int[] OUTPUT_SLOTS = new int[]{6, 8};
-    private static final int[] BACKGROUND_SLOTS = new int[]{9, 10, 11, 12, 14, 15, 16, 17};
+    private static final int[] BACKGROUND_SLOTS = new int[]{9, 10, 11, 13, 15, 16, 17};
 
     private static final Map<Location, QuantumCache> CACHES = new HashMap<>();
 
@@ -233,6 +239,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                     addItem(i, BACK_OUTPUT, (p, slot, item, action) -> false);
                 }
                 addItem(ITEM_SET_SLOT, SET_ITEM, (p, slot, item, action) -> false);
+                addItem(VOIDING_SET_SLOT, SET_VOIDING, (p, slot, item, action) -> false);
                 addMenuClickHandler(ITEM_SLOT, ChestMenuUtils.getEmptyClickHandler());
                 drawBackground(BACKGROUND_SLOTS);
             }
@@ -255,11 +262,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block block) {
                 menu.addMenuClickHandler(ITEM_SET_SLOT, (p, slot, item, action) -> {
-                    if (action.isShiftClicked()) {
-                        toggleVoid(menu);
-                    } else {
-                        setItem(menu, p);
-                    }
+                    setItem(menu, p);
+                    return false;
+                });
+
+                menu.addMenuClickHandler(VOIDING_SET_SLOT, (p, slot, item, action) -> {
+                    toggleVoid(menu);
                     return false;
                 });
 
