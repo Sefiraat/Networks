@@ -1,7 +1,17 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.slimefun.network.*;
+import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
+import io.github.sefiraat.networks.slimefun.network.NetworkExport;
+import io.github.sefiraat.networks.slimefun.network.NetworkGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkImport;
+import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
+import io.github.sefiraat.networks.slimefun.network.NetworkObject;
+import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
