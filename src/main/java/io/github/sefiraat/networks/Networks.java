@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
@@ -59,12 +60,8 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
 
     public void tryUpdate() {
-        if (getConfig().getBoolean("auto-update")
-            && getDescription().getVersion().startsWith("DEV")
-        ) {
-            String updateLocation = MessageFormat.format("{0}/{1}/{2}", this.username, this.repo, this.branch);
-            GitHubBuildsUpdater updater = new GitHubBuildsUpdater(this, getFile(), updateLocation);
-            updater.start();
+        if (getConfig().getBoolean("auto-update") && getDescription().getVersion().startsWith("Dev")) {
+            new BlobBuildUpdater(this, getFile(), "Networks", "Dev").start();
         }
     }
 
