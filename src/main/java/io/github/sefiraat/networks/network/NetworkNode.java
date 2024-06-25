@@ -123,29 +123,27 @@ public class NetworkNode {
     private void killAdditionalController(@Nonnull Location location) {
         final Block block = location.getBlock();
         final ItemStack toDrop = BlockStorage.retrieve(block);
-        if (toDrop != null) {
-            BukkitRunnable runnable = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    location.getWorld().dropItemNaturally(location, toDrop);
-                    block.setType(Material.AIR);
-                }
-            };
-            runnable.runTask(Networks.getInstance());
-            NetworkStorage.getAllNetworkObjects().remove(location);
-        }
+        if (toDrop == null) return;
+        BukkitRunnable runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                location.getWorld().dropItemNaturally(location, toDrop);
+                block.setType(Material.AIR);
+            }
+        };
+        runnable.runTask(Networks.getInstance());
+        NetworkStorage.getAllNetworkObjects().remove(location);
     }
 
     protected long retrieveBlockCharge() {
-        if (this.nodeType == NodeType.POWER_NODE) {
-            int blockCharge = 0;
-            final SlimefunItem item = BlockStorage.check(this.nodePosition);
-            if (item instanceof NetworkPowerNode powerNode) {
-                blockCharge = powerNode.getCharge(this.nodePosition);
-            }
-            return blockCharge;
+        if (this.nodeType != NodeType.POWER_NODE) {
+            return 0;
         }
-        return 0;
+        final SlimefunItem item = BlockStorage.check(this.nodePosition);
+        if (!(item instanceof NetworkPowerNode powerNode)) {
+            return 0;
+        }
+        return powerNode.getCharge(this.nodePosition);
     }
 
     public long getPower() {
