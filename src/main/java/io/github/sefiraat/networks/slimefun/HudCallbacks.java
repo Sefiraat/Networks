@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class HudCallbacks {
+    private static final String EMPTY = "&7| Empty";
     public static void setup() {
         HudController controller = SlimeHUD.getHudController();
 
@@ -21,7 +22,7 @@ public class HudCallbacks {
             Location location = request.getLocation();
             QuantumCache cache = NetworkQuantumStorage.getCaches().get(location);
             if (cache == null || cache.getItemStack() == null) {
-                return "&7| Empty";
+                return EMPTY;
             }
 
             return format(cache.getItemStack(), cache.getAmount(), cache.getLimit());
@@ -31,29 +32,28 @@ public class HudCallbacks {
             Location location = request.getLocation();
             BlockMenu menu = BlockStorage.getInventory(location);
             if (menu == null) {
-                return "&7| Empty";
+                return EMPTY;
             }
 
-            ItemStack template = menu.getItemInSlot(NetworkGreedyBlock.TEMPLATE_SLOT);
-            if (template == null || template.getType().isAir()) {
-                return "&7| Empty";
+            ItemStack templateStack = menu.getItemInSlot(NetworkGreedyBlock.TEMPLATE_SLOT);
+            if (templateStack == null || templateStack.getType().isAir()) {
+                return EMPTY;
             }
 
-            ItemStack item = menu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
-            int amount = item == null || item.getType().isAir() ? 0 : item.getAmount();
-            return format(template, amount, template.getMaxStackSize());
+            ItemStack itemStack = menu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
+            int amount = itemStack == null || itemStack.getType() != templateStack.getType() ? 0 : itemStack.getAmount();
+            return format(templateStack, amount, templateStack.getMaxStackSize());
         });
     }
 
-    private static String format(ItemStack item, int amount, int limit) {
-        ItemMeta meta = item.getItemMeta();
+    private static String format(ItemStack itemStack, int amount, int limit) {
+        ItemMeta meta = itemStack.getItemMeta();
         String amountStr = HudBuilder.getAbbreviatedNumber(amount);
         String limitStr = HudBuilder.getAbbreviatedNumber(limit);
+        String itemName = meta != null && meta.hasDisplayName()
+                ? meta.getDisplayName()
+                : ChatUtils.humanize(itemStack.getType().name());
 
-        if (meta != null && meta.hasDisplayName()) {
-            return "&7| " + meta.getDisplayName() + " &7| " + amountStr + "/" + limitStr;
-        } else {
-            return "&7| &f" + ChatUtils.humanize(item.getType().name()) + " &7| " + amountStr + "/" + limitStr;
-        }
+        return "&7| &f" + itemName + " &7| " + amountStr + "/" + limitStr;
     }
 }
