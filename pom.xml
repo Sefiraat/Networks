@@ -197,6 +197,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.github.schntgaispock</groupId>
+            <artifactId>SlimeHUD</artifactId>
+            <version>1.2.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>WildChestsAPI</artifactId>
             <version>2024.1</version>
