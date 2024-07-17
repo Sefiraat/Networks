@@ -112,14 +112,10 @@ public class NetworkVanillaPusher extends NetworkDirectional {
     }
 
     private void handleFurnace(@Nonnull ItemStack stack, @Nonnull FurnaceInventory furnace) {
-        if (stack.getType().isFuel()
-            && (furnace.getFuel() == null || furnace.getFuel().getType() == Material.AIR)
-        ) {
+        if (stack.getType().isFuel() && (furnace.getFuel() == null || furnace.getFuel().getType() == Material.AIR)) {
             furnace.setFuel(stack.clone());
             stack.setAmount(0);
-        } else if (!stack.getType().isFuel()
-            && (furnace.getSmelting() == null || furnace.getSmelting().getType() == Material.AIR)
-        ) {
+        } else if (!stack.getType().isFuel() && (furnace.getSmelting() == null || furnace.getSmelting().getType() == Material.AIR)) {
             furnace.setSmelting(stack.clone());
             stack.setAmount(0);
         }
@@ -129,6 +125,9 @@ public class NetworkVanillaPusher extends NetworkDirectional {
         if (stack.getType() == Material.BLAZE_POWDER) {
             if (brewer.getFuel() == null || brewer.getFuel().getType() == Material.AIR) {
                 brewer.setFuel(stack.clone());
+                stack.setAmount(0);
+            } else if (brewer.getIngredient() == null || brewer.getIngredient().getType() == Material.AIR) {
+                brewer.setIngredient(stack.clone());
                 stack.setAmount(0);
             }
         } else if (stack.getType() == Material.POTION) {
