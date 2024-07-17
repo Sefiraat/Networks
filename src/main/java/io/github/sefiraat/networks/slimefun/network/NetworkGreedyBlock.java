@@ -71,7 +71,7 @@ public class NetworkGreedyBlock extends NetworkObject {
                 if (flow == ItemTransportFlow.INSERT) {
                     return new int[]{INPUT_SLOT};
                 }
-                return new int[]{0};
+                return new int[0];
             }
 
         };
