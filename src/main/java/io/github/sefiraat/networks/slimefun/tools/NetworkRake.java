@@ -6,6 +6,10 @@ import io.github.sefiraat.networks.slimefun.network.NetworkExport;
 import io.github.sefiraat.networks.slimefun.network.NetworkGrabber;
 import io.github.sefiraat.networks.slimefun.network.NetworkImport;
 import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
@@ -51,6 +55,10 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkGrabber.class);
         viableObjects.add(NetworkImport.class);
         viableObjects.add(NetworkExport.class);
+        viableObjects.add(NetworkVanillaGrabber.class);
+        viableObjects.add(NetworkVanillaPusher.class);
+        viableObjects.add(NetworkWirelessTransmitter.class);
+        viableObjects.add(NetworkWirelessReceiver.class);
     }
 
     @Override
