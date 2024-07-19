@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun;
+package io.github.sefiraat.networks.integrations;
 
 import io.github.schntgaispock.slimehud.SlimeHUD;
 import io.github.schntgaispock.slimehud.util.HudBuilder;
