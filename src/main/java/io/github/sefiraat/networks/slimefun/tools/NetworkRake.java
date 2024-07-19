@@ -49,12 +49,12 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkMonitor.class);
         viableObjects.add(NetworkPusher.class);
         viableObjects.add(NetworkGrabber.class);
+        viableObjects.add(NetworkImport.class);
+        viableObjects.add(NetworkExport.class);
         viableObjects.add(NetworkVanillaGrabber.class);
         viableObjects.add(NetworkVanillaPusher.class);
         viableObjects.add(NetworkWirelessTransmitter.class);
         viableObjects.add(NetworkWirelessReceiver.class);
-        viableObjects.add(NetworkImport.class);
-        viableObjects.add(NetworkExport.class);
     }
 
     @Override
