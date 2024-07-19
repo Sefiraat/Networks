@@ -3,12 +3,13 @@ package io.github.sefiraat.networks;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
-import io.github.sefiraat.networks.slimefun.NetheoPlants;
+import io.github.sefiraat.networks.integrations.HudCallbacks;
+import io.github.sefiraat.networks.integrations.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
+
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.plugin.PluginManager;
@@ -67,11 +68,18 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
-        if (supportedPluginManager.isNetheopoiesis()){
+        if (supportedPluginManager.isNetheopoiesis()) {
             try {
                 NetheoPlants.setup();
             } catch (NoClassDefFoundError e) {
                 getLogger().severe("Netheopoiesis must be updated to meet Networks' requirements.");
+            }
+        }
+        if (supportedPluginManager.isSlimeHud()) {
+            try {
+                HudCallbacks.setup();
+            } catch (NoClassDefFoundError e) {
+                getLogger().severe("SlimeHUD must be updated to meet Networks' requirements.");
             }
         }
     }

@@ -10,6 +10,7 @@ public class SupportedPluginManager {
 
     private final boolean infinityExpansion;
     private final boolean netheopoiesis;
+    private final boolean slimeHud;
 
     // region First Tick Only Registrations
     private boolean mcMMO;
@@ -22,6 +23,7 @@ public class SupportedPluginManager {
         instance = this;
         this.infinityExpansion = Bukkit.getPluginManager().isPluginEnabled("InfinityExpansion");
         this.netheopoiesis = Bukkit.getPluginManager().isPluginEnabled("Netheopoiesis");
+        this.slimeHud = Bukkit.getPluginManager().isPluginEnabled("SlimeHUD");
         Networks.getInstance()
             .getServer()
             .getScheduler()
@@ -39,6 +41,10 @@ public class SupportedPluginManager {
 
     public boolean isNetheopoiesis() {
         return netheopoiesis;
+    }
+
+    public boolean isSlimeHud() {
+        return slimeHud;
     }
 
     public boolean isMcMMO() {

@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun;
+package io.github.sefiraat.networks.integrations;
 
 import dev.sefiraat.netheopoiesis.api.items.DoNothingSeed;
 import dev.sefiraat.netheopoiesis.api.items.HarvestableSeed;
@@ -9,6 +9,7 @@ import dev.sefiraat.netheopoiesis.implementation.Stacks;
 import dev.sefiraat.netheopoiesis.utils.Skulls;
 import dev.sefiraat.netheopoiesis.utils.Theme;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
