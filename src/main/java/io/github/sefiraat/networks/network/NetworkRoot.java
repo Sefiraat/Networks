@@ -69,6 +69,8 @@ public class NetworkRoot extends NetworkNode {
         super(location, type);
         this.maxNodes = maxNodes;
         this.root = this;
+        NetworkNode node = new NetworkNode(location, NodeType.CONTROLLER);
+        io.github.sefiraat.networks.NetworkStorage.getAllNetworkObjects().get(location).setNode(node);
     }
 
     public void registerNode(@Nonnull Location location, @Nonnull NodeType type) {

@@ -98,8 +98,17 @@ public class NetworkController extends NetworkObject {
     }
 
     public static void wipeNetwork(@Nonnull Location location) {
-        for (NetworkNode node : NETWORKS.remove(location).getChildrenNodes()) {
-            NetworkStorage.removeNode(node.getNodePosition());
+        NetworkRoot networkRoot = NETWORKS.remove(location);
+        if (networkRoot != null && networkRoot.getChildrenNodes() != null) {
+            for (NetworkNode node : networkRoot.getChildrenNodes()) {
+                NetworkStorage.removeNode(node.getNodePosition());
+            }
+        } else {
+            if (networkRoot != null) {
+                for (NetworkNode node : networkRoot.getChildrenNodes()) {
+                    NetworkStorage.removeNode(node.getNodePosition());
+                }
+            }
         }
     }
 }
