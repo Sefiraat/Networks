@@ -9,16 +9,20 @@ import io.github.sefiraat.networks.utils.datatypes.PersistentCraftingBlueprintTy
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.attributes.DistinctiveItem;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftingBlueprint extends UnplaceableBlock {
+public class CraftingBlueprint extends UnplaceableBlock implements DistinctiveItem{
 
     public CraftingBlueprint(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -57,6 +61,17 @@ public class CraftingBlueprint extends UnplaceableBlock {
         itemMeta.setLore(lore);
 
         blueprint.setItemMeta(itemMeta);
+    }
+
+    @Override
+    public boolean canStack(@Nonnull ItemMeta itemMetaOne, @Nonnull ItemMeta itemMetaTwo) {
+        boolean hasLoreItem = itemMetaTwo.hasLore();
+        boolean hasLoreSfItem = itemMetaOne.hasLore();
+
+        if (hasLoreItem && hasLoreSfItem && SlimefunUtils.equalsLore(itemMetaTwo.getLore(), itemMetaOne.getLore())) {
+            return true;
+        }
+        return !hasLoreItem && !hasLoreSfItem;
     }
 
 }

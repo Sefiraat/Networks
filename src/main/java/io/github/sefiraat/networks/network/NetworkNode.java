@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.network;
 
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -127,6 +128,7 @@ public class NetworkNode {
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
+                    NetworkController.wipeNetwork(location);
                     location.getWorld().dropItemNaturally(location, toDrop);
                     block.setType(Material.AIR);
                 }
@@ -134,6 +136,7 @@ public class NetworkNode {
             runnable.runTask(Networks.getInstance());
             NetworkStorage.getAllNetworkObjects().remove(location);
         }
+
     }
 
     protected long retrieveBlockCharge() {
