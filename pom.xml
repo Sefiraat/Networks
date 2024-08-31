@@ -205,7 +205,7 @@
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>WildChestsAPI</artifactId>
-            <version>2024.1</version>
+            <version>2024.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
