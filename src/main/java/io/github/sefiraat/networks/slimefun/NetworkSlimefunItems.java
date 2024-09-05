@@ -73,7 +73,7 @@ public class NetworkSlimefunItems {
     public static final NetworkVanillaPusher NETWORK_VANILLA_PUSHER;
     public static final NetworkWirelessTransmitter NETWORK_WIRELESS_TRANSMITTER;
     public static final NetworkWirelessReceiver NETWORK_WIRELESS_RECEIVER;
-    public static final NetworkPurger NETWORK_TRASH;
+    public static final NetworkPurger NETWORK_PURGER;
     public static final NetworkGrid NETWORK_GRID;
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
     public static final NetworkCell NETWORK_CELL;
@@ -404,7 +404,7 @@ public class NetworkSlimefunItems {
             }
         );
 
-        NETWORK_TRASH = new NetworkPurger(
+        NETWORK_PURGER = new NetworkPurger(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_PURGER,
             RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -864,7 +864,7 @@ public class NetworkSlimefunItems {
         NETWORK_VANILLA_PUSHER.register(plugin);
         NETWORK_WIRELESS_TRANSMITTER.register(plugin);
         NETWORK_WIRELESS_RECEIVER.register(plugin);
-        NETWORK_TRASH.register(plugin);
+        NETWORK_PURGER.register(plugin);
         NETWORK_GRID.register(plugin);
         NETWORK_CRAFTING_GRID.register(plugin);
         NETWORK_CELL.register(plugin);

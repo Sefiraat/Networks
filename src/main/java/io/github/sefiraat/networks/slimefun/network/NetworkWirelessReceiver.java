@@ -98,14 +98,14 @@ public class NetworkWirelessReceiver extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return NetworkSlimefunItems.NETWORK_CELL.canUse(player, false)
+                return NetworkSlimefunItems.NETWORK_WIRELESS_RECEIVER.canUse(player, false)
                     && Slimefun.getProtectionManager()
                     .hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[]{0};
+                return new int[0];
             }
 
         };
