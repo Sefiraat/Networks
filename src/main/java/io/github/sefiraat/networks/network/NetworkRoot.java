@@ -37,6 +37,7 @@ public class NetworkRoot extends NetworkNode {
     private final int maxNodes;
     private boolean isOverburdened = false;
 
+    private Location controller = null;
     private final Set<Location> bridges = ConcurrentHashMap.newKeySet();
     private final Set<Location> monitors = ConcurrentHashMap.newKeySet();
     private final Set<Location> importers = ConcurrentHashMap.newKeySet();
@@ -69,14 +70,13 @@ public class NetworkRoot extends NetworkNode {
         super(location, type);
         this.maxNodes = maxNodes;
         this.root = this;
+        registerNode(location, type);
     }
 
     public void registerNode(@Nonnull Location location, @Nonnull NodeType type) {
         nodeLocations.add(location);
         switch (type) {
-            case CONTROLLER -> {
-                // Nothing here guvnor
-            }
+            case CONTROLLER -> this.controller = location;
             case BRIDGE -> bridges.add(location);
             case STORAGE_MONITOR -> monitors.add(location);
             case IMPORT -> importers.add(location);
@@ -129,6 +129,11 @@ public class NetworkRoot extends NetworkNode {
             }
         }
         this.isOverburdened = overburdened;
+    }
+
+    @Nullable
+    public Location getController() {
+        return controller;
     }
 
     public Set<Location> getBridges() {

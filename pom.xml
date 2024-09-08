@@ -124,8 +124,8 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>jeff-media-public</id>
-            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
+            <id>jeffMediaPublic</id>
+            <url>https://repo.jeff-media.com/public</url>
         </repository>
         <repository>
             <id>mcmmo-repo</id>
@@ -148,7 +148,7 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>03e5b9a</version>
+            <version>f1363ceadf</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
