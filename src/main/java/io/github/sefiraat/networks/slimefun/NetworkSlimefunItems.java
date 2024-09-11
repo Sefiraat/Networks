@@ -565,6 +565,7 @@ public class NetworkSlimefunItems {
             },
             NetworkQuantumStorage.getSizes()[7]
         );
+        NETWORK_QUANTUM_STORAGE_8.setSupportsCustomMaxAmount(true);
 
         NETWORK_CAPACITOR_1 = new NetworkPowerNode(
             NetworksItemGroups.NETWORK_ITEMS,
