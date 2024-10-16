@@ -107,7 +107,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     @Nonnull
     @Override
-    public String getWikiURL() {
+    public String getWikiUrlTemplate() {
         return "https://docs.sefiraat.dev/networks/%item%";
     }
 
