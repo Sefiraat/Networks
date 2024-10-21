@@ -520,6 +520,7 @@ public class NetworksSlimefunItemStacks {
             Theme.MACHINE,
             "Network Quantum Storage (∞)",
             "Stores ∞ items... almost",
+            "Has configurable maximum storage capacity",
             "",
             "Stores items in mass quantities within",
             "a quantum singularity."
