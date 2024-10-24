@@ -13,6 +13,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -226,19 +227,13 @@ public class NetworkRoot extends NetworkNode {
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            final Integer currentAmount = itemStacks.get(barrelIdentity.getItemStack());
-            final int newAmount;
-            if (currentAmount == null) {
-                newAmount = barrelIdentity.getAmount();
-            } else {
-                long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
-                if (newLong > Integer.MAX_VALUE) {
-                    newAmount = Integer.MAX_VALUE;
-                } else {
-                    newAmount = currentAmount + barrelIdentity.getAmount();
+            itemStacks.compute(barrelIdentity.getItemStack(), (item, amount) -> {
+                int barrelAmount = barrelIdentity.getAmount();
+                if (amount == null) {
+                    return barrelAmount;
                 }
-            }
-            itemStacks.put(barrelIdentity.getItemStack(), newAmount);
+                return NumberUtils.flowSafeAddition(amount, barrelAmount);
+            });
         }
 
         for (BlockMenu blockMenu : getGreedyBlocks()) {
@@ -246,20 +241,14 @@ public class NetworkRoot extends NetworkNode {
             if (itemStack == null || itemStack.getType() == Material.AIR) {
                 continue;
             }
-            final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
-            final Integer currentAmount = itemStacks.get(clone);
-            final int newAmount;
-            if (currentAmount == null) {
-                newAmount = itemStack.getAmount();
-            } else {
-                long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                if (newLong > Integer.MAX_VALUE) {
-                    newAmount = Integer.MAX_VALUE;
-                } else {
-                    newAmount = currentAmount + itemStack.getAmount();
+
+            itemStacks.compute(StackUtils.getAsOne(itemStack), (item, amount) -> {
+                int itemAmount = itemStack.getAmount();
+                if (amount == null) {
+                    return itemAmount;
                 }
-            }
-            itemStacks.put(clone, newAmount);
+                return NumberUtils.flowSafeAddition(amount, itemAmount);
+            });
         }
 
         for (BlockMenu blockMenu : getCrafterOutputs()) {
@@ -269,46 +258,30 @@ public class NetworkRoot extends NetworkNode {
                 if (itemStack == null || itemStack.getType() == Material.AIR) {
                     continue;
                 }
-                final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
-                final Integer currentAmount = itemStacks.get(clone);
-                final int newAmount;
-                if (currentAmount == null) {
-                    newAmount = itemStack.getAmount();
-                } else {
-                    long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                    if (newLong > Integer.MAX_VALUE) {
-                        newAmount = Integer.MAX_VALUE;
-                    } else {
-                        newAmount = currentAmount + itemStack.getAmount();
+
+                itemStacks.compute(StackUtils.getAsOne(itemStack), (item, amount) -> {
+                    int itemAmount = itemStack.getAmount();
+                    if (amount == null) {
+                        return itemAmount;
                     }
-                }
-                itemStacks.put(clone, newAmount);
+                    return NumberUtils.flowSafeAddition(amount, itemAmount);
+                });
             }
         }
 
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack != null && itemStack.getType() != Material.AIR) {
-                    final ItemStack clone = itemStack.clone();
-
-                    clone.setAmount(1);
-
-                    final Integer currentAmount = itemStacks.get(clone);
-                    int newAmount;
-
-                    if (currentAmount == null) {
-                        newAmount = itemStack.getAmount();
-                    } else {
-                        long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                        if (newLong > Integer.MAX_VALUE) {
-                            newAmount = Integer.MAX_VALUE;
-                        } else {
-                            newAmount = currentAmount + itemStack.getAmount();
-                        }
-                    }
-
-                    itemStacks.put(clone, newAmount);
+                if (itemStack == null || itemStack.getType() == Material.AIR) {
+                    continue;
                 }
+
+                itemStacks.compute(StackUtils.getAsOne(itemStack), (item, amount) -> {
+                    int itemAmount = itemStack.getAmount();
+                    if (amount == null) {
+                        return itemAmount;
+                    }
+                    return NumberUtils.flowSafeAddition(amount, itemAmount);
+                });
             }
         }
         return itemStacks;
@@ -368,6 +341,11 @@ public class NetworkRoot extends NetworkNode {
     @Nullable
     private InfinityBarrel getInfinityBarrel(@Nonnull BlockMenu blockMenu, @Nonnull StorageUnit storageUnit) {
         final ItemStack itemStack = blockMenu.getItemInSlot(16);
+
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            return null;
+        }
+
         final Config config = BlockStorage.getLocationInfo(blockMenu.getLocation());
         final String storedString = config.getString("stored");
 
@@ -376,24 +354,16 @@ public class NetworkRoot extends NetworkNode {
         }
 
         final int storedInt = Integer.parseInt(storedString);
-
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return null;
-        }
-
         final io.github.mooy1.infinityexpansion.items.storage.StorageCache cache = storageUnit.getCache(blockMenu.getLocation());
 
         if (cache == null) {
             return null;
         }
 
-        final ItemStack clone = itemStack.clone();
-        clone.setAmount(1);
-
         return new InfinityBarrel(
             blockMenu.getLocation(),
-            clone,
-            storedInt + itemStack.getAmount(),
+            StackUtils.getAsOne(itemStack),
+            NumberUtils.flowSafeAddition(storedInt, itemStack.getAmount()),
             cache
         );
     }
@@ -403,28 +373,26 @@ public class NetworkRoot extends NetworkNode {
 
         final QuantumCache cache = NetworkQuantumStorage.getCaches().get(blockMenu.getLocation());
 
-        if (cache == null || cache.getItemStack() == null) {
+        if (cache == null) {
             return null;
         }
 
-        final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
         final ItemStack itemStack = cache.getItemStack();
-        int storedInt = cache.getAmount();
-
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
-            storedInt = storedInt + output.getAmount();
-        }
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
             return null;
         }
 
-        final ItemStack clone = itemStack.clone();
-        clone.setAmount(1);
+        final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
+        int storedInt = cache.getAmount();
+
+        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
+            storedInt = NumberUtils.flowSafeAddition(storedInt, output.getAmount());
+        }
 
         return new NetworkStorage(
             blockMenu.getLocation(),
-            clone,
+            StackUtils.getAsOne(itemStack),
             storedInt
         );
     }

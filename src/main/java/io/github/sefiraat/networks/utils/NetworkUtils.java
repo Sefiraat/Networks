@@ -64,7 +64,7 @@ public class NetworkUtils {
                     boolean worked = false;
                     for (ItemStack stack : player.getInventory()) {
                         if (StackUtils.itemsMatch(stack, templateStack)) {
-                            final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
+                            final ItemStack stackClone = StackUtils.getAsOne(stack);
                             stack.setAmount(stack.getAmount() - 1);
                             blockMenu.replaceExistingItem(directional.getItemSlots()[i], stackClone);
                             player.sendMessage(Theme.SUCCESS + "Item [" + i + "]: " + Theme.PASSIVE + "Item added into filter");

@@ -161,7 +161,7 @@ public class NetworkEncoder extends NetworkObject {
             return;
         }
 
-        final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
+        final ItemStack blueprintClone = StackUtils.getAsOne(blueprint);
 
         blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);
