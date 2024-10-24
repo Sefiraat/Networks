@@ -79,7 +79,7 @@ public class NetworkConfigurator extends SlimefunItem {
             for (int slot : directional.getItemSlots()) {
                 final ItemStack possibleStack = blockMenu.getItemInSlot(slot);
                 if (possibleStack != null) {
-                    itemStacks[i] = StackUtils.getAsQuantity(blockMenu.getItemInSlot(slot), 1);
+                    itemStacks[i] = StackUtils.getAsOne(blockMenu.getItemInSlot(slot));
                 }
                 i++;
             }

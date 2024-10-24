@@ -34,6 +34,11 @@ import java.util.Optional;
 public class StackUtils {
 
     @Nonnull
+    public static ItemStack getAsOne(@Nonnull ItemStack itemStack) {
+        return getAsQuantity(itemStack, 1);
+    }
+
+    @Nonnull
     public static ItemStack getAsQuantity(@Nonnull ItemStack itemStack, int amount) {
         ItemStack clone = itemStack.clone();
         clone.setAmount(amount);
