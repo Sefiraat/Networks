@@ -268,9 +268,13 @@ public class StackUtils {
 
         // Potion
         if (metaOne instanceof PotionMeta instanceOne && metaTwo instanceof PotionMeta instanceTwo) {
-            if (!instanceOne.getBasePotionData().equals(instanceTwo.getBasePotionData())) {
-                return true;
+
+            if((instanceOne.getBasePotionData() != null) && (instanceTwo.getBasePotionData() != null)) {
+                if (!instanceOne.getBasePotionData().equals(instanceTwo.getBasePotionData())) {
+                    return true;
+                }
             }
+
             if (instanceOne.hasCustomEffects() != instanceTwo.hasCustomEffects()) {
                 return true;
             }
