@@ -39,7 +39,7 @@ public class NetworkPurger extends NetworkObject {
     private static final int TEST_ITEM_SLOT = 13;
     private static final int[] TEST_ITEM_BACKDROP = {3, 4, 5, 12, 14, 21, 22, 23};
 
-    private static final CustomItemStack TEST_BACKDROP_STACK = new CustomItemStack(
+    private static final ItemStack TEST_BACKDROP_STACK = CustomItemStack.create(
         Material.GREEN_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Purge Item Matching"
     );

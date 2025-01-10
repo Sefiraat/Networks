@@ -148,7 +148,7 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>0a7fea8</version>
+            <version>walshy~mc-1.21-RC-7-g47092df-5828</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

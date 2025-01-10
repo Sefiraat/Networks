@@ -52,11 +52,11 @@ public class NetworkAutoCrafter extends NetworkObject {
     private static final int BLUEPRINT_SLOT = 10;
     private static final int OUTPUT_SLOT = 16;
 
-    public static final CustomItemStack BLUEPRINT_BACKGROUND_STACK = new CustomItemStack(
+    public static final ItemStack BLUEPRINT_BACKGROUND_STACK = CustomItemStack.create(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Crafting Blueprint"
     );
 
-    public static final CustomItemStack OUTPUT_BACKGROUND_STACK = new CustomItemStack(
+    public static final ItemStack OUTPUT_BACKGROUND_STACK = CustomItemStack.create(
         Material.GREEN_STAINED_GLASS_PANE, Theme.PASSIVE + "Output"
     );
 

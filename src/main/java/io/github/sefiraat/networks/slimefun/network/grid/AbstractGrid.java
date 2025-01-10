@@ -42,27 +42,27 @@ import java.util.Map;
 
 public abstract class AbstractGrid extends NetworkObject {
 
-    private static final CustomItemStack BLANK_SLOT_STACK = new CustomItemStack(
+    private static final ItemStack BLANK_SLOT_STACK = CustomItemStack.create(
         Material.LIGHT_GRAY_STAINED_GLASS_PANE,
         " "
     );
 
-    private static final CustomItemStack PAGE_PREVIOUS_STACK = new CustomItemStack(
+    private static final ItemStack PAGE_PREVIOUS_STACK = CustomItemStack.create(
         Material.RED_STAINED_GLASS_PANE,
         Theme.CLICK_INFO.getColor() + "Previous Page"
     );
 
-    private static final CustomItemStack PAGE_NEXT_STACK = new CustomItemStack(
+    private static final ItemStack PAGE_NEXT_STACK = CustomItemStack.create(
         Material.RED_STAINED_GLASS_PANE,
         Theme.CLICK_INFO.getColor() + "Next Page"
     );
 
-    private static final CustomItemStack CHANGE_SORT_STACK = new CustomItemStack(
+    private static final ItemStack CHANGE_SORT_STACK = CustomItemStack.create(
         Material.BLUE_STAINED_GLASS_PANE,
         Theme.CLICK_INFO.getColor() + "Change Sort Order"
     );
 
-    private static final CustomItemStack FILTER_STACK = new CustomItemStack(
+    private static final ItemStack FILTER_STACK = CustomItemStack.create(
         Material.NAME_TAG,
         Theme.CLICK_INFO.getColor() + "Set Filter (Right Click to Clear)"
     );
@@ -350,23 +350,23 @@ public abstract class AbstractGrid extends NetworkObject {
 
     protected abstract int getFilterSlot();
 
-    protected CustomItemStack getBlankSlotStack() {
+    protected ItemStack getBlankSlotStack() {
         return BLANK_SLOT_STACK;
     }
 
-    protected CustomItemStack getPagePreviousStack() {
+    protected ItemStack getPagePreviousStack() {
         return PAGE_PREVIOUS_STACK;
     }
 
-    protected CustomItemStack getPageNextStack() {
+    protected ItemStack getPageNextStack() {
         return PAGE_NEXT_STACK;
     }
 
-    protected CustomItemStack getChangeSortStack() {
+    protected ItemStack getChangeSortStack() {
         return CHANGE_SORT_STACK;
     }
 
-    protected CustomItemStack getFilterStack() {
+    protected ItemStack getFilterStack() {
         return FILTER_STACK;
     }
 

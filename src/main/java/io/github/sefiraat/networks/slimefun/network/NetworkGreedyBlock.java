@@ -32,12 +32,12 @@ public class NetworkGreedyBlock extends NetworkObject {
         6,7,8,15,17,24,25,26
     };
 
-    private static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
+    private static final ItemStack TEMPLATE_BACKGROUND_STACK = CustomItemStack.create(
         Material.GREEN_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Store items matching"
     );
 
-    private static final CustomItemStack STORAGE_BACKGROUND_STACK = new CustomItemStack(
+    private static final ItemStack STORAGE_BACKGROUND_STACK = CustomItemStack.create(
         Material.ORANGE_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Storage"
     );

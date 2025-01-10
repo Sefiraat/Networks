@@ -43,7 +43,7 @@ public class NetworkWirelessTransmitter extends NetworkObject {
         3, 4, 5, 12, 14, 21, 22, 23
     };
 
-    private static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
+    private static final ItemStack TEMPLATE_BACKGROUND_STACK = CustomItemStack.create(
         Material.GREEN_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Transmit items matching"
     );

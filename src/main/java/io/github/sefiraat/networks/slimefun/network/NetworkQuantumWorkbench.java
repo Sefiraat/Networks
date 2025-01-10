@@ -42,7 +42,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
     private static final int CRAFT_SLOT = 23;
     private static final int OUTPUT_SLOT = 25;
 
-    private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
+    private static final ItemStack CRAFT_BUTTON_STACK = CustomItemStack.create(
         Material.CRAFTING_TABLE,
         Theme.CLICK_INFO + "Click to entangle"
     );

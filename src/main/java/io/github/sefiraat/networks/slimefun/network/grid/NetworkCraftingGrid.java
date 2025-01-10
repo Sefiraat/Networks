@@ -50,7 +50,7 @@ public class NetworkCraftingGrid extends AbstractGrid {
     private static final int CRAFT_BUTTON_SLOT = 34;
     private static final int CRAFT_OUTPUT_SLOT = 43;
 
-    private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
+    private static final ItemStack CRAFT_BUTTON_STACK = CustomItemStack.create(
         Material.CRAFTING_TABLE,
         Theme.CLICK_INFO.getColor() + "Craft",
         Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Try to Craft",

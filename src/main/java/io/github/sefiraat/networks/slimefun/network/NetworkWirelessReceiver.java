@@ -37,7 +37,7 @@ public class NetworkWirelessReceiver extends NetworkObject {
         3, 4, 5, 12, 14, 21, 22, 23
     };
 
-    private static final CustomItemStack RECEIVED_BACKGROUND_STACK = new CustomItemStack(
+    private static final ItemStack RECEIVED_BACKGROUND_STACK = CustomItemStack.create(
         Material.GREEN_STAINED_GLASS_PANE,
         Theme.SUCCESS + "Received items"
     );

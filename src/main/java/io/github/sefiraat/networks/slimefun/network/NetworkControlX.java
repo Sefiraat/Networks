@@ -52,7 +52,7 @@ public class NetworkControlX extends NetworkDirectional {
 
     private final Set<BlockPosition> blockCache = new HashSet<>();
 
-    public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
+    public static final ItemStack TEMPLATE_BACKGROUND_STACK = CustomItemStack.create(
         Material.BLUE_STAINED_GLASS_PANE,
         Theme.PASSIVE + "Cut items matching template.",
         Theme.PASSIVE + "Leaving blank will cut anything"
@@ -167,7 +167,7 @@ public class NetworkControlX extends NetworkDirectional {
 
     @Nullable
     @Override
-    protected CustomItemStack getOtherBackgroundStack() {
+    protected ItemStack getOtherBackgroundStack() {
         return TEMPLATE_BACKGROUND_STACK;
     }
 
