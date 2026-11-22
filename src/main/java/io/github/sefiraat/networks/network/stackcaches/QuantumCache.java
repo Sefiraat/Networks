@@ -68,12 +68,14 @@ public class QuantumCache extends ItemStackCache {
 
     @Nullable
     public ItemStack withdrawItem(int amount) {
-        if (this.getItemStack() == null) {
+        final ItemStack stored = getItemStack();
+        final int withdrawn = Math.min(this.amount, amount);
+        if (stored == null || stored.getType().isAir() || withdrawn <= 0) {
             return null;
         }
-        final ItemStack clone = this.getItemStack().clone();
-        clone.setAmount(Math.min(this.amount, amount));
-        reduceAmount(clone.getAmount());
+        final ItemStack clone = stored.clone();
+        clone.setAmount(withdrawn);
+        reduceAmount(withdrawn);
         return clone;
     }
 

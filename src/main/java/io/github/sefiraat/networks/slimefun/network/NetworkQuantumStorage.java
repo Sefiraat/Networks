@@ -25,6 +25,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -295,11 +296,19 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             final ItemStack clone = itemStack.clone();
             final ItemMeta itemMeta = clone.getItemMeta();
             final List<String> lore = itemMeta.getLore();
-            for (int i = 0; i < 3; i++) {
-                lore.remove(lore.size() - 1);
+            if (lore != null && lore.size() >= 3) {
+                final int start = lore.size() - 3;
+                // Existing saves keep the item template in the display slot.
+                final String status = ChatColor.stripColor(lore.get(start + 1));
+                final String amountLine = ChatColor.stripColor(lore.get(start + 2));
+                if (ChatColor.stripColor(lore.get(start)).isBlank()
+                    && (status.equals("Voiding: True")
+                        || status.equals("Voiding: False"))
+                    && amountLine.matches("Amount: -?\\d+")) {
+                    itemMeta.setLore(start == 0 ? null : lore.subList(0, start));
+                    clone.setItemMeta(itemMeta);
+                }
             }
-            itemMeta.setLore(lore.isEmpty() ? null : lore);
-            clone.setItemMeta(itemMeta);
 
             final QuantumCache cache = new QuantumCache(clone, amount, this.maxAmount, voidExcess);
 
@@ -380,46 +389,41 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     @ParametersAreNonnullByDefault
     @Nullable
     public static ItemStack getItemStack(@Nonnull QuantumCache cache, @Nonnull BlockMenu blockMenu) {
-        if (cache.getItemStack() == null || cache.getAmount() <= 0) {
-            return null;
-        }
-        return getItemStack(cache, blockMenu, cache.getItemStack().getMaxStackSize());
+        final ItemStack stored = cache.getItemStack();
+        return stored == null ? null : getItemStack(cache, blockMenu, stored.getMaxStackSize());
     }
 
     @ParametersAreNonnullByDefault
     @Nullable
     public static ItemStack getItemStack(@Nonnull QuantumCache cache, @Nonnull BlockMenu blockMenu, int amount) {
-        if (cache.getAmount() < amount) {
-            // Storage has no content or not enough, mix and match!
-            ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
-            ItemStack fetched = cache.withdrawItem(amount);
-
-            if (output != null
-                && output.getType() != Material.AIR
-                && StackUtils.itemsMatch(cache, output, true)
-            ) {
-                // We have an output item we can use also
-                if (fetched == null || fetched.getType() == Material.AIR) {
-                    // Storage is totally empty - just use output slot
-                    fetched = output.clone();
-                    if (fetched.getAmount() > amount) {
-                        fetched.setAmount(amount);
-                    }
-                    output.setAmount(output.getAmount() - fetched.getAmount());
-                } else {
-                    // Storage has content, lets add on top of it
-                    int additional = Math.min(amount - fetched.getAmount(), output.getAmount());
-                    output.setAmount(output.getAmount() - additional);
-                    fetched.setAmount(fetched.getAmount() + additional);
-                }
-            }
-            syncBlock(blockMenu.getLocation(), cache);
-            return fetched;
-        } else {
-            // Storage has everything we need
-            syncBlock(blockMenu.getLocation(), cache);
-            return cache.withdrawItem(amount);
+        if (amount <= 0 || cache.getItemStack() == null) {
+            return null;
         }
+
+        ItemStack fetched = cache.withdrawItem(amount);
+        final int remaining = amount - (fetched == null ? 0 : fetched.getAmount());
+        if (remaining > 0) {
+            final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
+            if (output != null && !output.getType().isAir() && output.getAmount() > 0
+                && StackUtils.itemsMatch(cache, output, true)) {
+                final int withdrawnFromOutput = Math.min(remaining, output.getAmount());
+                if (fetched == null) {
+                    fetched = output.clone();
+                    fetched.setAmount(withdrawnFromOutput);
+                } else {
+                    fetched.setAmount(fetched.getAmount() + withdrawnFromOutput);
+                }
+
+                final int leftInOutput = output.getAmount() - withdrawnFromOutput;
+                blockMenu.replaceExistingItem(OUTPUT_SLOT,
+                    leftInOutput == 0 ? null : StackUtils.getAsQuantity(output, leftInOutput));
+            }
+        }
+
+        if (fetched != null) {
+            syncBlock(blockMenu.getLocation(), cache);
+        }
+        return fetched;
     }
 
     private static void updateDisplayItem(@Nonnull BlockMenu menu, @Nonnull QuantumCache cache) {
