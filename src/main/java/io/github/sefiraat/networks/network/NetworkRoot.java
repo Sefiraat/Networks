@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.network.barrel.NetworkStorage;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
+import io.github.sefiraat.networks.slimefun.network.NetworkCell;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
@@ -226,6 +227,9 @@ public class NetworkRoot extends NetworkNode {
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
+            if (barrelIdentity.getAmount() <= 0 || !isStoredStack(barrelIdentity.getItemStack())) {
+                continue;
+            }
             final Integer currentAmount = itemStacks.get(barrelIdentity.getItemStack());
             final int newAmount;
             if (currentAmount == null) {
@@ -243,7 +247,7 @@ public class NetworkRoot extends NetworkNode {
 
         for (BlockMenu blockMenu : getGreedyBlocks()) {
             final ItemStack itemStack = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
-            if (itemStack == null || itemStack.getType() == Material.AIR) {
+            if (!isStoredStack(itemStack)) {
                 continue;
             }
             final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
@@ -266,7 +270,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR) {
+                if (!isStoredStack(itemStack)) {
                     continue;
                 }
                 final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
@@ -288,7 +292,7 @@ public class NetworkRoot extends NetworkNode {
 
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack != null && itemStack.getType() != Material.AIR) {
+                if (isStoredStack(itemStack)) {
                     final ItemStack clone = itemStack.clone();
 
                     clone.setAmount(1);
@@ -312,6 +316,10 @@ public class NetworkRoot extends NetworkNode {
             }
         }
         return itemStacks;
+    }
+
+    private static boolean isStoredStack(@Nullable ItemStack stack) {
+        return stack != null && !stack.getType().isAir() && stack.getAmount() > 0;
     }
 
     @Nonnull
@@ -411,8 +419,8 @@ public class NetworkRoot extends NetworkNode {
         final ItemStack itemStack = cache.getItemStack();
         int storedInt = cache.getAmount();
 
-        if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
-            storedInt = storedInt + output.getAmount();
+        if (isStoredStack(output) && StackUtils.itemsMatch(cache, output, true)) {
+            storedInt = (int) Math.min((long) storedInt + output.getAmount(), Integer.MAX_VALUE);
         }
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
@@ -433,8 +441,11 @@ public class NetworkRoot extends NetworkNode {
     public Set<BlockMenu> getCellMenus() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location cellLocation : this.cells) {
+            if (!(BlockStorage.check(cellLocation) instanceof NetworkCell cell)) {
+                continue;
+            }
             BlockMenu menu = BlockStorage.getInventory(cellLocation);
-            if (menu != null) {
+            if (menu != null && menu.getPreset().getID().equals(cell.getId())) {
                 menus.add(menu);
             }
         }
@@ -478,13 +489,15 @@ public class NetworkRoot extends NetworkNode {
      */
     @Nullable
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
+        if (request.getAmount() <= 0) {
+            return null;
+        }
         ItemStack stackToReturn = null;
 
         // Cells first
         for (BlockMenu blockMenu : getCellMenus()) {
             for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack == null
-                    || itemStack.getType() == Material.AIR
+                if (!isStoredStack(itemStack)
                     || !StackUtils.itemsMatch(request, itemStack, true)
                 ) {
                     continue;
@@ -525,7 +538,7 @@ public class NetworkRoot extends NetworkNode {
             int[] slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
             for (int slot : slots) {
                 final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR || !StackUtils.itemsMatch(
+                if (!isStoredStack(itemStack) || !StackUtils.itemsMatch(
                     request,
                     itemStack,
                     true
@@ -561,8 +574,7 @@ public class NetworkRoot extends NetworkNode {
         // Greedy Blocks
         for (BlockMenu blockMenu : getGreedyBlocks()) {
             final ItemStack itemStack = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
-            if (itemStack == null
-                || itemStack.getType() == Material.AIR
+            if (!isStoredStack(itemStack)
                 || !StackUtils.itemsMatch(request, itemStack, true)
             ) {
                 continue;
@@ -608,7 +620,7 @@ public class NetworkRoot extends NetworkNode {
 
             boolean infinity = barrelIdentity instanceof InfinityBarrel;
             final ItemStack fetched = barrelIdentity.requestItem(request);
-            if (fetched == null || fetched.getType() == Material.AIR || (infinity && fetched.getAmount() == 1)) {
+            if (!isStoredStack(fetched) || (infinity && fetched.getAmount() == 1)) {
                 continue;
             }
 

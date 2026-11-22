@@ -131,7 +131,9 @@ public abstract class NetworkObject extends SlimefunItem implements AdminDebugga
             Block block = blockOptional.get();
             Block target = block.getRelative(event.getClickedFace());
 
-            addToRegistry(block);
+            if (BlockStorage.check(block.getLocation()) instanceof NetworkObject clickedObject) {
+                clickedObject.addToRegistry(block);
+            }
             for (BlockFace checkFace : CHECK_FACES) {
                 Block checkBlock = target.getRelative(checkFace);
 
